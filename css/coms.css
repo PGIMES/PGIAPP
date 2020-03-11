@@ -1,0 +1,28 @@
+﻿
+body{font:normal 3.75vw/160% arial,"microsoft yahei"; color:#000;/*text-align:justify;text-justify:inter-ideograph;*/-webkit-font-smoothing: antialiased; font-family: "Microsoft YaHei" ! important;}
+body,p,ul,li,ol,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,iframe{margin:0;padding:0;}
+ul,li,ol{list-style:none outside none;}
+img{border:0 none;vertical-align:top;max-width:100%;}
+/*textarea,input,select{vertical-align:middle;font-family: "microsoft yahei";font-size:3.75vw;outline:none;margin:0;padding:0;}*/
+a,span,div,p,ul,li,ol,b{/*-webkit-user-select:none;*/-webkit-tap-highlight-color:rgba(255,255,255,0);}
+/**,*/
+/**:after,*:before{transition:all .3s ease-in-out}*/
+pre{white-space:normal;}
+.clear{zoom:1;clear:both;}
+.clear:after{content:".";height:0;display:block;clear:both;visibility:hidden;font-size:0;}
+a{text-decoration:none;color:#333;}
+a:active{color:#999;}
+
+
+.normal-page-wrap{background:#f7f7f7;}
+.resume-setting-page .menus-module:first-child .menus-title{background-color:#227d41;color:#fff;}
+.resume-setting-page .menus-title{margin-bottom:0;background-color:transparent;color:#a9abac;}
+
+.menus-normal .menus-title{background-color:#227d41;color:#fff;}
+.menus-normal .mi-info{color:#5f6369}
+.menus-normal .check{color:#bbb;font-size:14px;background:none;}
+.menus-normal .check:after{font-size:14px;color:#bbb;}
+.menus-normal .menus-module{background-color:transparent;}
+.menus-normal .menus-item{background-color:#fff;}
+.menus-normal .logo{border:0 none;}
+.menus-normal .logo .icons{background:#227d41;display:block;color:#fff;font-size:24px;border-radius:100px;}
