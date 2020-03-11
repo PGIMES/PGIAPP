@@ -6,8 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 
-namespace PGI_APP
-{
+
     public partial class Emp_Login : System.Web.UI.Page
     {
         string Inlogin = "N";
@@ -73,4 +72,3 @@ namespace PGI_APP
             txt_part.Text = SQLHelper.reDs(strSQL).Tables[0].Rows[0][0].ToString();
         }
     }
-}

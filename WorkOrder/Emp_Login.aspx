@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Emp_Login.aspx.cs" Inherits="PGI_APP.Emp_Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Emp_Login.aspx.cs" Inherits="Emp_Login" %>
 
 <!DOCTYPE html>
 

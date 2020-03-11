@@ -1,21 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Load_Material.aspx.cs" Inherits="PGI_APP.Load_Material" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Load_Material.aspx.cs" Inherits="Load_Material" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-
-     <%--<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.form.min.js"></script>
-    <script type="text/javascript" src="/js/json2.min.js"></script>
-    <script type="text/javascript" src="/js/jweixin-1.2.0.js"></script>
-    <script id="commonJsScript" type="text/javascript" src="/js/common.js?v=201810311922" ></script>
-    <script type="text/javascript" src="/js/jquery.weixintools.js?v=201809201357"></script>--%>
-
-     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="/Scripts/jquery-1.10.2.min.js"></script> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Content/laydate/laydate.js"></script>
     <script src="/Content/layer/mobile/layer.js"></script>
 
@@ -25,7 +17,7 @@
     <link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
     <link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
 
-     <style>
+    <style>
         .rowbr{
             margin-bottom:5px;
         }
@@ -51,81 +43,112 @@
     </script>
 </head>
 <body>
+    <%-- 步骤一：引入JS文件--%>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <%--步骤二：通过config接口注入权限验证配置--%>
+    <script>        
+        //config注入的是企业的身份与权限
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: <% ="test" %>, // 公众号
+                timestamp: <% = timestamp %>, // 必填，生成签名的时间戳
+                nonceStr: '<% = noncestr   %>', // 必填，生成签名的随机串 
+                signature: '<%= ent_signature %>',// 必填，签名，config所以为企业签名
+                jsApiList: ['scanQRCode'] 
+            }); 
+            wx.ready(function(){
+                //扫描二维码
+                document.querySelector('#txt_lotno').onclick = function () {
+                    wx.scanQRCode({
+                        needResult : 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType : [ "qrCode", "barCode" ], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {                       
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容                       
+                            $('#txt_lotno').val(result);
+                        }
+                    });
+                };//end_document_scanQRCode
+            });
+
+       
+    </script>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
-    <div class="resume-setting-page normal-page-wrap"> 
-        <div id="allContainer" class="menus-normal">
-            <dl class="menus-module" style="background-color:#008083;height:66px;"> 
-                
-                <dt class="menus-title" style="background-color:#008083;height:66px">
-                    <div  style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-生产上线</div> 
-                    <div style="float:left;width:18%;border:0px solid #000; text-align:right;"><%--<a href="/Index.aspx"><img src="/img/home.png" width="22px" height="22px" style="text-align:right;"></a>--%></div> 
-                </dt> 
+        <div class="resume-setting-page normal-page-wrap">
+            <div id="allContainer" class="menus-normal">
+                <dl class="menus-module" style="background-color: #008083; height: 66px;">
 
-         
-            </dl>
-        </div> 
+                    <dt class="menus-title" style="background-color: #008083; height: 66px">
+                        <div style="float: left; width: 80%; border: 0px solid #F00;">PGI产线作业-生产上线</div>
+                        <div style="float: left; width: 18%; border: 0px solid #000; text-align: right;"><%--<a href="/Index.aspx"><img src="/img/home.png" width="22px" height="22px" style="text-align:right;"></a>--%></div>
+                    </dt>
 
-        
-        <div class="row ">
-            <div class="col-md-12">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-            <ContentTemplate>
-            
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth3">当前岗位</span>
-                    <asp:TextBox ID="txt_location" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
-                </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">登入人</span>
-                    <asp:TextBox ID="txt_emp" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
-                </div>
-              
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1" >项目号</span>
-                    <asp:TextBox ID="txt_xmh" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
-                </div>
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth2">Lot No</span>
-                     <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"></asp:TextBox>
-                </div>
-                
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">物料号</span>
-                     <asp:TextBox ID="txt_wlh" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" ReadOnly="true"></asp:TextBox>
-                </div>
-
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth2">数&nbsp;&nbsp;&nbsp;&nbsp;量</span>
-                    <asp:TextBox ID="txt_qty" class="form-control" ReadOnly="true"  Style="max-width: 100%" runat="server"></asp:TextBox>
-                   
-                </div>
-
-                 <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth4">工艺路线</span>
-                    <asp:TextBox ID="txt_routing" class="form-control" ReadOnly="true"   Style="max-width: 100%" runat="server"></asp:TextBox>
-                   
-                </div>
-
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth2">Bom&nbsp;&nbsp;</span>
-                    <asp:TextBox ID="txt_Bom" class="form-control" ReadOnly="true"    Style="max-width: 100%; " runat="server"></asp:TextBox>
-                   
-                </div>
-
-                </ContentTemplate>
-            </asp:UpdatePanel>
-                <div class="">
-                    <asp:Button ID="btnsave" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" style="padding:10px 16px" runat="server" Text="上线" OnClick="btnsave_Click" OnClientClick="return valid();" />
-                </div>
-            
-           
+                </dl>
             </div>
+
+
+            <div class="row ">
+                <div class="col-md-12">
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth3">当前岗位</span>
+                                <asp:TextBox ID="txt_location" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                            </div>
+
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth1">登入人</span>
+                                <asp:TextBox ID="txt_emp" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                            </div>
+
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth1">项目号</span>
+                                <asp:TextBox ID="txt_xmh" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth2">Lot No</span>
+                                <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"></asp:TextBox>
+                            </div>
+
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth1">物料号</span>
+                                <asp:TextBox ID="txt_wlh" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" ReadOnly="true"></asp:TextBox>
+                            </div>
+
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth2">数&nbsp;&nbsp;&nbsp;&nbsp;量</span>
+                                <asp:TextBox ID="txt_qty" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+
+                            </div>
+
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth4">工艺路线</span>
+                                <asp:TextBox ID="txt_routing" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+
+                            </div>
+
+                            <div class="input-group rowbr">
+                                <span class="input-group-addon textwidth2">Bom&nbsp;&nbsp;</span>
+                                <asp:TextBox ID="txt_Bom" class="form-control" ReadOnly="true" Style="max-width: 100%;" runat="server"></asp:TextBox>
+
+                            </div>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                    <div class="">
+                        <asp:Button ID="btnsave" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" Style="padding: 10px 16px" runat="server" Text="上线" OnClick="btnsave_Click" OnClientClick="return valid();" />
+                    </div>
+
+
+                </div>
+            </div>
+
         </div>
-       
-    </div>
     </form>
 </body>
 </html>

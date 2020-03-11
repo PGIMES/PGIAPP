@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Off_Material.aspx.cs" Inherits="PGI_APP.Off_Material" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Off_Material.aspx.cs" Inherits="Off_Material" %>
 
 <!DOCTYPE html>
 

@@ -5,17 +5,32 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace PGI_APP
-{
+
+    
     public partial class Load_Material : System.Web.UI.Page
     {
+        //定义对象
+        public string timestamp;//签名的时间戳
+        public string noncestr;//签名的随机串
+        public string ent_signature;//企业签名        
+        public string ent_ticket;//企业的jsapi_ticket         
+        public string uri;//url
+
         string uid = "01764";
-       
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
+
                 ShowValue();
+
+                timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
+                noncestr = new Random().Next(10000).ToString();               
+                //uri = Request.Url.ToString().Replace("#", "").Replace(PGI_APP.App_Code.WeiXin.Port, ""); //本地地址                
+                //string entAccessTicket = PGI_APP.App_Code.WeiXin.GetEntAccessToken();//企业AccessTicket
+                //ent_ticket = PGI_APP.App_Code.WeiXin.GetEntJsapi_Ticket(entAccessTicket);                
+                //ent_signature = PGI_APP.App_Code.WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
             }
         }
 
@@ -96,4 +111,3 @@ namespace PGI_APP
             }
         }
     }
-}

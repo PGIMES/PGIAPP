@@ -5,8 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace PGI_APP
-{
+
     public partial class Off_Material : System.Web.UI.Page
     {
         string uid = "01764";
@@ -82,4 +81,3 @@ namespace PGI_APP
             }
         }
     }
-}

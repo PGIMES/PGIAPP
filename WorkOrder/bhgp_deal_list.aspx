@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bhgp_deal_list.aspx.cs" Inherits="bhgp_deal_list" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="bhgp_deal_list.aspx.cs" Inherits="bhgp_deal_list" %>
 
 <!DOCTYPE html>
 
