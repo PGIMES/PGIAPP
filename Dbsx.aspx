@@ -59,7 +59,7 @@
             </dt> 
         
             <dd id="btn1" class="menus-item"  > 
-                <a href="/workorder/bhgp_deal_list.aspx"> <span class="mi-info logo"></span> <span id="span_ng" class="mi-info txt">不合格品处置(10)</span> <span class="mi-info check txt">进入</span> </a> 
+                <a href="/workorder/bhgp_deal_list_new.aspx"> <span class="mi-info logo"></span> <span id="span_ng" class="mi-info txt">不合格品处置(10)</span> <span class="mi-info check txt">进入</span> </a> 
             </dd> 
             <dd id="btn2" class="menus-item"  > 
                 <a href="javascript:void(0);"> <span class="mi-info logo"></span> <span class="mi-info txt">问题改善(0)</span> <span class="mi-info check txt">进入</span> </a> 
