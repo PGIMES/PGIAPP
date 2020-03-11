@@ -48,7 +48,7 @@
 	       <li class=" col-xs-6"><a href="#tab2" data-toggle="tab">已完成</a></li>
         </ul>
         <div class="tab-content">
-		    <div class="tab-pane active" id="tab1">		
+		    <div class="tab-pane active" id="tab1" style="margin-left:8px;margin-right:8px;">		
                 <div class="page-header" style="margin:15px 0 15px">
                     <h4><%--待处理--%>
                         <small><asp:Label ID="Label1" runat="server" Text="未处理"></asp:Label></small>
@@ -67,22 +67,25 @@
                                 <td width="25%">
                                     <%# DataBinder.Eval(Container.DataItem, "pgino") %>
                                 </td>
-                                <td width="50%" colspan="2" >
+                                <td width="40%" >
                                     <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                </td>
+                                <td width="10%" rowspan="3" >
+                                    <img src="/img/arrow_large_right.png" />
                                 </td>
                             </tr>
                             <tr>
-                                <td width="50%" colspan="2" >
+                                <td width="45%" colspan="2" >
                                     处置数量
                                     <font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
                                 </td>
-                                <td width="50%" colspan="2" >
+                                <td width="45%" >
                                     已处置数量
                                     <font color="blue"><%# DataBinder.Eval(Container.DataItem, "off_qty") %></font>
                                 </td>
                             </tr>
                             <tr style="color:#999">
-                                <td width="25%" colspan="4" >
+                                <td width="90%" colspan="3" >
                                     工序<%# DataBinder.Eval(Container.DataItem, "op") %>-
                                     <%# DataBinder.Eval(Container.DataItem, "op_descr") %>
                                 </td>
@@ -103,28 +106,31 @@
                                 <td width="25%">
                                     <%--<a href='/workorder/bhgp_deal_result.aspx?workorder=<%# DataBinder.Eval(Container.DataItem, "workorder") %>&next=N'>
                                         <font style="font-weight:800;"><%# DataBinder.Eval(Container.DataItem, "workorder") %></font>
-                                    </a>--%>                                        
+                                    </a>--%>
                                         <font style="font-weight:800;"><%# DataBinder.Eval(Container.DataItem, "workorder") %></font>
                                 </td>
                                 <td width="25%">
                                     <%# DataBinder.Eval(Container.DataItem, "pgino") %>
                                 </td>
-                                <td width="50%" colspan="2" >
+                                <td width="40%" >
                                     <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                </td>
+                                <td width="10%" rowspan="3" >
+                                    <img src="/img/arrow_large_right.png" />
                                 </td>
                             </tr>
                             <tr>
-                                <td width="50%" colspan="2" >
+                                <td width="45%" colspan="2" >
                                     处置数量
                                     <font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
                                 </td>
-                                <td width="50%" colspan="2" >
+                                <td width="45%" >
                                     已处置数量
                                     <font color="blue"><%# DataBinder.Eval(Container.DataItem, "off_qty") %></font>
                                 </td>
                             </tr>
                             <tr style="color:#999">
-                                <td width="25%" colspan="4" >
+                                <td width="90%" colspan="3" >
                                     工序<%# DataBinder.Eval(Container.DataItem, "op") %>-
                                     <%# DataBinder.Eval(Container.DataItem, "op_descr") %>
                                 </td>
