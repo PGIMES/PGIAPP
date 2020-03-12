@@ -20,8 +20,8 @@ public partial class Load_Material : System.Web.UI.Page
      
     protected void Page_Load(object sender, EventArgs e)
     {
-        
-        if (Session["workcode"] == null || Session["workcode"].ToString()=="")
+        //Response.Write(((LoginUser)Session["userModel"]).Domain);
+        if (Session["userModel"] == null )
         {
             Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
@@ -47,7 +47,7 @@ public partial class Load_Material : System.Web.UI.Page
         //取当前登录者
         string sql = @"select emp_code+emp_name,pgino,location from [dbo].[Mes_App_EmployeeLogin] 
                         where emp_code='{0}' and off_date is null   ";
-        sql = string.Format(sql, Session["workcode"].ToString());
+        sql = string.Format(sql, ((LoginUser)Session["userModel"]).WorkCode);
         var value = SQLHelper.reDs(sql).Tables[0];
         if (value != null && value.Rows.Count > 0)
         {
