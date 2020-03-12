@@ -7,61 +7,68 @@ using System.Web.UI.WebControls;
 
 
     
-    public partial class Load_Material : System.Web.UI.Page
+public partial class Load_Material : System.Web.UI.Page
+{
+    //定义对象
+    public string timestamp;//签名的时间戳
+    public string noncestr;//签名的随机串
+    public string ent_signature;//企业签名        
+    public string ent_ticket;//企业的jsapi_ticket         
+    public string uri;//url
+
+
+     
+    protected void Page_Load(object sender, EventArgs e)
     {
-        //定义对象
-        public string timestamp;//签名的时间戳
-        public string noncestr;//签名的随机串
-        public string ent_signature;//企业签名        
-        public string ent_ticket;//企业的jsapi_ticket         
-        public string uri;//url
-
-        string uid = "01764";
         
-        protected void Page_Load(object sender, EventArgs e)
+        if (Session["workcode"] == null || Session["workcode"].ToString()=="")
         {
-            if(!IsPostBack)
-            {
+            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }  
 
-                ShowValue();
-
-                timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
-                noncestr = new Random().Next(10000).ToString();               
-                //uri = Request.Url.ToString().Replace("#", "").Replace(PGI_APP.App_Code.WeiXin.Port, ""); //本地地址                
-                //string entAccessTicket = PGI_APP.App_Code.WeiXin.GetEntAccessToken();//企业AccessTicket
-                //ent_ticket = PGI_APP.App_Code.WeiXin.GetEntJsapi_Ticket(entAccessTicket);                
-                //ent_signature = PGI_APP.App_Code.WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
-            }
-        }
-
-
-        public void ShowValue()
+        if(!IsPostBack)
         {
-            //取当前登录者
-            string sql = @"select emp_code+emp_name,pgino,location from [dbo].[Mes_App_EmployeeLogin] 
-                            where emp_code='{0}' and off_date is null   ";
-            sql = string.Format(sql, uid);
-            var value = SQLHelper.reDs(sql).Tables[0];
-            if (value != null && value.Rows.Count > 0)
-            {
-                txt_emp.Text = value.Rows[0][0].ToString();
-                txt_xmh.Text = value.Rows[0][1].ToString();
-                txt_location.Text = value.Rows[0][2].ToString();
-                string strsql = "select  ROUTING,BOM FROM [172.16.5.26].[Production].[dbo].[mes_pginosetting]where pgino = '{0}'";
-                strsql = string.Format(strsql,txt_xmh.Text);
-                var value_rout = SQLHelper.reDs(strsql).Tables[0];
-                txt_routing.Text = value_rout.Rows[0][0].ToString();
-                txt_Bom.Text = value_rout.Rows[0][1].ToString();
-            }
-            else
-            {
+
+            ShowValue();
+
+            timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
+            noncestr = new Random().Next(10000).ToString();
+            uri = Request.Url.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
+            string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
+            ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
+            ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
+        }
+    }
+
+
+    public void ShowValue()
+    {
+        //取当前登录者
+        string sql = @"select emp_code+emp_name,pgino,location from [dbo].[Mes_App_EmployeeLogin] 
+                        where emp_code='{0}' and off_date is null   ";
+        sql = string.Format(sql, Session["workcode"].ToString());
+        var value = SQLHelper.reDs(sql).Tables[0];
+        if (value != null && value.Rows.Count > 0)
+        {
+            txt_emp.Text = value.Rows[0][0].ToString();
+            txt_xmh.Text = value.Rows[0][1].ToString();
+            txt_location.Text = value.Rows[0][2].ToString();
+            string strsql = "select  ROUTING,BOM FROM [172.16.5.26].[Production].[dbo].[mes_pginosetting]where pgino = '{0}'";
+            strsql = string.Format(strsql,txt_xmh.Text);
+            var value_rout = SQLHelper.reDs(strsql).Tables[0];
+            txt_routing.Text = value_rout.Rows[0][0].ToString();
+            txt_Bom.Text = value_rout.Rows[0][1].ToString();
+        }
+        else
+        {
                
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx'", true);
-                return;
-            }
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx'", true);
+            return;
+        }
                
 
-        }
+    }
 
         protected void txt_lotno_TextChanged(object sender, EventArgs e)
         {
