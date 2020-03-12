@@ -36,27 +36,24 @@
             padding-right:40px;
         }
         
+        #cbl_position label{
+            font-weight:normal;
+        }
         
     </style>
-    <script>
-        function valid() {
-           
-        }
-    </script>
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:ScriptManager runat="server">
-        </asp:ScriptManager>
+    <asp:ScriptManager runat="server">
+    </asp:ScriptManager>
     <div class="resume-setting-page normal-page-wrap"> 
         <div id="allContainer" class="menus-normal">
             <dl class="menus-module" style="background-color:#008083;height:66px;"> 
                 
                 <dt class="menus-title" style="background-color:#008083;height:66px">
-                    <div  style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-员工上下岗操作</div> 
+                    <div style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-员工上下岗操作</div> 
                     <div style="float:left;width:18%;border:0px solid #000; text-align:right;"><%--<a href="/Index.aspx"><img src="/img/home.png" width="22px" height="22px" style="text-align:right;"></a>--%></div> 
                 </dt> 
-
          
             </dl>
         </div> 
@@ -70,29 +67,29 @@
                 <div class="input-group rowbr">
                     <span class="input-group-addon textwidth2">登入人</span>
                     <asp:TextBox ID="txt_emp" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
                 </div>
-              
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1" >当前岗位</span>
-                    <asp:DropDownList ID="ddl_position" runat="server" class="form-control" Style="max-width: 100%"  OnTextChanged="ddl_position_TextChanged" AutoPostBack="True">
-                        </asp:DropDownList>
-                </div>
-               
 
                 <div class="input-group rowbr">
                     <span class="input-group-addon textwidth2">物料号</span>
-                  <asp:TextBox ID="txt_part" class="form-control" runat="server"  Style="max-width: 100%" ReadOnly="true"></asp:TextBox>
+                    <asp:DropDownList ID="ddl_part" runat="server" class="form-control" Style="max-width: 100%" OnTextChanged="ddl_part_TextChanged" AutoPostBack="True">
+                    </asp:DropDownList>
+                    <asp:TextBox ID="txt_part" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
                    
                 </div>
-               
+              
+                <div class="input-group rowbr">
+                    <span class="input-group-addon textwidth1">当前岗位</span>
+                    <asp:CheckBoxList ID="cbl_position" runat="server" class="form-control" Style="max-width: 100%" RepeatDirection="Horizontal" RepeatColumns="1"></asp:CheckBoxList>
+                </div>  
 
-                 
-
-                </ContentTemplate>
+            </ContentTemplate>
             </asp:UpdatePanel>
-                <div class="">
-                     <asp:Button ID="Button1" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" style="padding:10px 16px" runat="server" Text="上岗确认" OnClick="Button1_Click" OnClientClick="return valid();" />
-                </div>
+
+            <div class="">
+                    <asp:Button ID="btn_sure" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" style="padding:10px 16px" runat="server" Text="上岗确认" 
+                        OnClick="btn_sure_Click"/>
+            </div>
             
            
             </div>
