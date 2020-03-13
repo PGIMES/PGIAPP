@@ -11,16 +11,21 @@ public partial class Emp_Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+         
         if (WeiXin.GetCookie("workcode") == null)
         {
             Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
+        //else
+        //{
+        //    //Response.Write("cookie2:" + Request.Cookies["workcode"].Value);
+        //    //Response.Write("cookie1:" + Request.Cookies["usermodel"].Value);
+        //}
         if (!IsPostBack)
         {
-           
-            LoginUser lu = (LoginUser)WeiXin.GetUserModeCookie();
+            ////Response.Write(Request.Cookies["usermodel"].Value);
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             txt_emp.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
             ////txt_emp.Text = "02432何桂勤";
@@ -30,7 +35,7 @@ public partial class Emp_Login : System.Web.UI.Page
             setButton(lu.WorkCode);
         }
 
-        
+
         //setButton("02432");
 
     }
