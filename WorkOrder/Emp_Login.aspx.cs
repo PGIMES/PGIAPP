@@ -11,25 +11,26 @@ public partial class Emp_Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["userModel"] == null)
+        
+        if (WeiXin.GetCookie("workcode") == null)
         {
             Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
-
-        LoginUser lu = (LoginUser)Session["userModel"];
-
         if (!IsPostBack)
         {
+           
+            LoginUser lu = (LoginUser)WeiXin.GetUserModeCookie();
             txt_emp.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
-            //txt_emp.Text = "02432何桂勤";
-            //domain.Text = "200";
+            ////txt_emp.Text = "02432何桂勤";
+            ////domain.Text = "200";
 
             bind_pgino(domain.Text);
+            setButton(lu.WorkCode);
         }
 
-        setButton(lu.WorkCode);
+        
         //setButton("02432");
 
     }
@@ -125,7 +126,9 @@ public partial class Emp_Login : System.Web.UI.Page
 
         if (i == true)
         {
-            Response.Redirect("/Cjgl1.aspx");
+            //Response.Redirect("/Cjgl1.aspx");
+            //Response.Write("<script>location.replace(\"/Cjgl1.aspx\");</script>");
+            Response.Write("<script>window.location.href = '/Cjgl1.aspx';</script>");
         }
         else
         {

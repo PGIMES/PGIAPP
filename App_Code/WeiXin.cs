@@ -8,8 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-
-
+using System.Web;
 
 public   class WeiXin
 {
@@ -141,7 +140,76 @@ public   class WeiXin
             return "";
         }
     }
+    /// <summary>
+    /// 设置cookies
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
+    /// <param name="time"></param>
+    public static void SetCookie(string name, string value, int time)
+    {
+        HttpCookie cookies = new HttpCookie(name);
+        cookies.Name = name;
+        cookies.Value = value;
+        cookies.Expires = DateTime.Now.AddDays(time);
+        HttpContext.Current.Response.Cookies.Add(cookies);
 
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name">具体cookie名称 如: workcode</param>
+    /// <param name="cookiename">cookie序列名称，默认user</param>
+    /// <returns></returns>
+    public static string GetCookie( string name)
+    {
+        HttpCookie cookie = HttpContext.Current.Request.Cookies[name];
+        
+        if (cookie != null )
+        {
+            return cookie.Value;
+        }
+        else {
+            return "";
+        };
+    }
+    /// <summary>
+    /// 获取存放在cookie中的LoginUser对象
+    /// </summary>
+    /// <param name="cookiename"></param>
+    /// <returns></returns>
+    public static LoginUser GetJsonCookie(string cookiename="usermodel")
+    {
+        HttpCookie cookie = HttpContext.Current.Request.Cookies[cookiename];       
+        if (cookie != null )
+        {
+            string ck = HttpUtility.UrlDecode(cookie.Value,System.Text.Encoding.GetEncoding("UTF-8"));
+            
+            LoginUser userMode = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginUser>(ck);
+             
+            return userMode ;
+        }
+        else {
+            return null;
+        };
+    }
+    /// <summary>
+    /// 删除cookies
+    /// </summary>
+    /// <param name="name"></param>
+    public static void delCookies(string name)
+    {
+        foreach (string cookiename in HttpContext.Current.Request.Cookies.AllKeys)
+        {
+            HttpCookie cookies = HttpContext.Current.Request.Cookies[name];
+            if (cookies != null)
+            {
+                cookies.Expires = DateTime.Today.AddDays(-1);
+                HttpContext.Current.Response.Cookies.Add(cookies);
+                HttpContext.Current.Request.Cookies.Remove(name);
+            }
+        }
+    }
     /// <summary>
     /// 根据CODE得到用户帐号地址
     /// </summary>

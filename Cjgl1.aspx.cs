@@ -10,7 +10,9 @@ public partial class Cjgl1 : PageMain
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       
-        // Response.Write(name);
+        //WeiXin.delCookies("userid");
+        //WeiXin.delCookies("workcode");
+        //WeiXin.delCookies("usermodel");
+        //Response.Write("cookie:" + WeiXin.GetCookie("workcode"));
     }
 }

@@ -1,11 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Emp_Login.aspx.cs" Inherits="Emp_Login" %>
+﻿<%@ Page Language="C#" Title="" AutoEventWireup="true" CodeFile="Emp_Login.aspx.cs" Inherits="Emp_Login" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no"/>
 
      <%--<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
     <script type="text/javascript" src="/js/jquery.form.min.js"></script>

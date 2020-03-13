@@ -85,8 +85,8 @@
 
                 <div class="input-group rowbr">
                     <span class="input-group-addon textwidth1">下料数量</span>
-                    <asp:TextBox ID="txt_qty" class="form-control"   Style="max-width: 100%" runat="server" AutoPostBack="True" OnTextChanged="txt_qty_TextChanged"></asp:TextBox>
-                   
+                    <asp:TextBox ID="txt_qty" class="form-control" type='number'  Style="max-width: 100%" runat="server" AutoPostBack="True" OnTextChanged="txt_qty_TextChanged"></asp:TextBox>
+                    
                 </div>
                 <div>
                     <asp:GridView ID="GridView1" runat="server"></asp:GridView>
