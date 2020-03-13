@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -72,26 +73,52 @@ public partial class Load_Material : System.Web.UI.Page
 
     }
 
-    protected void txt_lotno_TextChanged(object sender, EventArgs e)
-    {
-        string re_sql = @"exec [usp_app_load_material_lot_change] '{0}', '{1}'";
-        re_sql = string.Format(re_sql, txt_xmh.Text, txt_lotno.Text);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
-        string flag = re_dt.Rows[0][0].ToString();
+    //protected void txt_lotno_TextChanged(object sender, EventArgs e)
+    //{
+    //    string re_sql = @"exec [usp_app_load_material_lot_change] '{0}', '{1}'";
+    //    re_sql = string.Format(re_sql, txt_xmh.Text, txt_lotno.Text);
+    //    DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+    //    string flag = re_dt.Rows[0][0].ToString();
 
+    //    if (flag == "N")
+    //    {
+    //        txt_qty.Text = re_dt.Rows[0]["tr_qty_chg"].ToString();
+    //        txt_wlh.Text = re_dt.Rows[0]["tr_part"].ToString();
+    //    }
+    //    else
+    //    {
+    //        string msg = re_dt.Rows[0][1].ToString();
+    //        ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + msg + "')", true);
+    //        return;
+    //    }
+        
+    //}
+
+    [WebMethod]
+    public static string lotno_change(string pgino,string lotno)
+    {
+
+        string re_sql = @"exec [usp_app_load_material_lot_change] '{0}', '{1}'";
+        re_sql = string.Format(re_sql, pgino, lotno);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        string qty = "", wlh = "";
         if (flag == "N")
         {
-            txt_qty.Text = re_dt.Rows[0]["tr_qty_chg"].ToString();
-            txt_wlh.Text = re_dt.Rows[0]["tr_part"].ToString();
+            DataTable dt= ds.Tables[1];
+            qty = re_dt.Rows[0]["tr_qty_chg"].ToString();
+            wlh = re_dt.Rows[0]["tr_part"].ToString();
         }
-        else
-        {
-            string msg = re_dt.Rows[0][1].ToString();
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + msg + "')", true);
-            return;
-        }
-        
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\",\"wlh\":\"" + wlh + "\"}]";
+        return result;
+
     }
+
 
 
     protected void btnsave_Click(object sender, EventArgs e)

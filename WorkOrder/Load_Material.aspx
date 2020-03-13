@@ -25,14 +25,19 @@
             padding-right:37px;
         }        
         .textwidth2{
-            padding-right:32px;
-        }
-                
-        .textwidth3{
-            padding-right:25px;
-        }    
+            padding-right:49px;
+        }   
         .textwidth3{
             padding-right:23px;
+        }  
+        .textwidth4{
+            padding-right:35px;
+        } 
+        .textwidth5{
+            padding-right:35px;
+        }
+        .textwidth6{
+            padding-right:48px;
         }
         
     </style>
@@ -71,9 +76,37 @@
                         var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                         // code 在这里面写上扫描二维码之后需要做的内容                       
                         $('#txt_lotno').val(result);
+                        $('#txt_lotno').change();
+                        
                     }
                 });
             };//end_document_scanQRCode
+        });
+
+        $(document).ready(function () {
+            $("#txt_lotno").change(function () {
+                $.ajax({
+                    type: "post",
+                    url: "Load_Material.aspx/lotno_change",
+                    data: "{'pgino':'" + $("#txt_xmh").val() + "','lotno':'" + $("#txt_lotno").val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        var flag = obj[0].flag;
+                        if (flag == "Y") {
+                            layer.alert(obj[0].msg, function (index) { $('#txt_lotno').val(""); })
+                        } else {
+                            $('#txt_wlh').val(wlh);
+                            $('#txt_qty').val(qty);
+                        }
+
+                        return;
+                    }
+
+                });
+            });
         });
 
        
@@ -116,29 +149,29 @@
                             </div>                            
 
                             <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth4">工艺路线</span>
+                                <span class="input-group-addon textwidth3">工艺路线</span>
                                 <asp:TextBox ID="txt_routing" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
 
                             </div>
 
                             <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth2">Bom&nbsp;&nbsp;</span>
+                                <span class="input-group-addon textwidth2">Bom</span>
                                 <asp:TextBox ID="txt_Bom" class="form-control" ReadOnly="true" Style="max-width: 100%;" runat="server"></asp:TextBox>
 
                             </div>
 
                             <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth2">Lot No</span>
+                                <span class="input-group-addon textwidth4">Lot No</span>
                                 <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"></asp:TextBox>
                             </div>
 
                             <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth1">物料号</span>
+                                <span class="input-group-addon textwidth5">物料号</span>
                                 <asp:TextBox ID="txt_wlh" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" ReadOnly="true"></asp:TextBox>
                             </div>
 
                             <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth2">数&nbsp;&nbsp;&nbsp;&nbsp;量</span>
+                                <span class="input-group-addon textwidth6">数量</span>
                                 <asp:TextBox ID="txt_qty" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
 
                             </div>
