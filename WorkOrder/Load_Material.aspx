@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Content/laydate/laydate.js"></script>
     <script src="/Content/layer/mobile/layer.js"></script>
 
     <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
@@ -43,7 +42,19 @@
     </style>
     <script>
         function valid() {
-           
+            if ($('#txt_lotno').val()=="") {
+                alert("请输入【Lot No】.");
+                return false;
+            }
+            if ($('#txt_wlh').val() == "") {
+                alert("【物料号】不可为空.");
+                return false;
+            }
+            if ($('#txt_qty').val() == "" || $('#txt_qty').val() == "0") {
+                alert("【数量】不可为空或0.");
+                return false;
+            }
+            return true;
         }
     </script>
 </head>
@@ -67,7 +78,7 @@
 
         wx.ready(function () {
             //扫描二维码
-            document.querySelector('#txt_lotno').onclick = function () {
+            document.querySelector('#img_sm').onclick = function () {
                 //alert("a");
                 wx.scanQRCode({
                     needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -84,6 +95,9 @@
         });
 
         $(document).ready(function () {
+            $("#txt_wlh").attr("readonly", "readonly");
+            $("#txt_qty").attr("readonly", "readonly");
+
             $("#txt_lotno").change(function () {
                 $.ajax({
                     type: "post",
@@ -96,10 +110,13 @@
                         var obj = eval(data.d);
                         var flag = obj[0].flag;
                         if (flag == "Y") {
-                            layer.alert(obj[0].msg, function (index) { $('#txt_lotno').val(""); })
+                            alert(obj[0].msg);
+                            $('#txt_lotno').val("");
+                            $('#txt_wlh').val("");
+                            $('#txt_qty').val("");
                         } else {
-                            $('#txt_wlh').val(wlh);
-                            $('#txt_qty').val(qty);
+                            $('#txt_wlh').val(obj[0].wlh);
+                            $('#txt_qty').val(obj[0].qty);
                         }
 
                         return;
@@ -162,17 +179,23 @@
 
                             <div class="input-group rowbr">
                                 <span class="input-group-addon textwidth4">Lot No</span>
-                                <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox> <%--AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"--%>
+                                <span style="float:left; width:90%">
+                                    <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox> <%--AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"--%>
+                                </span>
+                                 <span style="float:left; width:10%">
+                                     <img id="img_sm" src="../img/fdj.gif" style="padding-top:10px;" />
+                                </span>
+                                
                             </div>
 
                             <div class="input-group rowbr">
                                 <span class="input-group-addon textwidth5">物料号</span>
-                                <asp:TextBox ID="txt_wlh" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" ReadOnly="true"></asp:TextBox>
+                                <asp:TextBox ID="txt_wlh" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox>
                             </div>
 
                             <div class="input-group rowbr">
                                 <span class="input-group-addon textwidth6">数量</span>
-                                <asp:TextBox ID="txt_qty" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txt_qty" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox>
 
                             </div>
 

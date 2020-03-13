@@ -110,8 +110,8 @@ public partial class Load_Material : System.Web.UI.Page
         if (flag == "N")
         {
             DataTable dt= ds.Tables[1];
-            qty = re_dt.Rows[0]["tr_qty_chg"].ToString();
-            wlh = re_dt.Rows[0]["tr_part"].ToString();
+            qty = dt.Rows[0]["tr_qty_chg"].ToString();
+            wlh = dt.Rows[0]["tr_part"].ToString();
         }
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\",\"wlh\":\"" + wlh + "\"}]";
@@ -131,8 +131,8 @@ public partial class Load_Material : System.Web.UI.Page
         {
             if (value.Rows[0][0].ToString() == "Y")
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"上料完成.\")", true);
-                btnsave.Style.Add("disabled", "true");
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"上料完成.\");$('#txt_lotno').val('');$('#txt_wlh').val('');$('#txt_qty').val('');", true);
+                //btnsave.Style.Add("disabled", "true");
             }
             else
             {
