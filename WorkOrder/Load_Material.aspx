@@ -162,7 +162,7 @@
 
                             <div class="input-group rowbr">
                                 <span class="input-group-addon textwidth4">Lot No</span>
-                                <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server" AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"></asp:TextBox>
+                                <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox> <%--AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"--%>
                             </div>
 
                             <div class="input-group rowbr">
