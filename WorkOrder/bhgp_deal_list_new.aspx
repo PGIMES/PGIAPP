@@ -32,7 +32,7 @@
         <div id="allContainer" class="menus-normal">
             <dl class="menus-module" style="background-color:#008083;height:66px;">                 
                 <dt class="menus-title" style="background-color:#008083;height:66px">
-                    <div  style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-不合格品处置-待处理2</div> 
+                    <div  style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-不合格品处置-待处理</div> 
                     <div style="float:left;width:18%;border:0px solid #000; text-align:right;"><%--<a href="/Index.aspx"><img src="/img/home.png" width="22px" height="22px" style="text-align:right;"></a>--%></div> 
                 </dt> 
             </dl>

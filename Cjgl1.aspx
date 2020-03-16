@@ -49,9 +49,15 @@
       <a href="/workorder/Off_Material.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">生产下线</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
         <dd id="btn4" class="menus-item"  > 
-      <a href="../workorder/bhgp_deal.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格品处置申请</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/bhgpsx.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格品处置</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
-         <dd id="btn5" class="menus-item"  > 
+     <dd id="btn4" class="menus-item"  > 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检上线</span> <span class="mi-info check txt">进入</span> </a> 
+     </dd> 
+     <dd id="btn5" class="menus-item"  > 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检下线</span> <span class="mi-info check txt">进入</span> </a> 
+     </dd> 
+         <dd id="btn6" class="menus-item"  > 
       <a href="javascript:void(0);"> <span class="mi-info logo"></span> <span class="mi-info txt">报表查看</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
     </dl>
