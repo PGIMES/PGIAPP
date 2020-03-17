@@ -7,7 +7,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Dbsx : System.Web.UI.Page
+public partial class Dbsx : PageMain
 {
     protected void Page_Load(object sender, EventArgs e)
     {
