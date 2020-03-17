@@ -8,13 +8,36 @@ using System.Web.UI.WebControls;
 
 public partial class bhgp_deal : System.Web.UI.Page
 {
+    //定义对象
+    public string timestamp;//签名的时间戳
+    public string noncestr;//签名的随机串
+    public string ent_signature;//企业签名        
+    public string ent_ticket;//企业的jsapi_ticket         
+    public string uri;//url
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (WeiXin.GetCookie("workcode") == null)
+        {
+            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }
+
         if (!IsPostBack)
         {
-            emp_code_name.Text = "02432何桂勤";
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            emp_code_name.Text = lu.WorkCode + lu.UserName;
+            //emp_code_name.Text = "02432何桂勤";
+
             bind_pgino();
             bind_source("");
+
+            timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
+            noncestr = new Random().Next(10000).ToString();
+            uri = Request.Url.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
+            string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
+            ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
+            ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
         }
         
     }
@@ -81,7 +104,7 @@ public partial class bhgp_deal : System.Web.UI.Page
         if (flag=="N")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('" + msg + "')", true);
-            Response.Redirect("/workorder/bhgp_deal_list.aspx");
+            Response.Redirect("/workorder/bhgp_deal_list_new.aspx");
         }
         else
         {
