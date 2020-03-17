@@ -85,15 +85,44 @@
 
                 <div class="input-group rowbr">
                     <span class="input-group-addon textwidth1">下料数量</span>
-                    <asp:TextBox ID="txt_qty" class="form-control" type='number'  Style="max-width: 100%" runat="server" AutoPostBack="True" OnTextChanged="txt_qty_TextChanged"></asp:TextBox>
-                    
+                    <asp:TextBox ID="txt_qty" class="form-control" type='number'  Style="max-width: 100%" runat="server"></asp:TextBox><%--AutoPostBack="True" OnTextChanged="txt_qty_TextChanged"--%>  
                 </div>
                 <div>
-                    <asp:GridView ID="GridView1" runat="server"></asp:GridView>
+                   <asp:GridView ID="GridView1" 
+                        AllowMultiColumnSorting="True" AllowPaging="True"
+                        AllowSorting="True" AutoGenerateColumns="False"
+                        OnPageIndexChanging="GridView1_PageIndexChanging"
+                        runat="server" Font-Size="Small" Width="96%" style="margin-left:2%; margin-right:2%;" PageSize="5">
+                        <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                        <PagerSettings FirstPageText="首页" LastPageText="尾页"
+                            Mode="NextPreviousFirstLast" NextPageText="下页" PreviousPageText="上页" />
+                        <PagerStyle ForeColor="Red" />
+                        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                        <EditRowStyle BackColor="#999999" />
+                        <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                        <HeaderStyle BackColor="#428bca" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
+                        <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+
+                        <Columns>  
+                            <asp:BoundField DataField="lot_no" HeaderText="Lot No" ReadOnly="True" ItemStyle-Width="20%">
+                                <HeaderStyle Wrap="True" />
+                            </asp:BoundField> 
+                            <asp:BoundField DataField="qty" HeaderText="已上料数" ReadOnly="True" ItemStyle-Width="20%">
+                                <HeaderStyle Wrap="True" />
+                            </asp:BoundField> 
+                            <asp:BoundField DataField="go_qty" HeaderText="生产中" ReadOnly="True" ItemStyle-Width="15%">
+                                <HeaderStyle Wrap="True" />
+                            </asp:BoundField>  
+                            <asp:BoundField DataField="off_qty" HeaderText="已下料数" ReadOnly="True" ItemStyle-Width="20%">
+                                <HeaderStyle Wrap="True" />
+                            </asp:BoundField> 
+                            <asp:BoundField DataField="bhg_qty" HeaderText="不合格申请数" ReadOnly="True" ItemStyle-Width="25%">
+                                <HeaderStyle Wrap="True" />
+                            </asp:BoundField>   
+                        </Columns>
+                    </asp:GridView>
 
                 </div>
-
-                 
 
                 </ContentTemplate>
             </asp:UpdatePanel>
