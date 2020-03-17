@@ -55,7 +55,7 @@ public partial class Off_Material : System.Web.UI.Page
     void bind_gv()
     {
         DataTable dt = new DataTable();
-        string sql = @"exec usp_app_off_material_gv '{0}',''";
+        string sql = @"exec usp_app_off_material_gv '{0}'";
         sql = string.Format(sql, txt_xmh.Text);
         dt = SQLHelper.Query(sql).Tables[0];
         GridView1.DataSource = dt;
