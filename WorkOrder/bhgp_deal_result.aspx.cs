@@ -200,7 +200,7 @@ public partial class bhgp_deal_result : System.Web.UI.Page
 
         if (flag == "N")
         {
-            Response.Redirect("/workorder/bhgp_deal_list.aspx");
+            Response.Redirect("/workorder/bhgp_deal_list_new.aspx");
         }
         else
         {
