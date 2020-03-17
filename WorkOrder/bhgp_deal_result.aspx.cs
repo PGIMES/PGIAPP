@@ -13,20 +13,21 @@ public partial class bhgp_deal_result : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if (WeiXin.GetCookie("workcode") == null)
-        //{
-        //    Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
-        //    return;
-        //}
+        if (WeiXin.GetCookie("workcode") == null)
+        {
+            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }
 
         _workorder = Request.QueryString["workorder"].ToString();
         _next = Request.QueryString["next"].ToString();//N表示第一次链接进来，Y表示点击 下一次 进来的
         if (!IsPostBack)
         {
-            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            //emp_code_name.Text = lu.WorkCode + lu.UserName;
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            emp_code_name.Text = lu.WorkCode + lu.UserName;
+            domain.Text = lu.Domain;
 
-            emp_code_name.Text = "02432何桂勤";
+            //emp_code_name.Text = "02432何桂勤";
             //domain.Text = "200";
 
             workorder.Text = _workorder;
@@ -179,11 +180,18 @@ public partial class bhgp_deal_result : System.Web.UI.Page
 
     protected void btnsure_Click(object sender, EventArgs e)
     {
-        if (_next == "N" || GridView1.Rows.Count == 0)
+        if (_next == "N")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('没有处置明细，不能确认')", true);
             return;
         }
+
+        if (GridView1.Rows.Count == 0 && (hege_qty.Text == "" || hege_qty.Text == "0"))
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('没有处置明细，不能确认')", true);
+            return;
+        }
+
         string re_sql = @"exec usp_app_workorder_ng_next_sure '{0}'";
         re_sql = string.Format(re_sql, workorder.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
