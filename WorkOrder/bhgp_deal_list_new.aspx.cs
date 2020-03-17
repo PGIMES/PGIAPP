@@ -11,6 +11,12 @@ public partial class bhgp_deal_list_new : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (WeiXin.GetCookie("workcode") == null)
+        {
+            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }
+
         //if (!IsPostBack)
         //{
         GetData();
