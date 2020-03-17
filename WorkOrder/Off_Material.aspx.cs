@@ -12,18 +12,18 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if (WeiXin.GetCookie("workcode") == null)
-        //{
-        //    Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
-        //    return;
-        //}
+        if (WeiXin.GetCookie("workcode") == null)
+        {
+            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }
 
         if (!IsPostBack)
         {
-            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
 
-            //ShowValue(lu.WorkCode);
-            ShowValue("02432");
+            ShowValue(lu.WorkCode);
+            //ShowValue("02432");
             bind_gv();
         }
     }
