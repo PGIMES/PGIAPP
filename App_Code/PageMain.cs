@@ -1,6 +1,7 @@
 ﻿using LitJson;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 using System.Web;
@@ -19,16 +20,24 @@ public class PageMain : System.Web.UI.Page
             String code = Request.QueryString["code"];
             //Response.Write(code);
 
-            string accesstoken = WeiXin.GetAccessToken(WeiXin.OrganizeSecret);
+           // string accesstoken = WeiXin.GetAccessToken(WeiXin.OrganizeSecret);
            // Response.Write(accesstoken);
 
 
            JsonData userInfo = WeiXin.GetUserInfo(code);
-           //  Response.Write(userInfo.ToJson());
+            //  Response.Write(userInfo.ToJson());
 
-           string userid = userInfo.ContainsKey("UserId") ? userInfo["UserId"].ToString() : ""; //账号
+            string userid = "";
+            if(ConfigurationManager.AppSettings["debugmode"].ToString().ToLower()=="false")
+            {
+                userid = userInfo.ContainsKey("UserId") ? userInfo["UserId"].ToString() : ""; //账号
+            }
+            else
+            {
+                userid = ConfigurationManager.AppSettings["debuguserid"].ToString();
+            }
            // Response.Write("userid"+userid);
-           // string userid = "YuDuoKui";
+             
 
             string sql = "select * from WX_User where wxuserid='{0}'";
             sql = string.Format(sql, userid);
