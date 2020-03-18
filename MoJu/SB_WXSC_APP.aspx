@@ -31,12 +31,15 @@
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_day" HeaderText="本日" ReadOnly="True">
                     <HeaderStyle Wrap="True" Width="25%" />
+                    <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_week" HeaderText="本周" ReadOnly="True">
                     <HeaderStyle Wrap="True" Width="25%" />
+                    <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
                 <asp:BoundField DataField="sc_month" HeaderText="本月" ReadOnly="True">
                     <HeaderStyle Wrap="True" Width="25%" />
+                    <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
             </Columns>
             <SortedAscendingCellStyle BackColor="#F7F7F7" />
