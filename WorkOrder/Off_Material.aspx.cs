@@ -94,11 +94,12 @@ public partial class Off_Material : System.Web.UI.Page
 
         if (flag == "N")
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"下料完成.\");$('#txt_qty').val('');", true);
+            bind_gv();
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"下料完成.\");$('#txt_qty').val('');", true);
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + msg + "')", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert('" + msg + "')", true);
         }
     }
 
