@@ -14,7 +14,7 @@ public partial class Emp_Login : System.Web.UI.Page
          
         if (WeiXin.GetCookie("workcode") == null)
         {
-            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
         //else
@@ -97,7 +97,7 @@ public partial class Emp_Login : System.Web.UI.Page
         }
         else if (re_dt.Rows.Count > 1)
         {
-            Response.Write("<script>alert('程序异常，员工上岗记录多笔！');window.history.back();location.reload();</script>");
+            Response.Write("<script>layer.alert('程序异常，员工上岗记录多笔！');window.history.back();location.reload();</script>");
         }
 
     }
@@ -137,7 +137,7 @@ public partial class Emp_Login : System.Web.UI.Page
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('操作失败')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('操作失败')", true);
         }
     }
 

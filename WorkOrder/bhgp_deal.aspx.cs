@@ -19,7 +19,7 @@ public partial class bhgp_deal : System.Web.UI.Page
     {
         if (WeiXin.GetCookie("workcode") == null)
         {
-            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
 
@@ -103,12 +103,12 @@ public partial class bhgp_deal : System.Web.UI.Page
 
         if (flag=="N")
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('" + msg + "')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
             Response.Redirect("/workorder/bhgp_deal_list_new.aspx");
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('失败："+ msg + "')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
 
     }

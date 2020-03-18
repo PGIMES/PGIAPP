@@ -23,7 +23,7 @@ public partial class Load_Material : System.Web.UI.Page
     {
         if (WeiXin.GetCookie("workcode") == null)
         {
-            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
 
@@ -66,7 +66,7 @@ public partial class Load_Material : System.Web.UI.Page
         else
         {
 
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx'", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx'", true);
             return;
         }
 
@@ -131,12 +131,12 @@ public partial class Load_Material : System.Web.UI.Page
         {
             if (value.Rows[0][0].ToString() == "Y")
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"上料完成.\");$('#txt_lotno').val('');$('#txt_wlh').val('');$('#txt_qty').val('');", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"上料完成.\");$('#txt_lotno').val('');$('#txt_wlh').val('');$('#txt_qty').val('');", true);
                 //btnsave.Style.Add("disabled", "true");
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"失败，请重新提交.\")", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"失败，请重新提交.\")", true);
             }
         }
     }

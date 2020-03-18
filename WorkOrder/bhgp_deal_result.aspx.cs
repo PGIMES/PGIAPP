@@ -15,7 +15,7 @@ public partial class bhgp_deal_result : System.Web.UI.Page
     {
         if (WeiXin.GetCookie("workcode") == null)
         {
-            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
 
@@ -173,7 +173,7 @@ public partial class bhgp_deal_result : System.Web.UI.Page
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('" + msg + "')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
         }
     }
 
@@ -182,13 +182,13 @@ public partial class bhgp_deal_result : System.Web.UI.Page
     {
         if (_next == "N")
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('没有处置明细，不能确认')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('没有处置明细，不能确认')", true);
             return;
         }
 
         if (GridView1.Rows.Count == 0 && (hege_qty.Text == "" || hege_qty.Text == "0"))
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('没有处置明细，不能确认')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('没有处置明细，不能确认')", true);
             return;
         }
 
@@ -204,7 +204,7 @@ public partial class bhgp_deal_result : System.Web.UI.Page
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('" + msg + "')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
         }
     }
 }

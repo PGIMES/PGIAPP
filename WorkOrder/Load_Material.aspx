@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Content/layer/mobile/layer.js"></script>
+    <script src="/Content/layer/layer.js"></script>
 
     <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
     <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
@@ -43,15 +43,15 @@
     <script>
         function valid() {
             if ($('#txt_lotno').val()=="") {
-                alert("请输入【Lot No】.");
+                layer.alert("请输入【Lot No】.");
                 return false;
             }
             if ($('#txt_wlh').val() == "") {
-                alert("【物料号】不可为空.");
+                layer.alert("【物料号】不可为空.");
                 return false;
             }
             if ($('#txt_qty').val() == "" || $('#txt_qty').val() == "0") {
-                alert("【数量】不可为空或0.");
+                layer.alert("【数量】不可为空或0.");
                 return false;
             }
             return true;

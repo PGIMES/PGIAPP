@@ -11,7 +11,7 @@
      <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
     <script src="/Content/laydate/laydate.js"></script>
-    <script src="/Content/layer/mobile/layer.js"></script>
+    <script src="/Content/layer/layer.js"></script>
 
     <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
     <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
@@ -69,7 +69,7 @@
             //return false;
 
             if ($("input[name*=b_result]:checked").length == 0) {
-                alert("请选择是【处置结果】.");
+                layer.alert("请选择是【处置结果】.");
                 return false;
             }
 
@@ -82,25 +82,25 @@
 
             if ($("input[name*=b_result]:checked").val()=="废品") {
                 if ($("input[id*=baofei_qty]").val() == "") {
-                    alert("请输入【废品数量】.");
+                    layer.alert("请输入【废品数量】.");
                     return false;
                 }
                 if ($("#reason").val() == "") {
-                    alert("请输入【废品原因】.");
+                    layer.alert("请输入【废品原因】.");
                     return false;
                 }
             } else if ($("input[name*=b_result]:checked").val() == "待处理") {
                 if ($("#dcl_rea").val() == "") {
-                    alert("请输入【待处理原因】.");
+                    layer.alert("请输入【待处理原因】.");
                     return false;
                 }
                 
                 if ($("#hege_qty").val() == "" && $("input[id*=baofei_qty]").val() == "") {
-                    alert("请输入【合格数量】或【废品数量】.");
+                    layer.alert("请输入【合格数量】或【废品数量】.");
                     return false;
                 }
                 if ($("input[id*=baofei_qty]").val() != "" && $("#reason").val() == "") {
-                    alert("请输入【废品原因】.");
+                    layer.alert("请输入【废品原因】.");
                     return false;
                 }
             }

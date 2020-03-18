@@ -17,7 +17,7 @@
      <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
     <script src="/Content/laydate/laydate.js"></script>
-    <script src="/Content/layer/mobile/layer.js"></script>
+    <script src="/Content/layer/layer.js"></script>
 
     <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
     <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
@@ -41,11 +41,11 @@
     <script>
         function valid() {
             if ($("#b_source").val() == "") {
-                alert("请选择是【来源】.");
+                layer.alert("请选择是【来源】.");
                 return false;
             }
             if ($("input[id*=qty]").val() == "") {
-                alert("请输入处置数量.");
+                layer.alert("请输入处置数量.");
                 return false;
             }
             return true;
