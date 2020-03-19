@@ -39,7 +39,7 @@ public partial class MoJu_MJ_WXSC_APP : System.Web.UI.Page
     private void GetData()
     {
         DataTable dt = new DataTable();
-        string sql = @"exec API.dbo.SheBei_ForMes_Detail_Ver7_APP";
+        string sql = @"exec MES.dbo.[form_moju_detail_ver1_APP]";
         dt = Query(sql).Tables[0];
 
         if (dt == null || dt.Rows.Count <= 0)
