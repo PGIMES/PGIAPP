@@ -11,7 +11,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <div style="text-align:center;"><h3>设备维修统计</h3></div>
+        <div style="text-align:center;"><h3>设备报修统计</h3></div>
         <asp:Label ID="lb_msg" runat="server" Text=""></asp:Label>
         <asp:GridView ID="GridView1" 
             AllowMultiColumnSorting="True" AllowPaging="True"
