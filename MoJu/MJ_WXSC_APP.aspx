@@ -23,22 +23,22 @@
             <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
             <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
             <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-            <HeaderStyle BackColor="#EEEEEE" Font-Bold="false" ForeColor="Black" HorizontalAlign="left" />
+            <HeaderStyle BackColor="#EEEEEE" Font-Bold="false" ForeColor="Black" />
 
             <Columns>     
                 <asp:BoundField DataField="workshop" HeaderText="车间" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" />
+                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="left" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_day" HeaderText="本日" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" />
+                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="right" />
                     <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_week" HeaderText="本周" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" />
+                    <HeaderStyle Wrap="True" Width="25%"  HorizontalAlign="right"/>
                     <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
                 <asp:BoundField DataField="sc_month" HeaderText="本月" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" />
+                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="right" />
                     <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
             </Columns>
