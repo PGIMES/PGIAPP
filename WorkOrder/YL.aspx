@@ -10,8 +10,13 @@
 
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
-    <script src="/Content/laydate/laydate.js"></script>
+    <%--<script src="/Content/laydate/laydate.js"></script>--%>
     <script src="/Content/layer/layer.js"></script>
+
+    <link href="../css/weui.css" rel="stylesheet" />
+    <link href="../css/weuix.css" rel="stylesheet" />
+    <script src="../js/zepto.min.js"></script>
+    <script src="../js/zepto.weui.js"></script>
 
     <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
     <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
@@ -43,8 +48,6 @@
             //}
             //return true;
         }
-       
-
     </script>
 </head>
 <body>
@@ -92,18 +95,12 @@
 
                     <div class="input-group rowbr">
                         <span class="input-group-addon">要料数量</span>
-                        <asp:TextBox ID="qty" class="form-control" placeholder="请输入要料数量" Style="max-width: 100%" runat="server"></asp:TextBox>
-                    </div>
-
-                    <div class="input-group rowbr">
-                        <span class="input-group-addon">送到时间</span>
-                        <asp:TextBox ID="TextBox1" class="form-control" placeholder="请输入送到时间" Style="max-width: 100%" runat="server"
-                            onclick="laydate({format: 'YYYY/MM/DD hh:mm',istime:true,start:laydate.now(),min:laydate.now()});" ></asp:TextBox>
+                        <asp:TextBox ID="need_qty" class="form-control" placeholder="请输入要料数量" Style="max-width: 100%" runat="server"></asp:TextBox>
                     </div>
                     
                     <div class="input-group rowbr">
-                        <span class="input-group-addon">送到时间2</span>
-                        
+                        <span class="input-group-addon">送到时间</span>
+                        <asp:TextBox ID="need_date" class="form-control" Style="max-width: 100%; background-color:#fff;" runat="server"></asp:TextBox>
                     </div>
 
                 </ContentTemplate>
@@ -120,5 +117,43 @@
        
     </div>
     </form>
+
+    <script>
+        $("#need_date").datetimePicker({
+            title: '送到时间',
+            //yearSplit: '年',
+            //monthSplit: '月',
+            //dateSplit: '日',
+            times: function () {
+                return [  // 自定义的时间
+                    {
+                        values: (function () {
+                            var hours = [];
+                            for (var i = 0; i < 24; i++) hours.push(i > 9 ? i : '0' + i);
+                            return hours;
+                        })()
+                    },
+                    {
+                        divider: true,  // 这是一个分隔符
+                        content: ':'
+                    },
+                    {
+                        values: (function () {
+                            var minutes = [];
+                            for (var i = 0; i < 60; i++) minutes.push(i > 9 ? i : '0' + i);
+                            return minutes;
+                        })()
+                    }//,
+                    //{
+                    //    divider: true,  // 这是一个分隔符
+                    //    content: '分'
+                    //}
+                ];
+            },
+            onChange: function (picker, values, displayValues) {
+                console.log(values);
+            }
+        });
+    </script>
 </body>
 </html>
