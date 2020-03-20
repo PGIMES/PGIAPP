@@ -27,20 +27,32 @@
 
             <Columns>     
                 <asp:BoundField DataField="workshop" HeaderText="车间" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="left" />
+                    <HeaderStyle Wrap="True" Width="20%" HorizontalAlign="left" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_day" HeaderText="本日" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="Right" />
+                    <HeaderStyle Wrap="True" Width="23%" HorizontalAlign="Right" />
                     <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_week" HeaderText="本周" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="Right" />
+                    <HeaderStyle Wrap="True" Width="23%" HorizontalAlign="Right" />
                     <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
                 <asp:BoundField DataField="sc_month" HeaderText="本月" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="Right" />
+                    <HeaderStyle Wrap="True" Width="24%" HorizontalAlign="Right" />
                     <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
+                <%--<asp:HyperLinkField NavigateUrl="~/MoJu/SB_WX_Chart_APP.aspx" Text="趋势" >
+                    <HeaderStyle Wrap="True" Width="5%" HorizontalAlign="Right" />
+                </asp:HyperLinkField>--%>
+                <asp:TemplateField>
+                    <HeaderStyle Wrap="True" Width="10%" HorizontalAlign="Right" />
+                    <ItemStyle HorizontalAlign="Right" />
+                    <ItemTemplate>
+                        <asp:HyperLink ID="HyperLink1"
+                            NavigateUrl='<%# "/MoJu/SB_WX_Chart_APP.aspx?workshop="+ Eval("workshop") %>'
+                            runat="server">趋势</asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
             <SortedAscendingCellStyle BackColor="#F7F7F7" />
             <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
