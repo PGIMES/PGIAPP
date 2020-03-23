@@ -233,6 +233,7 @@
             $("#btn_week").addClass("weui-btn_primary");
             $("#btn_day").addClass("weui-btn_default");
             $("#btn_month").addClass("weui-btn_default");
+            chart.line().position('rep*sc').color('#FACC14');
             chart.changeData(data_week);
         }
         function month() {
@@ -250,6 +251,7 @@
             $("#btn_month").addClass("weui-btn_primary");
             $("#btn_day").addClass("weui-btn_default");
             $("#btn_week").addClass("weui-btn_default");
+            chart.line().position('rep*sc').color('#FACC14');
             chart.changeData(data_month);
         }
 
