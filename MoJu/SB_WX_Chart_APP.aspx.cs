@@ -44,10 +44,17 @@ public partial class MoJu_SB_WX_Chart_APP : System.Web.UI.Page
     {
 
         string sql = @"exec api.dbo.[SheBei_ForMes_Detail_Ver7_chart_APP] '"+ _workshop + "'";
-        DataTable dt = Query(sql).Tables[0];
-        string json = JsonConvert.SerializeObject(dt);
+        DataTable dt_day = Query(sql).Tables[0];
+        string json_day = JsonConvert.SerializeObject(dt_day);
 
-        return json;
+        DataTable dt_week = Query(sql).Tables[1];
+        string json_week = JsonConvert.SerializeObject(dt_week);
+
+        DataTable dt_month = Query(sql).Tables[2];
+        string json_month = JsonConvert.SerializeObject(dt_month);
+
+        string result = "[{\"json_day\":" + json_day + ",\"json_week\":" + json_week + ",\"json_month\":" + json_month + "}]";
+        return result;
 
     }
 }
