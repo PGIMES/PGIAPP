@@ -9,7 +9,7 @@
     <title></title>
      <link rel="stylesheet" href="/css/weui.css"/>
     <link rel="stylesheet" href="/css/weuix.css"/>
-
+    
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
     <script src="/js/f2.min.js"></script>
@@ -208,12 +208,48 @@
         });
 
         function day() {
+            $("#btn_day").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+            $("#btn_week").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+            $("#btn_month").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+
+            $("#btn_day").addClass("weui-btn_primary");
+            $("#btn_week").addClass("weui-btn_default");
+            $("#btn_week").addClass("weui-btn_default");
             chart.changeData(data_day);
         }
         function week() {
+            //if (data_week == undefined) {
+            //    layer.open({
+            //        content: '数据加载中'
+            //        , skin: 'msg'
+            //        , time: 2 //2秒后自动关闭
+            //    });
+            //}
+
+            $("#btn_day").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+            $("#btn_week").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+            $("#btn_month").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+
+            $("#btn_week").addClass("weui-btn_primary");
+            $("#btn_day").addClass("weui-btn_default");
+            $("#btn_month").addClass("weui-btn_default");
             chart.changeData(data_week);
         }
         function month() {
+            //if (data_month == undefined) {
+            //    layer.open({
+            //        content: '数据加载中'
+            //        , skin: 'msg'
+            //        , time: 2 //2秒后自动关闭
+            //    });
+            //}
+            $("#btn_day").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+            $("#btn_week").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+            $("#btn_month").removeClass("weui-btn_primary").removeClass("weui-btn_default");
+
+            $("#btn_month").addClass("weui-btn_primary");
+            $("#btn_day").addClass("weui-btn_default");
+            $("#btn_week").addClass("weui-btn_default");
             chart.changeData(data_month);
         }
 
