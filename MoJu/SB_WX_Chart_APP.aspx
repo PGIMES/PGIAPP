@@ -16,8 +16,16 @@
 </head>
 <body ontouchstart>
    <div class="page-bd-15">
-    <canvas id="myChart" height="260"></canvas>
+        <canvas id="myChart" height="260"></canvas>
     <script>
+
+        const legendItems = [{
+            name: '时长',
+            fill: '#FACC14',
+        }, {
+            name: '次数',
+            fill: '#000'
+        }];
 
         function findLegendItem(name) {
             let index;
@@ -30,15 +38,7 @@
             return index;
         }
 
-        const legendItems = [{
-            name: '时长',
-            fill: '#FACC14',
-        }, {
-            name: '次数',
-            fill: '#000'
-        }];
-
-        $(document).ready(function () {
+        function day() {
             $.ajax({
                 type: "post",
                 url: "SB_WX_Chart_APP.aspx/init",
@@ -70,12 +70,18 @@
                     });
 
 
-                    //chart.tooltip({
-                    //    showCrosshairs: true,
-                    //    showItemMarker: false,
-                    //    onShow: function onShow(ev) {
-                    //    }
-                    //});
+                    chart.tooltip({
+                        showTitle: true,
+                        showCrosshairs: true,
+                        showItemMarker: false,
+                        onShow: function onShow(ev) {//tooltipMarkerCfg
+                            //const items = ev.items;
+                            //items[0].rep = null;
+                            //items[0].sc = items[0].sc + items[0].cs;
+                            //items[0].cs = null;
+                        }
+
+                    });
 
                     chart.axis('cs', {
                         grid: null
@@ -125,31 +131,32 @@
                     });
 
                     // tooltip 和图例的联动
-                    chart.tooltip({
-                        showCrosshairs: true,
-                        custom: true, // 自定义 tooltip 内容框
-                        onChange: function onChange(obj) {
-                            const legend = chart.get('legendController').legends.top[0];
-                            const tooltipItems = obj.items;
-                            const legendItems = legend.items;
-                            const map = {};
-                            legendItems.forEach(function (item) {
-                                map[item.name] = _.clone(item);
-                            });
-                            tooltipItems.forEach(function (item) {
-                                const name = item.name;
-                                const value = item.value;
-                                if (map[name]) {
-                                    map[name].value = value;
-                                }
-                            });
-                            legend.setItems(_.values(map));
-                        },
-                        onHide: function onHide() {
-                            const legend = chart.get('legendController').legends.top[0];
-                            legend.setItems(legendItems);
-                        }
-                    });
+                    //chart.tooltip({
+                    //    showCrosshairs: true,
+                    //    custom: true, // 自定义 tooltip 内容框
+                    //    onChange: function onChange(obj) {
+                    //        const legend = chart.get('legendController').legends.top[0];
+                    //        const tooltipItems = obj.items;
+                    //        const legendItems = legend.items;
+                    //        const map = {};
+                    //        legendItems.forEach(function (item) {
+                    //            map[item.name] = _.clone(item);
+                    //        });
+                    //        tooltipItems.forEach(function (item) {
+                    //            const name = item.name;
+                    //            const value = item.value;
+                    //            if (map[name]) {
+                    //                map[name].value = value;
+                    //            }
+                    //        });
+                            
+                    //        legend.setItems(_.values(map));
+                    //    },
+                    //    onHide: function onHide() {
+                    //        const legend = chart.get('legendController').legends.top[0];
+                    //        legend.setItems(legendItems);
+                    //    }
+                    //});
 
                     chart.line().position('rep*sc').color('#FACC14');
                     chart.point().position('rep*sc').size(3)
@@ -170,11 +177,31 @@
                 }
 
             });
+        }
+
+
+        $(document).ready(function () {
+            day();
+
+            $("#btn_day").click(function () {
+                day();
+            });
+            $("#btn_week").click(function () {
+                day();
+            });
+            $("#btn_month").click(function () {
+                day();
+            });
         });
 
 
 
     </script>
     </div>
+    
+    <input id="btn_day" type="button" value="近12日" class="weui-btn weui-btn_mini weui-btn_primary" />
+    <input id="btn_week" type="button" value="近12周" class="weui-btn weui-btn_mini weui-btn_default" />
+    <input id="btn_month" type="button" value="近12月" class="weui-btn weui-btn_mini weui-btn_default" />
+
 </body>
 </html>
