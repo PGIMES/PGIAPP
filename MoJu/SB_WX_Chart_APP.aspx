@@ -50,13 +50,26 @@
             $.ajax({
                 type: "post",
                 url: "SB_WX_Chart_APP.aspx/init",
-                data: "{}",
+                data: "{'type':'day'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                 success: function (data) {
                     var obj = eval(data.d);
                     data_day = obj[0].json_day;
+                }
+
+            });
+
+            $.ajax({
+                type: "post",
+                url: "SB_WX_Chart_APP.aspx/init",
+                data: "{'type':'week_month'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
                     data_week = obj[0].json_week;
                     data_month = obj[0].json_month;
                 }
