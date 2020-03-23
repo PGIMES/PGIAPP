@@ -26,7 +26,7 @@
             <HeaderStyle BackColor="#EEEEEE" Font-Bold="false" ForeColor="Black" />
 
             <Columns>     
-                <asp:BoundField DataField="workshop" HeaderText="车间" ReadOnly="True">
+                <asp:BoundField DataField="workshop" HeaderText="生产线" ReadOnly="True">
                     <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="left" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_day" HeaderText="本日" ReadOnly="True">
