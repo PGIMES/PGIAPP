@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title></title>
+    <title>模具报修统计</title>
 </head>
 <body>
     <form id="form1" runat="server">
