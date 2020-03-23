@@ -214,7 +214,7 @@
 
             $("#btn_day").addClass("weui-btn_primary");
             $("#btn_week").addClass("weui-btn_default");
-            $("#btn_week").addClass("weui-btn_default");
+            $("#btn_month").addClass("weui-btn_default");
             chart.changeData(data_day);
         }
         function week() {
