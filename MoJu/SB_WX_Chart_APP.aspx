@@ -16,7 +16,7 @@
 </head>
 <body ontouchstart>
    <div class="page-bd-15">
-        <canvas id="myChart" height="260"></canvas>
+        <canvas id="myChart" height="260" style="width:95%;"></canvas>
     <script>
 
         const legendItems = [{
