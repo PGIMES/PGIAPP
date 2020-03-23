@@ -76,9 +76,8 @@
                         showItemMarker: false,
                         onShow: function onShow(ev) {//tooltipMarkerCfg
                             //const items = ev.items;
-                            //items[0].rep = null;
-                            //items[0].sc = items[0].sc + items[0].cs;
-                            //items[0].cs = null;
+                            //items[0].name = null;
+                            //items[0].value = "时长:" + items[0].value;
                         }
 
                     });
@@ -130,7 +129,7 @@
                         }
                     });
 
-                    // tooltip 和图例的联动
+                     //tooltip 和图例的联动
                     //chart.tooltip({
                     //    showCrosshairs: true,
                     //    custom: true, // 自定义 tooltip 内容框
@@ -140,7 +139,7 @@
                     //        const legendItems = legend.items;
                     //        const map = {};
                     //        legendItems.forEach(function (item) {
-                    //            map[item.name] = _.clone(item);
+                    //            map[item.name] = item;//_.clone(item);
                     //        });
                     //        tooltipItems.forEach(function (item) {
                     //            const name = item.name;
@@ -150,7 +149,7 @@
                     //            }
                     //        });
                             
-                    //        legend.setItems(_.values(map));
+                    //        //legend.setItems(map["时长"]);//_.values(map)
                     //    },
                     //    onHide: function onHide() {
                     //        const legend = chart.get('legendController').legends.top[0];
