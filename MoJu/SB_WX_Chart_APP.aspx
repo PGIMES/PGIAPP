@@ -24,7 +24,7 @@
             fill: '#FACC14',
         }, {
             name: '次数',
-            fill: '#000'
+            fill: '#40E0D0'
         }];
 
         const chart = new F2.Chart({
@@ -186,10 +186,10 @@
                   lineWidth: 1
               });
 
-            chart.line().position('rep*cs').color('#000');
+            chart.line().position('rep*cs').color('#40E0D0');
             chart.point().position('rep*cs').size(3)
               .style({
-                  fill: '#000',
+                  fill: '#40E0D0',
                   stroke: '#fff',
                   lineWidth: 1
               });
