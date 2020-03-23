@@ -6,12 +6,12 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title></title>
+    <title>设备报修统计</title>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-        <div style="text-align:center;"><h3>设备报修统计</h3></div>
+        <%--<div style="text-align:center;"><h3>设备报修统计</h3></div>--%>
         <asp:Label ID="lb_msg" runat="server" Text=""></asp:Label>
         <asp:GridView ID="GridView1" 
             AllowMultiColumnSorting="True" AllowPaging="True"
