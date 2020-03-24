@@ -50,11 +50,13 @@ public partial class MoJu_SB_WXSC_APP : System.Web.UI.Page
         GridView1.DataBind();
 
     }
+
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         this.GridView1.PageIndex = e.NewPageIndex;
         GetData();
     }
+
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -63,4 +65,5 @@ public partial class MoJu_SB_WXSC_APP : System.Web.UI.Page
             e.Row.Attributes.Add("onmouseout", "javascript:this.style.backgroundColor=currentcolor;");
         }
     }
+
 }
