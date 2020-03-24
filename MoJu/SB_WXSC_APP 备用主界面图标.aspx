@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SB_WXSC_APP.aspx.cs" Inherits="MoJu_SB_WXSC_APP" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SB_WXSC_APP 备用主界面图标.aspx.cs" Inherits="MoJu_SB_WXSC_APP" %>
 
 <!DOCTYPE html>
 
