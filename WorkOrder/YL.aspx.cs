@@ -69,6 +69,19 @@ public partial class YL : System.Web.UI.Page
 
     }
 
+    protected bool IsNum(string text)
+    {
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (!Char.IsNumber(text, i))
+            {
+                return true; //输入的不是数字  
+            }
+        }
+        return false; //否则是数字
+
+    }
+
     protected void btnsave_Click(object sender, EventArgs e)
     {
         DateTime date = DateTime.MinValue;
@@ -77,6 +90,17 @@ public partial class YL : System.Web.UI.Page
         if (!bf)
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【送到时间】日期格式不正确')", true);
+            return;
+        }
+
+        if (IsNum(need_qty.Text) == false)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【要料数量】格式不正确')", true);
+            return;
+        }
+        else if(Convert.ToInt32(need_qty.Text)<=0)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【要料数量】必须大于0')", true);
             return;
         }
 
