@@ -7,21 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <title>设备报修统计</title>
-    <link rel="stylesheet" href="/css/weui.css"/>
-    <link rel="stylesheet" href="/css/weuix.css"/>
-    
-    <script src="/js/zepto.min.js"></script>
-    <script src="/js/zepto.weui.js"></script>
-    <script src="/js/f2.min.js"></script>
-    <style>
-        .weui-table td, .weui-table th, table td, table th{
-            padding:5px;
-            line-height:12px;
-        }
-        .td1{
-            text-align:right;
-        }
-    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -32,7 +17,7 @@
             AllowMultiColumnSorting="True" AllowPaging="True"
             AllowSorting="True" AutoGenerateColumns="False"
             OnPageIndexChanging="GridView1_PageIndexChanging"
-            OnRowDataBound="GridView1_RowDataBound" Width="100%" PageSize="10"
+            OnRowDataBound="GridView1_RowDataBound" Width="100%"
             runat="server" Font-Size="Small" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal">
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
@@ -42,76 +27,38 @@
 
             <Columns>     
                 <asp:BoundField DataField="workshop" HeaderText="车间" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" HorizontalAlign="left" />
+                    <HeaderStyle Wrap="True" Width="20%" HorizontalAlign="left" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_day" HeaderText="本日" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" CssClass="td1"  />
-                    <ItemStyle CssClass="td1" />
+                    <HeaderStyle Wrap="True" Width="23%" HorizontalAlign="Right" />
+                    <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>
                 <asp:BoundField DataField="sc_week" HeaderText="本周" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" CssClass="td1" />
-                    <ItemStyle CssClass="td1" />
+                    <HeaderStyle Wrap="True" Width="23%" HorizontalAlign="Right" />
+                    <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
                 <asp:BoundField DataField="sc_month" HeaderText="本月" ReadOnly="True">
-                    <HeaderStyle Wrap="True" Width="25%" CssClass="td1" />
-                    <ItemStyle CssClass="td1" />
+                    <HeaderStyle Wrap="True" Width="24%" HorizontalAlign="Right" />
+                    <ItemStyle HorizontalAlign="Right" />
                 </asp:BoundField>  
+                <%--<asp:HyperLinkField NavigateUrl="~/MoJu/SB_WX_Chart_APP.aspx" Text="趋势" >
+                    <HeaderStyle Wrap="True" Width="5%" HorizontalAlign="Right" />
+                </asp:HyperLinkField>--%>
+                <asp:TemplateField>
+                    <HeaderStyle Wrap="True" Width="10%" HorizontalAlign="Right" />
+                    <ItemStyle HorizontalAlign="Right" />
+                    <ItemTemplate>
+                        <asp:HyperLink ID="HyperLink1"
+                            NavigateUrl='<%# "/MoJu/SB_WX_Chart_APP.aspx?workshop="+ Eval("workshop") %>'
+                            runat="server">趋势</asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
             <SortedAscendingCellStyle BackColor="#F7F7F7" />
             <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
             <SortedDescendingCellStyle BackColor="#E5E5E5" />
             <SortedDescendingHeaderStyle BackColor="#242121" />
         </asp:GridView>
-
-        <input id="btn_workshop" type="button" value="分车间" class="weui-btn weui-btn_mini weui-btn_primary" />
-        <input id="btn_workshop_all" type="button" value="全部车间" class="weui-btn weui-btn_mini weui-btn_default" />
-
-
-        <div class="page-bd-15">
-            <canvas id="myChart" height="260" style="width:95%;"></canvas>
-            <script>
-
-                
-
-                $(document).ready(function () {
-                    $.ajax({
-                        type: "post",
-                        url: "SB_WX_Chart_APP.aspx/init",
-                        data: "{'type':'day'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                        success: function (data) {
-                            var obj = eval(data.d);
-                            data_day = obj[0].json_day;
-                        }
-
-                    });
-
-                    $.ajax({
-                        type: "post",
-                        url: "SB_WX_Chart_APP.aspx/init",
-                        data: "{'type':'week_month'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                        success: function (data) {
-                            var obj = eval(data.d);
-                            data_week = obj[0].json_week;
-                            data_month = obj[0].json_month;
-                        }
-
-                    });
-
-                });
-
-
-            </script>
-        </div>
-
-        <input id="btn_day" type="button" value="近12日" class="weui-btn weui-btn_mini weui-btn_primary" />
-        <input id="btn_week" type="button" value="近12周" class="weui-btn weui-btn_mini weui-btn_default" />
-        <input id="btn_month" type="button" value="近12月" class="weui-btn weui-btn_mini weui-btn_default" />
     </div>
     </form>
 </body>
