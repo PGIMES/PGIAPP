@@ -20,6 +20,7 @@ public partial class MoJu_BXMonitor : System.Web.UI.Page
             BindQR();
             BindMyOrder();
             BindMyWork();
+            BindWanCheng();
         }
     }
 
@@ -40,6 +41,23 @@ public partial class MoJu_BXMonitor : System.Web.UI.Page
         DataSet ds= DbHelperSQL.Query(strSql.ToString());
         listBX.DataSource = ds;
         listBX.DataBind();
+    }
+    //已完成确认
+    public void BindWanCheng(string strWhere = "")
+    {
+        StringBuilder strSql = new StringBuilder();
+        strSql.Append("select     bx_date, bx_banbie, bx_gonghao, bx_name, bx_banzhu, bx_dh, bx_moju_no, bx_moju_type, bx_part, bx_mo_no, bx_gz_type, bx_gz_desc, bx_sbno, bx_sbname, status,level,b.cellphone ");
+        //strSql.Append(" ,cast(datediff(mi,bx_date,getdate())/60 as varchar)+'小时 '+right('00'+cast(datediff(mi,bx_date,getdate())%60  as varchar),2)+' 分' bx_shichang ");
+        strSql.Append(" ,cast(cast(datediff(ss, bx_date, qr_date) / 3600 as int) as varchar)+'小时 '+right('00' + cast(cast(datediff(ss, bx_date, qr_date) % 3600 / 60 as int) as varchar), 2)+' 分' bx_shichang ");
+
+        strSql.Append(" FROM mes.dbo.MES_SB_BX a join mes.dbo.MES_SB_QR c on a.bx_dh=c.dh join [172.16.5.6].[eHR_DB].dbo.view_hr_emp b on b.employeeid=a.bx_gonghao  where  dateadd(hh,24,qr_date )>getdate() and status = '确认完成' order by a.id asc");
+        //if (strWhere.Trim() != "")
+        //{
+        //    strSql.Append(" where " + strWhere);
+        //}
+        DataSet ds = DbHelperSQL.Query(strSql.ToString());
+        listWC.DataSource = ds;
+        listWC.DataBind();
     }
     //维修中
     public void BindWX(string strWhere = "")
@@ -101,5 +119,17 @@ public partial class MoJu_BXMonitor : System.Web.UI.Page
         DataSet ds = DbHelperSQL.Query(string.Format(strSql.ToString(),WeiXin.GetCookie("workcode")));
         listMyWork.DataSource = ds;
         listMyWork.DataBind();
+    }
+
+    public static string Right(string param,int length)
+    {
+        string result = param.Substring(param.Length-length, length);
+        return result;
+    }
+
+    public static string left(string param, int length)
+    {
+        string result = param.Substring(0, length-1);
+        return result;
     }
 }

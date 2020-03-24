@@ -11,6 +11,8 @@ using System.Web.UI.WebControls;
 public partial class MoJu_BXAction : System.Web.UI.Page
 {
     public string bx_shichang  ;
+    public string qr_shichang;
+    public string qr_date;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -51,7 +53,26 @@ public partial class MoJu_BXAction : System.Web.UI.Page
 
         }
     }
-    
+
+    private void BindQR(string dh)
+    {
+        DataTable dt = GetQRData(dh).Tables[0];
+        if (dt.Rows.Count > 0)
+        {
+            //listQRInfo.DataSource = dt;
+            //listQRInfo.DataBind();
+            txtQr_Remark.Value = dt.Rows[0]["qr_remark"].ToString();
+             
+            qr_date = Convert.ToDateTime(dt.Rows[0]["qr_date"]).ToString("MM/dd HH:mm");
+            qr_shichang= dt.Rows[0]["qr_shichang"].ToString();
+            bx_shichang = dt.Rows[0]["bx_shichang"].ToString();
+        }
+        else
+        {
+
+        }
+    }
+
     private void setVisibleState(string status,string dh,string level)
     {
          
@@ -87,6 +108,15 @@ public partial class MoJu_BXAction : System.Web.UI.Page
             VisibleBtn(false, false, true);
             string script = "$('#PageWX').removeAttr('hidden');$('#PageQR').removeAttr('hidden');";             
             ClientScript.RegisterStartupScript(this.GetType(), "show", script, true);
+        }
+        else if(status == "确认完成")
+        {
+            BindWX(dh);
+            BindQR(dh);
+            string script = "$('#PageWX').removeAttr('hidden');$('#PageQR').removeAttr('hidden');";
+            ClientScript.RegisterStartupScript(this.GetType(), "show", script, true);
+            enableBtn(false, false, false);
+            VisibleBtn(false, false, false);
         }
 
         SetRole(workcode, level);
@@ -125,7 +155,7 @@ public partial class MoJu_BXAction : System.Web.UI.Page
         
         StringBuilder strSql = new StringBuilder();
         strSql.Append("select   id, bx_date, bx_banbie, bx_gonghao, bx_name, bx_banzhu, bx_dh, bx_moju_no, bx_moju_type, bx_part, bx_mo_no, bx_gz_type, bx_gz_desc, bx_sbno, bx_sbname, status,level,b.cellphone  ");
-        strSql.Append(" ,cast(datediff(hh,bx_date,getdate()) as varchar)+'小时 '+right('00'+cast(datediff(mi,bx_date,getdate())%60  as varchar),2)+'分' bx_shichang ");
+        strSql.Append(" ,cast(datediff(mi,bx_date,getdate())/60 as varchar)+'小时 '+right('00'+cast(datediff(mi,bx_date,getdate())%60  as varchar),2)+'分' bx_shichang ");
         strSql.Append(" FROM  mes.dbo.MES_SB_BX a join [172.16.5.6].[eHR_DB].dbo.view_hr_emp b on b.employeeid=a.bx_gonghao where bx_dh='{0}'");
         
         return DbHelperSQL.Query(string.Format(strSql.ToString(),dh));
@@ -136,7 +166,7 @@ public partial class MoJu_BXAction : System.Web.UI.Page
 
         StringBuilder strSql = new StringBuilder();
         strSql.Append("select  wx_dh,wx_gonghao,wx_name,wx_banzhu,wx_banbie,wx_cs,wx_result,mo_down_cs,wx_begin_date,wx_end_date,b.cellphone   ");
-        strSql.Append(" ,cast(datediff(hh,bx_date,isnull(wx_begin_date,getdate())) as varchar)+'小时 '+right('00'+cast(datediff(mi,bx_date,isnull(wx_begin_date,getdate()) )%60  as varchar),2)+'分' jx_shichang ");
+        strSql.Append(" ,cast(datediff(mi,bx_date,isnull(wx_begin_date,getdate()))/60 as varchar)+'小时 '+right('00'+cast(datediff(mi,bx_date,isnull(wx_begin_date,getdate()) )%60  as varchar),2)+'分' jx_shichang ");
         strSql.Append(" ,cast(cast(datediff(mi, wx_begin_date, isnull(wx_end_date,getdate())) / 60 as int) as varchar)+'小时 '+right('00'+cast(datediff(mi,wx_begin_date,isnull(wx_end_date,getdate()) )%60  as varchar),2)+'分' wx_shichang ");
          //         cast(cast(datediff(ss, @starttime, @endtime) / 3600 as int) as varchar) + ':' + right('00' + cast(cast(datediff(ss, @starttime, @endtime) % 3600 / 60 as int) as varchar), 2)
          //cast(datediff(mi,wx_begin_date,isnull(wx_end_date,getdate()))/60 as varchar)
@@ -149,8 +179,10 @@ public partial class MoJu_BXAction : System.Web.UI.Page
     {
 
         StringBuilder strSql = new StringBuilder();
-        strSql.Append("select   id, bx_date, bx_banbie, bx_gonghao, bx_name, bx_banzhu, bx_dh, bx_moju_no, bx_moju_type, bx_part, bx_mo_no, bx_gz_type, bx_gz_desc, bx_sbno, bx_sbname, status,format(datediff(mi,bx_date,getdate())/60.0,'0.0')bx_shichang ");
-        strSql.Append(" FROM  mes.dbo.MES_SB_QR where dh='{0}'");
+        strSql.Append("select  a.* ");
+        strSql.Append(" ,cast(datediff(mi,bx_date,qr_date)/60 as varchar)+'小时 '+right('00'+cast(datediff(mi,bx_date,qr_date )%60  as varchar),2)+'分' bx_shichang ");
+        strSql.Append(" ,cast(datediff(mi,wx_end_date,qr_date)/60 as varchar)+'小时 '+right('00'+cast(datediff(mi,wx_end_date,qr_date )%60  as varchar),2)+'分' qr_shichang ");
+        strSql.Append(" FROM  mes.dbo.MES_SB_QR a join mes.dbo.mes_sb_wx b  on b.wx_dh=a.dh   join mes.dbo.mes_sb_bx c on  a.dh=c.bx_dh  where dh='{0}'");
 
         return DbHelperSQL.Query(string.Format(strSql.ToString(), dh));
     }

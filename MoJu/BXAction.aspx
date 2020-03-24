@@ -116,8 +116,8 @@
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">维修措施</label>
-                                <span class="weui-form-preview__value"><%# ViewState["state"].ToString()=="维修完成"? Eval("wx_cs"):"" %>                                    
-                                    <asp:TextBox ID="wx_cs" runat="server" Text='<%# Eval("wx_cs") %>' class="weui-input input"  Visible='<%# ViewState["state"].ToString()=="维修完成"?false:true %>'  placeholder="请输入维修措施"></asp:TextBox>
+                                <span class="weui-form-preview__value"><%#  "维修完成 确认完成".Contains(ViewState["state"].ToString())? Eval("wx_cs"):"" %>                                    
+                                    <asp:TextBox ID="wx_cs" runat="server" Text='<%# Eval("wx_cs") %>' class="weui-input input"  Visible='<%# "维修完成 确认完成".Contains(ViewState["state"].ToString())?false:true %>'  placeholder="请输入维修措施"></asp:TextBox>
                                      
                                 </span>
                             </div>
@@ -150,7 +150,14 @@
                 </div>
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
-                        <textarea class="weui-input input" placeholder="请输入确认说明" id="txtQr_Remark" runat="server" rows="2" ></textarea>
+                        <label class="weui-form-preview__label">确认时间</label>
+                        <span class="weui-form-preview__value"><%= qr_date  %> </span>
+                    </div>
+                </div>
+               
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <textarea class="weui-input input" placeholder="请输入确认说明" id="txtQr_Remark" runat="server" rows="2"   ></textarea>
                     </div>
                 </div>
                 <div class="weui-form-preview__bd">
