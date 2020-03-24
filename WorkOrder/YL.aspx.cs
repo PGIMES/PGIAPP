@@ -93,7 +93,7 @@ public partial class YL : System.Web.UI.Page
             return;
         }
 
-        if (IsNum(need_qty.Text) == false)
+        if (IsNum(need_qty.Text))
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【要料数量】格式不正确')", true);
             return;
