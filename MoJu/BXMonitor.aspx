@@ -9,6 +9,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
     <link rel="stylesheet" href="../css/weui.css" />
     <link rel="stylesheet" href="../css/weuix.css" />
+    <style>
+         .weui-mark-lt {
+            color: #fff;
+            display: block;
+            font-size: 0.775em !important;
+            left: -2.5em;
+            height: 1em;
+            line-height: 1em !important;
+            position: relative;
+            text-align: center;
+            top: 0.25em;
+            transform: rotate(-45deg);
+            width: 3.375em;
+            padding: 0.125em;
+        }
+    </style>
     <%--<link href="../css/font-awesome.min.css" rel="stylesheet" />--%>
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
@@ -43,7 +59,7 @@
                         </div>
                     </div>
 
-                    <div class="weui-tab__panel">
+                    <div class="weui-tab__panel" style="background-color:lightgray">
       <%--=====故障监视================================================--%>
                          <%----已报修-----%>
                         <div id="tab1" class="weui-tab__content">
@@ -53,13 +69,14 @@
                                     <asp:Repeater runat="server" ID="listBX" EnableTheming="False">
                                         <ItemTemplate>
                                             <a class="weui-cell weui-cell_access" href="BXAction.aspx?dh=<%#Eval("bx_dh") %>">
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-danger"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="weui-cell__bd">
                                                     <span class="weui-form-preview__label"><%#Eval("bx_dh").ToString()%></span>
                                                     <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
-                                                    <span class="weui-mark-rt- weui-badge" style="background-color: <%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>; font-size: smaller; color: white"><%#Eval("level") %></span>
+                                                    <span class="weui-mark-rt- weui-badge" style="background-color: <%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>; font-size: x-small; color: white"><%#Eval("level") %></span>
                                                     <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
                                                     <span class="weui-agree__text" style="font-size: smaller"><%#Eval("cellphone")+" "+Eval("bx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}") +  " 时长: "+Eval("bx_shichang") %>  </span>
 
@@ -79,20 +96,21 @@
                                     <asp:Repeater runat="server" ID="listWX" EnableTheming="False">
                                         <ItemTemplate>
                                             <a class="weui-cell weui-cell_access" href="BXAction.aspx?dh=<%#Eval("bx_dh") %>">
-                                            <div class="weui-cell__hd">
-                                                <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="weui-cell__bd">
-                                                <label class="weui-form-preview__label"><%#Eval("bx_dh").ToString()%></label>
-                                                <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
-                                                <span class="weui-mark-rt- weui-badge"  style="background-color:<%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>;font-size:smaller;color:white  "><%#Eval("level") %></span>
-                                                <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
-                                                <span class="weui-agree__text"  style="font-size:smaller "><%#Eval("cellphone")+" "+Eval("bx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}")+  " 时长: "+Eval("bx_shichang")%>   </span>                                                
-                                              
-                                            </div>
-                                            <div class="weui-cell__ft">                                                
-                                            </div>
-                                        </a>                                    
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                    <label class="weui-form-preview__label"><%#Eval("bx_dh").ToString()%></label>
+                                                    <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
+                                                    <span class="weui-mark-rt- weui-badge" style="background-color: <%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>; font-size: x-small; color: white"><%#Eval("level") %></span>
+                                                    <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
+                                                    <span class="weui-agree__text" style="font-size: smaller"><%#Eval("cellphone")+" "+Eval("bx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}")+  " 时长: "+Eval("bx_shichang")%>   </span>
+
+                                                </div>
+                                                <div class="weui-cell__ft">
+                                                </div>
+                                            </a>
 
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -106,26 +124,54 @@
                                     <asp:Repeater runat="server" ID="listQR" EnableTheming="False">
                                         <ItemTemplate>
                                             <a class="weui-cell weui-cell_access" href="BXAction.aspx?dh=<%#Eval("bx_dh") %>">
-                                            <div class="weui-cell__hd">
-                                                <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="weui-cell__bd">
-                                                <label class="weui-form-preview__label"><%#Eval("bx_dh").ToString()%></label>
-                                                <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
-                                                <span class="weui-mark-rt- weui-badge"  style="background-color:<%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>;font-size:smaller;color:white  "><%#Eval("level") %></span>
-                                                <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
-                                                <span class="weui-agree__text"  style="font-size:smaller "><%#Eval("cellphone")+" "+Eval("wx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}")+  " 时长: "+Eval("bx_shichang")%></span>
-                                                
-                                            </div>
-                                            <div class="weui-cell__ft">                                               
-                                            </div>
-                                        </a>                                    
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                    <label class="weui-form-preview__label"><%#Eval("bx_dh").ToString()%></label>
+                                                    <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
+                                                    <span class="weui-mark-rt- weui-badge" style="background-color: <%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>; font-size: x-small; color: white"><%#Eval("level") %></span>
+                                                    <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
+                                                    <span class="weui-agree__text" style="font-size: smaller"><%#Eval("cellphone")+" "+Eval("wx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}")+  " 时长: "+Eval("bx_shichang")%></span>
+
+                                                </div>
+                                                <div class="weui-cell__ft">
+                                                </div>
+                                            </a>
 
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
                             </div>
+                            <%-----确认完成----%>
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title ">已完成(24小时内) </div>
+                                <div class="weui-cells" id="WC">
+                                   
+                                    <asp:Repeater runat="server" ID="listWC" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" href="BXAction.aspx?dh=<%#Eval("bx_dh") %>">
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd f-gray">
+                                                    <label class="weui-form-preview__label"><%# Right(Eval("bx_dh").ToString(),7)%></label>
+                                                    <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
+                                                    <span class="weui-mark-rt- weui-badge" style="background-color: <%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>; font-size:x-small; color: white"><%#Eval("level") %></span>
+                                                    <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
+                                                    <span class="weui-agree__text" style="font-size: smaller"><%#Eval("cellphone")+" "+Eval("bx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}")+  " 时长: "+Eval("bx_shichang")%></span>
 
+                                                </div>
+                                                <div class="weui-cell__ft">
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
            <%--=====end故障监视================================================--%>
                         </div>
 
@@ -144,7 +190,7 @@
                                             <div class="weui-cell__bd">
                                                 <label class="weui-form-preview__label"><%#Eval("bx_dh").ToString()%></label>
                                                 <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
-                                                <span class="weui-mark-rt- weui-badge"  style="background-color:<%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>;font-size:smaller;color:white  "><%#Eval("level") %></span>
+                                                <span class="weui-mark-rt- weui-badge"  style="background-color:<%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>;font-size:x-small;color:white  "><%#Eval("level") %></span>
                                                 <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
                                                 <span class="weui-agree__text"  style="font-size:smaller "><%#Eval("cellphone")+" "+Eval("bx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}")+  " 时长: "+Eval("bx_shichang")%> </span>
                                                  
@@ -170,7 +216,7 @@
                                             <div class="weui-cell__bd">
                                                 <label class="weui-form-preview__label"><%#Eval("bx_dh").ToString()%></label>
                                                 <span><%#Eval("bx_sbname") + " " + Eval("bx_moju_type")%></span>
-                                                <span class="weui-mark-rt- weui-badge"  style="background-color:<%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>;font-size:smaller;color:white  "><%#Eval("level") %></span>
+                                                <span class="weui-mark-rt- weui-badge"  style="background-color:<%# Eval("level").ToString()=="一级"?"#10AEFF":"#FA5151"%>;font-size:x-small;color:white  "><%#Eval("level") %></span>
                                                 <span class="weui-form-preview__value"><%#Eval("bx_gz_type")+" "+Eval("bx_gz_desc")%></span>
                                                 <span class="weui-agree__text"  style="font-size:smaller "><%#Eval("cellphone")+" "+Eval("bx_name")+" "+Eval("bx_date","{0:MM-dd HH:mm}")+  " 时长: "+Eval("bx_shichang")%> </span>
                                                 
