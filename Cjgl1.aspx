@@ -49,7 +49,7 @@
       <a href="/workorder/YL.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">要料</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
           <dd id="btn4" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/YL_list.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
      <dd id="btn5" class="menus-item"  > 
       <a href="/workorder/Load_Material.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt">进入</span> </a> 
