@@ -6,6 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <%--<title>生产上线</title>--%>
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Content/layer/layer.js"></script>
