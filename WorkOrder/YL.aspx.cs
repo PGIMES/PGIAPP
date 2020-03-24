@@ -27,6 +27,10 @@ public partial class YL : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            emp_code_name.Text = lu.WorkCode + lu.UserName;
+            domain.Text = lu.Domain;
+            //emp_code_name.Text = "02432何桂勤";
+            //domain.Text = "200";
 
             timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
             noncestr = new Random().Next(10000).ToString();
@@ -51,45 +55,46 @@ public partial class YL : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string qty = "";
+        string pn = "", descr = "",qty = "";
         if (flag == "N")
         {
             DataTable dt = ds.Tables[1];
+            pn = dt.Rows[0]["pt_desc1"].ToString();
+            descr = dt.Rows[0]["pt_desc2"].ToString();
             qty = dt.Rows[0]["pt_ord_mult"].ToString();
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"qty\":\"" + qty + "\"}]";
         return result;
 
     }
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        ////string _b_source = "";
-        ////if (b_source1.Checked)
-        ////    _b_source = b_source1.Value;
-        ////if (b_source2.Checked)
-        ////    _b_source = b_source2.Value;
-        ////if (b_source3.Checked)
-        ////    _b_source = b_source3.Value;
+        DateTime date = DateTime.MinValue;
+        bool bf = DateTime.TryParse(need_date.Text, out date);
 
-        //string _b_source = b_source.SelectedValue;
+        if (!bf)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【送到时间】日期格式不正确')", true);
+            return;
+        }
 
-        //string re_sql = @"exec usp_app_workorder_ng_save '{0}', '{1}','{2}','{3}','{4}','{5}'";
-        //re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, pgino.SelectedValue, _b_source, op.SelectedValue, qty.Text);
-        //DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
-        //string flag = re_dt.Rows[0][0].ToString();
-        //string msg = re_dt.Rows[0][1].ToString();
+        string re_sql = @"exec [usp_app_YL] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, pgino.Text, domain.Text, pn.Text, descr.Text, need_qty.Text, need_date.Text);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
 
-        //if (flag == "N")
-        //{
-        //    ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-        //    Response.Redirect("/workorder/bhgp_deal_list_new.aspx");
-        //}
-        //else
-        //{
-        //    ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
-        //}
+        if (flag == "N")
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');", true);
+            Response.Redirect("/workorder/YL_list.aspx");
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
+        }
 
     }
 }

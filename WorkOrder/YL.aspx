@@ -66,12 +66,12 @@
 </head>
 <body>
     <%-- 步骤一：引入JS文件--%>
-    <script src="../scripts/jquery-1.10.2.min.js"></script>
+    <%--<script src="../scripts/jquery-1.10.2.min.js"></script>--%>
     
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <%--步骤二：通过config接口注入权限验证配置--%>
     <script>        
-        //config注入的是企业的身份与权限
+       //config注入的是企业的身份与权限
         $('#pgino').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -101,6 +101,8 @@
         });
 
         $(document).ready(function () {
+            $("#pn").attr("readonly", "readonly");
+            $("#descr").attr("readonly", "readonly");
 
             $("#pgino").change(function () {
                 $.ajax({
@@ -116,8 +118,12 @@
                         if (flag == "Y") {
                             alert(obj[0].msg);
                             $('#pgino').val("");
+                            $('#pn').val("");
+                            $('#descr').val("");
                             $('#need_qty').val("");
                         } else {
+                            $('#pn').val(obj[0].pn);
+                            $('#descr').val(obj[0].descr);
                             $('#need_qty').val(obj[0].qty);
                         }
 
@@ -150,7 +156,9 @@
             <div class="col-md-12">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-            
+                   
+                    <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
                     <div class="input-group rowbr">
                         <span class="input-group-addon textwidth1">物料号</span>
                         <span style="float:left; width:90%">
@@ -163,12 +171,12 @@
 
                     <div class="input-group rowbr">
                         <span class="input-group-addon textwidth1" >零件号</span>                       
-                        <asp:TextBox ID="pn" class="form-control" placeholder="" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="pn" class="form-control" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
                     </div>
 
                     <div class="input-group rowbr">
                         <span class="input-group-addon " >物料名称</span>                       
-                        <asp:TextBox ID="descr" class="form-control" placeholder="" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="descr" class="form-control" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
                     </div>
 
                     <div class="input-group rowbr">
