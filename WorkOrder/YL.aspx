@@ -116,7 +116,7 @@
                         var obj = eval(data.d);
                         var flag = obj[0].flag;
                         if (flag == "Y") {
-                            alert(obj[0].msg);
+                            layer.alert(obj[0].msg);
                             $('#pgino').val("");
                             $('#pn').val("");
                             $('#descr').val("");
