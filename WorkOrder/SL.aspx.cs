@@ -94,14 +94,41 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
     protected void btn_sl_Click(object sender, EventArgs e)
     {
-        //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('没有处置明细，不能确认')", true);
-        //return;
+        string re_sql = @"exec [usp_app_SL] '{0}', '{1}','{2}','{3}','{4}','{5}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, need_no.Text,lot_no.Text,act_qty.Text, pgino.Text, pn.Text);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        if (flag == "N")
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');", true);
+            Response.Redirect("/workorder/YL_list.aspx");
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
+        }
 
     }
 
     protected void btn_cancel_Click(object sender, EventArgs e)
     {
+        string re_sql = @"exec [usp_app_SL_cancel] '{0}', '{1}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, need_no.Text);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
 
+        if (flag == "N")
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');", true);
+            Response.Redirect("/workorder/YL_list.aspx");
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
+        }
     }
 
 }

@@ -141,6 +141,8 @@
     </script>
 
     <form id="form1" runat="server">
+        <asp:ScriptManager runat="server">
+        </asp:ScriptManager>
     <div class="resume-setting-page normal-page-wrap"> 
         <div id="allContainer" class="menus-normal">
             <dl class="menus-module" style="background-color:#008083;height:66px;"> 
