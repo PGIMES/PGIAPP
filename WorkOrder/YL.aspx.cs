@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 
 public partial class YL : System.Web.UI.Page
 {
+    public string _workshop = "";
+
     //定义对象
     public string timestamp;//签名的时间戳
     public string noncestr;//签名的随机串
@@ -18,6 +20,8 @@ public partial class YL : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        _workshop = Request.QueryString["workshop"].ToString();
+
         if (WeiXin.GetCookie("workcode") == null)
         {
             Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");

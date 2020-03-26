@@ -21,7 +21,7 @@
     <script>
         function deal(need_no) {
             //alert(need_no);
-            window.location.href = "/workorder/SL.aspx?need_no=" + need_no;
+            window.location.href = "/workorder/SL.aspx?need_no=" + need_no+"&workshop=<%=_workshop %>";
         }
     </script>
 </head>

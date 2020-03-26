@@ -8,8 +8,12 @@ using System.Web.UI.WebControls;
 
 public partial class WorkOrder_YL_list : System.Web.UI.Page
 {
+    public string _workshop = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        _workshop = Request.QueryString["workshop"].ToString();
+
         if (WeiXin.GetCookie("workcode") == null)
         {
             Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");

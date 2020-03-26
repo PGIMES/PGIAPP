@@ -59,7 +59,7 @@
       <a href="/workorder/YL.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
           <dd id="btn4" class="menus-item"  > 
-      <a href="/workorder/YL_list.asp?workshop=<%=_workshop %>x"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/YL_list.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
      <dd id="btn5" class="menus-item"  > 
       <a href="/workorder/Load_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt">进入</span> </a> 

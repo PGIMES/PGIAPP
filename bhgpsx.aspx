@@ -35,14 +35,14 @@
          <div style="float:left;width:49%;border:0px solid #000; text-align:right;"><a href="Index.aspx"><img src="img/home.png" width="22px" height="22px" style="text-align:right;"></a></div> 
      </dt> --%>
 
-    <div class="headimg" module="headerImg"> 
+    <%--<div class="headimg" module="headerImg"> 
         <img src="img/logo11.jpg"> 
-    </div> 
+    </div> --%>
     <dd id="btn1" class="menus-item"  > 
-      <a href="/workorder/bhgp_deal.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">申请</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/bhgp_deal.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">申请</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
     <dd id="btn2" class="menus-item"  > 
-      <a href="/workorder/bhgp_deal_list_new.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">待办事项</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/bhgp_deal_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">待办事项</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
 
     </dl>

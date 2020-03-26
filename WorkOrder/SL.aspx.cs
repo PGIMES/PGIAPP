@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 
 public partial class WorkOrder_SL : System.Web.UI.Page
 {
+    public string _workshop = "";
+
     public string _need_no = "";
 
     //定义对象
@@ -20,6 +22,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        _workshop = Request.QueryString["workshop"].ToString();
+
 
         if (WeiXin.GetCookie("workcode") == null)
         {
