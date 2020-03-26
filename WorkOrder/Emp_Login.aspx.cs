@@ -24,12 +24,12 @@ public partial class Emp_Login : System.Web.UI.Page
         //}
         if (!IsPostBack)
         {
-            ////Response.Write(Request.Cookies["usermodel"].Value);
+            //Response.Write(Request.Cookies["usermodel"].Value);
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             txt_emp.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
-            ////txt_emp.Text = "02432何桂勤";
-            ////domain.Text = "200";
+            //txt_emp.Text = "02432何桂勤";
+            //domain.Text = "200";
 
             bind_pgino(domain.Text);
             setButton(lu.WorkCode);
@@ -121,8 +121,16 @@ public partial class Emp_Login : System.Web.UI.Page
                 position = position + cbl_position.Items[j].Value + "|";
             }
         }
-        //除去最后一个,
-        if (position != "") { position = position.Substring(0, position.Length - 1); }
+        
+        if (position != "")//除去最后一个,
+        {
+            position = position.Substring(0, position.Length - 1);
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前岗位】不可为空')", true);
+            return;
+        }
 
         string sql = @"exec usp_app_emp_login '{0}','{1}','{2}','{3}','{4}'";
         sql = string.Format(sql, Inlogin, txt_emp.Text, ddl_part.SelectedValue, position, domain.Text);
