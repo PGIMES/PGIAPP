@@ -6,7 +6,7 @@
 <head runat="server">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	
+	<title>不合格申请/待办</title>
 
  <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.form.min.js"></script>
