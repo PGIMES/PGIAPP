@@ -77,10 +77,10 @@
       <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检完成监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
         <dd id="btn10" class="menus-item"  > 
-      <a href="/bhgpsx.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理</span> <span class="mi-info check txt"></span> </a> 
+      <a href="/workorder/bhgp_deal.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格品</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
       <dd id="btn11" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理监视</span> <span class="mi-info check txt"></span> </a> 
+      <a href="/workorder/bhgp_deal_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格品监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
          <dd id="btn12" class="menus-item"  > 
       <a href="javascript:void(0);"> <span class="mi-info logo"></span> <span class="mi-info txt">报表查看</span> <span class="mi-info check txt"></span> </a> 

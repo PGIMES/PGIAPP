@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>不合格品处置-待处理</title>
+    <title>不合格品监视</title>
     
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
