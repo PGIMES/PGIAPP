@@ -5,98 +5,62 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
-
+using System.Web.Services;
 
 public partial class Emp_Login : System.Web.UI.Page
 {
     public string _workshop = "";
 
+    //定义对象
+    //public string timestamp;//签名的时间戳
+    //public string noncestr;//签名的随机串
+    //public string ent_signature;//企业签名        
+    //public string ent_ticket;//企业的jsapi_ticket         
+    //public string uri;//url
+
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
 
-        if (WeiXin.GetCookie("workcode") == null)
-        {
-            Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
-            return;
-        }
-        //else
+        //if (WeiXin.GetCookie("workcode") == null)
         //{
-        //    //Response.Write("cookie2:" + Request.Cookies["workcode"].Value);
-        //    //Response.Write("cookie1:" + Request.Cookies["usermodel"].Value);
+        //    Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+        //    return;
         //}
+
         if (!IsPostBack)
         {
-            //Response.Write(Request.Cookies["usermodel"].Value);
-            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
-            //txt_emp.Text = "02432何桂勤";
-            //domain.Text = "200";
+            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            //txt_emp.Text = lu.WorkCode + lu.UserName;
+            //domain.Text = lu.Domain;
 
-            bind_pgino(domain.Text);
-            setButton(lu.WorkCode);
+            txt_emp.Text = "02432何桂勤";
+            domain.Text = "200";
+
+            setButton();
+
+            //timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
+            //noncestr = new Random().Next(10000).ToString();
+            //uri = Request.Url.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
+            //string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
+            //ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
+            //ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
         }
 
-
-        //setButton("02432");
-
     }
 
-    void bind_pgino(string domain)
-    {
-        string strSQL = @"select distinct pgino from Mes_App_Base_Location where domain='" + domain + "'";
-        DataTable re_dt = SQLHelper.Query(strSQL).Tables[0];
-        ddl_part.DataSource = re_dt;
-        ddl_part.DataTextField = "pgino";
-        ddl_part.DataValueField = "pgino";
-        ddl_part.DataBind();
 
-        bind_position(ddl_part.SelectedValue);
-    }
-
-    void bind_position(string pgino)
-    {
-
-        string sql = @"select location from Mes_App_Base_Location where pgino='" + pgino + "'";
-        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
-        cbl_position.DataSource = re_dt;
-        cbl_position.DataTextField = "location";
-        cbl_position.DataValueField = "location";
-        cbl_position.DataBind();
-    }
-
-    public void setButton(string emp_code)
+    public void setButton()
     {
         //取当前登录者工号
         string sql = @"select * from Mes_App_EmployeeLogin WHERE emp_code = '{0}' AND on_date is not null and off_date IS NULL";
-        sql = string.Format(sql, emp_code);
+        sql = string.Format(sql, txt_emp.Text.Substring(0, 5));
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
         if (re_dt.Rows.Count == 1)
         {
             btn_sure.Text = "离岗确认";
-
-            ddl_part.SelectedValue = re_dt.Rows[0]["pgino"].ToString();
-            txt_part.Text = re_dt.Rows[0]["pgino"].ToString();
-
-            string location = re_dt.Rows[0]["location"].ToString();
-            for (int j = 0; j < cbl_position.Items.Count; j++)
-            {
-                if (location.Contains(cbl_position.Items[j].Value))
-                {
-                    cbl_position.Items[j].Selected = true;
-                }
-                else
-                {
-                    cbl_position.Items[j].Selected = false;
-                }
-            }
-
-            ddl_part.Visible = false;
-            txt_part.Visible = true;
-
-            cbl_position.Enabled = false;
+            bind_gv();
         }
         else if (re_dt.Rows.Count > 1)
         {
@@ -105,38 +69,100 @@ public partial class Emp_Login : System.Web.UI.Page
 
     }
 
-
-    protected void ddl_part_TextChanged(object sender, EventArgs e)
+    public void bind_gv()
     {
-        bind_position(ddl_part.SelectedValue);
-    }
+        DataTable dt = new DataTable();
 
-
-    protected void btn_sure_Click(object sender, EventArgs e)
-    {
-       
-        string Inlogin = btn_sure.Text == "离岗确认" ? "Y" : "N";
-        string position = "";
-        for (int j = 0; j < cbl_position.Items.Count; j++)
+        if (btn_sure.Text == "离岗确认")
         {
-            if (cbl_position.Items[j].Selected)
-            {
-                position = position + cbl_position.Items[j].Value + "|";
-            }
-        }
-        
-        if (position != "")//除去最后一个,
-        {
-            position = position.Substring(0, position.Length - 1);
+            string sql = @"exec usp_app_emp_login_gv '{0}'";
+            sql = string.Format(sql, txt_emp.Text.Substring(0, 5));
+            dt = SQLHelper.Query(sql).Tables[0];
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前岗位】不可为空')", true);
+            dt = (DataTable)Session["emp_login_sb"];
+        }
+
+        GridView1.Columns[0].Visible = true;
+        GridView1.DataSource = dt;
+        GridView1.DataBind();
+        GridView1.Columns[0].Visible = false;
+    }
+
+    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        this.GridView1.PageIndex = e.NewPageIndex;
+        bind_gv();
+    }
+
+    protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        DataTable dt = (DataTable)Session["emp_login_sb"];
+        foreach (var item in dt.Rows)
+        {
+            
+        }
+        bind_gv();
+    }
+
+    public void sbcode_change()
+    {
+        string sb_code = e_code.Text;
+        ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('121')", true);
+
+        string sql = @"select distinct top 1 location from [Mes_App_Base_Location] WHERE e_code = '{0}' ";
+        sql = string.Format(sql, sb_code);
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        if (re_dt.Rows.Count <= 0)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备】不存在')", true);
+            return;
+        }
+        string location = re_dt.Rows[0][0].ToString();
+
+        DataTable dt = (DataTable)Session["emp_login_sb"];
+        DataRow dr = dt.NewRow();
+        dr["id"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["rownum"]) + 1;
+        dr["e_code"] = sb_code;
+        dr["location"] = location;
+
+        dt.Rows.Add(dr);
+        Session["emp_login_sb"] = dt;
+
+        bind_gv();
+    }
+
+    protected void btn_bind_data_Click(object sender, EventArgs e)
+    {
+        sbcode_change();
+    }
+    protected void btn_sure_Click(object sender, EventArgs e)
+    {
+        if (GridView1.Rows.Count <= 0)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前】不可为空')", true);
             return;
         }
 
-        string sql = @"exec usp_app_emp_login '{0}','{1}','{2}','{3}','{4}'";
-        sql = string.Format(sql, Inlogin, txt_emp.Text, ddl_part.SelectedValue, position, domain.Text);
+        string Inlogin = btn_sure.Text == "离岗确认" ? "Y" : "N";
+        string e_codes = "", location = "";
+        if (Inlogin == "N")//上岗保存
+        {
+            DataTable dt = (DataTable)Session["emp_login_sb"];
+            for (int j = 0; j < GridView1.Rows.Count; j++)
+            {
+                e_codes = e_codes + dt.Rows[j]["e_code"] + "|";
+                location = location + dt.Rows[j]["location"] + "|";
+            }
+            //除去最后一个|
+            e_codes = e_codes.Substring(0, e_codes.Length - 1);
+            location = location.Substring(0, location.Length - 1);
+        }
+       
+
+        string sql = @"exec usp_app_emp_login_new '{0}','{1}','{2}','{3}','{4}'";
+        sql = string.Format(sql, Inlogin, txt_emp.Text, e_codes, location, domain.Text);
 
         bool i = SQLHelper.ExSql(sql);
 
@@ -153,4 +179,25 @@ public partial class Emp_Login : System.Web.UI.Page
     }
 
 
+
+}
+
+public class SB_GW
+{
+
+    public SB_GW()
+    {
+        //
+        // TODO: 在此处添加构造函数逻辑
+        //       
+
+    }
+    /// <summary>
+    /// 设备号
+    /// </summary>
+    public string e_code { get; set; }
+    /// <summary>
+    /// 岗位
+    /// </summary>
+    public string location { get; set; }
 }
