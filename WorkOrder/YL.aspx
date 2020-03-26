@@ -162,7 +162,7 @@
                     <div class="input-group rowbr">
                         <span class="input-group-addon textwidth1">物料号</span>
                         <span style="float:left; width:90%">
-                            <asp:TextBox ID="pgino" class="form-control" placeholder="请输入物料号" Style="max-width: 100%" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="pgino" class="form-control" placeholder="请输入物料号" Style="max-width: 100%" runat="server" onkeyup="this.value=this.value.toUpperCase()"></asp:TextBox>
                         </span>
                         <span style="float:left; width:10%">
                             <img id="img_sm" src="../img/fdj.gif" style="padding-top:10px;" />

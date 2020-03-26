@@ -23,7 +23,7 @@
             //alert(need_no);
             window.location.href = "/workorder/SL.aspx?need_no=" + need_no+"&workshop=<%=_workshop %>";
         }
-        function deal_load_material() {
+        function deal_load_material(need_no) {
             //alert(need_no);
             window.location.href = "/workorder/Load_Material.aspx?need_no=" + need_no + "&workshop=<%=_workshop %>";
         }
