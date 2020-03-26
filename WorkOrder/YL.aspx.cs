@@ -117,7 +117,7 @@ public partial class YL : System.Web.UI.Page
         if (flag == "N")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');", true);
-            Response.Redirect("/workorder/YL_list.aspx");
+            Response.Redirect("/workorder/YL_list.aspx?workshop=" + _workshop);
         }
         else
         {

@@ -108,7 +108,7 @@ public partial class bhgp_deal : System.Web.UI.Page
         if (flag=="N")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-            Response.Redirect("/workorder/bhgp_deal_list_new.aspx");
+            Response.Redirect("/workorder/bhgp_deal_list_new.aspx?workshop=" + _workshop);
         }
         else
         {

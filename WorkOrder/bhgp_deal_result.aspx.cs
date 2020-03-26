@@ -173,7 +173,7 @@ public partial class bhgp_deal_result : System.Web.UI.Page
 
         if (flag == "N")
         {
-            Response.Redirect(string.Format("/workorder/bhgp_deal_result.aspx?workorder={0}&next={1}", workorder.Text, "Y"));
+            Response.Redirect(string.Format("/workorder/bhgp_deal_result.aspx?workorder={0}&next={1}&workshop=" + _workshop, workorder.Text, "Y"));
         }
         else
         {
@@ -204,7 +204,7 @@ public partial class bhgp_deal_result : System.Web.UI.Page
 
         if (flag == "N")
         {
-            Response.Redirect("/workorder/bhgp_deal_list_new.aspx");
+            Response.Redirect("/workorder/bhgp_deal_list_new.aspx?workshop=" + _workshop);
         }
         else
         {

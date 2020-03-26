@@ -42,6 +42,15 @@
         }
         
     </style>
+     <%--<script type="text/javascript">
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = decodeURI(window.location.search).substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        var workshop = getQueryString("workshop");
+        alert(workshop);
+    </script>--%>
 </head>
 <body>
     <form id="form1" runat="server">
