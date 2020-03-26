@@ -21,7 +21,7 @@
     <script>
         function deal(workorder) {
             //alert(workorder);
-            window.location.href = "/workorder/bhgp_deal_result.aspx?workorder=" + workorder + "&next=N";    
+            window.location.href = "/workorder/bhgp_deal_result.aspx?workorder=" + workorder + "&next=N&workshop=<%=_workshop %>";    
         }
     </script>
     
