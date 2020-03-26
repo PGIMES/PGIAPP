@@ -8,8 +8,10 @@ using System.Web.UI.WebControls;
 
 public partial class Cjgl1 : System.Web.UI.Page
 {
+    public string _workshop = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        _workshop = Request.QueryString["workshop"].ToString();
     }
 }

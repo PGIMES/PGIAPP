@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	
-
+    <title><%=_workshop %></title>
  <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.form.min.js"></script>
 <script type="text/javascript" src="js/json2.min.js"></script>
@@ -24,7 +24,7 @@
 
     <meta name="layout" content="main"/>
 
-    <script type="text/javascript">
+   <%-- <script type="text/javascript">
         function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
             var r = decodeURI(window.location.search).substr(1).match(reg);
@@ -32,7 +32,7 @@
         }
         var workshop = getQueryString("workshop");
         //alert(workshop);
-    </script>
+    </script>--%>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -50,22 +50,22 @@
     </div> --%>
         
      <dd id="btn1" class="menus-item"  > 
-      <a href="/workorder/Emp_Login.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">上岗</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">上岗</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
       <dd id="btn2" class="menus-item"  > 
-      <a href="/workorder/Emp_Login.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">下岗</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">下岗</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
          <dd id="btn3" class="menus-item"  > 
-      <a href="/workorder/YL.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">要料</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/YL.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
           <dd id="btn4" class="menus-item"  > 
-      <a href="/workorder/YL_list.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/YL_list.asp?workshop=<%=_workshop %>x"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
      <dd id="btn5" class="menus-item"  > 
-      <a href="/workorder/Load_Material.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Load_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
      <dd id="btn6" class="menus-item"  > 
-      <a href="/workorder/Off_Material.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
          <dd id="btn7" class="menus-item"  > 
       <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成监视</span> <span class="mi-info check txt">进入</span> </a> 
@@ -77,7 +77,7 @@
       <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检完成监视</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
         <dd id="btn10" class="menus-item"  > 
-      <a href="/bhgpsx.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/bhgpsx.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理</span> <span class="mi-info check txt">进入</span> </a> 
      </dd> 
       <dd id="btn11" class="menus-item"  > 
       <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理监视</span> <span class="mi-info check txt">进入</span> </a> 
