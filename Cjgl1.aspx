@@ -50,40 +50,40 @@
     </div> --%>
         
      <dd id="btn1" class="menus-item"  > 
-      <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">上岗</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">上岗</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
       <dd id="btn2" class="menus-item"  > 
-      <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">下岗</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">下岗</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
          <dd id="btn3" class="menus-item"  > 
-      <a href="/workorder/YL.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/YL.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
           <dd id="btn4" class="menus-item"  > 
-      <a href="/workorder/YL_list.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/YL_list.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
      <dd id="btn5" class="menus-item"  > 
-      <a href="/workorder/Load_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Load_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
      <dd id="btn6" class="menus-item"  > 
-      <a href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
          <dd id="btn7" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成监视</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
          <dd id="btn8" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检完成</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检完成</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
          <dd id="btn9" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检完成监视</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检完成监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
         <dd id="btn10" class="menus-item"  > 
-      <a href="/bhgpsx.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/bhgpsx.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
       <dd id="btn11" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理监视</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">待处理监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
          <dd id="btn12" class="menus-item"  > 
-      <a href="javascript:void(0);"> <span class="mi-info logo"></span> <span class="mi-info txt">报表查看</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="javascript:void(0);"> <span class="mi-info logo"></span> <span class="mi-info txt">报表查看</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
     </dl>
    </div> 

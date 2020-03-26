@@ -39,16 +39,16 @@
         <img src="img/logo11.jpg"> 
     </div> --%>
     <dd id="btn1" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">一车间</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">一车间</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
     <dd id="btn2" class="menus-item"  > 
-      <a href="/Cjgl1.aspx?workshop=二车间"> <span class="mi-info logo"></span> <span class="mi-info txt">二车间</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/Cjgl1.aspx?workshop=二车间"> <span class="mi-info logo"></span> <span class="mi-info txt">二车间</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
     <dd id="btn3" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">三车间</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">三车间</span> <span class="mi-info check txt"></span> </a> 
      </dd>
     <dd id="btn4" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">四车间</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">四车间</span> <span class="mi-info check txt"></span> </a> 
      </dd>
 
     </dl>

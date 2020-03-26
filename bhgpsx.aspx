@@ -39,10 +39,10 @@
         <img src="img/logo11.jpg"> 
     </div> --%>
     <dd id="btn1" class="menus-item"  > 
-      <a href="/workorder/bhgp_deal.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">申请</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/bhgp_deal.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">申请</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
     <dd id="btn2" class="menus-item"  > 
-      <a href="/workorder/bhgp_deal_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">待办事项</span> <span class="mi-info check txt">进入</span> </a> 
+      <a href="/workorder/bhgp_deal_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">待办事项</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
 
     </dl>
