@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-    <%--<title>生产要料监视</title>--%>
+    <title>生产要料监视</title>
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
@@ -28,14 +28,14 @@
 <body>
     <form id="form1" runat="server">
     <div class="resume-setting-page normal-page-wrap"> 
-        <div id="allContainer" class="menus-normal">
+        <%--<div id="allContainer" class="menus-normal">
             <dl class="menus-module" style="background-color:#008083;height:66px;">                 
                 <dt class="menus-title" style="background-color:#008083;height:66px">
                     <div  style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-生产要料监视</div> 
-                    <div style="float:left;width:18%;border:0px solid #000; text-align:right;"><%--<a href="/Index.aspx"><img src="/img/home.png" width="22px" height="22px" style="text-align:right;"></a>--%></div> 
+                    <div style="float:left;width:18%;border:0px solid #000; text-align:right;"></div> 
                 </dt> 
             </dl>
-        </div> 
+        </div>--%> 
        
 		    
         <div class="page-header" style="margin:15px 0 15px">
