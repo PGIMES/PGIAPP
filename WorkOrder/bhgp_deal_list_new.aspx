@@ -141,7 +141,54 @@
 			    
 		    </div>
 		    <div class="tab-pane" id="tab2">
-			    <p> 我是已完成    
+                <div class="page-header" style="margin:15px 0 15px">
+                    <h4><%--已完成--%>
+                        <small><asp:Label ID="Label3" runat="server" Text="已完成"></asp:Label></small>
+                    </h4>
+                </div>	  
+                <asp:DataList ID="DataList3" RepeatColumns="1" runat="server" Width="100%" HorizontalAlign="Center" >
+                    <ItemTemplate>
+                        <table border="0" width="100%" align="center"style="border-bottom:1px solid gray;"> 
+                            <tr>
+                                <td width="25%">
+                                        <font style="font-weight:800;"><%# DataBinder.Eval(Container.DataItem, "workorder") %></font>
+                                </td>
+                                <td width="25%">
+                                    <%# DataBinder.Eval(Container.DataItem, "pgino") %>
+                                </td>
+                                <td width="50%" >
+                                    <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" colspan="2" >
+                                    处置数量
+                                    <font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
+                                </td>
+                                <td width="50%">
+                                   <%# DataBinder.Eval(Container.DataItem, "result") %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" colspan="2" >
+                                    合格数量
+                                    <font color="blue"><%# DataBinder.Eval(Container.DataItem, "hege_qty") %></font>
+                                </td>
+                                <td width="50%">
+                                    废品数量
+                                    <font color="blue"><%# DataBinder.Eval(Container.DataItem, "baofei_qty") %></font>
+                                </td>
+                            </tr>
+                            <tr style="color:#999">
+                                <td width="90%" colspan="3" >
+                                    工序<%# DataBinder.Eval(Container.DataItem, "op") %>-
+                                    <%# DataBinder.Eval(Container.DataItem, "op_descr") %>
+                                </td>
+                            </tr>
+                        </table>
+                    </ItemTemplate>
+                </asp:DataList>
+
 		    </div>
 	    </div>
 

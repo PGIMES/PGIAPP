@@ -31,10 +31,12 @@ public partial class bhgp_deal_list_new : System.Web.UI.Page
     {
         DataTable dt_wcl = new DataTable();
         DataTable dt_ycl = new DataTable();
+        DataTable dt_ywc = new DataTable();
 
         string sql = @"exec [usp_app_workorder_ng_list_new] ''";
         dt_wcl = SQLHelper.Query(sql).Tables[0];
         dt_ycl = SQLHelper.Query(sql).Tables[1];
+        dt_ywc = SQLHelper.Query(sql).Tables[2];
 
         DataList1.DataSource = dt_wcl;
         DataList1.DataBind();
@@ -43,6 +45,10 @@ public partial class bhgp_deal_list_new : System.Web.UI.Page
         DataList2.DataSource = dt_ycl;
         DataList2.DataBind();
         Label2.Text = Label2.Text + "(" + dt_ycl.Rows.Count + ")";
+
+        DataList3.DataSource = dt_ywc;
+        DataList3.DataBind();
+        Label3.Text = Label3.Text + "(" + dt_ywc.Rows.Count + ")";
 
     }
 }
