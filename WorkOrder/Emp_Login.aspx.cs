@@ -90,6 +90,11 @@ public partial class Emp_Login : System.Web.UI.Page
         GridView1.DataSource = dt;
         GridView1.DataBind();
         GridView1.Columns[0].Visible = false;
+
+        if (btn_sure.Text == "离岗确认")
+        {
+            GridView1.Columns[3].Visible = false;
+        }
     }
 
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)

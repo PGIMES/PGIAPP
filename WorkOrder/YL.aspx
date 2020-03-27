@@ -30,19 +30,19 @@
             padding-right:25px;
         }     
         .weui-picker-modal{
-            height:18rem;
+            height:15rem;
         }
         .weui-picker-modal .picker-modal-inner{
-            height:14.8rem
+            height:11.8rem
         }
         .weui-picker-modal .picker-items{
-            font-size:2rem;
+            font-size:1.5rem;
         }
         .toolbar{
-            font-size:2rem;
+            font-size:1.5rem;
         }
         .toolbar .title{
-            font-size:2rem;
+            font-size:1.5rem;
         }
         
     </style>

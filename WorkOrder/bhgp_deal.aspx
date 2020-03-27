@@ -153,7 +153,7 @@
 
                     <div class="input-group rowbr">
                         <span class="input-group-addon">处置数量</span>
-                        <asp:TextBox ID="qty" class="form-control" placeholder="请输入处置数量" Style="max-width: 100%" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="qty" class="form-control" type='number' placeholder="请输入处置数量" Style="max-width: 100%" runat="server"></asp:TextBox>
                     </div>
 
                 </ContentTemplate>
