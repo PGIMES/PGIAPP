@@ -17,7 +17,14 @@
     <link href="/css/login.css?v=201802091428" rel="stylesheet" type="text/css"/>
     <link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css"/>
     <link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css"/>
-
+    <style>
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+            border:unset;
+            background-color:transparent;
+            border-bottom:2px solid #07c160;
+            color:#07c160;
+        }
+    </style>
     <script>
         function deal(workorder) {
             //alert(workorder);
