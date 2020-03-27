@@ -74,6 +74,10 @@
                                 <span class="weui-form-preview__value"><%# Eval("bx_part") %> </span>
                             </div>
                             <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">产品大类</label>
+                                <span class="weui-form-preview__value"><%# Eval("pd_type") %> </span>
+                            </div>
+                            <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">故障类型/描述</label>
                                 <span class="weui-form-preview__value"><%# Eval("bx_gz_type").ToString() +"| " %><%# Eval("bx_gz_desc") %></span>
                             </div>

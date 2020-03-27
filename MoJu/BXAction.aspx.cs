@@ -156,6 +156,7 @@ public partial class MoJu_BXAction : System.Web.UI.Page
         StringBuilder strSql = new StringBuilder();
         strSql.Append("select   id, bx_date, bx_banbie, bx_gonghao, bx_name, bx_banzhu, bx_dh, bx_moju_no, bx_moju_type, bx_part, bx_mo_no, bx_gz_type, bx_gz_desc, bx_sbno, bx_sbname, status,level,b.cellphone  ");
         strSql.Append(" ,cast(datediff(mi,bx_date,getdate())/60 as varchar)+'小时 '+right('00'+cast(datediff(mi,bx_date,getdate())%60  as varchar),2)+'分' bx_shichang ");
+        strSql.Append(" ,(select top 1 product_leibie from form3_Sale_Product_MainTable where pgino =(select left(xmh,5)  from [172.16.5.6].report.dbo.MoJu  where mojuno= bx_moju_no ) ) as pd_type ");
         strSql.Append(" FROM  mes.dbo.MES_SB_BX a join [172.16.5.6].[eHR_DB].dbo.view_hr_emp b on b.employeeid=a.bx_gonghao where bx_dh='{0}'");
         
         return DbHelperSQL.Query(string.Format(strSql.ToString(),dh));

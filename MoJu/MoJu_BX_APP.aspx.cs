@@ -33,7 +33,7 @@ public partial class MoJu_MoJu_BX_APP : System.Web.UI.Page
     {
         string sqlStr = "select iif(COUNT(1)>0,0,1) as IsInUse  from mes.dbo.MES_SB_BX where   status<>'确认完成' and bx_moju_no='{0}'";
         sqlStr = string.Format(sqlStr,ddl_mojuno.SelectedValue);
-        var dt = SQLHelper.Query(sqlStr).Tables[0];
+        var dt = DbHelperSQL.Query(sqlStr).Tables[0];
         if (dt.Rows[0][0].ToString() == "0")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "alert('此模具正在维修确认中,请勿重复报修！')", true);
@@ -48,9 +48,9 @@ public partial class MoJu_MoJu_BX_APP : System.Web.UI.Page
             }
             else
             { level = "二级"; }
-            string sql = @"exec mes.dbo.MES_MoJu_BX_Insert_app  '{0}','{1}','{2}','{3}','{4}','{5}','{6}'";
+            string sql = @"exec mes.dbo.MES_MoJu_BX_Insert_app  '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
             sql = string.Format(sql, txt_empname.Value, ddl_mojuno.SelectedValue, ddl_equip.SelectedItem.Text,
-                gztype.Value, gxms.Value,  0, level);
+                gztype.Value, gxms.Value,  0, level,txt_repair.Value);
             int b_flag = DbHelperSQL.ExecuteSql(sql);
             if (b_flag>0)
             {
@@ -158,6 +158,13 @@ public partial class MoJu_MoJu_BX_APP : System.Web.UI.Page
         if (dt.Rows.Count > 0)
         {
             txt_pn.Value = dt.Rows[0]["part"].ToString();
+        }
+        string strsql = @"SELECT moju_repair FROM MES_SB_Repair WHERE XMH=(select XMH from [172.16.5.6].report.dbo.moju where flag=1 and mojuno='{0}')";
+        strsql = string.Format(strsql,ddl_mojuno.SelectedValue);
+        var dt_zzr= DbHelperSQL.Query(strsql).Tables[0];
+        if(dt_zzr.Rows.Count>0)
+        {
+            txt_repair.Value = dt_zzr.Rows[0][0].ToString();
         }
     }
 }

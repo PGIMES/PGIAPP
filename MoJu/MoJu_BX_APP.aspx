@@ -4,7 +4,7 @@
 
 <html class="pixel-ratio-1"><head>
     <meta charset="utf-8">
-    <title></title>
+    <title>模具报修</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <link rel="stylesheet" href="../css/weui.css">
     <link rel="stylesheet" href="../css/weuix.css">
@@ -181,6 +181,12 @@
         <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>
         <div class="weui-cell__bd">
             <input class="weui-input"  runat="server"  id="txt_pn" readonly="readonly">
+        </div>
+    </div>
+     <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">模具维修</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input"  runat="server"  id="txt_repair" readonly="readonly">
         </div>
     </div>
 

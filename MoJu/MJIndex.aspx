@@ -53,11 +53,12 @@
         <div id="allContainer" class="menus-normal">
         <dl class="menus-module" style=""> 
        
-            <dt class="menus-title" style="background-color:#155097;height:35px">
+            <%--<dt class="menus-title" style="background-color:#155097;height:35px">
                 <div  style="float:left;width:49%;border:0px solid #F00;">模修监视</div> 
-                <div style="float:left;width:49%;border:0px solid #000; text-align:right;"><%--<a href="Index.aspx"><img src="img/home.png" width="22px" height="22px" style="text-align:right;"></a>--%></div> 
+                <div style="float:left;width:49%;border:0px solid #000; text-align:right;"><%--<a href="Index.aspx"><img src="img/home.png" width="22px" height="22px" style="text-align:right;"></a>
+            </div> 
             </dt> 
-        
+           --%>
             <dd id="btn1" class="menus-item"  > 
                 <a href="/MoJu/MoJu_BX_APP.aspx"> <span class="mi-info logo"></span> <span id="span_ng" class="mi-info txt">模具报修</span> <span class="mi-info check txt"></span> </a> 
             </dd> 
