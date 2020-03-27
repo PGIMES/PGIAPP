@@ -12,39 +12,41 @@ public partial class Emp_Login : System.Web.UI.Page
     public string _workshop = "";
 
     //定义对象
-    //public string timestamp;//签名的时间戳
-    //public string noncestr;//签名的随机串
-    //public string ent_signature;//企业签名        
-    //public string ent_ticket;//企业的jsapi_ticket         
-    //public string uri;//url
+    public string timestamp;//签名的时间戳
+    public string noncestr;//签名的随机串
+    public string ent_signature;//企业签名        
+    public string ent_ticket;//企业的jsapi_ticket         
+    public string uri;//url
 
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
 
-        //if (WeiXin.GetCookie("workcode") == null)
-        //{
-        //    Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
-        //    return;
-        //}
+        if (WeiXin.GetCookie("workcode") == null)
+        {
+            Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }
 
         if (!IsPostBack)
         {
-            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            //txt_emp.Text = lu.WorkCode + lu.UserName;
-            //domain.Text = lu.Domain;
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            txt_emp.Text = lu.WorkCode + lu.UserName;
+            domain.Text = lu.Domain;
 
-            txt_emp.Text = "02432何桂勤";
-            domain.Text = "200";
+            //txt_emp.Text = "02432何桂勤";
+            //domain.Text = "200";
 
             setButton();
 
-            //timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
-            //noncestr = new Random().Next(10000).ToString();
-            //uri = Request.Url.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
-            //string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
-            //ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
-            //ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
+            ViewState["emp_login_sb"] = null;
+
+            timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
+            noncestr = new Random().Next(10000).ToString();
+            uri = Request.Url.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
+            string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
+            ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
+            ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
         }
 
     }
@@ -81,7 +83,7 @@ public partial class Emp_Login : System.Web.UI.Page
         }
         else
         {
-            dt = (DataTable)Session["emp_login_sb"];
+            dt = (DataTable)ViewState["emp_login_sb"];
         }
 
         GridView1.Columns[0].Visible = true;
@@ -98,37 +100,46 @@ public partial class Emp_Login : System.Web.UI.Page
 
     protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        DataTable dt = (DataTable)Session["emp_login_sb"];
-        foreach (var item in dt.Rows)
+        DataTable dt = (DataTable)ViewState["emp_login_sb"];
+        for (int i = dt.Rows.Count - 1; i >= 0; i--)
         {
-            
+            if (GridView1.DataKeys[e.RowIndex].Value.ToString() == dt.Rows[i]["id"].ToString()) { dt.Rows.RemoveAt(i); }
         }
+        
+        ViewState["emp_login_sb"] = dt;
         bind_gv();
     }
 
     public void sbcode_change()
     {
         string sb_code = e_code.Text;
-        ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('121')", true);
-
         string sql = @"select distinct top 1 location from [Mes_App_Base_Location] WHERE e_code = '{0}' ";
         sql = string.Format(sql, sb_code);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         if (re_dt.Rows.Count <= 0)
         {
+            e_code.Text = "";
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备】不存在')", true);
             return;
         }
         string location = re_dt.Rows[0][0].ToString();
 
-        DataTable dt = (DataTable)Session["emp_login_sb"];
+        DataTable dt = (DataTable)ViewState["emp_login_sb"];
+        if (dt == null)
+        {
+            dt = new DataTable();
+            dt.Columns.Add("id", typeof(Int32));
+            dt.Columns.Add("e_code", typeof(string));
+            dt.Columns.Add("location", typeof(string));
+        }
         DataRow dr = dt.NewRow();
-        dr["id"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["rownum"]) + 1;
+        dr["id"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["id"]) + 1;
         dr["e_code"] = sb_code;
         dr["location"] = location;
 
         dt.Rows.Add(dr);
-        Session["emp_login_sb"] = dt;
+        ViewState["emp_login_sb"] = dt;
+        e_code.Text = "";
 
         bind_gv();
     }
@@ -141,7 +152,7 @@ public partial class Emp_Login : System.Web.UI.Page
     {
         if (GridView1.Rows.Count <= 0)
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前】不可为空')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前岗位】不可为空')", true);
             return;
         }
 
@@ -149,7 +160,7 @@ public partial class Emp_Login : System.Web.UI.Page
         string e_codes = "", location = "";
         if (Inlogin == "N")//上岗保存
         {
-            DataTable dt = (DataTable)Session["emp_login_sb"];
+            DataTable dt = (DataTable)ViewState["emp_login_sb"];
             for (int j = 0; j < GridView1.Rows.Count; j++)
             {
                 e_codes = e_codes + dt.Rows[j]["e_code"] + "|";
@@ -180,24 +191,4 @@ public partial class Emp_Login : System.Web.UI.Page
 
 
 
-}
-
-public class SB_GW
-{
-
-    public SB_GW()
-    {
-        //
-        // TODO: 在此处添加构造函数逻辑
-        //       
-
-    }
-    /// <summary>
-    /// 设备号
-    /// </summary>
-    public string e_code { get; set; }
-    /// <summary>
-    /// 岗位
-    /// </summary>
-    public string location { get; set; }
 }

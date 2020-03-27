@@ -42,7 +42,7 @@
     <%--步骤二：通过config接口注入权限验证配置--%>
     <script>        
         //config注入的是企业的身份与权限
-        <%--$('#e_code').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
+       $('#e_code').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: '<% =WeiXin.CorpID %>', // 公众号
@@ -68,14 +68,20 @@
                     }
                 });
             };//end_document_scanQRCode
-        });--%>
+        });
+
         $(document).ready(function () {
+            $("#btn_bind_data").css("display", "none");
+
             if ($("#btn_sure").val() == "离岗确认") {
                 $("#div_code").hide();
             }
             $("#e_code").change(function () {
-               
-                document.getElementById("btn_bind_data").click();
+                if ($("#e_code").val() == "") {
+                    layer.alert('【设备】不可为空');
+                    return;
+                }
+                $("#<%=btn_bind_data.ClientID%>").click();
                 
             });
         });
@@ -114,7 +120,6 @@
                     </span>
                     <span style="float:left; width:10%">
                         <img id="img_sm" src="../img/fdj.gif" style="padding-top:10px;" />
-                        <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据"  OnClick="btn_bind_data_Click" Visible="false"/>
                     </span>
                 </div>
                 当前岗位：
@@ -141,14 +146,14 @@
                             <asp:BoundField DataField="location" HeaderText="岗位" ReadOnly="True" ItemStyle-Width="65%">
                                 <HeaderStyle Wrap="True" />
                             </asp:BoundField> 
-                            <asp:CommandField HeaderText="删除" ShowDeleteButton="True" ItemStyle-Width="15%"/>
+                            <asp:CommandField HeaderText="" ShowDeleteButton="True" ItemStyle-Width="15%" />
                         </Columns>
                     </asp:GridView>
 
             </ContentTemplate>
             </asp:UpdatePanel>
-
-            <div class="">
+                <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据"  OnClick="btn_bind_data_Click"/>
+            <div  class="">
                     <asp:Button ID="btn_sure" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" style="padding:10px 16px" runat="server" Text="上岗确认" 
                         OnClick="btn_sure_Click"/>
             </div>
