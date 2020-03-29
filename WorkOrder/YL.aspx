@@ -16,9 +16,9 @@
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
     <style>          
-        .weui-cell{
+        /*.weui-cell{
             padding:4px 15px;
-        }   
+        }*/   
     </style>
     <script>
         function valid() {
