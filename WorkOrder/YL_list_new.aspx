@@ -37,7 +37,7 @@
                 onToggle: function (index) {
                     console.log('index' + index);
                 }
-            })
+            });
 
             $(document.body).pullToRefresh({
                 distance: 10,
