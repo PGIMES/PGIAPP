@@ -160,7 +160,7 @@
                     <div class="weui-cell__hd" style="width:30%">
                         <input class="weui-input" id="need_date_dl" type="text" value=""  runat="server" placeholder="请选择" readonly="readonly" />
                     </div>
-                    <div class="weui-cell__hd" style="width:70%">
+                    <div class="weui-cell__hd" style="width:70%; text-align:right;">
                         <asp:TextBox ID="need_date" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
                     </div>
                 </div>
