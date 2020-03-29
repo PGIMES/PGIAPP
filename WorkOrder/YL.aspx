@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <title>生产要料</title>
 
-    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
     <script src="/Content/layer/layer.js"></script>
 
@@ -16,35 +15,10 @@
     <link href="../css/weuix.css" rel="stylesheet" />
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
-
-    <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
-    <style>
-        .rowbr{
-            margin-bottom:5px;
-        }
-        .textwidth1{
-            padding-right:25px;
-        }     
-        .weui-picker-modal{
-            height:15rem;
-        }
-        .weui-picker-modal .picker-modal-inner{
-            height:11.8rem
-        }
-        .weui-picker-modal .picker-items{
-            font-size:1.5rem;
-        }
-        .toolbar{
-            font-size:1.5rem;
-        }
-        .toolbar .title{
-            font-size:1.5rem;
-        }
-        
+    <style>          
+        .weui-cell{
+            padding:4px 15px;
+        }   
     </style>
     <script>
         function valid() {
@@ -54,6 +28,10 @@
             }
             if ($.trim($("#need_qty").val()) == "" || $.trim($("#need_qty").val()) == "0") {
                 layer.alert("请输入【要料数量】.");
+                return false;
+            }
+            if ($("#need_date_dl").val() == "") {
+                layer.alert("请输入【送到时间】.");
                 return false;
             }
             if ($("#need_date").val() == "") {
@@ -72,7 +50,7 @@
     <%--步骤二：通过config接口注入权限验证配置--%>
     <script>        
        //config注入的是企业的身份与权限
-        $('#pgino').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
+       $('#pgino').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: '<% =WeiXin.CorpID %>', // 公众号
@@ -103,6 +81,7 @@
         $(document).ready(function () {
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
+            $("#need_date").attr("readonly", "readonly");
 
             $("#pgino").change(function () {
                 $.ajax({
@@ -132,115 +111,105 @@
 
                 });
             });
+
         });
+
+        
     </script>
 
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
-    <div class="resume-setting-page normal-page-wrap"> 
-        <%--<div id="allContainer" class="menus-normal">
-            <dl class="menus-module" style="background-color:#008083;height:66px;"> 
-                
-                <dt class="menus-title" style="background-color:#008083;height:66px">
-                    <div  style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-生产要料</div> 
-                    <div style="float:left;width:18%;border:0px solid #000; text-align:right;"></div> 
-                </dt> 
-
-         
-            </dl>
-        </div> --%>
-
-        
-        <div class="row ">
-            <div class="col-md-12">
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
+        <div class="weui-cells weui-cells_form">       
+    
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
                    
-                    <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
-                    <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
-                    <div class="input-group rowbr">
-                        <span class="input-group-addon textwidth1">物料号</span>
+                <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
+                <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">物料号</label></div>
+                    <div class="weui-cell__bd">
                         <span style="float:left; width:90%">
-                            <asp:TextBox ID="pgino" class="form-control" placeholder="请输入物料号" Style="max-width: 100%" runat="server" onkeyup="this.value=this.value.toUpperCase()"></asp:TextBox>
+                            <asp:TextBox ID="pgino" class="weui-input"  placeholder="请输入物料号" runat="server" onkeyup="this.value=this.value.toUpperCase()"></asp:TextBox>
                         </span>
                         <span style="float:left; width:10%">
                             <img id="img_sm" src="../img/fdj.gif" style="padding-top:10px;" />
                         </span>
                     </div>
-
-                    <div class="input-group rowbr">
-                        <span class="input-group-addon textwidth1" >零件号</span>                       
-                        <asp:TextBox ID="pn" class="form-control" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
-                    </div>
-
-                    <div class="input-group rowbr">
-                        <span class="input-group-addon " >物料名称</span>                       
-                        <asp:TextBox ID="descr" class="form-control" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
-                    </div>
-
-                    <div class="input-group rowbr">
-                        <span class="input-group-addon">要料数量</span>
-                        <asp:TextBox ID="need_qty" class="form-control" type='number' placeholder="请输入要料数量" Style="max-width: 100%" runat="server"></asp:TextBox>
-                    </div>
-                    
-                    <div class="input-group rowbr">
-                        <span class="input-group-addon">送到时间</span>
-                        <asp:TextBox ID="need_date" class="form-control" Style="max-width: 100%; background-color:#fff;" runat="server"></asp:TextBox>
-                    </div>
-
-                </ContentTemplate>
-                </asp:UpdatePanel>  
-
-                <div class="">
-                    <asp:Button ID="btnsave" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" style="padding:10px 16px" runat="server" 
-                        Text="确认" OnClick="btnsave_Click" OnClientClick="return valid();" />
                 </div>
-            
-            
-            </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>              
+                    <asp:TextBox ID="pn" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">物料名称</label></div>                          
+                    <asp:TextBox ID="descr" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">要料数量</label></div> 
+                    <asp:TextBox ID="need_qty" class="weui-input" type='number' placeholder="请输入要料数量" runat="server"></asp:TextBox>
+                </div>
+                    
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">送到时间</label></div>
+                    <div class="weui-cell__hd" style="width:30%">
+                        <input class="weui-input" id="need_date_dl" type="text" value=""  runat="server" placeholder="请选择" readonly="readonly" />
+                    </div>
+                    <div class="weui-cell__hd" style="width:70%">
+                        <asp:TextBox ID="need_date" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+            </ContentTemplate>
+        </asp:UpdatePanel>  
+
+        <div class="weui-cell">
+            <asp:Button ID="btnsave" class="weui-btn bg-blue" runat="server" 
+                Text="确认" OnClick="btnsave_Click" OnClientClick="return valid();" />
         </div>
-       
+
     </div>
     </form>
 
     <script>
-        $("#need_date").datetimePicker({
-            title: '送到时间',
-            //yearSplit: '年',
-            //monthSplit: '月',
-            //dateSplit: '日',
-            years:[2020,2021,2022],
-            times: function () {
-                return [  // 自定义的时间
-                    {
-                        values: (function () {
-                            var hours = [];
-                            for (var i = 0; i < 24; i++) hours.push(i > 9 ? i : '0' + i);
-                            return hours;
-                        })()
-                    },
-                    {
-                        divider: true,  // 这是一个分隔符
-                        content: ':'
-                    },
-                    {
-                        values: (function () {
-                            var minutes = [];
-                            for (var i = 0; i < 60; i++) minutes.push(i > 9 ? i : '0' + i);
-                            return minutes;
-                        })()
-                    }//,
-                    //{
-                    //    divider: true,  // 这是一个分隔符
-                    //    content: '分'
-                    //}
-                ];
+        var datalist_nd = [{ title: '立即', value: '0' }, { title: '半小时后', value: '30' }, { title: '1小时后', value: '60' }
+                        , { title: '2小时后', value: '120' }, { title: '4小时后', value: '240' }, { title: '8小时后', value: '480' }]
+        $("#need_date_dl").select({
+            title: "送到时间",
+            items: datalist_nd,
+            onChange: function (d) {
+                //    console.log(this, d);
             },
-            onChange: function (picker, values, displayValues) {
-                console.log(values);
-            }
+            onClose: function (d) {
+                var obj = eval(d.data);
+                //alert(obj.values);
+                $.ajax({
+                    type: "post",
+                    url: "YL.aspx/nd_change",
+                    data: "{'nd_jg':'" + obj.values + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        var time = obj[0].time;
+                        //alert(time);
+                        $("#need_date").val(time);
+                    }
+
+                });
+            },
+            onOpen: function () {
+                //  console.log("open");
+            },
+
         });
+        
     </script>
 </body>
 </html>

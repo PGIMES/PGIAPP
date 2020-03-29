@@ -73,6 +73,17 @@ public partial class YL : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string nd_change(string nd_jg)
+    {
+        string time = "";
+        time = DateTime.Now.AddMinutes(Convert.ToDouble(nd_jg)).ToString("yyyy-MM-dd HH:mm");
+
+        string result = "[{\"time\":\"" + time + "\"}]";
+        return result;
+
+    }
+
     protected bool IsNum(string text)
     {
         for (int i = 0; i < text.Length; i++)
