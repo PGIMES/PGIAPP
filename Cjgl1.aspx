@@ -53,7 +53,7 @@
       <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">上岗</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
      <dd id="btn1_1" class="menus-item"  > 
-      <a href="/workorder/Emp_Login_list.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">上岗监视</span> <span class="mi-info check txt"></span> </a> 
+      <a href="/workorder/Emp_Login_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">上岗监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
      <%-- <dd id="btn2" class="menus-item"  > 
       <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">下岗</span> <span class="mi-info check txt"></span> </a> 

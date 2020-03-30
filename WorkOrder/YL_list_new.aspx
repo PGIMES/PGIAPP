@@ -57,16 +57,6 @@
         })
     </script>
 
-    <script>
-        function deal(need_no) {
-            //alert(need_no);
-            window.location.href = "/workorder/SL.aspx?need_no=" + need_no+"&workshop=<%=_workshop %>";
-        }
-        function deal_load_material(need_no) {
-            //alert(need_no);
-            window.location.href = "/workorder/Load_Material.aspx?need_no=" + need_no + "&workshop=<%=_workshop %>";
-        }
-    </script>
 </head>
 <body ontouchstart>
     <div class="weui-pull-to-refresh__layer">
