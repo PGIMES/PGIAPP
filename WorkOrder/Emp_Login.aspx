@@ -55,7 +55,7 @@
             $("#btn_bind_data").css("display", "none");
 
             if ($("#btn_sure").val() == "离岗确认") {
-                $("#div_code").hide();
+                $("#div_emp").hide(); $("#div_code").hide();
             }
         });
 
@@ -78,7 +78,7 @@
             
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
-                <div class="weui-cell">
+                <div id="div_emp" class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">登入人</label></div>
                     <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="color:gray"></asp:TextBox>
                 </div>
@@ -106,7 +106,7 @@
                             <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
                             <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
                             <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
+                            <HeaderStyle BackColor="#ffffff" Font-Bold="True" ForeColor="black" HorizontalAlign="Center" />
 
                             <Columns>  
                                 <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" />
