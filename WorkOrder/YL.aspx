@@ -135,7 +135,7 @@
                             <asp:TextBox ID="pgino" class="weui-input"  placeholder="请输入物料号" runat="server" onkeyup="this.value=this.value.toUpperCase()"></asp:TextBox>
                         </span>
                         <span style="float:left; width:10%">
-                            <img id="img_sm" src="../img/fdj.gif" style="padding-top:10px;" />
+                            <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
                         </span>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
         </asp:UpdatePanel>  
 
         <div class="weui-cell">
-            <asp:Button ID="btnsave" class="weui-btn bg-blue" runat="server" 
+            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
                 Text="确认" OnClick="btnsave_Click" OnClientClick="return valid();" />
         </div>
 

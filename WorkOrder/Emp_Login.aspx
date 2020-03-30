@@ -106,7 +106,7 @@
                             <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
                             <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
                             <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#10aeff" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
+                            <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
 
                             <Columns>  
                                 <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" />
@@ -135,7 +135,7 @@
             <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据"  OnClick="btn_bind_data_Click"/>
 
             <div class="weui-cell">
-                <asp:Button ID="btn_sure" class="weui-btn bg-blue" runat="server" Text="上岗确认" OnClick="btn_sure_Click"/>
+                <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" Text="上岗确认" OnClick="btn_sure_Click"/>
             </div>
             
         </div>   
