@@ -210,6 +210,9 @@
                                                         <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date")
                                                                 /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
                                                          %>   
+                                                        <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
+                                                             <%# Eval("times_type") %><%# Eval("times") %>
+                                                         </span>
                                                         <%--<span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>--%>
                                                     </span>
 
