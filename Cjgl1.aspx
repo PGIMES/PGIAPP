@@ -67,6 +67,12 @@
      <dd id="btn5" class="menus-item"  > 
       <a href="/workorder/Load_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
+         <dd id="btn10" class="menus-item"  > 
+      <a href="/workorder/bhgp_deal.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格处置</span> <span class="mi-info check txt"></span> </a> 
+     </dd> 
+      <dd id="btn11" class="menus-item"  > 
+      <a href="/workorder/bhgp_deal_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格监视</span> <span class="mi-info check txt"></span> </a> 
+     </dd> 
      <dd id="btn6" class="menus-item"  > 
       <a href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
@@ -79,12 +85,7 @@
          <dd id="btn9" class="menus-item"  > 
       <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">终检完成监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
-        <dd id="btn10" class="menus-item"  > 
-      <a href="/workorder/bhgp_deal.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格品</span> <span class="mi-info check txt"></span> </a> 
-     </dd> 
-      <dd id="btn11" class="menus-item"  > 
-      <a href="/workorder/bhgp_deal_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格品监视</span> <span class="mi-info check txt"></span> </a> 
-     </dd> 
+       
          <dd id="btn12" class="menus-item"  > 
       <a href="javascript:void(0);"> <span class="mi-info logo"></span> <span class="mi-info txt">报表查看</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
