@@ -148,10 +148,10 @@
         <div class="weui-cells weui-cells_form">
 
             <div class="weui-form-preview">
-                <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
-                <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
-                <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
-                <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
+                <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
