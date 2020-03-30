@@ -89,7 +89,7 @@
 
         $(document).ready(function () {
             if ($("#lot_no").val() != "") {
-                $("#lot_no").attr("readonly", "readonly");
+                $("#lot_no").attr("readonly", "readonly"); $("#lot_no").css('color', 'gray');
                 $("#btn_sl").hide(); $("#btn_cancel").show();
             } else {
                 $("#btn_sl").show(); $("#btn_cancel").hide();
@@ -131,7 +131,65 @@
    
 
         <div class="weui-cells weui-cells_form">
+
+            <div class="weui-form-preview">
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
+                <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
+                <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
+                <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
+
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">要料信息</label>
+                        <label class="weui-form-preview__">单号:<% ="<font class='tag'/>"+_need_no %></label>
+                    </div>
+                </div>
+                <div class="weui-form-preview__bd">
+                    <asp:Repeater runat="server" ID="listBxInfo">
+                        <ItemTemplate>
+                            <div class="weui-mark-vip"><span class="weui-mark-lt <%# Eval("type").ToString()=="部分"?"bg-red":""%>"><%#Eval("type") %></span></div>
+                            
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要料人</label>
+                                <span class="weui-form-preview__value"><%# Eval("emp_code") %><%# Eval("emp_name") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要料人时间</label>
+                                <span class="weui-form-preview__value"><%# Eval("req_date","{0:MM/dd HH:mm}")%></span>
+                            </div>                             
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">车间</label>
+                                <span class="weui-form-preview__value"><%# Eval("workshop") %> </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">生产线</label>
+                                <span class="weui-form-preview__value"><%# Eval("line") %> </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">岗位</label>
+                                <span class="weui-form-preview__value"><%# Eval("location") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">物料号</label>
+                                <span class="weui-form-preview__value"><%# Eval("pgino") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">零件号</label>
+                                <span class="weui-form-preview__value"><%# Eval("pn") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要料数量</label>
+                                <span class="weui-form-preview__value"><%# Eval("need_qty") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要求送到时间</label>
+                                <span class="weui-form-preview__value"><%# Eval("need_date","{0:MM/dd HH:mm}")%></span>
+                            </div>  
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </div>
+                <%--<asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">要料人</label></div>
@@ -177,7 +235,7 @@
                     <div class="weui-cell__hd"><label class="weui-label">要求送到时间</label></div>
                     <asp:TextBox ID="need_date" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                     <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
-                </div>
+                </div>--%>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">Lot No</label></div>
@@ -211,7 +269,7 @@
                     <asp:Button ID="btn_sl" class="weui-btn weui-btn_primary" runat="server" 
                         Text="送&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;料" OnClick="btn_sl_Click" OnClientClick="return valid_sl();" /> 
                      <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" 
-                        Text="取消送料" OnClick="btn_cancel_Click" OnClientClick="return valid_cancel();"/>
+                        Text="取消要料" OnClick="btn_cancel_Click" OnClientClick="return valid_cancel();"/>
                 </div>
 
         </div>

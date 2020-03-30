@@ -57,15 +57,18 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         sql = string.Format(sql, need_no);
         DataTable dt = SQLHelper.Query(sql).Tables[0];
 
-        need_date.Text = dt.Rows[0]["need_date"].ToString();
-        yl_emp.Text = dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString();
-        req_date.Text = dt.Rows[0]["req_date"].ToString();
-        workshop.Text = dt.Rows[0]["workshop"].ToString();
-        line.Text = dt.Rows[0]["line"].ToString();
-        location.Text = dt.Rows[0]["location"].ToString();
+        listBxInfo.DataSource = dt;
+        listBxInfo.DataBind();
+
+        //need_date.Text = dt.Rows[0]["need_date"].ToString();
+        //yl_emp.Text = dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString();
+        //req_date.Text = dt.Rows[0]["req_date"].ToString();
+        //workshop.Text = dt.Rows[0]["workshop"].ToString();
+        //line.Text = dt.Rows[0]["line"].ToString();
+        //location.Text = dt.Rows[0]["location"].ToString();
         pgino.Text = dt.Rows[0]["pgino"].ToString();
         pn.Text = dt.Rows[0]["pn"].ToString();
-        need_qty.Text = dt.Rows[0]["need_qty"].ToString();
+        //need_qty.Text = dt.Rows[0]["need_qty"].ToString();
 
         lot_no.Text = dt.Rows[0]["lot_no"].ToString();
         act_qty.Text = dt.Rows[0]["act_qty"].ToString() == "0" ? "" : dt.Rows[0]["act_qty"].ToString();
