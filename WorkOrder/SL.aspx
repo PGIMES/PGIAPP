@@ -19,12 +19,12 @@
             color: #fff;
             display: block;
             font-size: 0.775em !important;
-            left: -2.5em;
+            left: -0.5em;
             height: 1em;
             line-height: 1em !important;
             position: relative;
             text-align: center;
-            top: 0.25em;
+            top: 0.55em;
             transform: rotate(-45deg);
             width: 3.375em;
             padding: 0.125em;
