@@ -84,10 +84,10 @@
                 <div class="weui-tab">
                     <div class="weui-navbar">
                         <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
-                            所有工单
+                            要料监视
                         </div>
                         <div href="#tab2" class="weui-navbar__item">
-                            我的工单
+                            我的要料
                         </div>
                     </div>
 

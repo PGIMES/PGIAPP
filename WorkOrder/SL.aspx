@@ -14,7 +14,22 @@
     <link href="../css/weuix.css" rel="stylesheet" />
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
-
+    <style>
+         .weui-mark-lt {
+            color: #fff;
+            display: block;
+            font-size: 0.775em !important;
+            left: -2.5em;
+            height: 1em;
+            line-height: 1em !important;
+            position: relative;
+            text-align: center;
+            top: 0.25em;
+            transform: rotate(-45deg);
+            width: 3.375em;
+            padding: 0.125em;
+        }
+    </style>
     <style>
         .weui-cell{
             padding:4px 15px;
