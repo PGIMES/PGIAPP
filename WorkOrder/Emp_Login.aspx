@@ -8,33 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no"/>
 
-    <%-- <link href="/Content/bootstrap.min.css" rel="stylesheet" />--%>
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
-    <%--<script src="/Content/laydate/laydate.js"></script>--%>
     <script src="/Content/layer/layer.js"></script>
 
     <link href="../css/weui.css" rel="stylesheet" />
     <link href="../css/weuix.css" rel="stylesheet" />
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
-<%--    <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css">--%>
-
-    <%-- <style>
-        .rowbr{
-            margin-bottom:5px;
-        }
-        .textwidth1{
-            padding-right:25px;
-        }        
-        .textwidth2{
-            padding-right:40px;
-        }
-        
-    </style>--%>
 </head>
 <body>
 
@@ -42,7 +22,7 @@
     <%--步骤二：通过config接口注入权限验证配置--%>
     <script>        
         //config注入的是企业的身份与权限
-       <%--$('#e_code').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
+       $('#e_code').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: '<% =WeiXin.CorpID %>', // 公众号
@@ -69,7 +49,7 @@
                     }
                 });
             };//end_document_scanQRCode
-        });--%>
+        });
 
         $(document).ready(function () {
             $("#btn_bind_data").css("display", "none");
