@@ -130,6 +130,7 @@ public partial class Emp_Login : System.Web.UI.Page
         string location = re_dt.Rows[0][0].ToString();
 
         DataTable dt = (DataTable)ViewState["emp_login_sb"];
+        DataRow[] drs;
         if (dt == null)
         {
             dt = new DataTable();
@@ -137,6 +138,17 @@ public partial class Emp_Login : System.Web.UI.Page
             dt.Columns.Add("e_code", typeof(string));
             dt.Columns.Add("location", typeof(string));
         }
+        else
+        {
+            drs = dt.Select("e_code='" + sb_code + "'");
+            if (drs.Length != 0)
+            {
+                e_code.Text = "";
+                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备】已存在')", true);
+                return;
+            }
+        }
+
         DataRow dr = dt.NewRow();
         dr["id"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["id"]) + 1;
         dr["e_code"] = sb_code;
@@ -175,7 +187,7 @@ public partial class Emp_Login : System.Web.UI.Page
             e_codes = e_codes.Substring(0, e_codes.Length - 1);
             location = location.Substring(0, location.Length - 1);
         }
-       
+
 
         string sql = @"exec usp_app_emp_login_new '{0}','{1}','{2}','{3}','{4}'";
         sql = string.Format(sql, Inlogin, txt_emp.Text, e_codes, location, domain.Text);
@@ -186,7 +198,7 @@ public partial class Emp_Login : System.Web.UI.Page
         {
             //Response.Redirect("/Cjgl1.aspx");
             //Response.Write("<script>location.replace(\"/Cjgl1.aspx\");</script>");
-            Response.Write("<script>window.location.href = '/workshop.aspx';</script>");
+            Response.Write("<script>window.location.href = '/Cjgl1.aspx?workshop=" + _workshop + "';</script>");
         }
         else
         {
