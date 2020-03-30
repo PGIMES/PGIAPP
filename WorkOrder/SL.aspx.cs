@@ -44,7 +44,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
             timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
             noncestr = new Random().Next(10000).ToString();
-            uri = Request.Url.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
+            uri = Request.Url.AbsoluteUri.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
             string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
             ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
             ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名

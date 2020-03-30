@@ -7,40 +7,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <title>仓库送料</title>
-
-    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
-    <script src="/Content/laydate/laydate.js"></script>
     <script src="/Content/layer/layer.js"></script>
 
-    <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
+    <link href="../css/weui.css" rel="stylesheet" />
+    <link href="../css/weuix.css" rel="stylesheet" />
+    <script src="../js/zepto.min.js"></script>
+    <script src="../js/zepto.weui.js"></script>
 
     <style>
-        .rowbr{
-            margin-bottom:5px;
+        .weui-cell{
+            padding:4px 15px;
         }
-        .textwidth1{
-            padding-right:53px;
-        }        
-        .textwidth2{
-            padding-right:40px;
-        }
-        .textwidth3{
-            padding-right:67px;
-        } 
-        .textwidth4{
-            padding-right:25px;
-        } 
-        .textwidth5{
-            padding-right:53px;
-        } 
-        
-        
-    </style> 
+    </style>
+
      <script>
          function valid_sl() {
             
@@ -108,7 +88,12 @@
         });
 
         $(document).ready(function () {
-            if ($("#lot_no").val() != "") { $("#lot_no").attr("readonly", "readonly"); }
+            if ($("#lot_no").val() != "") {
+                $("#lot_no").attr("readonly", "readonly");
+                $("#btn_sl").hide(); $("#btn_cancel").show();
+            } else {
+                $("#btn_sl").show(); $("#btn_cancel").hide();
+            }
 
             $("#act_qty").attr("readonly", "readonly");
 
@@ -143,107 +128,95 @@
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
-    <div class="resume-setting-page normal-page-wrap"> 
-        <%--<div id="allContainer" class="menus-normal">
-            <dl class="menus-module" style="background-color:#008083;height:66px;"> 
-                
-                <dt class="menus-title" style="background-color:#008083;height:66px">
-                    <div  style="float:left;width:80%;border:0px solid #F00;">PGI产线作业-仓库送料</div> 
-                    <div style="float:left;width:18%;border:0px solid #000; text-align:right;"></div> 
-                </dt> 
+   
 
-         
-            </dl>
-        </div> --%>
-
-        <div class="row ">
-            <div class="col-md-12">
+        <div class="weui-cells weui-cells_form">
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">要料人</span>
-                    <asp:TextBox ID="yl_emp" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">要料人</label></div>
+                    <asp:TextBox ID="yl_emp" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth4">要料人时间</span>
-                    <asp:TextBox ID="req_date" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">要料人时间</label></div>
+                    <asp:TextBox ID="req_date" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth3">车间</span>
-                    <asp:TextBox ID="workshop" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">车间</label></div>
+                    <asp:TextBox ID="workshop" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">生产线</span>
-                    <asp:TextBox ID="line" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">生产线</label></div>
+                    <asp:TextBox ID="line" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth3">岗位</span>
-                    <asp:TextBox ID="location" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">岗位</label></div>
+                    <asp:TextBox ID="location" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">物料号</span>
-                    <asp:TextBox ID="pgino" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>
+                    <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">零件号</span>
-                    <asp:TextBox ID="pn" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>
+                    <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth2">要料数量</span>
-                    <asp:TextBox ID="need_qty" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">要料数量</label></div>
+                    <asp:TextBox ID="need_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon">要求送到时间</span>
-                    <asp:TextBox ID="need_date" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="need_no" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">要求送到时间</label></div>
+                    <asp:TextBox ID="need_date" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server" Visible="false"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth5">Lot No</span>
-                    <span style="float:left; width:90%">
-                        <asp:TextBox ID="lot_no" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox>
-                    </span>
-                        <span style="float:left; width:10%">
-                            <img id="img_sm" src="../img/fdj.gif" style="padding-top:10px;" />
-                    </span>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">Lot No</label></div>
+                    <div class="weui-cell__hd">
+                        <span style="float:left; width:90%">
+                            <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" runat="server"></asp:TextBox>
+                        </span>
+                            <span style="float:left; width:10%">
+                                <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
+                        </span>
+                    </div>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth2">送料数量</span>
-                    <asp:TextBox ID="act_qty" class="form-control" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">送料数量</label></div>
+                    <asp:TextBox ID="act_qty" class="weui-input" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">送料人</span>
-                    <asp:TextBox ID="emp_sl" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">送料人</label></div>
+                    <asp:TextBox ID="emp_sl" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth2">送料时间</span>
-                    <asp:TextBox ID="act_date" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">送料时间</label></div>
+                    <asp:TextBox ID="act_date" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
 
 
-                <div class="input-group-addon">
-                    <asp:Button ID="btn_sl" class="btn btn-primary btn-lg" BackColor="#428bca" style="padding:10px 16px" runat="server" 
+                <div class="">
+                    <asp:Button ID="btn_sl" class="weui-btn weui-btn_primary" runat="server" 
                         Text="送&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;料" OnClick="btn_sl_Click" OnClientClick="return valid_sl();" /> 
-                     <asp:Button ID="btn_cancel" class="btn btn-primary btn-lg" BackColor="#428bca" style="padding:10px 16px" runat="server" 
+                     <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" 
                         Text="取消送料" OnClick="btn_cancel_Click" OnClientClick="return valid_cancel();"/>
                 </div>
 
-
-            </div>
         </div>
 
-    </div>
+    
     </form>
 </body>
 </html>
