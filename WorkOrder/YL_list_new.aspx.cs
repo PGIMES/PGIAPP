@@ -14,14 +14,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
     {
         _workshop = Request.QueryString["workshop"].ToString();
 
-        //if (WeiXin.GetCookie("workcode") == null)
-        //{
-        //    Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
-        //    return;
-        //}
+        if (WeiXin.GetCookie("workcode") == null)
+        {
+            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }
 
-
-        GetData("02432");
+        LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+        GetData(lu.WorkCode);
+        //GetData("02432");
        
     }
 

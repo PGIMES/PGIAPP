@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="weui-tab__panel" style="background-color:lightgray">
-                        <%--=======我的工单-----%>
+                        <%--=======所有工单-----%>
                         <div id="tab1" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
@@ -125,8 +125,9 @@
 
                                                     <span class="weui-agree__text" style="font-size: smaller">
                                                         <%# Eval("phone")+" "+Eval("emp_name")
-                                                                +" <font class='f-blue'>"+Eval("need_date")+ "</font>" 
+                                                                /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
                                                          %>   
+                                                        <span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>
                                                     </span>
 
                                                 </div>
@@ -168,7 +169,7 @@
 
                                                     <span class="weui-agree__text" style="font-size: smaller">
                                                         <%# Eval("phone")+" "+Eval("emp_name")
-                                                                +" <font class='f-blue'>"+Eval("need_date")+ "</font>" 
+                                                               +" "+Eval("need_date")+ " " 
                                                          %>   
                                                     </span>
 
@@ -214,8 +215,9 @@
 
                                                     <span class="weui-agree__text" style="font-size: smaller">
                                                         <%# Eval("phone")+" "+Eval("emp_name")
-                                                                +" <font class='f-blue'>"+Eval("need_date")+ "</font>" 
+                                                                /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
                                                          %>   
+                                                        <span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>
                                                     </span>
 
                                                 </div>
@@ -257,7 +259,7 @@
 
                                                     <span class="weui-agree__text" style="font-size: smaller">
                                                         <%# Eval("phone")+" "+Eval("emp_name")
-                                                                +" <font class='f-blue'>"+Eval("need_date")+ "</font>" 
+                                                                +" "+Eval("need_date")+ " " 
                                                          %>   
                                                     </span>
 

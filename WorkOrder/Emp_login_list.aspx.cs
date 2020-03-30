@@ -14,15 +14,15 @@ public partial class WorkOrder_Emp_Login_list : System.Web.UI.Page
     {
         _workshop = Request.QueryString["workshop"].ToString();
 
-        //if (WeiXin.GetCookie("workcode") == null)
-        //{
-        //    Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
-        //    return;
-        //}
+        if (WeiXin.GetCookie("workcode") == null)
+        {
+            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+            return;
+        }
 
-        //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-        //GetData(lu.WorkCode);
-        GetData("02432");
+        LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+        GetData(lu.WorkCode);
+        //GetData("02432");
     }
 
     private void GetData(string emp)
