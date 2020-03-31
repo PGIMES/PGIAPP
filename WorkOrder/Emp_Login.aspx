@@ -84,7 +84,7 @@
                 </div>
 
                 <div id="div_code" class="weui-cell">
-                    <div class="weui-cell__hd f-red"><label class="weui-label">当前设备</label></div>
+                    <div class="weui-cell__hd f-red"><label class="weui-label">当前岗位</label></div>
                     <div class="weui-cell__bd">
                         <span style="float:left; width:90%">
                             <asp:TextBox ID="e_code" class="weui-input" runat="server" placeholder="请输入当前设备" onkeyup="this.value=this.value.toUpperCase()" onchange="e_code_change()"></asp:TextBox> 
@@ -95,40 +95,39 @@
                     </div>
                 </div>
                 
-                <div class="weui-cell">
-                    <label class="weui-label">当前岗位：</label></div>
-                    <asp:GridView ID="GridView1" 
-                            AllowMultiColumnSorting="True" AllowPaging="True"
-                            AllowSorting="True" AutoGenerateColumns="False"
-                            OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="id"
-                            runat="server" Font-Size="Small" Width="96%" style="margin-left:2%; margin-right:2%;" PageSize="5" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal">
-                            <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
-                            <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
-                            <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
-                            <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#ffffff" Font-Bold="True" ForeColor="black" HorizontalAlign="Center" />
+                <asp:GridView ID="GridView1" 
+                        AllowMultiColumnSorting="True" AllowPaging="True"
+                        AllowSorting="True" AutoGenerateColumns="False"
+                        OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="id"
+                        runat="server" Font-Size="Small" Width="96%" style="margin-left:2%; margin-right:2%;" PageSize="5" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal">
+                    <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+                    <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
+                    <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
+                    <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#ffffff" Font-Bold="True" ForeColor="black" HorizontalAlign="Center" />
 
-                            <Columns>  
-                                <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" />
-                                <asp:BoundField DataField="e_code" HeaderText="设备号" ReadOnly="True" ItemStyle-Width="20%">
-                                    <HeaderStyle Wrap="True" />
-                                <ItemStyle Width="20%" />
-                                </asp:BoundField> 
-                                <asp:BoundField DataField="location" HeaderText="岗位" ReadOnly="True" ItemStyle-Width="65%">
-                                    <HeaderStyle Wrap="True" />
-                                <ItemStyle Width="65%" />
-                                </asp:BoundField> 
-                                <asp:CommandField HeaderText="" ShowDeleteButton="True" ItemStyle-Width="15%" >
-                                <ItemStyle Width="15%" />
-                                </asp:CommandField>
-                            </Columns>
-                            <SortedAscendingCellStyle BackColor="#F7F7F7" />
-                            <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
-                            <SortedDescendingCellStyle BackColor="#E5E5E5" />
-                            <SortedDescendingHeaderStyle BackColor="#242121" />
-                        </asp:GridView>
+                    <Columns>  
+                        <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" />
+                        <asp:BoundField DataField="location" HeaderText="location" ReadOnly="True" />
+                        <asp:BoundField DataField="e_code" HeaderText="设备号" ReadOnly="True" ItemStyle-Width="20%">
+                            <HeaderStyle Wrap="True" />
+                        <ItemStyle Width="20%" />
+                        </asp:BoundField> 
+                        <asp:BoundField DataField="location_desc" HeaderText="车间/生产线/岗位" ReadOnly="True" ItemStyle-Width="65%">
+                            <HeaderStyle Wrap="True" />
+                        <ItemStyle Width="65%" />
+                        </asp:BoundField> 
+                        <asp:CommandField HeaderText="" ShowDeleteButton="True" ItemStyle-Width="15%" >
+                        <ItemStyle Width="15%" />
+                        </asp:CommandField>
+                    </Columns>
+                    <SortedAscendingCellStyle BackColor="#F7F7F7" />
+                    <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+                    <SortedDescendingCellStyle BackColor="#E5E5E5" />
+                    <SortedDescendingHeaderStyle BackColor="#242121" />
+                </asp:GridView>
                     
-                </div>
+                
             </ContentTemplate>
             </asp:UpdatePanel>
 

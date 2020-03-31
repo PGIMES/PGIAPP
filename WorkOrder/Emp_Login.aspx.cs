@@ -87,13 +87,15 @@ public partial class Emp_Login : System.Web.UI.Page
         }
 
         GridView1.Columns[0].Visible = true;
+        GridView1.Columns[1].Visible = true;
         GridView1.DataSource = dt;
         GridView1.DataBind();
         GridView1.Columns[0].Visible = false;
+        GridView1.Columns[1].Visible = false;
 
         if (btn_sure.Text == "离岗确认")
         {
-            GridView1.Columns[3].Visible = false;
+            GridView1.Columns[4].Visible = false;
         }
     }
 
@@ -118,7 +120,7 @@ public partial class Emp_Login : System.Web.UI.Page
     public void sbcode_change()
     {
         string sb_code = e_code.Text;
-        string sql = @"select distinct top 1 location from [Mes_App_Base_Location] WHERE e_code = '{0}' ";
+        string sql = @"select distinct top 1 location,workshop,line from [Mes_App_Base_Location] WHERE e_code = '{0}' ";
         sql = string.Format(sql, sb_code);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         if (re_dt.Rows.Count <= 0)
@@ -127,7 +129,9 @@ public partial class Emp_Login : System.Web.UI.Page
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备】不存在')", true);
             return;
         }
-        string location = re_dt.Rows[0][0].ToString();
+        string location = re_dt.Rows[0]["location"].ToString();
+        string workshop = re_dt.Rows[0]["workshop"].ToString();
+        string line = re_dt.Rows[0]["line"].ToString();
 
         DataTable dt = (DataTable)ViewState["emp_login_sb"];
         DataRow[] drs;
@@ -137,14 +141,15 @@ public partial class Emp_Login : System.Web.UI.Page
             dt.Columns.Add("id", typeof(Int32));
             dt.Columns.Add("e_code", typeof(string));
             dt.Columns.Add("location", typeof(string));
+            dt.Columns.Add("location_desc", typeof(string));
         }
         else
         {
-            drs = dt.Select("e_code='" + sb_code + "'");
+            drs = dt.Select("location='" + location + "'");
             if (drs.Length != 0)
             {
                 e_code.Text = "";
-                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备】已存在')", true);
+                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前岗位】已存在')", true);
                 return;
             }
         }
@@ -153,6 +158,7 @@ public partial class Emp_Login : System.Web.UI.Page
         dr["id"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["id"]) + 1;
         dr["e_code"] = sb_code;
         dr["location"] = location;
+        dr["location_desc"] = workshop + "/" + line + "/" + location;
 
         dt.Rows.Add(dr);
         ViewState["emp_login_sb"] = dt;
