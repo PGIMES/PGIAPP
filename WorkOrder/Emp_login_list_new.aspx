@@ -137,6 +137,8 @@
                                                          <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
                                                      </span>
                                                 </div>
+                                                <div class="weui-cell__ft">
+                                                </div>
                                             </a>
 
                                         </ItemTemplate>

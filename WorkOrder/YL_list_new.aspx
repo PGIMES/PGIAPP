@@ -108,8 +108,8 @@
                                                         style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                              font-size: x-small; color: white; 
                                                              display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                        <%#Eval("type") %>
-                                                    </span>
+                                                            <%#Eval("type") %>
+                                                        </span>
                                                     </span>
                                                     
 
@@ -123,6 +123,8 @@
                                                        <%-- <span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>--%>
                                                     </span>
 
+                                                </div>
+                                                <div class="weui-cell__ft">
                                                 </div>
                                             </a>
 
@@ -155,8 +157,8 @@
                                                         style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                              font-size: x-small; color: white; 
                                                              display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                        <%#Eval("type") %>
-                                                    </span>
+                                                            <%#Eval("type") %>
+                                                        </span>
                                                     </span>
                                                     
 
@@ -166,6 +168,8 @@
                                                          %>   
                                                     </span>
 
+                                                </div>
+                                                <div class="weui-cell__ft">
                                                 </div>
                                             </a>
 
@@ -201,8 +205,8 @@
                                                         style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                              font-size: x-small; color: white; 
                                                              display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                        <%#Eval("type") %>
-                                                    </span>
+                                                            <%#Eval("type") %>
+                                                        </span>
                                                     </span>
                                                     
 
@@ -216,6 +220,8 @@
                                                         <%--<span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>--%>
                                                     </span>
 
+                                                </div>
+                                                <div class="weui-cell__ft">
                                                 </div>
                                             </a>
 
@@ -248,8 +254,8 @@
                                                         style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                              font-size: x-small; color: white; 
                                                              display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                        <%#Eval("type") %>
-                                                    </span>
+                                                            <%#Eval("type") %>
+                                                        </span>
                                                     </span>
                                                     
 
@@ -259,6 +265,8 @@
                                                          %>   
                                                     </span>
 
+                                                </div>
+                                                <div class="weui-cell__ft">
                                                 </div>
                                             </a>
 
