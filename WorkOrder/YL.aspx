@@ -129,6 +129,17 @@
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
                 <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">要料人</label></div>
+                    <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="color:gray"></asp:TextBox>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">当前岗位</label></div>
+                    <%--<asp:TextBox ID="txt_location" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="color:gray"></asp:TextBox>--%>
+                    <asp:Label ID="lbl_location" runat="server" Text="" style="color:gray"></asp:Label>
+                </div>
+
+                <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">物料号</label></div>
                     <div class="weui-cell__bd">
                         <span style="float:left; width:90%">

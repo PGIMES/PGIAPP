@@ -33,8 +33,15 @@ public partial class YL : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
+            txt_emp.Text = lu.Telephone + lu.UserName;
+
             //emp_code_name.Text = "02432何桂勤";
             //domain.Text = "200";
+            //txt_emp.Text = "15850349106何桂勤";
+
+            //绑定岗位
+            ShowValue(lu.WorkCode);
+            //ShowValue("02432");
 
             timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
             noncestr = new Random().Next(10000).ToString();
@@ -44,6 +51,42 @@ public partial class YL : System.Web.UI.Page
             ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
         }
 
+    }
+
+    public void ShowValue(string WorkCode)
+    {
+        //取当前登录者
+        string sql = @"select id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
+        sql = string.Format(sql, WorkCode);
+        var value = SQLHelper.reDs(sql).Tables[0];
+        if (value != null && value.Rows.Count > 0)
+        {
+            string id = value.Rows[0][0].ToString();
+
+            string strsql = "select * from [dbo].Mes_App_EmployeeLogin_Location where login_id = '{0}'";
+            strsql = string.Format(strsql, id);
+            var value_rout = SQLHelper.reDs(strsql).Tables[0];
+
+            for (int i = 0; i < value_rout.Rows.Count; i++)
+            {
+                lbl_location.Text += value_rout.Rows[i]["workshop"].ToString() + "/" + value_rout.Rows[i]["line"].ToString() + "/" + value_rout.Rows[i]["op"].ToString();
+                if (i != value_rout.Rows.Count - 1) { lbl_location.Text += "<br />"; }
+            } 
+        }
+        else
+        {
+
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
+            return;
+        }
+
+
+    }
+
+    void init_location(string  emp_code) {
+        string re_sql = @"select * from [dbo].Mes_App_EmployeeLogin_Location where login_id=(select id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null)";
+        re_sql = string.Format(re_sql, emp_code_name.Text, pgino.Text, domain.Text, pn.Text, descr.Text, need_qty.Text, need_date.Text);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
     }
 
 
