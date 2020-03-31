@@ -215,11 +215,45 @@
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要求送到时间</label>
-                                <span class="weui-form-preview__value"><%# Eval("need_date","{0:MM/dd HH:mm}")%></span>
+                                <span class="weui-form-preview__value">
+                                    <%# Eval("need_date","{0:MM/dd HH:mm}")%>
+                                    <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
+                                        <%# Eval("times_type") %><%# Eval("times") %>
+                                    </span>
+                                </span>
                             </div>  
                         </ItemTemplate>
                     </asp:Repeater>
                 </div>
+
+                <div class="weui-form-preview__hd" style="border-top:1px solid #e5e5e5">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">送料信息</label>
+                    </div>
+                </div>
+                <div class="weui-form-preview__bd">
+                    <asp:Repeater runat="server" ID="listBx_lotno">
+                        <ItemTemplate>
+                            <div class="weui-form-preview__item"> <%--style="border-bottom:1px solid #e5e5e5"--%>
+                                <label class="weui-form-preview__label">Lot No</label>
+                                <span class="weui-form-preview__value"><%# Eval("lot_no") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">送料数量</label>
+                                <span class="weui-form-preview__value"><%# Eval("act_qty") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">还差数量</label>
+                                <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">送料时间</label>
+                                <span class="weui-form-preview__value"><%# Eval("act_date","{0:yyyy-MM-dd HH:mm}") %></span>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+
             </div>
             <%--<asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
@@ -284,6 +318,16 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">送料数量</label></div>
                 <asp:TextBox ID="act_qty" class="weui-input" placeholder="" style="color:gray" runat="server"></asp:TextBox>
+            </div>
+
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">还差数量</label></div>
+                <asp:TextBox ID="txt_sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
+            </div>
+
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">送料时间</label></div>
+                <asp:TextBox ID="txt_act_date" class="weui-input" ReadOnly="true"  placeholder="" style="color:gray" runat="server"></asp:TextBox>
             </div>
 
             <%--<div class="weui-cell">

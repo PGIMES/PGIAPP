@@ -55,8 +55,9 @@ public partial class WorkOrder_SL : System.Web.UI.Page
     {
         string sql = @"exec [usp_app_SL_init] '{0}'";
         sql = string.Format(sql, need_no);
-        DataTable dt = SQLHelper.Query(sql).Tables[0];
+        DataSet ds = SQLHelper.Query(sql);
 
+        DataTable dt = ds.Tables[0];
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
 
@@ -74,6 +75,12 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         //act_qty.Text = dt.Rows[0]["act_qty"].ToString() == "0" ? "" : dt.Rows[0]["act_qty"].ToString();
         //emp_sl.Text = dt.Rows[0]["emp_code_sl"].ToString() + dt.Rows[0]["emp_name_sl"].ToString();
         //act_date.Text = dt.Rows[0]["act_date"].ToString();
+
+        txt_sy_qty.Text= dt.Rows[0]["sy_qty"].ToString();
+        txt_act_date.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+
+        listBx_lotno.DataSource = ds.Tables[1];
+        listBx_lotno.DataBind();
     }
 
     [WebMethod]
