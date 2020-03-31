@@ -70,10 +70,10 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         pn.Text = dt.Rows[0]["pn"].ToString();
         //need_qty.Text = dt.Rows[0]["need_qty"].ToString();
 
-        lot_no.Text = dt.Rows[0]["lot_no"].ToString();
-        act_qty.Text = dt.Rows[0]["act_qty"].ToString() == "0" ? "" : dt.Rows[0]["act_qty"].ToString();
-        emp_sl.Text = dt.Rows[0]["emp_code_sl"].ToString() + dt.Rows[0]["emp_name_sl"].ToString();
-        act_date.Text = dt.Rows[0]["act_date"].ToString();
+        //lot_no.Text = dt.Rows[0]["lot_no"].ToString();
+        //act_qty.Text = dt.Rows[0]["act_qty"].ToString() == "0" ? "" : dt.Rows[0]["act_qty"].ToString();
+        //emp_sl.Text = dt.Rows[0]["emp_code_sl"].ToString() + dt.Rows[0]["emp_name_sl"].ToString();
+        //act_date.Text = dt.Rows[0]["act_date"].ToString();
     }
 
     [WebMethod]
