@@ -64,9 +64,9 @@
           <dd id="btn4" class="menus-item"  > 
       <a href="/workorder/YL_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">要料监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
-     <dd id="btn5" class="menus-item"  > 
+     <%--<dd id="btn5" class="menus-item"  > 
       <a href="/workorder/Load_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产上料</span> <span class="mi-info check txt"></span> </a> 
-     </dd> 
+     </dd> --%>
          <dd id="btn10" class="menus-item"  > 
       <a href="/workorder/bhgp_deal.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格处置</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
