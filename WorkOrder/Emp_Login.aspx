@@ -55,7 +55,9 @@
             $("#btn_bind_data").css("display", "none");
 
             if ($("#btn_sure").val() == "离岗确认") {
-                $("#div_emp").hide(); $("#div_code").hide();
+                $("#div_emp").hide(); $("#div_code").hide(); $("#div_login_on").show();
+            } else {
+                $("#div_login_on").hide();
             }
         });
 
@@ -72,7 +74,36 @@
     </asp:ScriptManager>
     
         
-        <div class="weui-cells weui-cells_form">     
+        <div class="weui-cells weui-cells_form">    
+
+            <div class="weui-form-preview" id="div_login_on">
+                <%--<div class="weui-form-preview__hd" style="border-top:1px solid #e5e5e5">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">上岗信息</label>
+                    </div>
+                </div>--%>
+                <div class="weui-form-preview__bd">
+                    <asp:Repeater runat="server" ID="listBxInfor">
+                        <ItemTemplate>
+                            <div class="weui-form-preview__item"> 
+                                <label class="weui-form-preview__label">上岗人</label>
+                                <span class="weui-form-preview__value"><%# Eval("emp_code")+""+Eval("emp_name") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">上岗时间</label>
+                                <span class="weui-form-preview__value"><%# Eval("on_date","{0:yyyy-MM-dd HH:mm}") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">时长</label>
+                                <span class="weui-form-preview__value"><%# Eval("times") %></span>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </div>
+            
+            
+             
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
             
@@ -94,17 +125,17 @@
                         </span>
                     </div>
                 </div>
-                
+                <br />
                 <asp:GridView ID="GridView1" 
                         AllowMultiColumnSorting="True" AllowPaging="True"
                         AllowSorting="True" AutoGenerateColumns="False"
                         OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="id"
-                        runat="server" Font-Size="Small" Width="96%" style="margin-left:2%; margin-right:2%;" PageSize="5" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal">
-                    <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+                        runat="server" Font-Size="Small" Width="96%" style="margin-left:2%; margin-right:2%;" PageSize="5" BackColor="White" BorderColor="#e5e5e5" BorderStyle="solid" BorderWidth="1px" CellPadding="4" ForeColor="#999999" GridLines="Horizontal">
+                    <FooterStyle BackColor="#CCCC99" ForeColor="#999999" />
                     <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
                     <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
                     <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                    <HeaderStyle BackColor="#ffffff" Font-Bold="True" ForeColor="black" HorizontalAlign="Center" />
+                    <HeaderStyle BackColor="#ffffff" Font-Bold="True" ForeColor="#999999" HorizontalAlign="Center" />
 
                     <Columns>  
                         <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" />

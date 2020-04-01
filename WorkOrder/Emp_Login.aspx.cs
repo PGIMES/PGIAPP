@@ -55,7 +55,8 @@ public partial class Emp_Login : System.Web.UI.Page
     public void setButton()
     {
         //取当前登录者工号
-        string sql = @"select * from Mes_App_EmployeeLogin WHERE emp_code = '{0}' AND on_date is not null and off_date IS NULL";
+        string sql = @"select *, cast(datediff(mi,on_date,getdate())/60 as varchar)+':'+right('00'+cast(datediff(mi,on_date,getdate())%60  as varchar),2) as times 
+                    from Mes_App_EmployeeLogin WHERE emp_code = '{0}' AND on_date is not null and off_date IS NULL";
         sql = string.Format(sql, txt_emp.Text.Substring(0, 5));
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
@@ -63,6 +64,10 @@ public partial class Emp_Login : System.Web.UI.Page
         {
             btn_sure.Text = "离岗确认";
             bind_gv();
+
+            listBxInfor.DataSource = re_dt;
+            listBxInfor.DataBind();
+
         }
         else if (re_dt.Rows.Count > 1)
         {
@@ -120,13 +125,14 @@ public partial class Emp_Login : System.Web.UI.Page
     public void sbcode_change()
     {
         string sb_code = e_code.Text;
+        if (sb_code.Length >= 5) { sb_code = sb_code.Substring(sb_code.Length - 5); }
         string sql = @"select distinct top 1 location,workshop,line from [Mes_App_Base_Location] WHERE e_code = '{0}' ";
         sql = string.Format(sql, sb_code);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         if (re_dt.Rows.Count <= 0)
         {
             e_code.Text = "";
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备】不存在')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备"+ e_code.Text + "】不存在')", true);
             return;
         }
         string location = re_dt.Rows[0]["location"].ToString();
