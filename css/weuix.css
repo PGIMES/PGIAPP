@@ -2167,7 +2167,7 @@ i.icon.icon-prev {
     background-color: #fa5151;
 }
 .bg-warning {
-    background-color: #FF6600;
+    background-color: #FFC107;
 }
 .bg-success {
     background-color: #07c160;
@@ -2418,6 +2418,10 @@ i.icon.icon-prev {
 .bg-blue {
     background-color: #10aeff;
 }
+.bg-yellow {
+    background-color: #FFC107;
+}
+
 .bg-blue:not(.weui-btn_disabled):visited {
     color: #FFFFFF;
 }

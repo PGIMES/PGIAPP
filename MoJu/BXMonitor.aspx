@@ -32,7 +32,7 @@
     <script>
         $(function () {
 
-            $('#t1,#t2').tab({
+            $('#t2').tab({
                 defaultIndex: 0,
                 activeClass: 'tab-green',
                 onToggle: function (index) {
