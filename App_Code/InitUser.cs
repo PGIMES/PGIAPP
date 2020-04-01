@@ -58,14 +58,14 @@ public abstract class InitUser
         //}
 
         LoginUser model = null;
-        DataTable dt = SQLHelper.reDs(string.Format("select a.* from  [172.16.5.26].MES.[dbo].[HRM_EMP_MES_ALL] a join wx_user b on a.workcode=b.workcode where b.wxuserid='{0}' and a.workcode<>''", wxuserid)).Tables[0];
+        DataTable dt = SQLHelper.reDs(string.Format("select a.* from  [172.16.5.6].ehr_db.dbo.view_hr_emp a join wx_user b on a.employeeid=b.workcode where b.wxuserid='{0}' and a.employeeid<>''", wxuserid)).Tables[0];
         if (dt.Rows.Count > 0)
         {
             DataRow dr= dt.Rows[0];
             model = new LoginUser();
             model.WXUserId = wxuserid;
-            model.WorkCode = dr["workcode"].ToString();
-            model.UserName = dr["lastname"].ToString();
+            model.WorkCode = dr["employeeid"].ToString();
+            model.UserName = dr["truename"].ToString();
            // model.ADAccount = dr["ADAccount"].ToString();
            // model.JobTitleId = dr[""].ToString();
            // model.JobTitleName = dr["JobTitleName"].ToString();
@@ -78,8 +78,8 @@ public abstract class InitUser
            // model.DepartName = dr["dept_name"].ToString();
            // model.GroupName = dr["departmentname"].ToString();
             model.Domain= dr["domain"].ToString();
-            model.DomainName= dr["gc"].ToString();
-           // model.Telephone= dr["telephone"].ToString();
+            //model.DomainName= dr["gc"].ToString();
+            model.Telephone= dr["cellphone"].ToString();
         }
         return model;
     }

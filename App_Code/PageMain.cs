@@ -55,6 +55,13 @@ public class PageMain : System.Web.UI.Page
             }
 
             LoginUser userModel = InitUser.GetLoginUserInfo("", userid);
+            WeiXin.SetCookie("userid", userid, 30);
+            if (userModel == null)
+            {
+                Response.Redirect("/RegInfo.aspx");
+                return;
+            }
+
             string jdUserMode = Newtonsoft.Json.JsonConvert.SerializeObject(userModel);
 
             WeiXin.SetCookie("workcode", userModel.WorkCode,30);
