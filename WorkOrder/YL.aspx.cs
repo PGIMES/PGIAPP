@@ -83,12 +83,6 @@ public partial class YL : System.Web.UI.Page
 
     }
 
-    void init_location(string  emp_code) {
-        string re_sql = @"select * from [dbo].Mes_App_EmployeeLogin_Location where login_id=(select id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null)";
-        re_sql = string.Format(re_sql, emp_code_name.Text, pgino.Text, domain.Text, pn.Text, descr.Text, need_qty.Text, need_date.Text);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
-    }
-
 
     [WebMethod]
     public static string pgino_change(string pgino)

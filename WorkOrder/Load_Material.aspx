@@ -1,65 +1,76 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Load_Material.aspx.cs" Inherits="Load_Material" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Load_Material.aspx.cs" Inherits="Load_Material" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+<html><head>
+    <meta charset="utf-8">
     <title>生产上线</title>
-    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Content/layer/layer.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
+  
 
-    <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
-
+    <link href="../css/weui.css" rel="stylesheet" />
+    <link href="../css/weuix.css" rel="stylesheet" />
+    <script src="../js/zepto.min.js"></script>
+    <script src="../js/zepto.weui.js"></script>
     <style>
-        .rowbr{
-            margin-bottom:5px;
-        }
-        .textwidth1{
-            padding-right:37px;
-        }        
-        .textwidth2{
-            padding-right:49px;
-        }   
-        .textwidth3{
-            padding-right:23px;
-        }  
-        .textwidth4{
-            padding-right:35px;
-        } 
-        .textwidth5{
-            padding-right:35px;
-        }
-        .textwidth6{
-            padding-right:48px;
-        }
-        
+     
+
+      /*.weui-cell {
+    padding: 7px 15px;
+    position: relative;
+    align-items: center;
+
+
+}*/
+
+      .weui-form-preview__value1 {
+    display: block;
+    overflow: hidden;
+    word-break: normal;
+    word-wrap: break-word;
+    color:black;
+    font-size:large;
+}
+
+      .weui-form-preview__label1 {
+    float: left;
+    margin-right: 1em;
+    min-width: 4em;
+    text-align: justify;
+    text-align-last: justify;
+     color:DodgerBlue;
+    font-size:large;
+}
+
+
+       .hidden { display:none;}
     </style>
+
+    
     <script>
         function valid() {
-            if ($('#txt_lotno').val()=="") {
-                layer.alert("请输入【Lot No】.");
-                return false;
-            }
-            if ($('#txt_wlh').val() == "") {
-                layer.alert("【物料号】不可为空.");
-                return false;
-            }
-            if ($('#txt_qty').val() == "" || $('#txt_qty').val() == "0") {
-                layer.alert("【数量】不可为空或0.");
-                return false;
-            }
-            return true;
+            //if ($('#txt_lotno').val()=="") {
+            //    alert("请输入【Lot No】.");
+            //    return false;
+            //}
+            //if ($('#txt_wlh').val() == "") {
+            //    alert("【物料号】不可为空.");
+            //    return false;
+            //}
+            //if ($('#txt_xmh').val() == "") {
+            //    alert("请选择【项目号】.");
+            //    return false;
+            //}
+            //if ($('#txt_qty').val() == "" || $('#txt_qty').val() == "0") {
+            //    alert("【数量】不可为空或0.");
+            //    return false;
+            //}
+            //return true;
         }
     </script>
 </head>
-<body>
+<body ontouchstart="">
     <%-- 步骤一：引入JS文件--%>
     <script src="../scripts/jquery-1.10.2.min.js"></script>
     
@@ -89,7 +100,7 @@
                         // code 在这里面写上扫描二维码之后需要做的内容                       
                         $('#txt_lotno').val(result);
                         $('#txt_lotno').change();
-                        
+                       
                     }
                 });
             };//end_document_scanQRCode
@@ -98,41 +109,71 @@
         $(document).ready(function () {
             $("#txt_wlh").attr("readonly", "readonly");
             $("#txt_qty").attr("readonly", "readonly");
+            var lotno = '<%=lotno%>';
+            Bind_Lotno(lotno);
 
             $("#txt_lotno").change(function () {
-                $.ajax({
-                    type: "post",
-                    url: "Load_Material.aspx/lotno_change",
-                    data: "{'pgino':'" + $("#txt_xmh").val() + "','lotno':'" + $("#txt_lotno").val() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                    success: function (data) {
-                        var obj = eval(data.d);
-                        var flag = obj[0].flag;
-                        if (flag == "Y") {
-                            alert(obj[0].msg);
-                            $('#txt_lotno').val("");
-                            $('#txt_wlh').val("");
-                            $('#txt_qty').val("");
-                        } else {
-                            $('#txt_wlh').val(obj[0].wlh);
-                            $('#txt_qty').val(obj[0].qty);
-                        }
-
-                        return;
-                    }
-
-                });
-            });
+                var lotno_value=$("#txt_lotno").val();
+                Bind_Lotno(lotno_value);
+            })
         });
 
+        
+        function Bind_Lotno(lotno) {       
+                $.ajax({
+                    type: "post",
+                    url: "Load_Material.aspx/Set_Lotno",
+                    data: "{'lotno':'" + lotno + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        if (data) {
+                            $.each(eval(data.d), function (i, item) {
+                                if (item.text == "Y")
+                                {
+                                    alert(item.value);
+                                    $("input[type='text']").val("");
+                                    return;
+                                }
+                                else
+                                {
+                                  //  $("#txt_lotno").val(lotno);
+                                    //$("#txt_wlh").text(item.sku);
+                                    $("#txt_wlh").html(item.sku).css({color: "black"});
+                                    $("#sku_desc").text(item.sku_desc).css("color", "black");
+                                    $("#txt_qty").text(item.feed_qty).css("color", "black");
+
+                                    $("#txt_need_person").text(item.need_person);
+                                    $("#txt_line").text(item.line);
+                                   // $("#txt_location").text(item.gw);
+                                    $("#txt_need_qty").text(item.need_qty);
+                                    $("#txt_deliver_time").text(item.need_time);
+                                    $("#txt_feed_person").text(item.feed_person);
+                                    $("#txt_feed_time").text(item.feed_time);
+                                    
+                                    $("#txt_desc").text(item.sku_desc);
+                                   
+                                    $("#txt_domain").text(item.domain);
+                                  
+
+                                }
+                            })
+                           
+                        }
+                       
+                    } 
+
+                });
+        }
+
        
+
     </script>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
-        <div class="resume-setting-page normal-page-wrap">
+        <div class="weui-cells weui-cells_form">
             <%--<div id="allContainer" class="menus-normal">
                 <dl class="menus-module" style="background-color: #008083; height: 66px;">
 
@@ -146,70 +187,304 @@
             </div>--%>
 
 
-            <div class="row ">
-                <div class="col-md-12">
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                        <ContentTemplate>
+            <div class="weui-form-preview">
+                <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth3">当前岗位</span>
-                                <asp:TextBox ID="txt_location" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
-                            </div>
+                 <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                       
+                       <label class="weui-form-preview__">上料单号:<% ="<font class='tag'/>"+lotno %></label>
+                    </div>
+                </div>
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth1">登入人</span>
-                                <asp:TextBox ID="txt_emp" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
-                            </div>
+                <div class="weui-form-preview__bd">
+                    <%--<asp:Repeater runat="server" ID="listBxInfo">
+                        <ItemTemplate>--%>
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth1">项目号</span>
-                                <asp:TextBox ID="txt_xmh" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
-                            </div>                            
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth3">工艺路线</span>
-                                <asp:TextBox ID="txt_routing" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">岗位</label>
+                        <span class="weui-form-preview__value">
+                            <asp:Label ID="txt_location" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:Label>
+                        </span>
+                    </div>
 
-                            </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">送料人</label>
+                        <span   class="weui-form-preview__value" id="txt_feed_person">
+                            <%--<asp:Label ID="txt_feed_person" class="weui-input" Style="max-width: 100%" runat="server"></asp:Label>--%>
+                        </span>
+                    </div>
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth2">Bom</span>
-                                <asp:TextBox ID="txt_Bom" class="form-control" ReadOnly="true" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label ">送料时间</label>
+                        <span class="weui-form-preview__value" id="txt_feed_time">
+                            <%--<asp:Label ID="txt_feed_time" class="weui-input" Style="max-width: 100%" runat="server"></asp:Label>--%>
+                        </span>
+                    </div>
 
-                            </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label1  ">物料号</label>
+                        <span class="weui-form-preview__value1" ID="txt_wlh">
+                            <%--<asp:Label ID="txt_wlh" class="weui-input" Style="max-width: 100%" runat="server"></asp:Label>--%>
+                        </span>
+                    </div>
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth4">Lot No</span>
-                                <span style="float:left; width:90%">
-                                    <asp:TextBox ID="txt_lotno" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox> <%--AutoPostBack="True" OnTextChanged="txt_lotno_TextChanged"--%>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label1 ">零件号</label>
+                        <span class="weui-form-preview__value1" ID="sku_desc">
+                           <%-- <asp:Label ID="sku_desc" class="weui-input" Style="max-width: 100%" runat="server"></asp:Label>--%>
+                        </span>
+                    </div>
+
+
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label1 ">数量</label>
+                        <span class="weui-form-preview__value1" ID="txt_qty">
+                            <%--<asp:Label ID="txt_qty" class="weui-input" Style="max-width: 100%" runat="server"></asp:Label>--%>
+                        </span>
+                    </div>
+                           
+
+                           <%-- <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要料人</label>
+                                <span class="weui-form-preview__value" ID="txt_need_person">
                                 </span>
-                                 <span style="float:left; width:10%">
-                                     <img id="img_sm" src="../img/fdj.gif" style="padding-top:10px;" />
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">车间</label>
+                                <span class="weui-form-preview__value" id="txt_workshop"><%--<%# Eval("workshop") %> 
+
                                 </span>
-                                
+                            </div>
+                             <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">生产线</label>
+                                <span class="weui-form-preview__value" id="txt_line"><%--<%# Eval("line") %>
+
+                                </span>
+                            </div>
+                             <%--<div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">岗位</label>
+                                <span class="weui-form-preview__value" id="txt_location"><%--<%# Eval("gw") %>
+
+                                </span>
+                            </div>
+                             <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要料数量</label>
+                                <span class="weui-form-preview__value" id="txt_need_qty"><%--<%# Eval("need_qty") %>
+
+                                </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要求送到时间</label>
+                                <span class="weui-form-preview__value" id="txt_deliver_time"><%--<%# Eval("need_time")%>
+
+                                </span>
+                            </div>                         
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">送料人</label>
+                                <span class="weui-form-preview__value" id="txt_feed_person"><%--<%# Eval("feed_person")%>
+
+                                </span>
+                            </div>                             
+                             <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">送料时间</label>
+                                <span class="weui-form-preview__value" id="txt_feed_time"><%--<%# Eval("feed_time")%>
+
+                                </span>
+                            </div>   
+                           
+                           
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">物料号</label>
+                                <span class="weui-form-preview__value"><%--<%# Eval("sku") %>
+                                </span>
+                            </div>
+                            <%--<div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">零件号</label>
+                                <span class="weui-form-preview__value"><%--<%# Eval("sku_desc") %>
+
+                                </span>
+                            </div>
+                           
+                            
+                       <%-- </ItemTemplate>
+                    </asp:Repeater>--%>
+                </div>
+            </div>
+
+
+
+            
+                   <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>--%>
+
+                          <%--  <div class="weui-cell">
+                                <div class="weui-cell__hd"><label class="weui-label">要料人</label></div>
+                                <div class="weui-cell__bd">
+                                     <asp:TextBox ID="txt_need_person" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
                             </div>
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth5">物料号</span>
-                                <asp:TextBox ID="txt_wlh" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox>
+                             <div class="weui-cell">
+                                <div class="weui-cell__hd">
+                                    <label class="weui-label">车间</label></div>
+                                <div class="weui-cell__bd">
+                                   <asp:TextBox ID="txt_workshop" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
                             </div>
 
-                            <div class="input-group rowbr">
-                                <span class="input-group-addon textwidth6">数量</span>
-                                <asp:TextBox ID="txt_qty" class="form-control" Style="max-width: 100%" runat="server"></asp:TextBox>
-
+                            <div class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">生产线</label></div>
+                                 <div class="weui-cell__bd">
+                                    <asp:TextBox ID="txt_line" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
                             </div>
 
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                             <div class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">岗位</label></div>
+                                 <div class="weui-cell__bd">
+                                     <asp:TextBox ID="txt_location" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
+                            </div>--%>
+
+                            
+
+<%--                                 <div class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">要料数量</label></div>
+                                 <div class="weui-cell__bd">
+                                    <asp:TextBox ID="txt_need_qty" class="weui-input" Style="max-width: 100%" runat="server" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>
+
+
+                                 <div class="weui-cell">
+                                 <div class="weui-cell__hd" ">
+                                    <label class="weui-label">要求送到<br />时 间</label></div>
+                                 <div class="weui-cell__bd">
+                                   <asp:TextBox ID="txt_deliver_time" class="weui-input" Style="max-width: 100%" runat="server" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>
+                         
+
+                               <div class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">送料人</label></div>
+                                 <div class="weui-cell__bd">
+                                    <asp:TextBox ID="txt_feed_person" class="weui-input" Style="max-width: 100%" runat="server" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>
+
+
+                              <div class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">送料时间</label></div>
+                                 <div class="weui-cell__bd">
+                                    <asp:TextBox ID="txt_feed_time" class="weui-input" Style="max-width: 100%" runat="server" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>--%>
+
+
+                            <div  hidden="hidden">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">登入人</label></div>
+                                 <div class="weui-cell__bd">
+                                    <asp:TextBox ID="txt_emp"  class="weui-input"  placeholder="" Style="max-width: 100%" runat="server" ></asp:TextBox>
+                                </div>
+                            </div>
+
+
+                             <%--  <div  hidden="hidden">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">工艺路线</label></div>
+                                 <div class="weui-cell__bd">
+                                    <asp:TextBox ID="txt_routing"  class="weui-input"  Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
+                            </div>--%>
+                                                
+                            <%--<div hidden="hidden">
+                                <div class="weui-cell__hd">
+                                    <label class="weui-label">Bom</label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <asp:TextBox ID="txt_Bom" class="weui-input" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                                    
+                           
+                             <div  hidden="hidden">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">域</label></div>
+                                 <div class="weui-cell__bd">
+                                     <asp:TextBox ID="txt_domain" class="weui-input"  Style="max-width: 100%;" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                          
+
+                            <div   class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label f-red ">Lot No</label></div>
+                                 <div class="weui-cell__bd">
+                                     <span style="float:left; width:90%">
+                                     <asp:TextBox ID="txt_lotno" class="weui-input"  runat="server" placeholder="请输入Lot No"></asp:TextBox> </span>
+                                    <span style="float:left; width:10%">
+                                     <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
+                                </span>
+                                </div>
+                            </div>
+
+     
+                            <%-- <div class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">项目号</label></div>
+                                 <div class="weui-cell__bd">
+                                       <asp:DropDownList ID="txt_xmh"  class="weui-input" runat="server" ></asp:DropDownList>
+                                       <asp:TextBox ID="txt_pgino"  CssClass="hidden"    Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
+                            </div>--%>
+
+
+                             <%-- <div class="weui-cell">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">零件号</label></div>
+                                 <div class="weui-cell__bd">
+                                   <asp:TextBox ID="txt_pn" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+
+                      
+                          
+
+                             <div  hidden="hidden">
+                                 <div class="weui-cell__hd">
+                                    <label class="weui-label">物料描述</label></div>
+                                 <div class="weui-cell__bd">
+                                     <asp:TextBox ID="txt_desc" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
+                                </div>
+                            </div>--%>
+
+
+                             
+
+
+
+
+                        <%--</ContentTemplate>
+                    </asp:UpdatePanel>--%>
                     <div class="">
-                        <asp:Button ID="btnsave" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" Style="padding: 10px 16px" runat="server" Text="上线" OnClick="btnsave_Click" OnClientClick="return valid();" />
+                        <asp:Button ID="btnsave"  class="weui-btn weui-btn_primary"  runat="server" Text="上线" OnClick="btnsave_Click" OnClientClick="return valid();" />
+                        
                     </div>
                      
                     
 
-                </div>
-            </div>
+              
 
         </div>
     </form>

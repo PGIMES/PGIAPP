@@ -7,23 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <title>生产下线</title>
-     <%--<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.form.min.js"></script>
-    <script type="text/javascript" src="/js/json2.min.js"></script>
-    <script type="text/javascript" src="/js/jweixin-1.2.0.js"></script>
-    <script id="commonJsScript" type="text/javascript" src="/js/common.js?v=201810311922" ></script>
-    <script type="text/javascript" src="/js/jquery.weixintools.js?v=201809201357"></script>--%>
-
-     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
-    <script src="/Content/laydate/laydate.js"></script>
-    <script src="/Content/layer/layer.js"></script>
+  
 
-    <link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
+    <link href="../css/weui.css" rel="stylesheet" />
+    <link href="../css/weuix.css" rel="stylesheet" />
+    <script src="../js/zepto.min.js"></script>
+    <script src="../js/zepto.weui.js"></script>
 
      <style>
         .rowbr{
@@ -41,7 +31,7 @@
     <script>
         function valid() {
             if ($("#txt_qty").val() == "" || $("#txt_qty").val() == "0") {
-                layer.alert("请输入处置数量.");
+                alert("请输入处置数量.");
                 return false;
             }
             return true;
@@ -66,31 +56,77 @@
         </div> --%>
 
         
-        <div class="row ">
-            <div class="col-md-12">
+        
+            <div class="weui-cells weui-cells_form">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
             
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">当前岗位</span>
-                    <asp:TextBox ID="txt_location" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+             <asp:TextBox ID="ps_part" class="weui-input" placeholder="" Style="max-width: 100%; display:none" runat="server" ></asp:TextBox>
+
+                <div hidden="hidden">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">当前岗位</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <asp:TextBox ID="txt_location" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                    </div>
                 </div>
 
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth2">登入人</span>
-                    <asp:TextBox ID="txt_emp" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+
+                 <div hidden="hidden">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">登入人</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                       <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
+                    </div>
                 </div>
-              
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1" >当前产品</span>
-                    <asp:TextBox ID="txt_xmh" class="form-control" ReadOnly="true" Style="max-width: 100%" runat="server"></asp:TextBox>
+
+
+
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">生产完成单号</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <asp:TextBox ID="txt_dh" class="weui-input" Style="max-width: 100%" runat="server" placeholder="请输入完成单号"></asp:TextBox>
+                    </div>
                 </div>
+
+
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">物料号</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <asp:DropDownList ID="txt_xmh" class="weui-input" runat="server" OnSelectedIndexChanged="txt_xmh_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                    </div>
+                </div>
+
+                 <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">零件号</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <asp:TextBox ID="txt_pn" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+
+                  <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">本次完工数量</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <asp:TextBox ID="txt_qty" class="weui-input" Style="max-width: 100%" runat="server" placeholder="请输入完工数量"></asp:TextBox>
+                    </div>
+                </div>
+
+
+
                
-
-                <div class="input-group rowbr">
-                    <span class="input-group-addon textwidth1">下料数量</span>
-                    <asp:TextBox ID="txt_qty" class="form-control" type='number'  Style="max-width: 100%" runat="server"></asp:TextBox><%--AutoPostBack="True" OnTextChanged="txt_qty_TextChanged"--%>  
-                </div>
                 <div>
                    <asp:GridView ID="GridView1" 
                         AllowMultiColumnSorting="True" AllowPaging="True"
@@ -131,12 +167,12 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
                 <div class="">
-                    <asp:Button ID="btnsave" class="btn btn-primary btn-lg btn-block" BackColor="#428bca" style="padding:10px 16px" runat="server" Text="下线" OnClick="btnsave_Click" OnClientClick="return valid();" />
+                    <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="下线" OnClick="btnsave_Click" OnClientClick="return valid();" />
                 </div>
             
            
             </div>
-        </div>
+        
        
     </div>
     </form>
