@@ -50,7 +50,7 @@
                      layer.alert("请输入【Lot No】.");
                      return false;
                  }
-                 if ($("#act_qty").val() == "") {
+                 if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
                      layer.alert("请输入【送料数量】.");
                      return false;
                  } else if (parseInt($("#act_qty").val()) > parseInt($("#sy_qty").val())) {
