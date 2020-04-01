@@ -178,6 +178,10 @@
                                 <span class="weui-form-preview__value"><%# Eval("emp_code") %><%# Eval("emp_name") %></span>
                             </div>
                             <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">岗位</label>
+                                <span class="weui-form-preview__value"><%# Eval("location_desc") %></span>
+                            </div>
+                            <%--<div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要料人时间</label>
                                 <span class="weui-form-preview__value"><%# Eval("req_date","{0:MM/dd HH:mm}")%></span>
                             </div>                             
@@ -192,7 +196,7 @@
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">岗位</label>
                                 <span class="weui-form-preview__value"><%# Eval("location") %></span>
-                            </div>
+                            </div>--%>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">物料号</label>
                                 <span class="weui-form-preview__value"><%# Eval("pgino") %></span>
@@ -205,14 +209,14 @@
                                 <label class="weui-form-preview__label">要料数量</label>
                                 <span class="weui-form-preview__value"><%# Eval("need_qty") %></span>
                             </div>
-                            <div class="weui-form-preview__item">
+                            <%--<div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">已送数量</label>
                                 <span class="weui-form-preview__value"><%# Eval("act_qty") %></span>
                             </div>
                             <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">剩余数量</label>
+                                <label class="weui-form-preview__label">还差数量</label>
                                 <span class="weui-form-preview__value"><span style="color:<%# Eval("type").ToString()=="部分"?"red":""%>;"><%# Eval("sy_qty") %></span></span>
-                            </div>
+                            </div>--%>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要求送到时间</label>
                                 <span class="weui-form-preview__value">
