@@ -58,9 +58,9 @@
                     signature: datad.signature,// 必填，签名，见附录1
                     jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
                 });
-                wx.error(function (res) {
-                    alert(res);
-                });
+                //wx.error(function (res) {
+                //    alert(res);
+                //});
                 wx.ready(function () {
                     //扫描二维码
                     document.querySelector('img[id*=img_sm]').onclick = function () {
@@ -92,11 +92,6 @@
         <div class="weui-cells weui-cells_form">    
 
             <div class="weui-form-preview" id="div_login_on">
-                <%--<div class="weui-form-preview__hd" style="border-top:1px solid #e5e5e5">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">上岗信息</label>
-                    </div>
-                </div>--%>
                 <div class="weui-form-preview__bd">
                     <asp:Repeater runat="server" ID="listBxInfor">
                         <ItemTemplate>
@@ -119,8 +114,8 @@
             
             
              
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-            <ContentTemplate>
+           <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>--%>
             
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
@@ -174,8 +169,8 @@
                 </asp:GridView>
                     
                 
-            </ContentTemplate>
-            </asp:UpdatePanel>
+           <%-- </ContentTemplate>
+            </asp:UpdatePanel>--%>
 
             <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据"  OnClick="btn_bind_data_Click"/>
 

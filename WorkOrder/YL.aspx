@@ -130,8 +130,8 @@
         </asp:ScriptManager>
         <div class="weui-cells weui-cells_form">       
     
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-            <ContentTemplate>
+            <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>--%>
                    
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
@@ -183,8 +183,8 @@
                     </div>
                 </div>
 
-            </ContentTemplate>
-        </asp:UpdatePanel>  
+           <%-- </ContentTemplate>
+        </asp:UpdatePanel>  --%>
 
         <div class="weui-cell">
             <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 

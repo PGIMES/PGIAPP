@@ -9,7 +9,7 @@ namespace Common
 {
     public class LogHelper
     {
-        static string path = System.Web.HttpContext.Current.Server.MapPath("../") + @"\Log\";
+        static string path = System.Web.HttpContext.Current.Server.MapPath("/") + @"\Log\";
         public static void Write(string str)
         {
             //try
@@ -40,17 +40,17 @@ namespace Common
 
             try
             {
-                bool flag = !Directory.Exists(path + "\\Log");
-                if (flag)
-                {
-                    Directory.CreateDirectory(path );
-                }
-                string fileName = path +  DateTime.Now.ToString("yyyyMMdd") + ".Log";
-                FileInfo fileInfo = new FileInfo(fileName);
-                StreamWriter streamWriter = fileInfo.AppendText();
-                streamWriter.BaseStream.Seek(0L, SeekOrigin.End);
-                streamWriter.WriteLine(DateTime.Now.ToString("yyyyMMdd HH:mm:ss:fff") + "-" + str);
-                streamWriter.Close();
+                //bool flag = !Directory.Exists(path + "\\Log");
+                //if (flag)
+                //{
+                //    Directory.CreateDirectory(path );
+                //}
+                //string fileName = path +  DateTime.Now.ToString("yyyyMMdd") + ".Log";
+                //FileInfo fileInfo = new FileInfo(fileName);
+                //StreamWriter streamWriter = fileInfo.AppendText();
+                //streamWriter.BaseStream.Seek(0L, SeekOrigin.End);
+                //streamWriter.WriteLine(DateTime.Now.ToString("yyyyMMdd HH:mm:ss:fff") + "-" + str);
+                //streamWriter.Close();
             }
             catch
             {
