@@ -118,7 +118,8 @@ public partial class Emp_Login : System.Web.UI.Page
         if (re_dt.Rows.Count <= 0)
         {
             e_code.Text = "";
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备"+ e_code.Text + "】不存在')", true);
+            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【设备"+ e_code.Text + "】不存在')", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【设备" + e_code.Text + "】不存在')", true);
             return;
         }
         string location = re_dt.Rows[0]["location"].ToString();
@@ -141,7 +142,8 @@ public partial class Emp_Login : System.Web.UI.Page
             if (drs.Length != 0)
             {
                 e_code.Text = "";
-                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前岗位】已存在')", true);
+                //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【当前岗位】已存在')", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【当前岗位】已存在')", true);
                 return;
             }
         }
