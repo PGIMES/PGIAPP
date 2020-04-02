@@ -20,37 +20,7 @@
 
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <%--步骤二：通过config接口注入权限验证配置--%>
-    <script>        
-        //config注入的是企业的身份与权限
-       $('#e_code').val('<% =WeiXin.CorpID %>' + " " + '<% = timestamp %>' + " " + '<% = noncestr   %>' + " " + '<%= ent_signature %>' + " " + '<%= uri %>');
-        wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: '<% =WeiXin.CorpID %>', // 公众号
-            timestamp: '<% = timestamp %>', // 必填，生成签名的时间戳
-            nonceStr: '<% = noncestr   %>', // 必填，生成签名的随机串 
-            signature: '<%= ent_signature %>',// 必填，签名，config所以为企业签名
-            jsApiList: ['scanQRCode']
-        });
-
-        wx.ready(function () {
-            //扫描二维码
-            document.querySelector('#img_sm').onclick = function () {
-                //alert("a");
-                wx.scanQRCode({
-                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                    success: function (res) {
-                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                        // code 在这里面写上扫描二维码之后需要做的内容                       
-                        $('#e_code').val(result);
-                        //$('#e_code').change();
-                        e_code_change();
-                        
-                    }
-                });
-            };//end_document_scanQRCode
-        });
-
+    <script>  
         $(document).ready(function () {
             $("#btn_bind_data").css("display", "none");
 
@@ -68,6 +38,51 @@
             }
             $("#<%=btn_bind_data.ClientID%>").click();
         }
+
+    </script>
+    <script>
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var datad = JSON.parse(data.d); //转为Json字符串
+                wx.config({
+                    debug: false, // 开启调试模式
+                    appId: datad.appid, // 必填，公众号的唯一标识
+                    timestamp: datad.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: datad.noncestr, // 必填，生成签名的随机串
+                    signature: datad.signature,// 必填，签名，见附录1
+                    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+                });
+                wx.error(function (res) {
+                    alert(res);
+                });
+                wx.ready(function () {
+                    //扫描二维码
+                    document.querySelector('img[id*=img_sm]').onclick = function () {
+                        wx.scanQRCode({
+                            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                            success: function (res) {
+                                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                                // code 在这里面写上扫描二维码之后需要做的内容                       
+                                $('#e_code').val(result);
+                                //$('#e_code').change();
+                                e_code_change();
+
+                            }
+                        });
+                    };//end_document_scanQRCode
+                });
+            },
+            error: function (error) {
+                alert(error)
+            }
+        });
     </script>
     <form id="form1" runat="server">
     <asp:ScriptManager runat="server">

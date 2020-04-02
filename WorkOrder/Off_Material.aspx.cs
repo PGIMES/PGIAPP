@@ -13,7 +13,7 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = Request.QueryString["workshop"].ToString();
+        //_workshop = Request.QueryString["workshop"].ToString();
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -38,9 +38,9 @@ public partial class Off_Material : System.Web.UI.Page
         var value = SQLHelper.Query(sql).Tables[0];
         if (value != null && value.Rows.Count > 0)
         {
-            string sql_str = @"exec usp_app_off_material_gv_data '{0}'";
-            sql_str = string.Format(sql_str, WorkCode);
-            DataTable dt = SQLHelper.Query(sql_str).Tables[1];
+            string sql_str = @"exec usp_app_off_material_Bind_xmh '{0}','{1}'";
+            sql_str = string.Format(sql_str,"", WorkCode);
+            DataTable dt = SQLHelper.Query(sql_str).Tables[0];
             txt_xmh.DataSource = dt;
             txt_xmh.DataTextField = "pgino";
             txt_xmh.DataValueField = "pn";
@@ -62,15 +62,18 @@ public partial class Off_Material : System.Web.UI.Page
     {
         DataTable dt = new DataTable();
 
-        string sql = @"exec usp_app_off_material_gv_data '{0}'";
-        sql = string.Format(sql, txt_xmh.SelectedItem.Text);
+        string sql = @"exec usp_app_off_material_Bind_xmh '{0}','{1}'";
+        sql = string.Format(sql, txt_xmh.SelectedItem.Text,txt_emp.Text);
         txt_pn.Text = txt_xmh.SelectedValue;
-        DataTable redt = SQLHelper.Query(sql).Tables[1];
+        DataTable redt = SQLHelper.Query(sql).Tables[0];
         //根据项目号取子集
+        if(txt_xmh.SelectedValue!="")
+        { 
         DataRow[] drs2 = redt.Select("pgino = '"+ txt_xmh.SelectedItem.Text + "' ");
         ps_part.Text = drs2.CopyToDataTable().Rows[0]["ps_comp"].ToString();
+        }
 
-        dt = SQLHelper.Query(sql).Tables[0];
+        dt = SQLHelper.Query(sql).Tables[1];
         GridView1.DataSource = dt;
         GridView1.DataBind();
         
@@ -85,8 +88,8 @@ public partial class Off_Material : System.Web.UI.Page
  
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        string sql = @"exec usp_app_off_material '{0}','{1}','{2}','{3}','{4}'";
-        sql = string.Format(sql, txt_dh.Text, txt_emp.Text, txt_location.Text, ps_part.Text, txt_qty.Text);
+        string sql = @"exec usp_app_off_material '{0}','{1}','{2}','{3}'";
+        sql = string.Format(sql, txt_dh.Text, txt_emp.Text,txt_xmh.SelectedItem.Text, txt_qty.Text);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();

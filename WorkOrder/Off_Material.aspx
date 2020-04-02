@@ -34,6 +34,12 @@
                 alert("请输入处置数量.");
                 return false;
             }
+
+            if ($("#txt_xmh").val() == "")
+            {
+                alert("请选择物料号.");
+                return false;
+            }
             return true;
         }
     </script>
@@ -166,7 +172,7 @@
 
                 </ContentTemplate>
             </asp:UpdatePanel>
-                <div class="">
+                <div class="weui-cell">
                     <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="下线" OnClick="btnsave_Click" OnClientClick="return valid();" />
                 </div>
             
