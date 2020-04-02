@@ -22,7 +22,7 @@
     <%--步骤二：通过config接口注入权限验证配置--%>
     <script>  
         $(document).ready(function () {
-            $("#btn_bind_data").css("display", "none");
+            //$("#btn_bind_data").css("display", "none");
 
             if ($("#btn_sure").val() == "离岗确认") {
                 $("#div_emp").hide(); $("#div_code").hide(); $("#div_login_on").show();
@@ -168,7 +168,7 @@
                     <SortedDescendingHeaderStyle BackColor="#242121" />
                 </asp:GridView>
 
-                <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据"  OnClick="btn_bind_data_Click"/>
+                <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_Click"/>
             </ContentTemplate>
             </asp:UpdatePanel>
 
