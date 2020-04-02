@@ -11,13 +11,6 @@ public partial class YL : System.Web.UI.Page
 {
     public string _workshop = "";
 
-    //定义对象
-    public string timestamp;//签名的时间戳
-    public string noncestr;//签名的随机串
-    public string ent_signature;//企业签名        
-    public string ent_ticket;//企业的jsapi_ticket         
-    public string uri;//url
-
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
@@ -33,22 +26,25 @@ public partial class YL : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
-            txt_emp.Text = lu.Telephone + lu.UserName;
+            lbl_emp.Text = lu.Telephone + lu.UserName;
+            if (string.IsNullOrEmpty( lu.Telephone))//增加手机号的获取，因为cookIE里的手机号有可能会是空值
+            {
+                string strsql = "select * from [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] where employeeid = '" + lu.WorkCode + "'";
+                var value_rout = SQLHelper.reDs(strsql).Tables[0];
+                if (value_rout != null && value_rout.Rows.Count > 0)
+                {
+                    lbl_emp.Text = value_rout.Rows[0]["cellphone"].ToString() + lu.UserName;
+                }
+            }
+           
 
             //emp_code_name.Text = "02432何桂勤";
             //domain.Text = "200";
-            //txt_emp.Text = "15850349106何桂勤";
+            //lbl_emp.Text = "15850349106何桂勤";
 
             //绑定岗位
             ShowValue(lu.WorkCode);
             //ShowValue("02432");
-
-            timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
-            noncestr = new Random().Next(10000).ToString();
-            uri = Request.Url.AbsoluteUri.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
-            string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
-            ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
-            ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
         }
 
     }

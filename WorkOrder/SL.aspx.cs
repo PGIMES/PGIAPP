@@ -10,20 +10,11 @@ using System.Web.UI.WebControls;
 public partial class WorkOrder_SL : System.Web.UI.Page
 {
     public string _workshop = "";
-
     public string _need_no = "";
-
-    //定义对象
-    public string timestamp;//签名的时间戳
-    public string noncestr;//签名的随机串
-    public string ent_signature;//企业签名        
-    public string ent_ticket;//企业的jsapi_ticket         
-    public string uri;//url
 
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
-
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -41,13 +32,6 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
             need_no.Text = _need_no;
             init_data(_need_no);
-
-            timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
-            noncestr = new Random().Next(10000).ToString();
-            uri = Request.Url.AbsoluteUri.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
-            string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
-            ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
-            ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
         }
     }
 
@@ -61,20 +45,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
 
-        //need_date.Text = dt.Rows[0]["need_date"].ToString();
-        //yl_emp.Text = dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString();
-        //req_date.Text = dt.Rows[0]["req_date"].ToString();
-        //workshop.Text = dt.Rows[0]["workshop"].ToString();
-        //line.Text = dt.Rows[0]["line"].ToString();
-        //location.Text = dt.Rows[0]["location"].ToString();
         pgino.Text = dt.Rows[0]["pgino"].ToString();
         pn.Text = dt.Rows[0]["pn"].ToString();
-        //need_qty.Text = dt.Rows[0]["need_qty"].ToString();
-
-        //lot_no.Text = dt.Rows[0]["lot_no"].ToString();
-        //act_qty.Text = dt.Rows[0]["act_qty"].ToString() == "0" ? "" : dt.Rows[0]["act_qty"].ToString();
-        //emp_sl.Text = dt.Rows[0]["emp_code_sl"].ToString() + dt.Rows[0]["emp_name_sl"].ToString();
-        //act_date.Text = dt.Rows[0]["act_date"].ToString();
 
         txt_sy_qty.Text= dt.Rows[0]["sy_qty"].ToString();
         txt_act_date.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");

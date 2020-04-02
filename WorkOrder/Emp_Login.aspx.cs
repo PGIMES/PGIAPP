@@ -11,13 +11,6 @@ public partial class Emp_Login : System.Web.UI.Page
 {
     public string _workshop = "";
 
-    //定义对象
-    public string timestamp;//签名的时间戳
-    public string noncestr;//签名的随机串
-    public string ent_signature;//企业签名        
-    public string ent_ticket;//企业的jsapi_ticket         
-    public string uri;//url
-
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
@@ -40,13 +33,6 @@ public partial class Emp_Login : System.Web.UI.Page
             setButton();
 
             ViewState["emp_login_sb"] = null;
-
-            timestamp = DateTime.Now.Ticks.ToString().Substring(0, 10);
-            noncestr = new Random().Next(10000).ToString();
-            uri = Request.Url.AbsoluteUri.ToString().Replace("#", "").Replace(WeiXin.Port, ""); //本地地址                
-            string entAccessTicket = WeiXin.GetEntAccessToken();//企业AccessTicket
-            ent_ticket = WeiXin.GetEntJsapi_Ticket(entAccessTicket);
-            ent_signature = WeiXin.GetSignature(ent_ticket, noncestr, timestamp, uri);//企业签名
         }
 
     }
