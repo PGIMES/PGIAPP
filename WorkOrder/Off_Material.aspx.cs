@@ -67,11 +67,11 @@ public partial class Off_Material : System.Web.UI.Page
         txt_pn.Text = txt_xmh.SelectedValue;
         DataTable redt = SQLHelper.Query(sql).Tables[0];
         //根据项目号取子集
-        if(txt_xmh.SelectedValue!="")
-        { 
-        DataRow[] drs2 = redt.Select("pgino = '"+ txt_xmh.SelectedItem.Text + "' ");
-        ps_part.Text = drs2.CopyToDataTable().Rows[0]["ps_comp"].ToString();
-        }
+        //if(txt_xmh.SelectedValue!="")
+        //{ 
+        //DataRow[] drs2 = redt.Select("pgino = '"+ txt_xmh.SelectedItem.Text + "' ");
+        //ps_part.Text = drs2.CopyToDataTable().Rows[0]["ps_comp"].ToString();
+        //}
 
         dt = SQLHelper.Query(sql).Tables[1];
         GridView1.DataSource = dt;
