@@ -111,31 +111,31 @@
                     </asp:Repeater>
                 </div>
             </div>
-            
-            
-             
-           <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-            <ContentTemplate>--%>
-            
-                <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
-                <div id="div_emp" class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">登入人</label></div>
-                    <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="color:gray"></asp:TextBox>
-                </div>
+            
+            <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
 
-                <div id="div_code" class="weui-cell">
-                    <div class="weui-cell__hd f-red"><label class="weui-label">当前岗位</label></div>
-                    <div class="weui-cell__bd">
-                        <span style="float:left; width:90%">
-                            <asp:TextBox ID="e_code" class="weui-input" runat="server" placeholder="请输入当前设备" onkeyup="this.value=this.value.toUpperCase()" onchange="e_code_change()"></asp:TextBox> 
-                        </span>
-                        <span style="float:left; width:10%">
-                            <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
-                        </span>
-                    </div>
+            <div id="div_emp" class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">登入人</label></div>
+                <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="color:gray"></asp:TextBox>
+            </div>
+
+            <div id="div_code" class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">当前岗位</label></div>
+                <div class="weui-cell__bd">
+                    <span style="float:left; width:90%">
+                        <asp:TextBox ID="e_code" class="weui-input" runat="server" placeholder="请输入当前设备" onkeyup="this.value=this.value.toUpperCase()" onchange="e_code_change()"></asp:TextBox> 
+                    </span>
+                    <span style="float:left; width:10%">
+                        <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
+                    </span>
                 </div>
-                <br />
+            </div>
+
+            <br />
+
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
                 <asp:GridView ID="GridView1" 
                         AllowMultiColumnSorting="True" AllowPaging="True"
                         AllowSorting="True" AutoGenerateColumns="False"
@@ -167,21 +167,17 @@
                     <SortedDescendingCellStyle BackColor="#E5E5E5" />
                     <SortedDescendingHeaderStyle BackColor="#242121" />
                 </asp:GridView>
-                    
-                
-           <%-- </ContentTemplate>
-            </asp:UpdatePanel>--%>
 
-            <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据"  OnClick="btn_bind_data_Click"/>
+                <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据"  OnClick="btn_bind_data_Click"/>
+            </ContentTemplate>
+            </asp:UpdatePanel>
 
             <div class="weui-cell">
                 <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" Text="上岗确认" OnClick="btn_sure_Click"/>
             </div>
             
         </div>   
-           
-       
-    
+            
     </form>
 </body>
 </html>
