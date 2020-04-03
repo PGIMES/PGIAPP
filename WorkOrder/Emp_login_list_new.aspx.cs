@@ -34,10 +34,12 @@ public partial class WorkOrder_Emp_Login_list_new : System.Web.UI.Page
 
         string sql = @"exec [usp_app_emp_login_list] '{0}','{1}'";
         sql = string.Format(sql, _workshop, emp);
-        dt_wk = SQLHelper.Query(sql).Tables[0];
-        dt_my_1 = SQLHelper.Query(sql).Tables[1];
-        dt_my_2 = SQLHelper.Query(sql).Tables[2];
-        dt_my_3 = SQLHelper.Query(sql).Tables[3];
+        DataSet ds = SQLHelper.Query(sql);
+
+        dt_wk = ds.Tables[0];
+        dt_my_1 = ds.Tables[1];
+        dt_my_2 = ds.Tables[2];
+        dt_my_3 = ds.Tables[3];
 
         list_go.DataSource = dt_wk;
         list_go.DataBind();
