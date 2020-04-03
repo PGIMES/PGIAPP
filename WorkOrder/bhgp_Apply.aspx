@@ -21,6 +21,13 @@
         $(document).ready(function () {
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
+
+            if ($("#ref_order").val() == "") {
+                $("#div_ref_order").hide();
+                $("#lbl_ref_order").text("参考号/生产完成工单号");
+                $("#ref_order").val("");
+            }
+            
         });
 
         function pgino_change(pgino) {
@@ -39,6 +46,10 @@
                     var json_op = obj[0].json_op;
                     $("#op").select("update", { items: json_op });
                     $('#op').val('');
+
+                    $("#div_ref_order").hide();
+                    $("#lbl_ref_order").text("参考号/生产完成工单号");
+                    $("#ref_order").val("");
                 }
 
             });
@@ -56,6 +67,17 @@
             if ($("#op").val() == "") {
                 layer.alert("请输入【工序】.");
                 return false;
+            } else {
+                if ($("#ref_order").val() == "") {
+                    var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
+                    if (parseInt(_op) > 700) {
+                        layer.alert("请输入【参考号】.");
+                        return false;
+                    }else if (parseInt(_op) >= 600) {
+                        layer.alert("请输入【生产完成工单号】.");
+                        return false;
+                    }
+                }
             }
             if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
                 layer.alert("请输入【数量】.");
@@ -165,11 +187,15 @@
             <div class="weui-cell__hd"><label class="weui-label">物料名称</label></div>                          
             <asp:TextBox ID="descr" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
         </div>
-           
 
         <div class="weui-cell">
             <div class="weui-cell__hd f-red "><label class="weui-label">工序</label></div>
             <asp:TextBox ID="op" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+        </div>
+
+        <div class="weui-cell" id="div_ref_order">
+            <div class="weui-cell__hd f-red "><label class="weui-label" id="lbl_ref_order"></label></div>
+            <asp:TextBox ID="ref_order" class="weui-input"  runat="server"></asp:TextBox>
         </div>
 
         <div class="weui-cell">
@@ -249,6 +275,19 @@
             items: [{title:'' ,value:''}],
             onChange: function (d) {
                 //alert(d.values);
+                if (parseInt(d.values) < 600) {
+                    $("#div_ref_order").hide();
+                    $("#lbl_ref_order").text("参考号/生产完成工单号");
+                    $("#ref_order").val("");
+                } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
+                    $("#div_ref_order").show();
+                    $("#lbl_ref_order").text("生产完成工单号");
+                    $("#ref_order").val("");
+                } else if (true) {
+                    $("#div_ref_order").show();
+                    $("#lbl_ref_order").text("参考号");
+                    $("#ref_order").val("");
+                }
             },
             onClose: function (d) {
                 //var obj = eval(d.data);
