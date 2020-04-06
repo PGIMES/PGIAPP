@@ -40,7 +40,7 @@
     </style>
 
      <script>
-         function valid_sl() {
+         function valid() {
             //if ($("#lot_no").val() == "") {
             //    layer.alert("请输入【Lot No】.");
             //    return false;
@@ -55,8 +55,8 @@
             //return true;
          }
 
-         function valid_cancel() {
-             //return confirm('确认要【取消要料】吗？');
+         function valid_next() {
+             return true;
          }
 
     </script>
@@ -82,6 +82,7 @@
 
             <div class="weui-form-preview">
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
@@ -156,44 +157,111 @@
 
             </div>
 
-            <%--<div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">Lot No</label></div>
-                <div class="weui-cell__hd">
-                    <span style="float:left; width:90%">
-                        <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" runat="server" onchange="lotno_change()"></asp:TextBox>
-                    </span>
-                        <span style="float:left; width:10%">
-                            <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
-                    </span>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:Repeater runat="server" ID="listBx_deal">
+                    <ItemTemplate>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd f-red"><label class="weui-label">处置数量</label></div>
+                            <asp:TextBox ID="cz_qty" class="weui-input" placeholder="" runat="server" Text='<%# Eval("cz_qty") %>'></asp:TextBox>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">剩余数量</label></div>
+                            <asp:TextBox ID="sy_qty" class="weui-input" placeholder="" style="color:gray" runat="server" Text='<%# Eval("sy_qty") %>'></asp:TextBox>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd f-red"><label class="weui-label">判断为</label></div>
+                            <asp:TextBox ID="result" class="weui-input" placeholder="" runat="server" Text='<%# Eval("result") %>'></asp:TextBox>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd f-red"><label class="weui-label">废品原因</label></div>
+                            <asp:TextBox ID="reason" class="weui-input" placeholder="" runat="server" Text='<%# Eval("reason") %>'></asp:TextBox>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">原因说明</label></div>
+                            <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="2"  runat="server" value='<%# Eval("comment") %>'></textarea>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+                <div class="weui-cell">
+                    <asp:Button ID="Button1" class="weui-btn weui-btn_mini weui-btn_primary" runat="server" 
+                        Text="再加一条"  OnClientClick="return valid_next();" OnClick="Button1_Click" />
                 </div>
-            </div>
+            </ContentTemplate>
+            </asp:UpdatePanel>
 
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">送料数量</label></div>
-                <asp:TextBox ID="act_qty" class="weui-input" placeholder="" style="color:gray" runat="server"></asp:TextBox>
+                <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" 
+                    Text="处置"  OnClientClick="return valid();" />
             </div>
-
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">还差数量</label></div>
-                <asp:TextBox ID="txt_sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
-            </div>
-
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">送料时间</label></div>
-                <asp:TextBox ID="txt_act_date" class="weui-input" ReadOnly="true"  placeholder="" style="color:gray" runat="server"></asp:TextBox>
-            </div>--%>
-
-
-            <%--<div class="weui-cell">
-                <asp:Button ID="btn_sl" class="weui-btn weui-btn_primary" runat="server" 
-                    Text="送料"  OnClientClick="return valid_sl();" /> 
-                    <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" 
-                    Text="取消要料" OnClientClick="return valid_cancel();"/>
-            </div>--%>
 
         </div>
 
     
     </form>
+    <script type="text/javascript">
+        var datalist_reason;
+        $.ajax({
+            type: "post",
+            url: "bhgp_deal_new.aspx/init_rs",
+            data: "{'domain': '" + $("#domain").val() + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+            success: function (data) {
+                var obj = eval(data.d);
+                datalist_reason = obj[0].json_reason;
+            }
+        });
+
+        init_data();
+
+        function init_data() {
+            //$("#UpdatePanel1 input[name*=sy_qty]").attr("readonly", "readonly");
+
+            $("#UpdatePanel1 input[name*=result]").select({
+                title: "判断为",
+                items: [{ title: '合格', value: '合格' }, { title: '不合格', value: '不合格' }
+                    , { title: '让步合格', value: '让步合格' }, { title: '返工', value: '返工' }],
+                onChange: function (d) {
+                    //alert(d.values);
+                    //if (d.values == "不合格") {
+                    //    this.parent().next().hide();
+                    //} else {
+
+                    //}
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                }
+            });
+            $("#UpdatePanel1 input[name*=reason]").select({
+                title: "废品原因",
+                items: datalist_reason,
+                onChange: function (d) {
+                    //alert(d.values);
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                }
+            });
+        }
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+
+            init_data();
+
+        });
+
+    </script>
 </body>
 </html>
