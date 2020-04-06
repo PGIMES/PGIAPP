@@ -71,7 +71,7 @@
       <a href="/workorder/bhgp_Apply.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格申请</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
       <dd id="btn11" class="menus-item"  > 
-      <a href="/workorder/bhgp_deal_list_new.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格监视</span> <span class="mi-info check txt"></span> </a> 
+      <a href="/workorder/bhgp_Apply_list.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">不合格监视</span> <span class="mi-info check txt"></span> </a> 
      </dd> 
      <dd id="btn6" class="menus-item"  > 
       <a href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>"> <span class="mi-info logo"></span> <span class="mi-info txt">生产完成</span> <span class="mi-info check txt"></span> </a> 

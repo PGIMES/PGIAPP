@@ -90,7 +90,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
             if (flag == "N")
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-                Response.Redirect("/workorder/bhgp_deal_list_new.aspx?workshop=" + _workshop);
+                Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
             }
             else
             {
