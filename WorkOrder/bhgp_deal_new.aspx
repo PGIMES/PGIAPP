@@ -84,6 +84,7 @@
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -217,7 +218,16 @@
         init_data();
 
         function init_data() {
-            //$("#UpdatePanel1 input[name*=sy_qty]").attr("readonly", "readonly");
+            $("#UpdatePanel1 input[name*=sy_qty]").attr("readonly", "readonly");
+
+            $("#UpdatePanel1 input[name*=cz_qty]").change(function () {
+                var result = $("#qty").val();//总数量
+                $("#UpdatePanel1").find("input[id*=cz_qty]").each(function () {
+                    var cz_qty = $(this).val();
+                    result = result - cz_qty;
+                    $(this).parent().next().find("input[id*=sy_qty]").val(result);
+                });
+            });
 
             $("#UpdatePanel1 input[name*=result]").select({
                 title: "判断为",
@@ -240,6 +250,18 @@
                     //  console.log("open");
                 }
             });
+
+            $("#UpdatePanel1 input[name*=result]").change(function () {
+                if ($(this).val() == "不合格") {
+                    $(this).parent().next().show();
+                    $(this).parent().next().find("input[name*=reason]").val("");
+                } else {
+                    $(this).parent().next().hide();
+                    $(this).parent().next().find("input[name*=reason]").val("");
+                }
+
+            });
+            
             $("#UpdatePanel1 input[name*=reason]").select({
                 title: "废品原因",
                 items: datalist_reason,

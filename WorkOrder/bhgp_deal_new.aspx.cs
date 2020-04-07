@@ -47,6 +47,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         DataTable dt = ds.Tables[0];
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
+        qty.Text = dt.Rows[0]["qty"].ToString();
 
         DataTable dt2 = ds.Tables[1];
         listBx_deal.DataSource = dt2;
@@ -124,6 +125,20 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             {
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【剩余数量】必须大于等于0')", true);
                 return;
+            }
+
+            if (txt_result.Text.Trim() == "")
+            {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【判断为】不可为空')", true);
+                return;
+            }
+            else if (txt_result.Text.Trim() == "不合格")
+            {
+                if (txt_reason.Text.Trim() == "")
+                {
+                    ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【废品原因】不可为空')", true);
+                    return;
+                }
             }
 
             DataRow dr_s = dt.NewRow();
