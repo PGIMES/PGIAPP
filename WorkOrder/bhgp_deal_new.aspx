@@ -37,6 +37,9 @@
         .weui-btn + .weui-btn{
             margin-top:0px;
         }
+        #UpdatePanel1 .weui-cell:before{
+            border-top:none;
+        }
     </style>
 
      <script>
@@ -162,9 +165,9 @@
             <ContentTemplate>
                 <asp:Repeater runat="server" ID="listBx_deal">
                     <ItemTemplate>
-                        <div class="weui-cell">
+                        <div class="weui-cell" style="border-top:1px solid #e5e5e5">
                             <div class="weui-cell__hd f-red"><label class="weui-label">处置数量</label></div>
-                            <asp:TextBox ID="cz_qty" class="weui-input" placeholder="" runat="server" Text='<%# Eval("cz_qty") %>'></asp:TextBox>
+                            <asp:TextBox ID="cz_qty" class="weui-input" placeholder="" type="number" runat="server" Text='<%# Eval("cz_qty") %>'></asp:TextBox>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd"><label class="weui-label">剩余数量</label></div>
