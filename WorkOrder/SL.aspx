@@ -114,9 +114,9 @@
                     signature: datad.signature,// 必填，签名，见附录1
                     jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
                 });
-                wx.error(function (res) {
-                    alert(res);
-                });
+                //wx.error(function (res) {
+                //    alert(res);
+                //});
                 wx.ready(function () {
                     //扫描二维码
                     document.querySelector('img[id*=img_sm]').onclick = function () {
