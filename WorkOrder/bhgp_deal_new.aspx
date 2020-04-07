@@ -58,10 +58,6 @@
             //return true;
          }
 
-         function valid_next() {
-             return true;
-         }
-
     </script>
 
 </head>
@@ -188,17 +184,13 @@
                     </ItemTemplate>
                 </asp:Repeater>
                 <div class="weui-cell">
-                    <asp:Button ID="Button1" class="weui-btn weui-btn_mini weui-btn_primary" runat="server" 
-                        Text="再加一条"  OnClientClick="return valid_next();" OnClick="Button1_Click" />
+                    <asp:Button ID="Button1" class="weui-btn weui-btn_mini weui-btn_primary" runat="server" Text="再加一条" OnClick="Button1_Click" />
+                </div>
+                <div class="weui-cell">
+                    <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" Text="处置"  OnClientClick="return valid();" OnClick="btn_sure_Click" />
                 </div>
             </ContentTemplate>
             </asp:UpdatePanel>
-
-            <div class="weui-cell">
-                <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" 
-                    Text="处置"  OnClientClick="return valid();" />
-            </div>
-
         </div>
 
     

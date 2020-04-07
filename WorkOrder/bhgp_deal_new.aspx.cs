@@ -89,14 +89,18 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         }
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    public DataTable Get_Repeat_cz(out string msg)
     {
+        msg = "";
+
         DataTable dt = new DataTable();
         dt.Columns.Add("cz_qty", typeof(string));
         dt.Columns.Add("sy_qty", typeof(string));
         dt.Columns.Add("result", typeof(string));
         dt.Columns.Add("reason", typeof(string));
         dt.Columns.Add("comment", typeof(string));
+
+        int i = 0; string msg_row = "";
         foreach (RepeaterItem item in listBx_deal.Items)
         {
             TextBox txt_cz_qty = (TextBox)item.FindControl("cz_qty");
@@ -107,49 +111,65 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
 
             if (txt_cz_qty.Text.Trim() == "")
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【处置数量】不可为空')", true);
-                return;
+                msg_row += "第" + (i + 1).ToString() + "组【处置数量】不可为空 <br />";
             }
-            else if (Convert.ToInt32(txt_cz_qty.Text.Trim())<=0)
+            else if (Convert.ToInt32(txt_cz_qty.Text.Trim()) <= 0)
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【处置数量】必须大于0')", true);
-                return;
+                msg_row += "第" + (i + 1).ToString() + "组【处置数量】必须大于0 <br />";
             }
 
             if (txt_sy_qty.Text.Trim() == "")
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【剩余数量】不可为空')", true);
-                return;
+                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】不可为空 <br />";
             }
             else if (Convert.ToInt32(txt_sy_qty.Text.Trim()) < 0)
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【剩余数量】必须大于等于0')", true);
-                return;
+                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】必须大于等于0 <br />";
             }
 
             if (txt_result.Text.Trim() == "")
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【判断为】不可为空')", true);
-                return;
+                msg_row += "第" + (i + 1).ToString() + "组【判断为】不可为空 <br />";
             }
             else if (txt_result.Text.Trim() == "不合格")
             {
                 if (txt_reason.Text.Trim() == "")
                 {
-                    ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【废品原因】不可为空')", true);
-                    return;
+                    msg_row += "第" + (i + 1).ToString() + "组【废品原因】不可为空 <br />";
                 }
             }
+            
+            if (msg_row == "")//此行正确，添加到datatable
+            {
+                DataRow dr_s = dt.NewRow();
+                dr_s["cz_qty"] = txt_cz_qty.Text.Trim();
+                dr_s["sy_qty"] = txt_sy_qty.Text.Trim();
+                dr_s["result"] = txt_result.Text.Trim();
+                dr_s["reason"] = txt_reason.Text.Trim();
+                dr_s["comment"] = txt_comment.Value.Trim();
+                dt.Rows.Add(dr_s);
+            }
 
-            DataRow dr_s = dt.NewRow();
-            dr_s["cz_qty"] = txt_cz_qty.Text.Trim();
-            dr_s["sy_qty"] = txt_sy_qty.Text.Trim();
-            dr_s["result"] = txt_result.Text.Trim();
-            dr_s["reason"] = txt_reason.Text.Trim();
-            dr_s["comment"] = txt_comment.Value.Trim();
-            dt.Rows.Add(dr_s);
+            msg += msg_row;//累计msg信息
+            i++; msg_row = "";
         }
 
+        return dt;
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        string msg = "";
+        DataTable dt = new DataTable();
+        dt = Get_Repeat_cz(out msg);
+        if (msg != "")
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
+            return;
+        }
+
+
+        //=================================add 一空行
         DataRow dr = dt.NewRow();
         dt.Rows.Add(dr);
 
@@ -157,5 +177,20 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         listBx_deal.DataBind();
     }
 
-   
+
+
+    protected void btn_sure_Click(object sender, EventArgs e)
+    {
+        string msg = "";
+        DataTable dt = new DataTable();
+        dt = Get_Repeat_cz(out msg);
+        if (msg != "")
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
+            return;
+        }
+
+        //=================================处理数据
+
+    }
 }
