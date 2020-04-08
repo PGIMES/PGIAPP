@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -177,8 +178,6 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         listBx_deal.DataBind();
     }
 
-
-
     protected void btn_sure_Click(object sender, EventArgs e)
     {
         string msg = "";
@@ -189,8 +188,61 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
             return;
         }
-
+        if (dt.Rows[dt.Rows.Count - 1]["sy_qty"].ToString() != "0")
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【处置数量之和】必须等于')", true);
+            return;
+        }
+        return;
         //=================================处理数据
+        try
+        {
+            bhgp_deal_new bdn = new bhgp_deal_new();
+            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
+
+            string flag = re_dt.Rows[0][0].ToString();
+            string msg_f = re_dt.Rows[0][1].ToString();
+            if (flag == "N")
+            {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
+                Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('处置异常：" + ex.Message + "')", true);
+        }
+
+    }
+
+
+}
+
+
+
+public class bhgp_deal_new
+{
+    public bhgp_deal_new()
+    {
+        //
+        // TODO: 在此处添加构造函数逻辑
+        //
+    }
+    SQLHelper SQLHelper = new SQLHelper();
+
+    public DataTable save_data(DataTable dt, string workorder, string emp_code_name)
+    {
+        SqlParameter[] param = new SqlParameter[]
+      {
+            new SqlParameter("@dt",dt),
+            new SqlParameter("@workorder",workorder),
+            new SqlParameter("@emp_code_name",emp_code_name)
+      };
+        return SQLHelper.GetDataTable("usp_app_bhgp_deal", param);
 
     }
 }

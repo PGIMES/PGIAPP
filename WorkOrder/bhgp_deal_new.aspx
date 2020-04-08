@@ -246,6 +246,15 @@
                 }
             });
 
+           
+            $("#UpdatePanel1").find("input[id*=result]").each(function () {
+                if ($(this).val() == "不合格") {
+                    $(this).parent().next().show();
+                } else {
+                    $(this).parent().next().hide();
+                }
+            });
+
             $("#UpdatePanel1 input[name*=result]").change(function () {
                 if ($(this).val() == "不合格") {
                     $(this).parent().next().show();
