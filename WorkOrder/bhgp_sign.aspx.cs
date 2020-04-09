@@ -224,27 +224,3 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
 }
 
-
-
-public class bhgp_deal_new
-{
-    public bhgp_deal_new()
-    {
-        //
-        // TODO: 在此处添加构造函数逻辑
-        //
-    }
-    SQLHelper SQLHelper = new SQLHelper();
-
-    public DataTable save_data(DataTable dt, string workorder, string emp_code_name)
-    {
-        SqlParameter[] param = new SqlParameter[]
-      {
-            new SqlParameter("@dt",dt),
-            new SqlParameter("@workorder",workorder),
-            new SqlParameter("@emp",emp_code_name)
-      };
-        return SQLHelper.GetDataTable("usp_app_bhgp_deal", param);
-
-    }
-}
