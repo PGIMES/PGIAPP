@@ -56,7 +56,17 @@
 
         })
     </script>
-
+    <script>
+        function deal(stepid, workorder, workorder_f) {
+            //alert(stepid);
+            if (stepid == "0002") {//--检验处置
+                window.location.href = "/workorder/bhgp_deal_new.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+            }
+            else{
+                window.location.href = "/workorder/bhgp_sign.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+            }
+        }
+    </script>
 </head>
 <body ontouchstart>
     <div class="weui-pull-to-refresh__layer">
@@ -93,56 +103,7 @@
                                         <div class="weui-cells" id="YLZ">
                                             <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
                                                 <ItemTemplate>
-                                                    <a class="weui-cell weui-cell_access" 
-                                                            href="bhgp_deal_new.aspx?workorder=<%#Eval("workorder") %>&workshop=<%=_workshop %>&workorder_f=<%#Eval("workorder_f") %>">
-                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                        <div class="weui-cell__hd">
-                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                        </div>
-                                                        <div class="weui-cell__bd">
-                                                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                                <%# "单号"+Eval("workorder") %>
-                                                                 <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
-                                                                    <%# " 分单号" + Eval("workorder_f") %>
-                                                                </span>
-                                                            </span>
-                                                            <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
-                                                            </span>
-                                                            <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("reason_code") + "" + Eval("reason") + "," +Eval("sy_qty")+"件" %>
-                                                                <span class="weui-mark-rt- weui-badge" 
-                                                                    style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
-                                                                     font-size: x-small; color: white; 
-                                                                     display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                                    <%#Eval("type") %>
-                                                                </span>
-                                                            </span>
-                                                             <span class="weui-agree__text" style="font-size: smaller">
-                                                                 <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
-                                                             </span>
-                                                        </div>
-                                                    </a>
-
-                                                </ItemTemplate>
-                                            </asp:Repeater>
-                                       
-                                        </div>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                            <asp:Repeater ID="list_go_2" runat="server" EnableTheming="False" OnItemDataBound="list_go_2_ItemDataBound">
-                                <ItemTemplate>
-                                    <div class="weui-form-preview">
-                                        <div class="weui-cells__title  ">
-                                            <i class="icon nav-icon icon-49"></i><%# Eval("stepname") %>
-                                            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                                        </div>
-                                        <div class="weui-cells" id="YLZ">
-                                            <asp:Repeater runat="server" ID="re_go_2" EnableTheming="False">
-                                                <ItemTemplate>
-                                                    <a class="weui-cell weui-cell_access" 
-                                                            href="bhgp_sign.aspx?workorder=<%#Eval("workorder") %>&workshop=<%=_workshop %>&workorder_f=<%#Eval("workorder_f") %>">
+                                                    <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>

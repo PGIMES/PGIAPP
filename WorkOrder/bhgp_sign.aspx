@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="bhgp_deal_new.aspx.cs" Inherits="WorkOrder_bhgp_deal_new" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="bhgp_sign.aspx.cs" Inherits="WorkOrder_bhgp_sign" %>
 
 <!DOCTYPE html>
 
@@ -83,8 +83,6 @@
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
-                <asp:TextBox ID="qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
-                <asp:TextBox ID="sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -96,7 +94,6 @@
                     <asp:Repeater runat="server" ID="listBxInfo" OnItemDataBound="listBxInfo_ItemDataBound">
                         <ItemTemplate>
                             <div class="weui-mark-vip">
-                                <span class="weui-mark-lt <%# Eval("type").ToString()=="部分"?"bg-red":""%>"><%#Eval("type") %></span>
                                  <span class="weui-mark-lt"></span>
                             </div>
                             
@@ -162,44 +159,55 @@
 
             </div>
 
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-            <ContentTemplate>
+           <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">处置信息</label>
+                    <label class="weui-form-preview__">单号:<% ="<font class='tag'/>"+_workorder_f %></label>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
                 <asp:Repeater runat="server" ID="listBx_deal">
                     <ItemTemplate>
-                        <div class="weui-cell" style="display:none;">
-                            <div class="weui-cell__hd"><label class="weui-label">num</label></div>
-                            <asp:TextBox ID="num" class="weui-input" placeholder="" style="color:gray;" runat="server" Text='<%# Eval("num") %>'></asp:TextBox>
+                        <div class="weui-mark-vip">
+                            <span class="weui-mark-lt"></span>
                         </div>
-                        <div class="weui-cell" style="border-top:1px solid #e5e5e5">
-                            <div class="weui-cell__hd f-red"><label class="weui-label">处置数量</label></div>
-                            <asp:TextBox ID="cz_qty" class="weui-input" placeholder="" type="number" runat="server" Text='<%# Eval("cz_qty") %>'></asp:TextBox>
+                        <div class="weui-form-preview__item" style="display:none;">
+                            <label class="weui-form-preview__label">num</label>
+                            <span class="weui-form-preview__value"><%# Eval("num") %></span>
                         </div>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd"><label class="weui-label">剩余数量</label></div>
-                            <asp:TextBox ID="sy_qty" class="weui-input" placeholder="" style="color:gray" runat="server" Text='<%# Eval("sy_qty") %>'></asp:TextBox>
+                        <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
+                            <label class="weui-form-preview__label">处置数量</label>
+                            <span class="weui-form-preview__value"><%# Eval("cz_qty") %></span>
                         </div>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd f-red"><label class="weui-label">判断为</label></div>
-                            <asp:TextBox ID="result" class="weui-input" placeholder="" runat="server" Text='<%# Eval("result") %>'></asp:TextBox>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">剩余数量</label>
+                            <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
                         </div>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd f-red"><label class="weui-label">废品原因</label></div>
-                            <asp:TextBox ID="reason" class="weui-input" placeholder="" runat="server" Text='<%# Eval("reason") %>'></asp:TextBox>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">判断为</label>
+                            <span class="weui-form-preview__value"><%# Eval("result") %></span>
                         </div>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd"><label class="weui-label">原因说明</label></div>
-                            <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="2"  runat="server" value='<%# Eval("comment") %>'></textarea>
+                        <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()=="不合格"?"block":"none"%>; ">
+                            <label class="weui-form-preview__label">废品原因</label>
+                            <span class="weui-form-preview__value"><%# Eval("reason") %></span>
                         </div>
+                       <%-- <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">原因说明</label>
+                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                        </div>--%>
                     </ItemTemplate>
                 </asp:Repeater>
-                <div class="weui-cell">
-                    <asp:Button ID="Button1" class="weui-btn weui-btn_mini weui-btn_primary" runat="server" Text="再加一条" OnClick="Button1_Click" />
-                </div>
-                <div class="weui-cell">
-                    <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" Text="处置"  OnClientClick="return valid();" OnClick="btn_sure_Click" />
-                </div>
-            </ContentTemplate>
-            </asp:UpdatePanel>
+            </div>
+
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">返工说明</label></div>
+                <textarea id="comment" class="weui-textarea"  placeholder="请输入返工说明" rows="2"  runat="server" value='<%# Eval("comment") %>'></textarea>
+            </div>
+            <div class="weui-cell">
+                <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认"  OnClientClick="return valid();" />
+                 <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回"/>
+            </div>
+            
         </div>
 
     
