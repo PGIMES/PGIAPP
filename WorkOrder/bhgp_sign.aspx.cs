@@ -112,6 +112,24 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
     }
 
+    protected void btn_cancel_Click(object sender, EventArgs e)
+    {
+        string re_sql = @"exec [usp_app_bhgp_sign] '{0}', '{1}','{2}','{3}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, workorder_f.Text, stepid.Text);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
 
+        if (flag == "N")
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');", true);
+            Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
+        }
+
+    }
 }
 

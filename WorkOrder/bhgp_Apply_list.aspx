@@ -60,7 +60,11 @@
         function deal(stepid, workorder, workorder_f) {
             //alert(stepid);
             if (stepid == "0002") {//--检验处置
-                window.location.href = "/workorder/bhgp_deal_new.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                if (workorder_f == "") {//未处置过得数据
+                    window.location.href = "/workorder/bhgp_deal_new.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                } else {//已处置的数据：返工的，总经理退签的
+                    window.location.href = "/workorder/bhgp_deal_new_again.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                }
             }
             else{
                 window.location.href = "/workorder/bhgp_sign.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";

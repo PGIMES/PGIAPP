@@ -212,7 +212,7 @@
             </div>
             <div class="weui-cell">
                 <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认" OnClick="btn_sure_Click" />
-                <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回"/>
+                <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回" OnClick="btn_cancel_Click"/>
             </div>
             
         </div>
