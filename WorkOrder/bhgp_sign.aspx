@@ -191,10 +191,10 @@
                             <label class="weui-form-preview__label">废品原因</label>
                             <span class="weui-form-preview__value"><%# Eval("reason") %></span>
                         </div>
-                       <%-- <div class="weui-form-preview__item">
+                        <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">原因说明</label>
                             <span class="weui-form-preview__value"><%# Eval("comment") %></span>
-                        </div>--%>
+                        </div>
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
