@@ -42,24 +42,6 @@
         }
     </style>
 
-     <script>
-         function valid() {
-            //if ($("#lot_no").val() == "") {
-            //    layer.alert("请输入【Lot No】.");
-            //    return false;
-            //}
-            //if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
-            //    layer.alert("请输入【送料数量】.");
-            //    return false;
-            //} else if (parseInt($("#act_qty").val()) > parseInt($("#sy_qty").val())) {
-            //    layer.alert("【送料数量】不可大于【剩余数量】.");
-            //    return false;
-            //}
-            //return true;
-         }
-
-    </script>
-
 </head>
 <body>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -229,7 +211,7 @@
                 <textarea id="fg_comment" class="weui-textarea"  placeholder="请输入返工说明" rows="2"  runat="server" value='<%# Eval("fg_comment") %>'></textarea>
             </div>
             <div class="weui-cell">
-                <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认"  OnClientClick="return valid();" />
+                <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认" OnClick="btn_sure_Click" />
                 <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回"/>
             </div>
             
