@@ -93,131 +93,17 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         }
     }
 
-    public DataTable Get_Repeat_cz(out string msg)
-    {
-        msg = "";
-
-        DataTable dt = new DataTable();
-        dt.Columns.Add("num", typeof(int));
-        dt.Columns.Add("cz_qty", typeof(string));
-        dt.Columns.Add("sy_qty", typeof(string));
-        dt.Columns.Add("result", typeof(string));
-        dt.Columns.Add("reason", typeof(string));
-        dt.Columns.Add("comment", typeof(string));
-
-        int i = 0; string msg_row = "";
-        foreach (RepeaterItem item in listBx_deal.Items)
-        {
-            TextBox txt_num = (TextBox)item.FindControl("num");
-            TextBox txt_cz_qty = (TextBox)item.FindControl("cz_qty");
-            TextBox txt_sy_qty = (TextBox)item.FindControl("sy_qty");
-            TextBox txt_result = (TextBox)item.FindControl("result");
-            TextBox txt_reason = (TextBox)item.FindControl("reason");
-            System.Web.UI.HtmlControls.HtmlTextArea txt_comment = (System.Web.UI.HtmlControls.HtmlTextArea)item.FindControl("comment");
-
-            if (txt_cz_qty.Text.Trim() == "")
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【处置数量】不可为空 <br />";
-            }
-            else if (Convert.ToInt32(txt_cz_qty.Text.Trim()) <= 0)
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【处置数量】必须大于0 <br />";
-            }
-
-            if (txt_sy_qty.Text.Trim() == "")
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】不可为空 <br />";
-            }
-            else if (Convert.ToInt32(txt_sy_qty.Text.Trim()) < 0)
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】必须大于等于0 <br />";
-            }
-
-            if (txt_result.Text.Trim() == "")
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【判断为】不可为空 <br />";
-            }
-            else if (txt_result.Text.Trim() == "不合格")
-            {
-                if (txt_reason.Text.Trim() == "")
-                {
-                    msg_row += "第" + (i + 1).ToString() + "组【废品原因】不可为空 <br />";
-                }
-            }
-            
-            if (msg_row == "")//此行正确，添加到datatable
-            {
-                DataRow dr_s = dt.NewRow();
-                dr_s["num"] = txt_num.Text;
-                dr_s["cz_qty"] = txt_cz_qty.Text.Trim();
-                dr_s["sy_qty"] = txt_sy_qty.Text.Trim();
-                dr_s["result"] = txt_result.Text.Trim();
-                dr_s["reason"] = txt_reason.Text.Trim();
-                dr_s["comment"] = txt_comment.Value.Trim();
-                dt.Rows.Add(dr_s);
-            }
-
-            msg += msg_row;//累计msg信息
-            i++; msg_row = "";
-        }
-
-        return dt;
-    }
-
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        string msg = "";
-        DataTable dt = new DataTable();
-        dt = Get_Repeat_cz(out msg);
-        if (msg != "")
-        {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-            return;
-        }
-
-
-        //=================================add 一空行
-        DataRow dr = dt.NewRow();
-        dr["num"] = dt.Rows.Count + 1;
-        dt.Rows.Add(dr);
-
-        listBx_deal.DataSource = dt;
-        listBx_deal.DataBind();
-    }
 
     protected void btn_sure_Click(object sender, EventArgs e)
     {
         string msg = "";
-        DataTable dt = new DataTable();
-        dt = Get_Repeat_cz(out msg);
+       
         if (msg != "")
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
             return;
         }
         
-        //=================================处理数据
-        try
-        {
-            bhgp_deal_new bdn = new bhgp_deal_new();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
-
-            string flag = re_dt.Rows[0][0].ToString();
-            string msg_f = re_dt.Rows[0][1].ToString();
-            if (flag == "N")
-            {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
-                Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
-            }
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('处置异常：" + ex.Message + "')", true);
-        }
 
     }
 
