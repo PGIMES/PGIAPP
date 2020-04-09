@@ -92,6 +92,8 @@
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="workorder_f" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -224,7 +226,7 @@
 
             <div class="weui-cell" style="display:<%= _stepid=="0001"?"flex":"none"%>;">
                 <div class="weui-cell__hd"><label class="weui-label">返工说明</label></div>
-                <textarea id="comment" class="weui-textarea"  placeholder="请输入返工说明" rows="2"  runat="server" value='<%# Eval("comment") %>'></textarea>
+                <textarea id="fg_comment" class="weui-textarea"  placeholder="请输入返工说明" rows="2"  runat="server" value='<%# Eval("fg_comment") %>'></textarea>
             </div>
             <div class="weui-cell">
                 <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认"  OnClientClick="return valid();" />

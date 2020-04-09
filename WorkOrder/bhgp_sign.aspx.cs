@@ -38,7 +38,7 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
             emp_code_name.Text = "02432何桂勤";
             domain.Text = "200";
 
-            workorder.Text = _workorder;
+            workorder.Text = _workorder; workorder_f.Text = _workorder_f; stepid.Text = _stepid;
             init_data(_workorder, _workorder_f);
         }
     }
@@ -62,24 +62,6 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         listBx_deal_a.DataBind();
     }
 
-    [WebMethod]
-    public static string init_rs(string domain)
-    {
-        string result = "";
-        string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
-                    from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where [rsn_type]='SCRAP' and rsn_domain='{0}' order by rsn_code";
-        sql = string.Format(sql, domain);
-        DataSet ds = SQLHelper.Query(sql);
-
-        DataTable dt_reason = ds.Tables[0];
-        string json_reason = JsonConvert.SerializeObject(dt_reason);
-
-        result = "[{\"json_reason\":" + json_reason + "}]";
-        return result;
-
-    }
-
     protected void listBxInfo_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -100,14 +82,33 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
     protected void btn_sure_Click(object sender, EventArgs e)
     {
-        string msg = "";
-       
-        if (msg != "")
+        string _fg_comment = "";
+        if (_stepid == "0001")//需返工
+        {
+            _fg_comment = fg_comment.Value.Trim();
+            if (_fg_comment == "")
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【返工说明】不可为空')", true);
+                return;
+            }
+        }
+
+        string re_sql = @"exec [usp_app_bhgp_sign] '{0}', '{1}','{2}','{3}','{4}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, workorder_f.Text, stepid.Text, _fg_comment);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        if (flag == "N")
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');", true);
+            Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
+        }
+        else
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
-            return;
         }
-        
+
 
     }
 
