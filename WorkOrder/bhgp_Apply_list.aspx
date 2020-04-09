@@ -104,7 +104,13 @@
                                                                 <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
                                                             </span>
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("reason_code") + "" + Eval("reason") + "," +Eval("qty")+"件" %>
+                                                                <%# Eval("reason_code") + "" + Eval("reason") + "," +Eval("sy_qty")+"件" %>
+                                                                <span class="weui-mark-rt- weui-badge" 
+                                                                    style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                     font-size: x-small; color: white; 
+                                                                     display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                    <%#Eval("type") %>
+                                                                </span>
                                                             </span>
                                                              <span class="weui-agree__text" style="font-size: smaller">
                                                                  <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   

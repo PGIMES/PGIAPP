@@ -84,6 +84,7 @@
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -95,7 +96,7 @@
                     <asp:Repeater runat="server" ID="listBxInfo" OnItemDataBound="listBxInfo_ItemDataBound">
                         <ItemTemplate>
                             <div class="weui-mark-vip">
-                               <%-- <span class="weui-mark-lt <%# Eval("type").ToString()=="部分"?"bg-red":""%>"><%#Eval("type") %></span>--%>
+                                <span class="weui-mark-lt <%# Eval("type").ToString()=="部分"?"bg-red":""%>"><%#Eval("type") %></span>
                                  <span class="weui-mark-lt"></span>
                             </div>
                             
@@ -116,8 +117,12 @@
                                 <span class="weui-form-preview__value"><%# Eval("op") +""+ Eval("op_descr") %></span>
                             </div>
                             <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">数量</label>
+                                <label class="weui-form-preview__label">申请数量</label>
                                 <span class="weui-form-preview__value"><%# Eval("qty") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">剩余数量</label>
+                                <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("sy_qty") +"</font>" %></span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">原因名称</label>
@@ -161,6 +166,10 @@
             <ContentTemplate>
                 <asp:Repeater runat="server" ID="listBx_deal">
                     <ItemTemplate>
+                        <div class="weui-cell" style="display:none;">
+                            <div class="weui-cell__hd"><label class="weui-label">num</label></div>
+                            <asp:TextBox ID="num" class="weui-input" placeholder="" style="color:gray;" runat="server" Text='<%# Eval("num") %>'></asp:TextBox>
+                        </div>
                         <div class="weui-cell" style="border-top:1px solid #e5e5e5">
                             <div class="weui-cell__hd f-red"><label class="weui-label">处置数量</label></div>
                             <asp:TextBox ID="cz_qty" class="weui-input" placeholder="" type="number" runat="server" Text='<%# Eval("cz_qty") %>'></asp:TextBox>
@@ -216,7 +225,7 @@
             $("#UpdatePanel1 input[name*=sy_qty]").attr("readonly", "readonly");
 
             $("#UpdatePanel1 input[name*=cz_qty]").change(function () {
-                var result = $("#qty").val();//总数量
+                var result = $("#sy_qty").val();//总数量
                 $("#UpdatePanel1").find("input[id*=cz_qty]").each(function () {
                     var cz_qty = $(this).val();
                     result = result - cz_qty;

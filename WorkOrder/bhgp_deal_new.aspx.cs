@@ -49,6 +49,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
         qty.Text = dt.Rows[0]["qty"].ToString();
+        sy_qty.Text = dt.Rows[0]["sy_qty"].ToString();
 
         DataTable dt2 = ds.Tables[1];
         listBx_deal.DataSource = dt2;
@@ -61,7 +62,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         string result = "";
         string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where [rsn_type]='SCRAP' and rsn_domain='{0}' and left(rsn_code,1) in('1','5') order by rsn_code";
+                    where [rsn_type]='SCRAP' and rsn_domain='{0}' order by rsn_code";
         sql = string.Format(sql, domain);
         DataSet ds = SQLHelper.Query(sql);
 
@@ -95,6 +96,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         msg = "";
 
         DataTable dt = new DataTable();
+        dt.Columns.Add("num", typeof(int));
         dt.Columns.Add("cz_qty", typeof(string));
         dt.Columns.Add("sy_qty", typeof(string));
         dt.Columns.Add("result", typeof(string));
@@ -104,6 +106,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         int i = 0; string msg_row = "";
         foreach (RepeaterItem item in listBx_deal.Items)
         {
+            TextBox txt_num = (TextBox)item.FindControl("num");
             TextBox txt_cz_qty = (TextBox)item.FindControl("cz_qty");
             TextBox txt_sy_qty = (TextBox)item.FindControl("sy_qty");
             TextBox txt_result = (TextBox)item.FindControl("result");
@@ -143,6 +146,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             if (msg_row == "")//此行正确，添加到datatable
             {
                 DataRow dr_s = dt.NewRow();
+                dr_s["num"] = txt_num.Text;
                 dr_s["cz_qty"] = txt_cz_qty.Text.Trim();
                 dr_s["sy_qty"] = txt_sy_qty.Text.Trim();
                 dr_s["result"] = txt_result.Text.Trim();
@@ -172,6 +176,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
 
         //=================================add 一空行
         DataRow dr = dt.NewRow();
+        dr["num"] = dt.Rows.Count + 1;
         dt.Rows.Add(dr);
 
         listBx_deal.DataSource = dt;
@@ -188,12 +193,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
             return;
         }
-        if (dt.Rows[dt.Rows.Count - 1]["sy_qty"].ToString() != "0")
-        {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【处置数量之和】必须等于')", true);
-            return;
-        }
-        return;
+        
         //=================================处理数据
         try
         {
@@ -240,7 +240,7 @@ public class bhgp_deal_new
       {
             new SqlParameter("@dt",dt),
             new SqlParameter("@workorder",workorder),
-            new SqlParameter("@emp_code_name",emp_code_name)
+            new SqlParameter("@emp",emp_code_name)
       };
         return SQLHelper.GetDataTable("usp_app_bhgp_deal", param);
 
