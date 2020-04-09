@@ -9,10 +9,12 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
+public partial class WorkOrder_bhgp_deal_new_again : System.Web.UI.Page
 {
     public string _workshop = "";
     public string _workorder = "";
+    public string _workorder_f = "";
+    public string _stepid = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,34 +27,43 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         }
 
         _workorder = Request.QueryString["workorder"].ToString();
+        _workorder_f = Request.QueryString["workorder_f"].ToString();
+        _stepid = Request.QueryString["stepid"].ToString();
 
         if (!IsPostBack)
         {
-            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            emp_code_name.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
-            //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            //emp_code_name.Text = lu.WorkCode + lu.UserName;
+            //domain.Text = lu.Domain;
+            emp_code_name.Text = "02432何桂勤";
+            domain.Text = "200";
 
-            workorder.Text = _workorder;
-            init_data(_workorder);
+            workorder.Text = _workorder; workorder_f.Text = _workorder_f; stepid.Text = _stepid;
+            init_data(_workorder, _workorder_f);
         }
     }
 
-    void init_data(string workorder)
+    void init_data(string workorder, string workorder_f)
     {
-        string sql = @"exec [usp_app_bhgp_deal_init] '{0}'";
-        sql = string.Format(sql, workorder);
+        string sql = @"exec [usp_app_bhgp_deal_again_init] '{0}','{1}'";
+        sql = string.Format(sql, workorder, workorder_f);
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
-        qty.Text = dt.Rows[0]["qty"].ToString();
-        sy_qty.Text = dt.Rows[0]["sy_qty"].ToString();
 
         DataTable dt2 = ds.Tables[1];
-        listBx_deal.DataSource = dt2;
+        Repeater1.DataSource = dt2;
+        Repeater1.DataBind();
+
+        DataTable dt3 = ds.Tables[2];
+        Repeater1_a.DataSource = dt3;
+        Repeater1_a.DataBind();
+        cz_sum_qty.Text = dt3.Rows[0]["cz_sum_qty"].ToString();
+
+        DataTable dt4 = ds.Tables[3];
+        listBx_deal.DataSource = dt4;
         listBx_deal.DataBind();
     }
 
@@ -201,20 +212,20 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         //=================================处理数据
         try
         {
-            bhgp_deal_new bdn = new bhgp_deal_new();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
+            //bhgp_deal_again_new bdn = new bhgp_deal_again_new();
+            //DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
 
-            string flag = re_dt.Rows[0][0].ToString();
-            string msg_f = re_dt.Rows[0][1].ToString();
-            if (flag == "N")
-            {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
-                Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
-            }
+            //string flag = re_dt.Rows[0][0].ToString();
+            //string msg_f = re_dt.Rows[0][1].ToString();
+            //if (flag == "N")
+            //{
+            //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
+            //    Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
+            //}
+            //else
+            //{
+            //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
+            //}
         }
         catch (Exception ex)
         {
@@ -228,9 +239,9 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
 
 
 
-public class bhgp_deal_new
+public class bhgp_deal_again_new
 {
-    public bhgp_deal_new()
+    public bhgp_deal_again_new()
     {
         //
         // TODO: 在此处添加构造函数逻辑
@@ -246,7 +257,7 @@ public class bhgp_deal_new
             new SqlParameter("@workorder",workorder),
             new SqlParameter("@emp",emp_code_name)
       };
-        return SQLHelper.GetDataTable("usp_app_bhgp_deal", param);
+        return SQLHelper.GetDataTable("usp_app_bhgp_deal_again", param);
 
     }
 }
