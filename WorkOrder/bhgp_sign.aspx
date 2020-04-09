@@ -215,7 +215,7 @@
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">处置时间</label>
                             <span class="weui-form-preview__value">
-                                <%# Eval("create_date","{0:MM/dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                <%# Eval("create_date","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                             </span>
                         </div> 
                     </ItemTemplate>
