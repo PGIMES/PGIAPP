@@ -68,8 +68,13 @@
 
         $(document).ready(function () {
             if (<%= _stepid %>=="0005") {//总经理
+                $("#btn_sign").show();
                 $("#btn_cancel").show();
+            }else if (<%= _stepid %>=="9999") {//已完成
+                $("#btn_sign").hide();
+                $("#btn_cancel").hide();
             }else {
+                $("#btn_sign").show();
                 $("#btn_cancel").hide();
             }
         });
