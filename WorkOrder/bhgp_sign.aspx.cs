@@ -56,6 +56,10 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         DataTable dt2 = ds.Tables[1];
         listBx_deal.DataSource = dt2;
         listBx_deal.DataBind();
+
+        DataTable dt3 = ds.Tables[2];
+        listBx_deal_a.DataSource = dt3;
+        listBx_deal_a.DataBind();
     }
 
     [WebMethod]
