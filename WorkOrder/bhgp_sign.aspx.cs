@@ -45,7 +45,7 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
     void init_data(string workorder,string workorder_f)
     {
-        string sql = @"exec [usp_app_bhgp_deal_init] '{0}','{1}'";
+        string sql = @"exec [usp_app_bhgp_deal_sign_init] '{0}','{1}'";
         sql = string.Format(sql, workorder, _workorder_f);
         DataSet ds = SQLHelper.Query(sql);
 
