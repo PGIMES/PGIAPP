@@ -152,46 +152,47 @@
 
             </div>
 
-           <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">处置信息</label>
-                    <label class="weui-form-preview__">单号:<% ="<font class='tag'/>"+_workorder_f %></label>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <asp:Repeater runat="server" ID="listBx_deal">
-                    <ItemTemplate>
-                        <div class="weui-mark-vip">
-                            <span class="weui-mark-lt"></span>
-                        </div>
-                        <div class="weui-form-preview__item" style="display:none;">
-                            <label class="weui-form-preview__label">num</label>
-                            <span class="weui-form-preview__value"><%# Eval("num") %></span>
-                        </div>
-                        <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
-                            <label class="weui-form-preview__label">处置数量</label>
-                            <span class="weui-form-preview__value"><%# "<font class='f-red'>"+ Eval("cz_qty")+"</font>" %></span>
-                        </div>
+           <asp:Repeater runat="server" ID="Repeater_cz"  OnItemDataBound="Repeater_cz_ItemDataBound">
+                <ItemTemplate>
+                    <div class="weui-form-preview__hd" style="border-top:1px solid #e5e5e5">
                         <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">剩余数量</label>
-                            <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
+                            <label class="weui-form-preview__label">处置信息</label>
+                            <label class="weui-form-preview__">单号:<%# Eval("workorder_f")%></label>
+                            <%--<span style="color:<%= _workorder_f %>==<%# Eval("workorder_f")%>?'red':''; "><%# Eval("workorder_f")%></span>--%>
                         </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">判断为</label>
-                            <span class="weui-form-preview__value"><%# Eval("result") %></span>
-                        </div>
-                        <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()=="不合格"?"block":"none"%>; ">
-                            <label class="weui-form-preview__label">废品原因</label>
-                            <span class="weui-form-preview__value"><%# Eval("reason") %></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">原因说明</label>
-                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-                <asp:Repeater runat="server" ID="listBx_deal_a">
-                    <ItemTemplate>
+                    </div>
+                    <div class="weui-form-preview__bd">
+                        <asp:Repeater runat="server" ID="Repeater_cz_dt">
+                            <ItemTemplate>
+                                <div class="weui-mark-vip">
+                                    <span class="weui-mark-lt"></span>
+                                </div>
+                                <div class="weui-form-preview__item" style="display:none;">
+                                    <label class="weui-form-preview__label">num</label>
+                                    <span class="weui-form-preview__value"><%# Eval("num") %></span>
+                                </div>
+                                <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
+                                    <label class="weui-form-preview__label">处置数量</label>
+                                    <span class="weui-form-preview__value"><%# Eval("qty") %></span>
+                                </div>
+                                <%--<div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">剩余数量</label>
+                                    <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
+                                </div>--%>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">判断为</label>
+                                    <span class="weui-form-preview__value"><%# Eval("result") %></span>
+                                </div>
+                                <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()=="不合格"?"block":"none"%>; ">
+                                    <label class="weui-form-preview__label">废品原因</label>
+                                    <span class="weui-form-preview__value"><%# Eval("reason") %></span>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">原因说明</label>
+                                    <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
                         <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
                             <label class="weui-form-preview__label">处置人</label>
                             <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
@@ -202,9 +203,10 @@
                                 <%# Eval("create_date","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                             </span>
                         </div> 
-                    </ItemTemplate>
-                </asp:Repeater>
-            </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+                
 
             <div class="weui-cell" style="display:<%= _stepid=="0001"?"flex":"none"%>;">
                 <div class="weui-cell__hd"><label class="weui-label">返工说明</label></div>

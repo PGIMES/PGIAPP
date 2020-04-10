@@ -60,11 +60,14 @@
         function deal(stepid, workorder, workorder_f) {
             //alert(stepid);
             if (stepid == "0002") {//--检验处置
-                if (workorder_f == "") {//未处置过得数据
+
+                <%--if (workorder_f == "") {//未处置过得数据
                     window.location.href = "/workorder/bhgp_deal_new.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
                 } else {//已处置的数据：返工的，总经理退签的
                     window.location.href = "/workorder/bhgp_deal_new_again.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
-                }
+                }--%>
+
+                window.location.href = "/workorder/bhgp_deal_new.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
             }
             else{
                 window.location.href = "/workorder/bhgp_sign.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
@@ -123,7 +126,7 @@
                                                                 <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
                                                             </span>
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("reason_code") + "" + Eval("reason") + "," +Eval("sy_qty")+"件" %>
+                                                                <%# Eval("reason_code") + "" + Eval("reason") + "," +Eval("cur_qty")+"件" %>
                                                                 <span class="weui-mark-rt- weui-badge" 
                                                                     style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                                      font-size: x-small; color: white; 

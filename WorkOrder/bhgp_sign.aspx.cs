@@ -45,7 +45,7 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
     void init_data(string workorder,string workorder_f)
     {
-        string sql = @"exec [usp_app_bhgp_deal_sign_init] '{0}','{1}'";
+        string sql = @"exec [usp_app_bhgp_deal_init] '{0}','{1}'";
         sql = string.Format(sql, workorder, _workorder_f);
         DataSet ds = SQLHelper.Query(sql);
 
@@ -53,13 +53,9 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
 
-        DataTable dt2 = ds.Tables[1];
-        listBx_deal.DataSource = dt2;
-        listBx_deal.DataBind();
-
-        DataTable dt3 = ds.Tables[2];
-        listBx_deal_a.DataSource = dt3;
-        listBx_deal_a.DataBind();
+        DataTable dt1 = ds.Tables[1];
+        Repeater_cz.DataSource = dt1;
+        Repeater_cz.DataBind();
     }
 
     protected void listBxInfo_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -78,7 +74,22 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
             detail.DataBind();
         }
     }
+    protected void Repeater_cz_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_dt");
+            DataRowView item = (DataRowView)e.Item.DataItem;
 
+            DataTable dt_wk = new DataTable();
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            sql = string.Format(sql, item["workorder_f"].ToString());
+            dt_wk = SQLHelper.Query(sql).Tables[0];
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+        }
+    }
 
     protected void btn_sure_Click(object sender, EventArgs e)
     {

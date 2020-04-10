@@ -83,8 +83,8 @@
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
-                <asp:TextBox ID="qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
-                <asp:TextBox ID="sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="workorder_f" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="cur_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -160,6 +160,61 @@
                     </asp:Repeater>
                 </div>
 
+                <asp:Repeater runat="server" ID="Repeater_cz"  OnItemDataBound="Repeater_cz_ItemDataBound">
+                    <ItemTemplate>
+                        <div class="weui-form-preview__hd" style="border-top:1px solid #e5e5e5">
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">处置信息</label>
+                                <label class="weui-form-preview__">单号:<span style="color:<%= _workorder_f!=""?"red":""%>; "><%# Eval("workorder_f")%></span></label>
+                            </div>
+                        </div>
+                        <div class="weui-form-preview__bd">
+                            <asp:Repeater runat="server" ID="Repeater_cz_dt">
+                                <ItemTemplate>
+                                    <div class="weui-mark-vip">
+                                        <span class="weui-mark-lt"></span>
+                                    </div>
+                                    <div class="weui-form-preview__item" style="display:none;">
+                                        <label class="weui-form-preview__label">num</label>
+                                        <span class="weui-form-preview__value"><%# Eval("num") %></span>
+                                    </div>
+                                    <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
+                                        <label class="weui-form-preview__label">处置数量</label>
+                                        <span class="weui-form-preview__value"><%# Eval("qty") %></span>
+                                    </div>
+                                    <%--<div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">剩余数量</label>
+                                        <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
+                                    </div>--%>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">判断为</label>
+                                        <span class="weui-form-preview__value"><%# Eval("result") %></span>
+                                    </div>
+                                    <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()=="不合格"?"block":"none"%>; ">
+                                        <label class="weui-form-preview__label">废品原因</label>
+                                        <span class="weui-form-preview__value"><%# Eval("reason") %></span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">原因说明</label>
+                                        <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                            <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
+                                <label class="weui-form-preview__label">处置人</label>
+                                <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
+                            </div> 
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">处置时间</label>
+                                <span class="weui-form-preview__value">
+                                    <%# Eval("create_date","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                </span>
+                            </div> 
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+                
+
             </div>
 
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -170,7 +225,7 @@
                             <div class="weui-cell__hd"><label class="weui-label">num</label></div>
                             <asp:TextBox ID="num" class="weui-input" placeholder="" style="color:gray;" runat="server" Text='<%# Eval("num") %>'></asp:TextBox>
                         </div>
-                        <div class="weui-cell" style="border-top:1px solid #e5e5e5">
+                        <div class="weui-cell">
                             <div class="weui-cell__hd f-red"><label class="weui-label">处置数量</label></div>
                             <asp:TextBox ID="cz_qty" class="weui-input" placeholder="" type="number" runat="server" Text='<%# Eval("cz_qty") %>'></asp:TextBox>
                         </div>
@@ -225,7 +280,7 @@
             $("#UpdatePanel1 input[name*=sy_qty]").attr("readonly", "readonly");
 
             $("#UpdatePanel1 input[name*=cz_qty]").change(function () {
-                var result = $("#sy_qty").val();//总数量
+                var result = $("#cur_qty").val();//总数量
                 $("#UpdatePanel1").find("input[id*=cz_qty]").each(function () {
                     var cz_qty = $(this).val();
                     result = result - cz_qty;

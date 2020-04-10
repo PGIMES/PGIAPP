@@ -13,6 +13,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
 {
     public string _workshop = "";
     public string _workorder = "";
+    public string _workorder_f = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,33 +26,38 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         }
 
         _workorder = Request.QueryString["workorder"].ToString();
+        _workorder_f = Request.QueryString["workorder_f"].ToString();
 
         if (!IsPostBack)
         {
-            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            emp_code_name.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
-            //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            //emp_code_name.Text = lu.WorkCode + lu.UserName;
+            //domain.Text = lu.Domain;
+            emp_code_name.Text = "02432何桂勤";
+            domain.Text = "200";
 
-            workorder.Text = _workorder;
-            init_data(_workorder);
+            workorder.Text = _workorder; workorder_f.Text = _workorder_f;
+            init_data(_workorder, _workorder_f);
         }
     }
 
-    void init_data(string workorder)
+    void init_data(string workorder, string workorder_f)
     {
-        string sql = @"exec [usp_app_bhgp_deal_init] '{0}'";
-        sql = string.Format(sql, workorder);
+        string sql = @"exec [usp_app_bhgp_deal_init] '{0}','{1}'";
+        sql = string.Format(sql, workorder, workorder_f);
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
-        qty.Text = dt.Rows[0]["qty"].ToString();
-        sy_qty.Text = dt.Rows[0]["sy_qty"].ToString();
+        cur_qty.Text = dt.Rows[0]["cur_qty"].ToString();
 
-        DataTable dt2 = ds.Tables[1];
+        DataTable dt1 = ds.Tables[1];
+        Repeater_cz.DataSource = dt1;
+        Repeater_cz.DataBind();
+
+
+        DataTable dt2 = ds.Tables[2];
         listBx_deal.DataSource = dt2;
         listBx_deal.DataBind();
     }
@@ -84,6 +90,24 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             DataTable dt_wk = new DataTable();
             string sql = @"select id,lot_no,qty,workorder from Mes_App_WorkOrder_Ng_Detail where workorder='{0}' order by id";
             sql = string.Format(sql, item["workorder"].ToString());
+            dt_wk = SQLHelper.Query(sql).Tables[0];
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+        }
+    }
+
+
+    protected void Repeater_cz_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_dt");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = new DataTable();
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            sql = string.Format(sql, item["workorder_f"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
             detail.DataSource = dt_wk;
@@ -202,7 +226,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         try
         {
             bhgp_deal_new bdn = new bhgp_deal_new();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
+            DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text);
 
             string flag = re_dt.Rows[0][0].ToString();
             string msg_f = re_dt.Rows[0][1].ToString();
@@ -238,12 +262,13 @@ public class bhgp_deal_new
     }
     SQLHelper SQLHelper = new SQLHelper();
 
-    public DataTable save_data(DataTable dt, string workorder, string emp_code_name)
+    public DataTable save_data(DataTable dt, string workorder, string workorder_f, string emp_code_name)
     {
         SqlParameter[] param = new SqlParameter[]
       {
             new SqlParameter("@dt",dt),
             new SqlParameter("@workorder",workorder),
+            new SqlParameter("@workorder_f",workorder_f),
             new SqlParameter("@emp",emp_code_name)
       };
         return SQLHelper.GetDataTable("usp_app_bhgp_deal", param);
