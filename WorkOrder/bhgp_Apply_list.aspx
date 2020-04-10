@@ -118,8 +118,11 @@
                                                         <div class="weui-cell__bd">
                                                              <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
                                                                 <%# "单号"+Eval("workorder") %>
-                                                                 <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                                <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
                                                                     <%# " 分单号" + Eval("workorder_f") %>
+                                                                </span>
+                                                                <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                                    <%# " 父单号" + Eval("workorder_f_a") %>
                                                                 </span>
                                                             </span>
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
