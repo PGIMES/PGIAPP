@@ -233,7 +233,11 @@
                                                 <span class="weui-form-preview__value"><%# Eval("comment") %></span>
                                             </div>
                                         </ItemTemplate>
-                                    </asp:Repeater>
+                                    </asp:Repeater>                                    
+                                    <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()=="返工"?"block":"none"%>; ">
+                                        <label class="weui-form-preview__label">返工说明</label>
+                                        <span class="weui-form-preview__value"><%# Eval("fg_comment") %></span>
+                                    </div>
                                     <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
                                         <label class="weui-form-preview__label">处置人</label>
                                         <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
