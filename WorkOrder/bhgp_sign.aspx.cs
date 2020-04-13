@@ -32,11 +32,11 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            emp_code_name.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
-            //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            //emp_code_name.Text = lu.WorkCode + lu.UserName;
+            //domain.Text = lu.Domain;
+            emp_code_name.Text = "02432何桂勤";
+            domain.Text = "200";
 
             workorder.Text = _workorder; workorder_f.Text = _workorder_f; stepid.Text = _stepid;
             init_data(_workorder, _workorder_f);

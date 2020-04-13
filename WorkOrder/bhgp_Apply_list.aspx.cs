@@ -20,9 +20,9 @@ public partial class WorkOrder_bhgp_Apply_list : System.Web.UI.Page
             return;
         }
 
-        //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-        //GetData(lu.WorkCode);
-        GetData("02432");
+        LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+        GetData(lu.WorkCode);
+        //GetData("02432");
     }
 
     private void GetData(string emp)
