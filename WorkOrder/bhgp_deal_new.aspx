@@ -235,7 +235,7 @@
                                                 </div>
                                                 <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()=="不合格"?"block":"none"%>; ">
                                                     <label class="weui-form-preview__label">废品原因</label>
-                                                    <span class="weui-form-preview__value"><%# Eval("reason") %></span>
+                                                    <span class="weui-form-preview__value"><%# Eval("reason_code")+""+Eval("reason") %></span>
                                                 </div>
                                                 <div class="weui-form-preview__item">
                                                     <label class="weui-form-preview__label">原因说明</label>
