@@ -75,6 +75,9 @@
         #UpdatePanel1 .weui-cell:before{
             border-top:none;
         }
+        .collapse li.js-show .weui-flex{
+            opacity:1;
+        }
     </style>
 
      <script>
