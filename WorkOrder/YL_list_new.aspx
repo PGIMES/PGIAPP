@@ -97,11 +97,11 @@
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="weui-cell__bd">
-                                                    <span style="font-size: smaller">
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                     </span>
                                                     
-                                                    <span class="weui-form-preview__value">
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%#   Eval("pgino")+","+Eval("pn")+","+Eval("need_qty") +"件" %>
 
                                                         <span class="weui-mark-rt- weui-badge" 
@@ -146,11 +146,11 @@
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="weui-cell__bd  f-gray">
-                                                    <span style="font-size: smaller">
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                     </span>
                                                     
-                                                    <span class="weui-form-preview__value">
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
 
                                                         <span class="weui-mark-rt- weui-badge" 
@@ -194,11 +194,11 @@
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="weui-cell__bd">
-                                                    <span style="font-size: smaller">
+                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                     </span>
                                                     
-                                                    <span class="weui-form-preview__value">
+                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
                                                         <%#   Eval("pgino")+","+Eval("pn")+","+Eval("need_qty") +"件" %>
 
                                                         <span class="weui-mark-rt- weui-badge" 
@@ -243,11 +243,11 @@
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="weui-cell__bd  f-gray">
-                                                    <span style="font-size: smaller">
+                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                     </span>
                                                     
-                                                    <span class="weui-form-preview__value">
+                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
                                                         <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
 
                                                         <span class="weui-mark-rt- weui-badge" 
