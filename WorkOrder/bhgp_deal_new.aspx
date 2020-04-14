@@ -233,13 +233,13 @@
                                                     <label class="weui-form-preview__label">判断为</label>
                                                     <span class="weui-form-preview__value"><%# Eval("result") %></span>
                                                 </div>
-                                                <div class="weui-form-preview__item">
-                                                    <label class="weui-form-preview__label">关联单号</label>
-                                                    <span class="weui-form-preview__value"><%# Eval("workorder_gl") %></span>
-                                                </div>
                                                 <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()=="不合格"?"block":"none"%>; ">
                                                     <label class="weui-form-preview__label">废品原因</label>
                                                     <span class="weui-form-preview__value"><%# Eval("reason_code")+""+Eval("reason") %></span>
+                                                </div>
+                                                <div class="weui-form-preview__item">
+                                                    <label class="weui-form-preview__label">关联单号</label>
+                                                    <span class="weui-form-preview__value"><%# Eval("workorder_gl") %></span>
                                                 </div>
                                                 <div class="weui-form-preview__item">
                                                     <label class="weui-form-preview__label">原因说明</label>
@@ -292,12 +292,12 @@
                             <asp:TextBox ID="result" class="weui-input" placeholder="" runat="server" Text='<%# Eval("result") %>'></asp:TextBox>
                         </div>
                         <div class="weui-cell">
-                            <div class="weui-cell__hd f-red"><label class="weui-label">关联单号</label></div>
-                            <asp:TextBox ID="workorder_gl" class="weui-input" placeholder="" runat="server" Text='<%# Eval("workorder_gl") %>'></asp:TextBox>
-                        </div>
-                        <div class="weui-cell">
                             <div class="weui-cell__hd f-red"><label class="weui-label">废品原因</label></div>
                             <asp:TextBox ID="reason" class="weui-input" placeholder="" runat="server" Text='<%# Eval("reason") %>'></asp:TextBox>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd f-red"><label class="weui-label">关联单号</label></div>
+                            <asp:TextBox ID="workorder_gl" class="weui-input" placeholder="" runat="server" Text='<%# Eval("workorder_gl") %>'></asp:TextBox>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd"><label class="weui-label">原因说明</label></div>
