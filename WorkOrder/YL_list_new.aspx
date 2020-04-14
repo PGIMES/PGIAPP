@@ -88,46 +88,52 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 </div>
                                 <div class="weui-cells" id="YLZ">
-                                    <asp:Repeater runat="server" ID="list_go" EnableTheming="False">
+                                    <asp:Repeater runat="server" ID="list_go" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" 
-                                                href="SL.aspx?need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
-                                                    </span>
-                                                    
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("need_qty") +"件" %>
-
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                        style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
-                                                             font-size: x-small; color: white; 
-                                                             display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                            <%#Eval("type") %>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_go_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access" 
+                                                    href="SL.aspx?need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                         </span>
-                                                    </span>
+                                                    
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%#   Eval("pgino")+","+Eval("pn")+","+Eval("need_qty") +"件" %>
+
+                                                            <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
+                                                        </span>
                                                     
 
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date")
-                                                                /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
-                                                         %>  
-                                                         <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
-                                                             <%# Eval("times_type") %><%# Eval("times") %>
-                                                         </span>
-                                                       <%-- <span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>--%>
-                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date")
+                                                                    /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
+                                                             %>  
+                                                             <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
+                                                                 <%# Eval("times_type") %><%# Eval("times") %>
+                                                             </span>
+                                                           <%-- <span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>--%>
+                                                        </span>
 
-                                                </div>
-                                                <div class="weui-cell__ft">
-                                                </div>
-                                            </a>
-
+                                                    </div>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
@@ -137,42 +143,48 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料 </div>
                                 <div class="weui-cells" id="YL_WC">
-                                    <asp:Repeater runat="server" ID="list_wc" EnableTheming="False">
+                                    <asp:Repeater runat="server" ID="list_wc" EnableTheming="False" OnItemDataBound="list_wc_ItemDataBound">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" 
-                                                href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&workshop=<%=_workshop %>">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd"> <%-- f-gray--%>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
-                                                    </span>
-                                                    
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
-
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                        style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
-                                                             font-size: x-small; color: white; 
-                                                             display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                            <%#Eval("type") %>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_wc_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access" 
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&workshop=<%=_workshop %>">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd"> <%-- f-gray--%>
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                         </span>
-                                                    </span>
+                                                    
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
+
+                                                            <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
+                                                        </span>
                                                     
 
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone")+" "+Eval("emp_name")
-                                                               +" "+Eval("need_date")+ " " 
-                                                         %>   
-                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")
+                                                                   +" "+Eval("need_date")+ " " 
+                                                             %>   
+                                                        </span>
 
-                                                </div>
-                                                <div class="weui-cell__ft">
-                                                </div>
-                                            </a>
-
+                                                    </div>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
@@ -185,46 +197,52 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 </div>
                                 <div class="weui-cells" id="YLZ_my">
-                                    <asp:Repeater runat="server" ID="list_go_my" EnableTheming="False">
+                                    <asp:Repeater runat="server" ID="list_go_my" EnableTheming="False" OnItemDataBound="list_go_my_ItemDataBound">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" 
-                                                href="SL.aspx?need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
-                                                    </span>
-                                                    
-                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("need_qty") +"件" %>
-
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                        style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
-                                                             font-size: x-small; color: white; 
-                                                             display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                            <%#Eval("type") %>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_go_my_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access" 
+                                                    href="SL.aspx?need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd">
+                                                        <span  class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                         </span>
-                                                    </span>
+                                                    
+                                                        <span  class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%#   Eval("pgino")+","+Eval("pn")+","+Eval("need_qty") +"件" %>
+
+                                                            <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
+                                                        </span>
                                                     
 
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date")
-                                                                /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
-                                                         %>   
-                                                        <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
-                                                             <%# Eval("times_type") %><%# Eval("times") %>
-                                                         </span>
-                                                        <%--<span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>--%>
-                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date")
+                                                                    /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
+                                                             %>   
+                                                            <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
+                                                                 <%# Eval("times_type") %><%# Eval("times") %>
+                                                             </span>
+                                                            <%--<span style="color:<%# Eval("sj_c").ToString()=="1"?"#10AEFF":(Eval("sj_c").ToString()=="2"?"red":"#999999") %>;"><%#Eval("need_date") %></span>--%>
+                                                        </span>
 
-                                                </div>
-                                                <div class="weui-cell__ft">
-                                                </div>
-                                            </a>
-
+                                                    </div>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
@@ -234,42 +252,48 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料 </div>
                                 <div class="weui-cells" id="YL_WC_my">
-                                    <asp:Repeater runat="server" ID="list_wc_my" EnableTheming="False">
+                                    <asp:Repeater runat="server" ID="list_wc_my" EnableTheming="False" OnItemDataBound="list_wc_my_ItemDataBound">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" 
-                                                href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&workshop=<%=_workshop %>">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd"> <%-- f-gray--%>
-                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
-                                                    </span>
-                                                    
-                                                    <span  class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
-
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                        style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
-                                                             font-size: x-small; color: white; 
-                                                             display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                            <%#Eval("type") %>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_wc_my_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access" 
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&workshop=<%=_workshop %>">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd"> <%-- f-gray--%>
+                                                        <span  class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                         </span>
-                                                    </span>
+                                                    
+                                                        <span  class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
+
+                                                            <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
+                                                        </span>
                                                     
 
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone")+" "+Eval("emp_name")
-                                                                +" "+Eval("need_date")+ " " 
-                                                         %>   
-                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")
+                                                                    +" "+Eval("need_date")+ " " 
+                                                             %>   
+                                                        </span>
 
-                                                </div>
-                                                <div class="weui-cell__ft">
-                                                </div>
-                                            </a>
-
+                                                    </div>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
