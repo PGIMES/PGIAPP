@@ -126,6 +126,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         dt.Columns.Add("result", typeof(string));
         dt.Columns.Add("reason", typeof(string));
         dt.Columns.Add("comment", typeof(string));
+        dt.Columns.Add("workorder_gl", typeof(string));
 
         int i = 0; string msg_row = "";
         foreach (RepeaterItem item in listBx_deal.Items)
@@ -135,6 +136,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             TextBox txt_sy_qty = (TextBox)item.FindControl("sy_qty");
             TextBox txt_result = (TextBox)item.FindControl("result");
             TextBox txt_reason = (TextBox)item.FindControl("reason");
+            TextBox txt_workorder_gl = (TextBox)item.FindControl("workorder_gl");
             System.Web.UI.HtmlControls.HtmlTextArea txt_comment = (System.Web.UI.HtmlControls.HtmlTextArea)item.FindControl("comment");
 
             if (txt_cz_qty.Text.Trim() == "")
@@ -166,7 +168,11 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
                     msg_row += "第" + (i + 1).ToString() + "组【废品原因】不可为空 <br />";
                 }
             }
-            
+            if (txt_workorder_gl.Text.Trim() == "")
+            {
+                msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
+            }
+
             if (msg_row == "")//此行正确，添加到datatable
             {
                 DataRow dr_s = dt.NewRow();
@@ -176,6 +182,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
                 dr_s["result"] = txt_result.Text.Trim();
                 dr_s["reason"] = txt_reason.Text.Trim();
                 dr_s["comment"] = txt_comment.Value.Trim();
+                dr_s["workorder_gl"] = txt_workorder_gl.Text.Trim();
                 dt.Rows.Add(dr_s);
             }
 
