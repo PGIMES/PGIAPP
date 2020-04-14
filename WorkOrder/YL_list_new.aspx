@@ -145,7 +145,7 @@
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
-                                                <div class="weui-cell__bd  f-gray">
+                                                <div class="weui-cell__bd"> <%-- f-gray--%>
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                     </span>
@@ -242,7 +242,7 @@
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
-                                                <div class="weui-cell__bd  f-gray">
+                                                <div class="weui-cell__bd"> <%-- f-gray--%>
                                                     <span  class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
                                                     </span>
