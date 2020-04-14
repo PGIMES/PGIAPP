@@ -110,6 +110,49 @@
 
       
     </script>
+    <script>
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var datad = JSON.parse(data.d); //转为Json字符串
+                wx.config({
+                    debug: false, // 开启调试模式
+                    appId: datad.appid, // 必填，公众号的唯一标识
+                    timestamp: datad.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: datad.noncestr, // 必填，生成签名的随机串
+                    signature: datad.signature,// 必填，签名，见附录1
+                    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+                });
+                //wx.error(function (res) {
+                //    alert(res);
+                //});
+                wx.ready(function () {
+                    //扫描二维码
+                    document.querySelector('img[id*=img_sm]').onclick = function () {
+                        $(this).parent().parent().find("input[name*=workorder_gl]").val("1");
+                        wx.scanQRCode({
+                            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                            success: function (res) {
+                                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                                // code 在这里面写上扫描二维码之后需要做的内容  
+                                $(this).parent().parent().find("input[name*=workorder_gl]").val(result);
+                                $("#TextBox1").val(result);
+                            }
+                        });
+                    };//end_document_scanQRCode
+                });
+            },
+            error: function (error) {
+                alert(error)
+            }
+        });
+    </script>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
@@ -118,6 +161,7 @@
         <div class="weui-cells weui-cells_form">
 
             <div class="weui-form-preview">
+                <asp:TextBox ID="TextBox1" class="form-control" ReadOnly="true" placeholder="" style="color:gray;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
@@ -297,7 +341,12 @@
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red"><label class="weui-label">关联单号</label></div>
-                            <asp:TextBox ID="workorder_gl" class="weui-input" placeholder="" runat="server" Text='<%# Eval("workorder_gl") %>'></asp:TextBox>
+                            <span style="float:left; width:90%">
+                                <asp:TextBox ID="workorder_gl" class="weui-input" placeholder="" runat="server" Text='<%# Eval("workorder_gl") %>'></asp:TextBox>
+                            </span>
+                            <span style="float:left; width:10%;">
+                                <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;"/>
+                            </span>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd"><label class="weui-label">原因说明</label></div>
