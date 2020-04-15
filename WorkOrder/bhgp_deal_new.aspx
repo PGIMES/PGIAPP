@@ -284,6 +284,10 @@
                                                 <%# Eval("create_date","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                                             </span>
                                         </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">处置结果</label>
+                                            <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
