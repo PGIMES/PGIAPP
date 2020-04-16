@@ -228,6 +228,19 @@
                     }
                 }
             }
+            if ($.trim($("#cz_qty").val()) == "" || $.trim($("#cz_qty").val()) == "0") {
+                layer.alert("请输入【处置数量】.");
+                return false;
+            }
+            if ($("#result").val() == "") {
+                layer.alert("请输入【判断为】.");
+                return false;
+            } else if ($("#result").val() == "不合格") {
+                if ($("#reason_two").val() == "") {
+                    layer.alert("请输入【废品原因】.");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -390,7 +403,10 @@
                             <textarea id="comment_two" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
                         </div>
 
-                        
+                        <div class="weui-cell">
+                            <asp:Button ID="btnsure" class="weui-btn weui-btn_primary" runat="server" 
+                                Text="处置" OnClick="btnsure_Click" OnClientClick="return valid_two();" />
+                        </div>
 
                     </div>
                 </div>

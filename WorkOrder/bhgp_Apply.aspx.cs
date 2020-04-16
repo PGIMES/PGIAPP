@@ -25,12 +25,12 @@ public partial class bhgp_Apply : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            //emp_code_name.Text = lu.WorkCode + lu.UserName;
-            //domain.Text = lu.Domain;
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            emp_code_name.Text = lu.WorkCode + lu.UserName;
+            domain.Text = lu.Domain;
 
-            emp_code_name.Text = "02432何桂勤";
-            domain.Text = "200";
+            //emp_code_name.Text = "02432何桂勤";
+            //domain.Text = "200";
         }
         
     }
@@ -132,8 +132,41 @@ public partial class bhgp_Apply : System.Web.UI.Page
     }
 
 
-    protected void btn_sure_Click(object sender, EventArgs e)
+    protected void btnsure_Click(object sender, EventArgs e)
     {
-       
+        string _op = op.Text;
+        int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
+        string re_sql = "";
+        if (op_code < 600)
+        {
+            re_sql = @"exec usp_app_bhgp_Apply_deal '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+
+        }
+        else if (op_code >= 600 && op_code <= 700)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
+            return;
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
+            return;
+        }
+
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, pgino.Text, pn.Text, descr.Text, op.Text
+            , cz_qty.Text, result.Text, reason_two.Text, comment_two.Value);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        if (flag == "N")
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
+            Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
+        }
     }
 }
