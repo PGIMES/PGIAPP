@@ -52,7 +52,7 @@
         });
 
         function saomiao_workorder() {
-            $('img[id*=img_sm_workorder]').click(function () {
+            $('#img_sm_workorder').click(function () {
                 wx.ready(function () {
                     wx.scanQRCode({
                         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -68,7 +68,7 @@
         }
 
         function saomiao_pgino() {
-            $('img[id*=img_sm_pgino]').click(function () {
+            $('#img_sm_pgino').click(function () {
                 wx.ready(function () {
                     wx.scanQRCode({
                         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -146,7 +146,7 @@
         
         //====================================two=============================
         function saomiao_workorder_two() {
-            $('img[id*=img_sm_workorder_two]').click(function () {
+            $('#img_sm_workorder_two').click(function () {
                 wx.ready(function () {
                     wx.scanQRCode({
                         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -162,7 +162,7 @@
         }
 
         function saomiao_pgino_two() {
-            $('img[id*=img_sm_pgino_two]').click(function () {
+            $('#img_sm_pgino_two').click(function () {
                 wx.ready(function () {
                     wx.scanQRCode({
                         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
