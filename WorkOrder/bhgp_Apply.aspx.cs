@@ -113,4 +113,9 @@ public partial class bhgp_Apply : System.Web.UI.Page
         }
     }
 
+
+    protected void btnsave_two_Click(object sender, EventArgs e)
+    {
+
+    }
 }
