@@ -145,11 +145,11 @@
 
         <div class="weui-tab" id="t1">
             <div class="weui-navbar">
-                <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
-                    不合格申请1
+                <div href="#tab1" class="weui-navbar__item">
+                    申请
                 </div>
                 <div href="#tab2" class="weui-navbar__item">
-                    不合格申请2
+                    申请&处置
                 </div>
             </div>
             <div class="weui-tab__panel">
