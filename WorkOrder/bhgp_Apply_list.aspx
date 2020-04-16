@@ -138,7 +138,11 @@
                                                                 </span>
                                                             </span>
                                                              <span class="weui-agree__text" style="font-size: smaller">
-                                                                 <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
+                                                                 <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                                 <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                                 <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                     <%# Eval("times") %>
+                                                                 </span>
                                                              </span>
                                                         </div>
                                                     </a>
@@ -193,7 +197,11 @@
                                                                 </span>
                                                             </span>
                                                              <span class="weui-agree__text" style="font-size: smaller">
-                                                                 <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
+                                                                 <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长: "%>   
+                                                                 <%--<font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                                 <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"f-red":"f-blue" %>;">
+                                                                     <%# Eval("times") %>
+                                                                 </span>
                                                              </span>
                                                         </div>
                                                     </a>
