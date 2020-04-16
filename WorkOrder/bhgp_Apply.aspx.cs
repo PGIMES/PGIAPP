@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -73,6 +74,23 @@ public partial class bhgp_Apply : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string init_rs(string domain)
+    {
+        string result = "";
+        string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+                    from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
+                    where [rsn_type]='SCRAP' and rsn_domain='{0}' order by rsn_code";
+        sql = string.Format(sql, domain);
+        DataSet ds = SQLHelper.Query(sql);
+
+        DataTable dt_reason = ds.Tables[0];
+        string json_reason = JsonConvert.SerializeObject(dt_reason);
+
+        result = "[{\"json_reason\":" + json_reason + "}]";
+        return result;
+
+    }
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
@@ -114,8 +132,8 @@ public partial class bhgp_Apply : System.Web.UI.Page
     }
 
 
-    protected void btnsave_two_Click(object sender, EventArgs e)
+    protected void btn_sure_Click(object sender, EventArgs e)
     {
-
+       
     }
 }

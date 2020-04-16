@@ -49,6 +49,7 @@
 
             saomiao_workorder_two();
             saomiao_pgino_two();
+
         });
 
         function saomiao_workorder() {
@@ -232,6 +233,9 @@
 
         //====================================two=============================
     </script>
+    <style>
+
+    </style>
 </head>
 <body>    
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -368,10 +372,25 @@
                             <div class="weui-cell__hd f-red "><label class="weui-label" id="lbl_ref_order_two"></label></div>
                             <asp:TextBox ID="ref_order_two" class="weui-input"  runat="server"></asp:TextBox>
                         </div>
+
                         <div class="weui-cell">
-                            <asp:Button ID="btnsave_two" class="weui-btn weui-btn_primary" runat="server" 
-                                Text="提交" OnClick="btnsave_two_Click" OnClientClick="return valid_two();" />
+                            <div class="weui-cell__hd f-red"><label class="weui-label">处置数量</label></div>
+                            <asp:TextBox ID="cz_qty" class="weui-input" placeholder="" type="number" runat="server" Text='<%# Eval("cz_qty") %>'></asp:TextBox>
                         </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd f-red"><label class="weui-label">判断为</label></div>
+                            <asp:TextBox ID="result" class="weui-input" placeholder="" runat="server" Text='<%# Eval("result") %>'></asp:TextBox>
+                        </div>
+                        <div class="weui-cell" id="div_bf">
+                            <div class="weui-cell__hd f-red"><label class="weui-label">废品原因</label></div>
+                            <asp:TextBox ID="reason_two" class="weui-input" placeholder="" runat="server" Text='<%# Eval("reason") %>'></asp:TextBox>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                            <textarea id="comment_two" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
+                        </div>
+
+                        
 
                     </div>
                 </div>
@@ -510,6 +529,63 @@
 
         });
         
+    </script>
+
+    <script type="text/javascript">
+        var datalist_reason;
+        $.ajax({
+            type: "post",
+            url: "bhgp_Apply.aspx/init_rs",
+            data: "{'domain': '" + $("#domain").val() + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+            success: function (data) {
+                var obj = eval(data.d);
+                datalist_reason = obj[0].json_reason;
+            }
+        });
+
+        $("#result").select({
+            title: "判断为",
+            items: [{ title: '合格', value: '合格' }, { title: '不合格', value: '不合格' }
+                , { title: '让步合格', value: '让步合格' }, { title: '返工', value: '返工' }],
+            onChange: function (d) {
+                //alert(d.values);
+                if (d.values == "不合格") {
+                    $("#div_bf").show();
+                } else {
+                    $("#div_bf").hide();
+                }
+                $("#reason_two").val("");
+            },
+            onClose: function (d) {
+                //var obj = eval(d.data);
+                //alert(obj.values);
+
+            },
+            onOpen: function () {
+                //  console.log("open");
+            }
+        });
+
+
+        $("#reason_two").select({
+            title: "废品原因",
+            items: datalist_reason,
+            onChange: function (d) {
+                //alert(d.values);
+            },
+            onClose: function (d) {
+                //var obj = eval(d.data);
+                //alert(obj.values);
+
+            },
+            onOpen: function () {
+                //  console.log("open");
+            }
+        });
+
     </script>
 
 </body>
