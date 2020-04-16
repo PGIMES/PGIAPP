@@ -24,7 +24,7 @@
 
             if ($("#ref_order").val() == "") {
                 $("#div_ref_order").hide();
-                $("#lbl_ref_order").text("参考号/生产完成工单号");
+                $("#lbl_ref_order").text("参考号/生产完成单号");
                 $("#ref_order").val("");
             }
             
@@ -48,7 +48,7 @@
                     $('#op').val('');
 
                     $("#div_ref_order").hide();
-                    $("#lbl_ref_order").text("参考号/生产完成工单号");
+                    $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
                 }
 
@@ -68,13 +68,13 @@
                 layer.alert("请输入【工序】.");
                 return false;
             } else {
-                if ($("#ref_order").val() == "") {
+                if ($.trim($("#ref_order").val()) == "") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     if (parseInt(_op) > 700) {
                         layer.alert("请输入【参考号】.");
                         return false;
                     }else if (parseInt(_op) >= 600) {
-                        layer.alert("请输入【生产完成工单号】.");
+                        layer.alert("请输入【生产完成单号】.");
                         return false;
                     }
                 }
@@ -277,11 +277,11 @@
                 //alert(d.values);
                 if (parseInt(d.values) < 600) {
                     $("#div_ref_order").hide();
-                    $("#lbl_ref_order").text("参考号/生产完成工单号");
+                    $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
                 } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
                     $("#div_ref_order").show();
-                    $("#lbl_ref_order").text("生产完成工单号");
+                    $("#lbl_ref_order").text("生产完成单号");
                     $("#ref_order").val("");
                 } else if (true) {
                     $("#div_ref_order").show();
