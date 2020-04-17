@@ -35,10 +35,10 @@ public partial class bhgp_Apply : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string init_pgino(string domain)
+    public static string init_pgino(string domain,string workshop)
     {
         string result = "";
-        string sql = @" exec [usp_app_bhgp_Apply_pgino] '" + domain + "'";
+        string sql = @" exec [usp_app_bhgp_Apply_pgino] '" + domain + "','" + workshop + "'";
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
@@ -60,15 +60,16 @@ public partial class bhgp_Apply : System.Web.UI.Page
         re_sql = string.Format(re_sql, pgino);
         DataSet ds = SQLHelper.Query(re_sql);
 
-        string pn = "", descr = "";
+        string pn = "", descr = "", b_use_routing = "";
         DataTable re_dt = ds.Tables[0];
         pn = re_dt.Rows[0][0].ToString();
         descr = re_dt.Rows[0][1].ToString();
+        b_use_routing = re_dt.Rows[0][2].ToString();
 
         DataTable dt_op = ds.Tables[1];
         string json_op = JsonConvert.SerializeObject(dt_op);
 
-        string result = "[{\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"json_op\":" + json_op + "}]";
+        string result = "[{\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"b_use_routing\":\"" + b_use_routing + "\",\"json_op\":" + json_op + "}]";
         return result;
 
     }

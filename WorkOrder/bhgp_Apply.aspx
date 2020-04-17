@@ -21,6 +21,7 @@
         $(document).ready(function () {
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
+            $("#b_use_routing").attr("readonly", "readonly");
 
             if ($("#ref_order").val() == "") {
                 $("#div_ref_order").hide();
@@ -42,6 +43,7 @@
                     var obj = eval(data.d);
                     $('#pn').val(obj[0].pn);
                     $('#descr').val(obj[0].descr);
+                    $('#b_use_routing').val(obj[0].b_use_routing);
 
                     var json_op = obj[0].json_op;
                     $("#op").select("update", { items: json_op });
@@ -67,8 +69,8 @@
             if ($("#op").val() == "") {
                 layer.alert("请输入【工序】.");
                 return false;
-            } else {
-                if ($.trim($("#ref_order").val()) == "") {
+            } else {//b_use_routing=0当作没有检验序
+                if ($.trim($("#ref_order").val()) == "" && $("#b_use_routing").val() == "1") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     if (parseInt(_op) > 700) {
                         layer.alert("请输入【参考号】.");
@@ -191,6 +193,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd f-red "><label class="weui-label">工序</label></div>
             <asp:TextBox ID="op" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+            <asp:TextBox ID="b_use_routing" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         </div>
 
         <div class="weui-cell" id="div_ref_order">
@@ -226,7 +229,7 @@
         $.ajax({
             type: "post",
             url: "bhgp_Apply.aspx/init_pgino",
-            data: "{'domain': '" + $("#domain").val() + "'}",
+            data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -275,7 +278,7 @@
             items: [{title:'' ,value:''}],
             onChange: function (d) {
                 //alert(d.values);
-                if (parseInt(d.values) < 600) {
+                if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
                     $("#div_ref_order").hide();
                     $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
