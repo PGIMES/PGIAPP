@@ -79,12 +79,14 @@ public partial class bhgp_Apply : System.Web.UI.Page
     {
 
         string _op = op.Text;
+        string _b_use_routing = b_use_routing.Text;
+
         int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
         string re_sql = "";
-        if (op_code < 600)
+        if (op_code < 600 || _b_use_routing == "0")
         {
             re_sql = @"exec usp_app_bhgp_Apply '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
-           
+
         }
         else if (op_code >= 600 && op_code <= 700)
         {
