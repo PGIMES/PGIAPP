@@ -288,7 +288,7 @@
                                         <ItemTemplate>
                                             <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
                                                 <label class="weui-form-preview__label"><%# Eval("sign_stepname") %></label>
-                                                <span class="weui-form-preview__value"><%# Eval("sign_emp") %></span>
+                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("sign_empname") %></span>
                                             </div>
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">签核时间</label>
