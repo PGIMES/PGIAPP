@@ -252,7 +252,21 @@
                                             <%# Eval("create_date","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                                         </span>
                                     </div> 
-                                    <div class="weui-form-preview__item">
+                                    <asp:Repeater runat="server" ID="Repeater_sg_dt">
+                                        <ItemTemplate>
+                                            <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
+                                                <label class="weui-form-preview__label"><%# Eval("sign_stepname") %></label>
+                                                <span class="weui-form-preview__value"><%# Eval("sign_emp") %></span>
+                                            </div>
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">签核时间</label>
+                                                <span class="weui-form-preview__value">
+                                                    <%# Eval("sign_time","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                                </span>
+                                            </div> 
+                                        </ItemTemplate>
+                                    </asp:Repeater>  
+                                    <div class="weui-form-preview__item" style="border-top:1px solid #e5e5e5">
                                         <label class="weui-form-preview__label">处置结果</label>
                                         <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
                                     </div>

@@ -78,9 +78,9 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
-            Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_dt");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
+            Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_dt");
             DataTable dt_wk = new DataTable();
             string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
             sql = string.Format(sql, item["workorder_f"].ToString());
@@ -88,6 +88,15 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
             detail.DataSource = dt_wk;
             detail.DataBind();
+
+            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_dt");
+            DataTable dt_wk_sg = new DataTable();
+            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}'";
+            sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
+            dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+
+            detail_sg.DataSource = dt_wk_sg;
+            detail_sg.DataBind();
         }
     }
 
