@@ -197,7 +197,7 @@
                             <div class="weui-flex__item" >
                                 <label class="weui-form-preview__label">处置信息</label>
                             </div>
-                            <label class="weui-form-preview__label">单号:<span id="dh_s"><%# Eval("workorder_f")%></span></label>
+                            <label class="weui-form-preview__label">序列号:<span id="dh_s"><%# Eval("workorder_f")%></span></label>
                             <i class="icon icon-74"></i>
                         </div>
                         <div class="page-category js-categoryInner">
@@ -229,8 +229,8 @@
                                                 <span class="weui-form-preview__value"><%# Eval("reason_code")+""+Eval("reason") %></span>
                                             </div>
                                             <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">关联单号</label>
-                                                <span class="weui-form-preview__value"><%# Eval("workorder_gl") %></span>
+                                                <label class="weui-form-preview__label"><span style="color:#10AEFF; font-weight:800;">关联单号</span></label>
+                                                <span class="weui-form-preview__value"><span style="color:#10AEFF; font-weight:800;"><%# Eval("workorder_gl") %></span></span>
                                             </div>
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">原因说明</label>

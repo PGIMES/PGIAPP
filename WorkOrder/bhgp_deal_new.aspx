@@ -261,8 +261,8 @@
                                                     <span class="weui-form-preview__value"><%# Eval("reason_code")+""+Eval("reason") %></span>
                                                 </div>
                                                 <div class="weui-form-preview__item">
-                                                    <label class="weui-form-preview__label">关联单号</label>
-                                                    <span class="weui-form-preview__value"><%# Eval("workorder_gl") %></span>
+                                                    <label class="weui-form-preview__label"><span style="color:#10AEFF; font-weight:800;">关联单号</span></label>
+                                                    <span class="weui-form-preview__value"><span style="color:#10AEFF; font-weight:800;"><%# Eval("workorder_gl") %></span></span>
                                                 </div>
                                                 <div class="weui-form-preview__item">
                                                     <label class="weui-form-preview__label">原因说明</label>
