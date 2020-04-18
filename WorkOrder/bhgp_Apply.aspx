@@ -31,6 +31,45 @@
             
         });
 
+        $(function () {
+            sm_workorder();
+            sm_pgino();
+        });
+
+        function sm_workorder() {
+            $('#img_sm_workorder').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容  
+                            $('#workorder').val(result);
+                        }
+                    });
+                });
+            });
+        }
+
+        function sm_pgino() {
+            $('#img_sm_pgino').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容  
+                            $('#pgino').val(result);
+                            pgino_change(result);
+                        }
+                    });
+                });
+            });
+        }
+
+
         function pgino_change(pgino) {
             $.ajax({
                 type: "post",
@@ -94,60 +133,7 @@
     </script>
 </head>
 <body>    
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script>
-        $.ajax({
-            url: "/getwxconfig.aspx/GetScanQRCode",
-            type: "Post",
-            data: "{ 'url': '" + location.href + "' }",
-            async: false,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                var datad = JSON.parse(data.d); //转为Json字符串
-                wx.config({
-                    debug: false, // 开启调试模式
-                    appId: datad.appid, // 必填，公众号的唯一标识
-                    timestamp: datad.timestamp, // 必填，生成签名的时间戳
-                    nonceStr: datad.noncestr, // 必填，生成签名的随机串
-                    signature: datad.signature,// 必填，签名，见附录1
-                    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
-                });
-                //wx.error(function (res) {
-                //    alert(res);
-                //});
-                wx.ready(function () {
-                    //扫描二维码
-                    document.querySelector('img[id*=img_sm]').onclick = function () {
-                        wx.scanQRCode({
-                            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                            success: function (res) {
-                                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                                // code 在这里面写上扫描二维码之后需要做的内容                       
-                                $('#workorder').val(result);
-                            }
-                        });
-                    };//end_document_scanQRCode
-                    document.querySelector('img[id*=img_sm_pgino]').onclick = function () {
-                        wx.scanQRCode({
-                            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                            success: function (res) {
-                                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                                // code 在这里面写上扫描二维码之后需要做的内容                       
-                                $('#pgino').val(result);
-                                pgino_change(result);
-                            }
-                        });
-                    };//end_document_scanQRCode
-                });
-            },
-            error: function (error) {
-                alert(error)
-            }
-        });
-    </script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>   
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
@@ -163,7 +149,7 @@
                     <asp:TextBox ID="workorder" class="weui-input" placeholder="请输入不合格处置单号" runat="server"></asp:TextBox>
                 </span>
                 <span style="float:left; width:10%">
-                    <img id="img_sm" src="../img/fdj2.png"/>
+                    <img id="img_sm_workorder" src="../img/fdj2.png"/>
                 </span>
             </div>
         </div>
@@ -306,4 +292,29 @@
     </script>
 
 </body>
+    <script>
+        var datad = [];
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                datad = JSON.parse(data.d); //转为Json字符串
+            },
+            error: function (error) {
+                alert(error)
+            }
+        });
+        wx.config({
+            debug: false, // 开启调试模式
+            appId: datad.appid, // 必填，公众号的唯一标识
+            timestamp: datad.timestamp, // 必填，生成签名的时间戳
+            nonceStr: datad.noncestr, // 必填，生成签名的随机串
+            signature: datad.signature,// 必填，签名，见附录1
+            jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+        });
+    </script>
 </html>

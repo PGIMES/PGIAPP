@@ -24,12 +24,12 @@ public partial class bhgp_Apply : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            emp_code_name.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
+            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            //emp_code_name.Text = lu.WorkCode + lu.UserName;
+            //domain.Text = lu.Domain;
 
-            //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            emp_code_name.Text = "02432何桂勤";
+            domain.Text = "200";
         }
         
     }
