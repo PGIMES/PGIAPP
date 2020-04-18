@@ -209,12 +209,15 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
     protected void btn_sure_Click(object sender, EventArgs e)
     {
+        btn_sign.Text = "确认中。。。。"; btn_sign.Enabled = false;
+
         string _fg_comment = "";
         if (_stepid == "0001")//需返工
         {
             _fg_comment = fg_comment.Value.Trim();
             if (_fg_comment == "")
             {
+                btn_sign.Text = "确认"; btn_sign.Enabled = true;
                 ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【返工说明】不可为空')", true);
                 return;
             }
@@ -234,6 +237,7 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         }
         else
         {
+            btn_sign.Text = "确认"; btn_sign.Enabled = true;
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
 
@@ -242,9 +246,12 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
 
     protected void btn_cancel_Click(object sender, EventArgs e)
     {
+        btn_cancel.Text = "退回中。。。。"; btn_cancel.Enabled = false;
+
         string _sign_comment = sign_comment.Value.Trim();
         if (_sign_comment == "")
         {
+            btn_cancel.Text = "退回"; btn_cancel.Enabled = true;
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【签核意见】不可为空')", true);
             return;
         }
@@ -262,6 +269,7 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         }
         else
         {
+            btn_cancel.Text = "退回"; btn_cancel.Enabled = true;
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
 

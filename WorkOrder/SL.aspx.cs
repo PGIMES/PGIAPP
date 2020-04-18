@@ -80,6 +80,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
     protected void btn_sl_Click(object sender, EventArgs e)
     {
+        btn_sl.Text = "送料中。。。。"; btn_sl.Enabled = false;
+
         string re_sql = @"exec [usp_app_SL] '{0}', '{1}','{2}','{3}','{4}','{5}'";
         re_sql = string.Format(re_sql, emp_code_name.Text, need_no.Text,lot_no.Text,act_qty.Text, pgino.Text, pn.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
@@ -93,6 +95,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         }
         else
         {
+            btn_sl.Text = "送料"; btn_sl.Enabled = true;
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
 
@@ -100,6 +103,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
     protected void btn_cancel_Click(object sender, EventArgs e)
     {
+        btn_cancel.Text = "取消送料中。。。。"; btn_cancel.Enabled = false;
+
         string re_sql = @"exec [usp_app_SL_cancel] '{0}', '{1}'";
         re_sql = string.Format(re_sql, emp_code_name.Text, need_no.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
@@ -113,6 +118,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         }
         else
         {
+            btn_cancel.Text = "取消送料"; btn_cancel.Enabled = true;
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
     }

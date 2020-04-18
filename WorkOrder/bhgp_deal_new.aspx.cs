@@ -322,11 +322,14 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
 
     protected void btn_sure_Click(object sender, EventArgs e)
     {
+        btn_sure.Text = "正在处置中。。。。"; btn_sure.Enabled = false;
+
         string msg = "";
         DataTable dt = new DataTable();
         dt = Get_Repeat_cz(out msg);
         if (msg != "")
         {
+            btn_sure.Text = "处置"; btn_sure.Enabled = true;
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
             return;
         }
@@ -346,11 +349,13 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             }
             else
             {
+                btn_sure.Text = "处置"; btn_sure.Enabled = true;
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
             }
         }
         catch (Exception ex)
         {
+            btn_sure.Text = "处置"; btn_sure.Enabled = true;
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('处置异常：" + ex.Message + "')", true);
         }
 
