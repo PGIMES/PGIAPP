@@ -51,6 +51,8 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
         cur_qty.Text = dt.Rows[0]["cur_qty"].ToString();
+        ng_reason_main.Text = dt.Rows[0]["reason_code"].ToString();
+        ng_reason_desc_main.Text = dt.Rows[0]["reason"].ToString();
 
         //DataTable dt1 = ds.Tables[1];
         //Repeater_cz.DataSource = dt1;

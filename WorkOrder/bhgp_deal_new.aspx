@@ -164,6 +164,8 @@
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder_f" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="cur_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="ng_reason_main" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="ng_reason_desc_main" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -667,6 +669,10 @@
                     var cz_qty = $(this).val();
                     result = result - cz_qty;
                     $(this).parent().next().find("input[id*=sy_qty]").val(result);
+                    if (result == "0") {
+                        //默认关联单号为 当前主单号
+                        $(this).parent().parent().find("input[id*=workorder_gl]").val("<%= _workorder %>");
+                    }
                 });
             });
 
@@ -705,6 +711,16 @@
                 if ($(this).val() == "不合格") {
                     $(this).parent().next().show();
                     $(this).parent().next().find("input[name*=reason]").val("");
+
+                    //剩余数量为0，选择不合格时，若是主表的也是工料废 原因，直接默认
+                    if ($(this).parent().parent().find("input[name*=sy_qty]").val() == "0") {
+                        if ($("#ng_reason_main").val().startsWith("1") || $("#ng_reason_main").val().startsWith("3")
+                            || $("#sp_rea_main").val().startsWith("5")) {
+                            var res=$("#ng_reason_main").val()+"-"+$("#ng_reason_desc_main").val();
+                            $(this).parent().parent().find("input[name*=reason]").val(res);
+                        }
+                    }
+
                 } else {
                     $(this).parent().next().hide();
                     $(this).parent().next().find("input[name*=reason]").val("");
