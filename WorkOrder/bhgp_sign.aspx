@@ -281,6 +281,10 @@
                                                         <%# Eval("sign_time","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                                                     </span>
                                                 </div> 
+                                                <div class="weui-form-preview__item">
+                                                    <label class="weui-form-preview__label">签核意见</label>
+                                                    <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
+                                                </div>
                                             </ItemTemplate>
                                         </asp:Repeater>  
                                         <div class="weui-form-preview__item">
@@ -450,6 +454,10 @@
                                                         <%# Eval("sign_time","{0:yyyy-MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                                                     </span>
                                                 </div> 
+                                                <div class="weui-form-preview__item">
+                                                    <label class="weui-form-preview__label">签核意见</label>
+                                                    <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
+                                                </div>
                                             </ItemTemplate>
                                         </asp:Repeater>  
                                         <div class="weui-form-preview__item">
