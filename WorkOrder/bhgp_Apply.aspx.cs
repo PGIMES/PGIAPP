@@ -248,7 +248,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
             return;
         }
-
+        //要做数量的检查，特别是在事务提交之前
         //=================================处理数据
         try
         {
