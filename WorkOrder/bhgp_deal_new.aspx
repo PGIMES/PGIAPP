@@ -715,7 +715,7 @@
                     //剩余数量为0，选择不合格时，若是主表的也是工料废 原因，直接默认
                     if ($(this).parent().parent().find("input[name*=sy_qty]").val() == "0") {
                         if ($("#ng_reason_main").val().startsWith("1") || $("#ng_reason_main").val().startsWith("3")
-                            || $("#sp_rea_main").val().startsWith("5")) {
+                            || $("#ng_reason_main").val().startsWith("5")) {
                             var res=$("#ng_reason_main").val()+"-"+$("#ng_reason_desc_main").val();
                             $(this).parent().parent().find("input[name*=reason]").val(res);
                         }
