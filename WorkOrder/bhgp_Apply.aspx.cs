@@ -85,7 +85,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
         string re_sql = "";
         if (op_code < 600 || _b_use_routing == "0")
         {
-            re_sql = @"exec usp_app_bhgp_Apply '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+            re_sql = @"exec usp_app_bhgp_Apply '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
 
         }
         else if (op_code >= 600 && op_code <= 700)
@@ -100,7 +100,8 @@ public partial class bhgp_Apply : System.Web.UI.Page
             return;
         }
 
-        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, pgino.Text, pn.Text, descr.Text, op.Text, qty.Text, reason.Text, comment.Value);
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, pgino.Text, pn.Text, descr.Text, op.Text
+            , qty.Text, reason.Text, comment.Value, _b_use_routing);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();

@@ -29,6 +29,7 @@
                 }
             });
 
+            var bg = 0;
             $("ul li").find("#dh_s").each(function () {
                 if ("<%= _workorder_f %>" == $(this).text()) {
                     $(this).parent().parent().parent().siblings().removeClass('js-show');
@@ -43,8 +44,25 @@
                     //处置信息
                     $(this).parent().parent().children('div').children().css("color", "red");
                     $(this).parent().parent().children('div').children().css("font-weight", "800");
+
+                    bg = 1;
                 } 
             });
+
+            if (bg == 0) {
+                $("#sp_cz").parent().parent().parent().siblings().removeClass('js-show');
+                $("#sp_cz").parent().parent().parent().addClass('js-show');
+                $("#sp_cz").parent().parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
+                $("#sp_cz").parent().parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+                //单号红色
+                $("#sp_cz").parent().css("color", "red");
+                $("#sp_cz").parent().css("font-weight", "800");
+
+                //处置信息
+                $("#sp_cz").parent().parent().children('div').children().css("color", "red");
+                $("#sp_cz").parent().parent().children('div').children().css("font-weight", "800");
+            }
 
         });
 
@@ -191,11 +209,14 @@
             </div>
 
             <ul class="collapse" style="display:<%= ViewState["dt1"].ToString()!="0"?"block":"none"%>;">
-                <li>
+                <li id="li_cz_one">
                     <div class="weui-flex js-category" >
                         <div class="weui-flex__item" >
                             <label class="weui-form-preview__label">处置</label>
                         </div>
+                        <label class="weui-form-preview__label">
+                            <span id="sp_cz"></span>
+                        </label>
                         <i class="icon icon-74"></i>
                     </div>
                     <div class="page-category js-categoryInner">
