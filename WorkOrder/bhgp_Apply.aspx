@@ -68,8 +68,7 @@
                 });
             });
         }
-
-
+        
         function pgino_change(pgino) {
             $.ajax({
                 type: "post",
