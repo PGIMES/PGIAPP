@@ -241,7 +241,7 @@
 
                 <ul class="collapse" style="display:<%= ViewState["dt1"].ToString()!="0"?"block":"none"%>;">
                     <li id="li_cz_one">
-                        <div class="weui-flex js-category" >
+                        <div class="weui-flex js-category"   style="border-top:1px solid #e5e5e5">
                             <div class="weui-flex__item" >
                                 <label class="weui-form-preview__label">处置</label>
                             </div>
