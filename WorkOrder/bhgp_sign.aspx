@@ -105,7 +105,7 @@
     <script>    
 
         $(document).ready(function () {
-            if ("<%= _stepid %>"=="0005") {//总经理
+            if ("<%= _stepid %>"=="0003" ||"<%= _stepid %>"=="0004" || "<%= _stepid %>"=="0005") {//总经理
                 $("#btn_sign").show();
                 $("#btn_cancel").show();
             } else if ("<%= _stepid %>" == "9999") {//已完成
@@ -552,7 +552,13 @@
 
             <div class="weui-cell" style="display:<%= _stepid=="0001"?"flex":"none"%>;">
                 <div class="weui-cell__hd"><label class="weui-label">返工说明</label></div>
-                <textarea id="fg_comment" class="weui-textarea"  placeholder="请输入返工说明" rows="2"  runat="server" value='<%# Eval("fg_comment") %>'></textarea>
+                <textarea id="fg_comment" class="weui-textarea"  placeholder="请输入返工说明" rows="2"  
+                    runat="server" value=''></textarea><%--value='<%# Eval("fg_comment") %>'--%>
+            </div>
+            <div class="weui-cell" style="display:<%= _stepid!="9999"?"flex":"none"%>;">
+                <div class="weui-cell__hd"><label class="weui-label">签核意见</label></div>
+                <textarea id="sign_comment" class="weui-textarea"  placeholder="请输入签核意见" rows="2"  
+                    runat="server" value=''></textarea>
             </div>
             <div class="weui-cell" style="display:<%= _stepid!="9999"?"flex":"none"%>;">
                 <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认" OnClick="btn_sure_Click" />
