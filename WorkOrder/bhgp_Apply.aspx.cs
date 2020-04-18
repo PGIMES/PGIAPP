@@ -147,8 +147,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
     }
-
-
+    
     public DataTable Get_Repeat_cz(out string msg)
     {
         msg = "";
@@ -254,7 +253,32 @@ public partial class bhgp_Apply : System.Web.UI.Page
         try
         {
             bhgp_Apply_Class bdn = new bhgp_Apply_Class();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
+
+            string _op = op.Text;
+            string _b_use_routing_two = b_use_routing_two.Text;
+
+            int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
+            string re_flag = "";
+            if (op_code < 600 || _b_use_routing_two == "0")
+            {
+                re_flag = "1";
+
+            }
+            else if (op_code >= 600 && op_code <= 700)
+            {
+                re_flag = "2";
+                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
+                return;
+            }
+            else
+            {
+                re_flag = "3";
+                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
+                return;
+            }
+
+            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text, workorder_two.Text, pgino_two.Text, pn_two.Text
+               , descr_two.Text , op_two.Text, comment_two.Value, _b_use_routing_two, re_flag);
 
             string flag = re_dt.Rows[0][0].ToString();
             string msg_f = re_dt.Rows[0][1].ToString();
@@ -289,15 +313,37 @@ public class bhgp_Apply_Class
     }
     SQLHelper SQLHelper = new SQLHelper();
 
-    public DataTable save_data(DataTable dt, string workorder, string emp_code_name)
+    public DataTable save_data(DataTable dt, string workorder, string emp_code_name, string workorder_two, string pgino_two, string pn_two
+        , string descr_two, string op_two, string comment_two, string b_use_routing_two, string re_flag)
     {
         SqlParameter[] param = new SqlParameter[]
       {
             new SqlParameter("@dt",dt),
             new SqlParameter("@workorder",workorder),
-            new SqlParameter("@emp",emp_code_name)
+            new SqlParameter("@emp",emp_code_name),
+            new SqlParameter("@workorder",workorder_two),
+            new SqlParameter("@pgino",pgino_two),
+            new SqlParameter("@pn",pn_two),
+            new SqlParameter("@descr",descr_two),
+            new SqlParameter("@op",op_two),
+            new SqlParameter("@comment",comment_two),
+            new SqlParameter("@b_use_routing",b_use_routing_two)
       };
-        return SQLHelper.GetDataTable("usp_app_bhgp_Apply_deal", param);
+
+        string sql = "";
+        if (sql == "1")
+        {
+            sql = "usp_app_bhgp_Apply_deal";
+        }
+        else if (sql == "2")
+        {
+
+        }
+        else if (sql == "3")
+        {
+
+        }
+        return SQLHelper.GetDataTable(sql, param);
 
     }
 }

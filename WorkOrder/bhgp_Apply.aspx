@@ -385,6 +385,10 @@
                             <div class="weui-cell__hd f-red "><label class="weui-label" id="lbl_ref_order_two"></label></div>
                             <asp:TextBox ID="ref_order_two" class="weui-input"  runat="server"></asp:TextBox>
                         </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                            <textarea id="comment_two" class="weui-textarea"  placeholder="请输入说明" rows="2"  runat="server"></textarea>
+                        </div>
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
                             <div class="weui-form-preview__hd" style="border-bottom:none;border-top:1px solid #e5e5e5;line-height:1.2rem;">
@@ -439,6 +443,7 @@
                             </div>
                         </ContentTemplate>
                         </asp:UpdatePanel>
+                        
                     </div>
                 </div>
             </div>
