@@ -49,7 +49,7 @@
                 } 
             });
 
-            if (bg == 0) {
+            if (bg == 0 && "<%= _workorder_f %>" !="") {
                 $("#sp_cz").parent().parent().parent().siblings().removeClass('js-show');
                 $("#sp_cz").parent().parent().parent().addClass('js-show');
                 $("#sp_cz").parent().parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
