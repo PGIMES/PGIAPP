@@ -424,7 +424,7 @@
                                         <asp:TextBox ID="reason" class="weui-input" placeholder="" runat="server" 
                                             Text='<%# Eval("reason") %>'></asp:TextBox>
                                     </div>
-                                    <div class="weui-cell">
+                                    <div class="weui-cell" style="display:none;">
                                         <div class="weui-cell__hd f-red"><label class="weui-label">关联单号</label></div>
                                         <span style="float:left; width:90%">
                                             <asp:TextBox ID="workorder_gl" class="weui-input" placeholder="" runat="server" 
@@ -441,7 +441,7 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
-                            <div class="weui-cell">
+                            <div class="weui-cell" style="display:none;">
                                 <asp:Button ID="Button1" class="weui-btn weui-btn_mini weui-btn_primary" runat="server" Text="再加一条" OnClick="Button1_Click" />
                             </div>
                             <div class="weui-cell">

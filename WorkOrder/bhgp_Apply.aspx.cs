@@ -190,10 +190,10 @@ public partial class bhgp_Apply : System.Web.UI.Page
                     msg_row += "第" + (i + 1).ToString() + "组【废品原因】不可为空 <br />";
                 }
             }
-            if (txt_workorder_gl.Text.Trim() == "")
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
-            }
+            //if (txt_workorder_gl.Text.Trim() == "")
+            //{
+            //    msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
+            //}
 
             if (msg_row == "")//此行正确，添加到datatable
             {
@@ -330,15 +330,15 @@ public class bhgp_Apply_Class
       };
 
         string sql = "";
-        if (sql == "1")
+        if (re_flag == "1")
         {
             sql = "usp_app_bhgp_Apply_deal";
         }
-        else if (sql == "2")
+        else if (re_flag == "2")
         {
 
         }
-        else if (sql == "3")
+        else if (re_flag == "3")
         {
 
         }
