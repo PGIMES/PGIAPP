@@ -602,7 +602,8 @@
             $("#UpdatePanel1 input[name*=result]").select({
                 title: "判断为",
                 items: [{ title: '合格', value: '合格' }, { title: '不合格', value: '不合格' }
-                    , { title: '让步合格', value: '让步合格' }, { title: '返工', value: '返工' }],
+                    , { title: '让步合格', value: '让步合格' }, { title: '返工', value: '返工' }
+                    , { title: '分选', value: '分选' }],
                 onChange: function (d) {
                     //alert(d.values);
                     //if (d.values == "不合格") {
