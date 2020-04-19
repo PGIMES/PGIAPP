@@ -71,12 +71,22 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         Repeater_cz_again.DataBind();
 
         DataTable dt4 = ds.Tables[4];
-        listBx_deal.DataSource = dt4;
+        Repeater_fx.DataSource = dt4;
+        Repeater_fx.DataBind();
+
+        DataTable dt5 = ds.Tables[5];
+        Repeater_cz_fx_again.DataSource = dt5;
+        Repeater_cz_fx_again.DataBind();
+
+        DataTable dt6 = ds.Tables[6];
+        listBx_deal.DataSource = dt6;
         listBx_deal.DataBind();
 
         ViewState["dt1"] = dt1.Rows.Count.ToString();
         ViewState["dt2"] = dt2.Rows.Count.ToString();
         ViewState["dt3"] = dt3.Rows.Count.ToString();
+        ViewState["dt4"] = dt4.Rows.Count.ToString();
+        ViewState["dt5"] = dt5.Rows.Count.ToString();
     }
 
     [WebMethod]
@@ -183,6 +193,59 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
             detail.DataBind();
 
             Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_again_dt");
+            DataTable dt_wk_sg = new DataTable();
+            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}'";
+            sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
+            dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+
+            detail_sg.DataSource = dt_wk_sg;
+            detail_sg.DataBind();
+        }
+    }
+
+
+    protected void Repeater_fx_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            Repeater detail = (Repeater)e.Item.FindControl("Repeater_fx_dt");
+            DataTable dt_wk = new DataTable();
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            sql = string.Format(sql, item["workorder_f"].ToString());
+            dt_wk = SQLHelper.Query(sql).Tables[0];
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_fx_sg_dt");
+            DataTable dt_wk_sg = new DataTable();
+            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}','分选'";
+            sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
+            dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+
+            detail_sg.DataSource = dt_wk_sg;
+            detail_sg.DataBind();
+        }
+    }
+
+    protected void Repeater_cz_fx_again_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_fx_again_dt");
+            DataTable dt_wk = new DataTable();
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            sql = string.Format(sql, item["workorder_f"].ToString());
+            dt_wk = SQLHelper.Query(sql).Tables[0];
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_fx_again_dt");
             DataTable dt_wk_sg = new DataTable();
             string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
