@@ -277,7 +277,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
                 return;
             }
 
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text, workorder_two.Text, pgino_two.Text, pn_two.Text
+            DataTable re_dt = bdn.save_data(dt, workorder_two.Text, emp_code_name.Text, pgino_two.Text, pn_two.Text
                , descr_two.Text , op_two.Text, comment_two.Value, _b_use_routing_two, re_flag);
 
             string flag = re_dt.Rows[0][0].ToString();
@@ -313,15 +313,14 @@ public class bhgp_Apply_Class
     }
     SQLHelper SQLHelper = new SQLHelper();
 
-    public DataTable save_data(DataTable dt, string workorder, string emp_code_name, string workorder_two, string pgino_two, string pn_two
+    public DataTable save_data(DataTable dt, string workorder_two, string emp_code_name, string pgino_two, string pn_two
         , string descr_two, string op_two, string comment_two, string b_use_routing_two, string re_flag)
     {
         SqlParameter[] param = new SqlParameter[]
       {
             new SqlParameter("@dt",dt),
-            new SqlParameter("@workorder",workorder),
-            new SqlParameter("@emp",emp_code_name),
             new SqlParameter("@workorder",workorder_two),
+            new SqlParameter("@emp",emp_code_name),
             new SqlParameter("@pgino",pgino_two),
             new SqlParameter("@pn",pn_two),
             new SqlParameter("@descr",descr_two),
