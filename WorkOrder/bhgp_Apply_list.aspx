@@ -129,12 +129,19 @@
                                                                 <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
                                                             </span>
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("reason_code") + "" + Eval("reason") + "," +Eval("cur_qty")+"件" %>
+                                                                <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                                <%# Eval("cur_qty")+"件" %>
                                                                 <span class="weui-mark-rt- weui-badge" 
                                                                     style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                                      font-size: x-small; color: white; 
                                                                      display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                                     <%#Eval("type") %>
+                                                                </span>
+                                                                <span class="weui-mark-rt- weui-badge" 
+                                                                    style="background-color: #10AEFF;
+                                                                     font-size: x-small; color: white; 
+                                                                     display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                                    <%#Eval("result") %>
                                                                 </span>
                                                             </span>
                                                              <span class="weui-agree__text" style="font-size: smaller">
