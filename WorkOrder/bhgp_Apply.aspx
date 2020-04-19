@@ -26,11 +26,11 @@
     
     <script>
         $(document).ready(function () {
-            if ($("#emp_code_name").val()=="02432何桂勤") {
-                $("#div_test").show();
-            } else {
-                $("#div_test").hide();
-            }
+            //if ($("#emp_code_name").val()=="02432何桂勤") {
+            //    $("#div_test").show();
+            //} else {
+            //    $("#div_test").hide();
+            //}
 
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
