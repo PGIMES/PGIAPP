@@ -26,6 +26,12 @@
     
     <script>
         $(document).ready(function () {
+            if ($("#emp_code_name").val()=="02432何桂勤") {
+                $("#div_test").show();
+            } else {
+                $("#div_test").hide();
+            }
+
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
             $("#b_use_routing").attr("readonly", "readonly");
@@ -345,7 +351,7 @@
                 </div>
                  <%--=======申请&处置-----%>
                 <div id="tab2" class="weui-tab__content">
-                    <div class="weui-cells weui-cells_form">
+                    <div class="weui-cells weui-cells_form" id="div_test">
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
                             <div class="weui-cell__bd">
