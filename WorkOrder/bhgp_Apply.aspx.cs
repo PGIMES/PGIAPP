@@ -254,17 +254,17 @@ public partial class bhgp_Apply : System.Web.UI.Page
         {
             bhgp_Apply_Class bdn = new bhgp_Apply_Class();
 
-            string _op = op.Text;
+            string _op_two = op_two.Text;
             string _b_use_routing_two = b_use_routing_two.Text;
 
-            int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
+            int op_code_two = Convert.ToInt32(_op_two.Substring(0, _op_two.IndexOf('-')));
             string re_flag = "";
-            if (op_code < 600 || _b_use_routing_two == "0")
+            if (op_code_two < 600 || _b_use_routing_two == "0")
             {
                 re_flag = "1";
 
             }
-            else if (op_code >= 600 && op_code <= 700)
+            else if (op_code_two >= 600 && op_code_two <= 700)
             {
                 re_flag = "2";
                 ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
