@@ -76,7 +76,7 @@
                         <a href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-check-square-o padding-r"></i>生产完成</span> <span class="mi-info check txt"></span></a>
                     </dd>
                     <dd id="btn2" class="menus-item">
-                        <a href="/workorder/CKSH.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-check-square-o padding-r"></i>仓库接收</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/CKSH.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-random padding-r"></i>仓库接收</span> <span class="mi-info check txt"></span></a>
                     </dd>
                     <dd id="btn7" class="menus-item">
                         <a href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-list-alt padding-r"></i>生产完成监视</span> <span class="mi-info check txt"></span></a>
