@@ -118,42 +118,33 @@
                 $("#btn_cancel").hide();
             }--%>
 
-            if ("<%= _stepid %>" == "9999") {//已完成
-                $("#btn_sign").hide();
-                $("#btn_cancel").hide();
-                $("#div_com").hide();
-            } else {
-                $.ajax({
-                    type: "post",
-                    url: "bhgp_sign.aspx/init_btn",
-                    data: "{'stepid':'" + "<%= _stepid %>" + "','workshop':'" + "<%= _workshop %>" + "','pgino':'" + $("#pgino").val() + "','emp':'" + $("#emp_code_name").val() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                    success: function (data) {
-                        var obj = eval(data.d);
+            $("#btn_sign").hide();
+            $("#btn_cancel").hide();
+            $("#div_com").hide();
 
-                        if (obj[0].btn_sure == "Y") {
-                            $("#btn_sign").show();
-                        } else {
-                            $("#btn_sign").hide();
-                        }
-                        if (obj[0].btn_cancel == "Y") {
-                            $("#btn_cancel").show();
-                        } else {
-                            $("#btn_cancel").hide();
-                        }
+            $.ajax({
+                type: "post",
+                url: "bhgp_sign.aspx/init_btn",
+                data: "{'stepid':'" + "<%= _stepid %>" + "','workshop':'" + "<%= _workshop %>" + "','pgino':'" + $("#pgino").val() + "','emp':'" + $("#emp_code_name").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
 
-                        if (obj[0].btn_sure == "Y" || obj[0].btn_cancel == "Y") {
-                            $("#div_com").show();
-                        } else {
-                            $("#div_com").hide();
-                        }
-                        return;
+                    if (obj[0].btn_sure == "Y") {
+                        $("#btn_sign").show();
                     }
-
-                });
-            }
+                    if (obj[0].btn_cancel == "Y") {
+                        $("#btn_cancel").show();
+                    }
+                    if (obj[0].btn_sure == "Y" || obj[0].btn_cancel == "Y") {
+                        $("#div_com").show();
+                    }
+                    return;
+                }
+            });
+            
         });
 
       
