@@ -55,10 +55,33 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         listBx_lotno.DataBind();
     }
 
+    //[WebMethod]
+    //public static string lotno_change(string pgino, string lotno)
+    //{
+    //    string re_sql = @"exec [usp_app_SL_lot_change] '{0}', '{1}'";
+    //    re_sql = string.Format(re_sql, pgino, lotno);
+    //    DataSet ds = SQLHelper.Query(re_sql);
+
+    //    DataTable re_dt = ds.Tables[0];
+    //    string flag = re_dt.Rows[0][0].ToString();
+    //    string msg = re_dt.Rows[0][1].ToString();
+
+    //    string qty = "";
+    //    if (flag == "N")
+    //    {
+    //        DataTable dt = ds.Tables[1];
+    //        qty = dt.Rows[0]["tr_qty_chg"].ToString();
+    //    }
+
+    //    string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
+    //    return result;
+
+    //}
+
     [WebMethod]
     public static string lotno_change(string pgino, string lotno)
     {
-        string re_sql = @"exec [usp_app_SL_lot_change] '{0}', '{1}'";
+        string re_sql = @"exec [usp_app_SL_lot_change_qad] '{0}', '{1}'";
         re_sql = string.Format(re_sql, pgino, lotno);
         DataSet ds = SQLHelper.Query(re_sql);
 
@@ -70,13 +93,29 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         if (flag == "N")
         {
             DataTable dt = ds.Tables[1];
-            qty = dt.Rows[0]["tr_qty_chg"].ToString();
+            string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + dt.Rows[0][0].ToString() + "' with (nolock)";
+            DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+            if (ldt == null)
+            {
+                flag = "Y"; msg = "Lot No不正确";
+            }
+            else if (ldt.Rows.Count <= 0)
+            {
+                flag = "Y"; msg = "Lot No不正确";
+            }
+            else
+            {
+                flag = "N"; msg = "";
+                qty = ldt.Rows[0][0].ToString();
+            }
         }
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
         return result;
 
     }
+
 
     protected void btn_sl_Click(object sender, EventArgs e)
     {
