@@ -55,10 +55,14 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         list_wc.DataSource = rowsline_wc;
         list_wc.DataBind();
 
-        list_go_my.DataSource = dt_go_my;
+        //list_go_my.DataSource = dt_go_my;
+        DataTable rowsline_go_my = dt_go_my.DefaultView.ToTable(true, "line");
+        list_go_my.DataSource = rowsline_go_my;
         list_go_my.DataBind();
 
-        list_wc_my.DataSource = dt_wc_my;
+        //list_wc_my.DataSource = dt_wc_my;
+        DataTable rowsline_wc_my = dt_wc_my.DefaultView.ToTable(true, "line");
+        list_wc_my.DataSource = rowsline_wc_my;
         list_wc_my.DataBind();
     }
 
