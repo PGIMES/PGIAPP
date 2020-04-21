@@ -39,14 +39,23 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
 
         string re_sql = @"exec [usp_app_CKSH_workorder_change] '{0}'";
         re_sql = string.Format(re_sql, workorder);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
 
         string pgino = "", pn = "", qty = "";
-        pgino = re_dt.Rows[0]["pgino"].ToString();
-        pn = re_dt.Rows[0]["pn"].ToString();
-        qty = re_dt.Rows[0]["qty"].ToString();
 
-        string result = "[{\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\"}]";
+        if (flag == "N")
+        {
+            DataTable re_dt_2 = ds.Tables[1];
+            pgino = re_dt_2.Rows[0]["pgino"].ToString();
+            pn = re_dt_2.Rows[0]["pn"].ToString();
+            qty = re_dt_2.Rows[0]["qty"].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\"}]";
         return result;
 
     }
