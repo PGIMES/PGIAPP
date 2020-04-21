@@ -109,9 +109,10 @@ public partial class WorkOrder_SL : System.Web.UI.Page
                 flag = "N"; msg = "";
                 //qty = ldt.Rows[0][0].ToString();
                 //qty = Convert.ToSingle(ldt.Rows[0][0].ToString()).ToString();
+                float qty_c = Convert.ToSingle(ldt.Rows[0][0].ToString());
 
                 string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}";
-                sql_q = string.Format(sql_q, pgino, lotno, Convert.ToSingle(ldt.Rows[0][0].ToString()));
+                sql_q = string.Format(sql_q, pgino, lotno, qty_c);
                 DataTable re_dt_q = SQLHelper.Query(sql_q).Tables[0];
 
                 flag = re_dt_q.Rows[0][0].ToString();
@@ -119,7 +120,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
                 if (flag == "N")
                 {
-                    qty = Convert.ToSingle(ldt.Rows[0][0].ToString()).ToString();
+                    qty = qty_c.ToString();
                 }
             }
         }
