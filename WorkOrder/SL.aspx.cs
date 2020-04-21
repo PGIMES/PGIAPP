@@ -93,7 +93,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         if (flag == "N")
         {
             DataTable dt = ds.Tables[1];
-            string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + dt.Rows[0][0].ToString() + "' with (nolock)";
+            string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + dt.Rows[0][0].ToString() + "' with (nolock)";
             DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
 
             if (ldt == null)
@@ -107,7 +107,20 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             else
             {
                 flag = "N"; msg = "";
-                qty = ldt.Rows[0][0].ToString();
+                //qty = ldt.Rows[0][0].ToString();
+                //qty = Convert.ToSingle(ldt.Rows[0][0].ToString()).ToString();
+
+                string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}";
+                sql_q = string.Format(sql_q, pgino, lotno, Convert.ToSingle(ldt.Rows[0][0].ToString()));
+                DataTable re_dt_q = SQLHelper.Query(sql_q).Tables[0];
+
+                flag = re_dt_q.Rows[0][0].ToString();
+                msg = re_dt_q.Rows[0][1].ToString();
+
+                if (flag == "N")
+                {
+                    qty = Convert.ToSingle(ldt.Rows[0][0].ToString()).ToString();
+                }
             }
         }
 
