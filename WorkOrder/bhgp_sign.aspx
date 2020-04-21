@@ -121,6 +121,7 @@
             if ("<%= _stepid %>" == "9999") {//已完成
                 $("#btn_sign").hide();
                 $("#btn_cancel").hide();
+                $("#div_com").hide();
             } else {
                 $.ajax({
                     type: "post",
@@ -141,6 +142,12 @@
                             $("#btn_cancel").show();
                         } else {
                             $("#btn_cancel").hide();
+                        }
+
+                        if (obj[0].btn_sure == "Y" || obj[0].btn_cancel == "Y") {
+                            $("#div_com").show();
+                        } else {
+                            $("#div_com").hide();
                         }
                         return;
                     }
@@ -771,12 +778,12 @@
                 <textarea id="fg_comment" class="weui-textarea"  placeholder="请输入返工说明" rows="2"  
                     runat="server" value=''></textarea><%--value='<%# Eval("fg_comment") %>'--%>
             </div>
-            <div class="weui-cell" style="display:<%= _stepid!="9999"?"flex":"none"%>;">
+            <div class="weui-cell" id="div_com"> <%--style="display:<%= _stepid!="9999"?"flex":"none"%>;"--%>
                 <div class="weui-cell__hd"><label class="weui-label">签核意见</label></div>
                 <textarea id="sign_comment" class="weui-textarea"  placeholder="请输入签核意见" rows="2"  
                     runat="server" value=''></textarea>
             </div>
-            <div class="weui-cell" style="display:<%= _stepid!="9999"?"flex":"none"%>;">
+            <div class="weui-cell" ><%--style="display:<%= _stepid!="9999"?"flex":"none"%>;"--%>
                 <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认" OnClick="btn_sure_Click" />
                 <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回" OnClick="btn_cancel_Click"/>
             </div>
