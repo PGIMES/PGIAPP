@@ -90,12 +90,22 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string init_rs(string domain)
+    public static string init_rs(string domain, string workshop)
     {
         string result = "";
-        string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+        string sql = @"";
+        if (workshop == "一车间" || workshop == "二车间" || workshop == "四车间")
+        {
+            sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where [rsn_type]='SCRAP' and rsn_domain='{0}' order by rsn_code";
+                    where left(rsn_code,1) in('3','5') and rsn_domain='{0}' order by rsn_code";//[rsn_type]='SCRAP'
+        }
+        //else if (workshop == "三车间")
+        //{
+        //    sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+        //            from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
+        //            where left(rsn_code,1) in('1','5') and rsn_domain='{0}' order by rsn_code";
+        //}
         sql = string.Format(sql, domain);
         DataSet ds = SQLHelper.Query(sql);
 
