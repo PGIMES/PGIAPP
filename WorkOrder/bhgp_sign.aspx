@@ -107,15 +107,45 @@
     <script>    
 
         $(document).ready(function () {
-            if ("<%= _stepid %>"=="0003" ||"<%= _stepid %>"=="0004" || "<%= _stepid %>"=="0005") {//总经理
+            <%--if ("<%= _stepid %>"=="0003" ||"<%= _stepid %>"=="0004" || "<%= _stepid %>"=="0005") {//质量工程师，质量经理，总经理
                 $("#btn_sign").show();
                 $("#btn_cancel").show();
             } else if ("<%= _stepid %>" == "9999") {//已完成
                 $("#btn_sign").hide();
                 $("#btn_cancel").hide();
-            }else {
+            }else {//0001 需返工，分选
                 $("#btn_sign").show();
                 $("#btn_cancel").hide();
+            }--%>
+
+            if ("<%= _stepid %>" == "9999") {//已完成
+                $("#btn_sign").hide();
+                $("#btn_cancel").hide();
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "bhgp_sign.aspx/init_btn",
+                    data: "{'stepid':'" + "<%= _stepid %>" + "','workshop':'" + "<%= _workshop %>" + "','pgino':'" + $("#pgino").val() + "','emp':'" + $("#emp_code_name").val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+
+                        if (obj[0].btn_sure == "Y") {
+                            $("#btn_sign").show();
+                        } else {
+                            $("#btn_sign").hide();
+                        }
+                        if (obj[0].btn_cancel == "Y") {
+                            $("#btn_cancel").show();
+                        } else {
+                            $("#btn_cancel").hide();
+                        }
+                        return;
+                    }
+
+                });
             }
         });
 
@@ -134,6 +164,7 @@
                 <asp:TextBox ID="workorder" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="workorder_f" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">

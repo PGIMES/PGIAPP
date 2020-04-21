@@ -68,6 +68,7 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
         lbl_fg.Text = dt.Rows[0]["cur_result"].ToString();
+        pgino.Text = dt.Rows[0]["pgino"].ToString();
 
         DataTable dt1 = ds.Tables[1];
         Repeater_cz_one.DataSource = dt1;
@@ -94,6 +95,21 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         ViewState["dt3"] = dt3.Rows.Count.ToString();
         ViewState["dt4"] = dt4.Rows.Count.ToString();
         ViewState["dt5"] = dt5.Rows.Count.ToString();
+    }
+
+    [WebMethod]
+    public static string init_btn(string stepid, string workshop, string pgino,string emp)
+    {
+        string re_sql = @"exec [usp_app_bhgp_sign_init_btn] '{0}', '{1}', '{2}', '{3}'";
+        re_sql = string.Format(re_sql, stepid, workshop, pgino, emp);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+
+        string btn_sure = re_dt.Rows[0][0].ToString();
+        string btn_cancel = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"btn_sure\":\"" + btn_sure + "\",\"btn_cancel\":\"" + btn_cancel + "\"}]";
+        return result;
+
     }
 
     protected void listBxInfo_ItemDataBound(object sender, RepeaterItemEventArgs e)
