@@ -126,13 +126,12 @@ public partial class bhgp_Apply : System.Web.UI.Page
         string re_sql = "";
         if (op_code < 600 || _b_use_routing == "0")
         {
-            re_sql = @"exec usp_app_bhgp_Apply '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+            re_sql = @"exec usp_app_bhgp_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
 
         }
         else if (op_code >= 600 && op_code <= 700)
         {
-            //re_sql = @"exec usp_app_bhgp_Apply_QC '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
+            re_sql = @"exec usp_app_bhgp_Apply_QC '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
             return;
         }
         else
@@ -142,7 +141,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
         }
 
         re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, pgino.Text, pn.Text, descr.Text, op.Text
-            , qty.Text, reason.Text, comment.Value, _b_use_routing);
+            , qty.Text, reason.Text, comment.Value, _b_use_routing, ref_order.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
@@ -277,8 +276,6 @@ public partial class bhgp_Apply : System.Web.UI.Page
             else if (op_code_two >= 600 && op_code_two <= 700)
             {
                 re_flag = "2";
-                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
-                return;
             }
             else
             {
@@ -288,7 +285,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
             }
 
             DataTable re_dt = bdn.save_data(dt, workorder_two.Text, emp_code_name.Text, pgino_two.Text, pn_two.Text
-               , descr_two.Text , op_two.Text, comment_two.Value, _b_use_routing_two, re_flag);
+               , descr_two.Text , op_two.Text, comment_two.Value, _b_use_routing_two, re_flag, ref_order_two.Text);
 
             string flag = re_dt.Rows[0][0].ToString();
             string msg_f = re_dt.Rows[0][1].ToString();
@@ -324,7 +321,7 @@ public class bhgp_Apply_Class
     SQLHelper SQLHelper = new SQLHelper();
 
     public DataTable save_data(DataTable dt, string workorder_two, string emp_code_name, string pgino_two, string pn_two
-        , string descr_two, string op_two, string comment_two, string b_use_routing_two, string re_flag)
+        , string descr_two, string op_two, string comment_two, string b_use_routing_two, string re_flag, string ref_order_two)
     {
         SqlParameter[] param = new SqlParameter[]
       {
@@ -336,7 +333,8 @@ public class bhgp_Apply_Class
             new SqlParameter("@descr",descr_two),
             new SqlParameter("@op",op_two),
             new SqlParameter("@comment",comment_two),
-            new SqlParameter("@b_use_routing",b_use_routing_two)
+            new SqlParameter("@b_use_routing",b_use_routing_two),
+            new SqlParameter("@ref_order",ref_order_two)
       };
 
         string sql = "";
@@ -346,7 +344,7 @@ public class bhgp_Apply_Class
         }
         else if (re_flag == "2")
         {
-
+            sql = "usp_app_bhgp_Apply_deal_QC";
         }
         else if (re_flag == "3")
         {
