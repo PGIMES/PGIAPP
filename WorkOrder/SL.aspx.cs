@@ -79,10 +79,10 @@ public partial class WorkOrder_SL : System.Web.UI.Page
     //}
 
     [WebMethod]
-    public static string lotno_change(string pgino, string lotno)
+    public static string lotno_change(string pgino, string lotno,string need_no)
     {
-        string re_sql = @"exec [usp_app_SL_lot_change_qad] '{0}', '{1}'";
-        re_sql = string.Format(re_sql, pgino, lotno);
+        string re_sql = @"exec [usp_app_SL_lot_change_qad] '{0}', '{1}', '{2}'";
+        re_sql = string.Format(re_sql, pgino, lotno, need_no);
         DataSet ds = SQLHelper.Query(re_sql);
 
         DataTable re_dt = ds.Tables[0];

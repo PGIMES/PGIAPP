@@ -75,7 +75,7 @@
             $.ajax({
                 type: "post",
                 url: "SL.aspx/lotno_change",
-                data: "{'pgino':'" + $("#pgino").val() + "','lotno':'" + $("#lot_no").val() + "'}",
+                data: "{'pgino':'" + $("#pgino").val() + "','lotno':'" + $("#lot_no").val() + "','need_no':'" + "<%= _need_no %>" + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
