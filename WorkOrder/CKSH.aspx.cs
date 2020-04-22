@@ -70,11 +70,13 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
 
         if (flag == "N")
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');$('#workorder').val('');$('#comment').val('');sm_workorder();", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "');$('#workorder').val('');$('#comment').val('');", true);
+            return;
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');sm_workorder();", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
+            return;
         }
     }
 
