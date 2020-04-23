@@ -27,7 +27,7 @@ public partial class Emp_Login : System.Web.UI.Page
             txt_emp.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
 
-            //txt_emp.Text = "02432何桂勤";
+            //txt_emp.Text = "02274李晓根";
             //domain.Text = "200";
 
             setButton();
@@ -57,7 +57,15 @@ public partial class Emp_Login : System.Web.UI.Page
         }
         else if (re_dt.Rows.Count > 1)
         {
-            Response.Write("<script>layer.alert('程序异常，员工上岗记录多笔！');window.history.back();location.reload();</script>");
+            //Response.Write("<script>layer.alert('程序异常，员工上岗记录多笔！');window.history.back();location.reload();</script>");
+
+            sql = @"delete Mes_App_EmployeeLogin_Location where login_id in(select id from [Mes_App_EmployeeLogin] where emp_code=LEFT('{0}',5) and on_date is not null and off_date is null);
+                 delete[Mes_App_EmployeeLogin] where emp_code = LEFT('{0}', 5) and on_date is not null and off_date is null";
+
+            sql = string.Format(sql, txt_emp.Text);
+            SQLHelper.ExSql(sql);
+
+            //Response.Write("<script>location.reload();</script>");
         }
 
     }
