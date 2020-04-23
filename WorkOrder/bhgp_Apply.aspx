@@ -64,6 +64,24 @@
             saomiao_workorder_two();
             saomiao_pgino_two();
             saomiao_workorder_gl();
+
+            $("#rscode").change(function () {
+                $.ajax({
+                    type: "post",
+                    url: "bhgp_Apply.aspx/rs_data",
+                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $("#rscode").val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].title == "") {
+                            layer.alert("【原因代码】不存在.");
+                        }
+                        $("#reason").val(obj[0].title);
+                    }
+                });
+            });
         });
 
         function sm_workorder() {
@@ -156,7 +174,16 @@
             if ($("#reason").val() == "") {
                 layer.alert("请输入【原因名称】.");
                 return false;
+            } else {
+                if ($("#rscode").val() != "") {
+                    var _reason = ($("#reason").val()).substr(0, ($("#reason").val()).indexOf('-'));
+                    if (_reason != $("#rscode").val()) {
+                        layer.alert("【原因名称】与【代码】不匹配.");
+                        return false;
+                    }
+                }
             }
+           
             return true;
         }
 
@@ -336,7 +363,8 @@
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">原因名称</label></div>
-                            <asp:TextBox ID="reason" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                            <input class="weui-input" id="rscode" type="text" value=""  runat="server" placeholder="原因代码" style="width:40%; border-bottom:1px solid #e5e5e5;" />
+                            <asp:TextBox ID="reason" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>                            
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
@@ -421,6 +449,8 @@
                                     </div>
                                     <div class="weui-cell">
                                         <div class="weui-cell__hd f-red"><label class="weui-label">废品原因</label></div>
+                                        <asp:TextBox ID="rscode" class="weui-input" placeholder="原因代码" runat="server" 
+                                            Text='' style="width:40%; border-bottom:1px solid #e5e5e5;"></asp:TextBox>
                                         <asp:TextBox ID="reason" class="weui-input" placeholder="" runat="server" 
                                             Text='<%# Eval("reason") %>'></asp:TextBox>
                                     </div>
@@ -635,9 +665,11 @@
                 if ($(this).val() == "不合格") {
                     $(this).parent().next().show();
                     $(this).parent().next().find("input[name*=reason]").val("");
+                    $(this).parent().next().find("input[name*=rscode]").val("");
                 } else {
                     $(this).parent().next().hide();
                     $(this).parent().next().find("input[name*=reason]").val("");
+                    $(this).parent().next().find("input[name*=rscode]").val("");
                 }
 
             });
@@ -656,6 +688,26 @@
                 onOpen: function () {
                     //  console.log("open");
                 }
+            });
+
+            $("#UpdatePanel1 input[name*=rscode]").change(function () {
+                var title = "";
+                $.ajax({
+                    type: "post",
+                    url: "bhgp_Apply.aspx/rs_data",
+                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $(this).val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d); 
+                        if (obj[0].title == "") {
+                            layer.alert("【原因代码】不存在.");
+                        }
+                        title = obj[0].title;
+                    }
+                });
+                $(this).parent().find("input[name*=reason]").val(title);               
             });
         }
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {

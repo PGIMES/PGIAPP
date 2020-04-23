@@ -25,12 +25,12 @@ public partial class bhgp_Apply : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            emp_code_name.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
+            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            //emp_code_name.Text = lu.WorkCode + lu.UserName;
+            //domain.Text = lu.Domain;
 
-            //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            emp_code_name.Text = "02432何桂勤";
+            domain.Text = "200";
 
             init_data();
         }
@@ -116,6 +116,27 @@ public partial class bhgp_Apply : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string rs_data(string domain, string rscode)
+    {
+        string result = "";
+        string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+                    from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
+                    where rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
+        sql = string.Format(sql, domain, rscode);
+        DataTable dt_reason = SQLHelper.Query(sql).Tables[0];
+
+        string title = "";
+        if (dt_reason.Rows.Count == 1)
+        {
+            title = dt_reason.Rows[0]["title"].ToString();
+        }
+
+        result = "[{\"title\":\"" + title + "\"}]";
+        return result;
+
+    }
+
     protected void btnsave_Click(object sender, EventArgs e)
     {
 
@@ -176,6 +197,7 @@ public partial class bhgp_Apply : System.Web.UI.Page
             TextBox txt_num = (TextBox)item.FindControl("num");
             TextBox txt_cz_qty = (TextBox)item.FindControl("cz_qty");
             TextBox txt_result = (TextBox)item.FindControl("result");
+            TextBox txt_rscode = (TextBox)item.FindControl("rscode");
             TextBox txt_reason = (TextBox)item.FindControl("reason");
             TextBox txt_workorder_gl = (TextBox)item.FindControl("workorder_gl");
             System.Web.UI.HtmlControls.HtmlTextArea txt_comment = (System.Web.UI.HtmlControls.HtmlTextArea)item.FindControl("comment");
@@ -197,6 +219,15 @@ public partial class bhgp_Apply : System.Web.UI.Page
                 if (txt_reason.Text.Trim() == "")
                 {
                     msg_row += "第" + (i + 1).ToString() + "组【废品原因】不可为空 <br />";
+                }
+                else
+                {
+                    if (txt_rscode.Text.Trim() != "") {
+                        var _reason = txt_reason.Text.Trim().Substring(0, txt_reason.Text.Trim().IndexOf('-'));
+                        if (_reason != txt_rscode.Text.Trim()) {
+                            msg_row += "第" + (i + 1).ToString() + "组【原因名称】与【代码】不匹配 <br />";
+                        }
+                    }
                 }
             }
             //if (txt_workorder_gl.Text.Trim() == "")
