@@ -787,6 +787,8 @@
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red"><label class="weui-label">废品原因</label></div>
+                            <asp:TextBox ID="rscode" class="weui-input" placeholder="原因代码" runat="server" Text='' 
+                                style="width:40%; border-bottom:1px solid #e5e5e5;"></asp:TextBox>
                             <asp:TextBox ID="reason" class="weui-input" placeholder="" runat="server" Text='<%# Eval("reason") %>'></asp:TextBox>
                         </div>
                         <div class="weui-cell">
@@ -916,6 +918,26 @@
                 onOpen: function () {
                     //  console.log("open");
                 }
+            });
+
+            $("#UpdatePanel1 input[name*=rscode]").change(function () {
+                var title = "";
+                $.ajax({
+                    type: "post",
+                    url: "bhgp_deal_new.aspx/rs_data",
+                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $(this).val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].title == "") {
+                            layer.alert("【原因代码】不存在.");
+                        }
+                        title = obj[0].title;
+                    }
+                });
+                $(this).parent().find("input[name*=reason]").val(title);
             });
         }
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
