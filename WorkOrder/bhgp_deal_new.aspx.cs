@@ -53,6 +53,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         cur_qty.Text = dt.Rows[0]["cur_qty"].ToString();
         ng_reason_main.Text = dt.Rows[0]["reason_code"].ToString();
         ng_reason_desc_main.Text = dt.Rows[0]["reason"].ToString();
+        workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString();
 
         //DataTable dt1 = ds.Tables[1];
         //Repeater_cz.DataSource = dt1;
@@ -447,7 +448,7 @@ public partial class WorkOrder_bhgp_deal_new : System.Web.UI.Page
         try
         {
             bhgp_deal_new bdn = new bhgp_deal_new();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text);
+            DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text, workorder_qc.Text);
 
             string flag = re_dt.Rows[0][0].ToString();
             string msg_f = re_dt.Rows[0][1].ToString();
@@ -485,14 +486,15 @@ public class bhgp_deal_new
     }
     SQLHelper SQLHelper = new SQLHelper();
 
-    public DataTable save_data(DataTable dt, string workorder, string workorder_f, string emp_code_name)
+    public DataTable save_data(DataTable dt, string workorder, string workorder_f, string emp_code_name, string workorder_qc)
     {
         SqlParameter[] param = new SqlParameter[]
       {
             new SqlParameter("@dt",dt),
             new SqlParameter("@workorder",workorder),
             new SqlParameter("@workorder_f",workorder_f),
-            new SqlParameter("@emp",emp_code_name)
+            new SqlParameter("@emp",emp_code_name),
+            new SqlParameter("@workorder_qc",workorder_qc)
       };
         return SQLHelper.GetDataTable("usp_app_bhgp_deal", param);
 
