@@ -107,6 +107,14 @@
     <script>    
 
         $(document).ready(function () {
+            if ($("#workorder_qc").val() != "") {
+                if ($("#workorder_qc").val().substr(0, 1).toUpperCase() == "W") {
+                    $("#lbl_workorder_qc").text("生产完成单号");
+                } else {
+                    $("#lbl_workorder_qc").text("参考号");
+                }
+            }
+
             <%--if ("<%= _stepid %>"=="0003" ||"<%= _stepid %>"=="0004" || "<%= _stepid %>"=="0005") {//质量工程师，质量经理，总经理
                 $("#btn_sign").show();
                 $("#btn_cancel").show();
@@ -163,6 +171,7 @@
                 <asp:TextBox ID="workorder_f" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="workorder_qc" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -192,6 +201,10 @@
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">工序</label>
                                 <span class="weui-form-preview__value"><%# Eval("op") +""+ Eval("op_descr") %></span>
+                            </div>
+                            <div class="weui-form-preview__item" style="display:<%# Eval("workorder_qc").ToString()!=""?"block":"none"%>; ">
+                                <label class="weui-form-preview__label" id="lbl_workorder_qc"></label>
+                                <span class="weui-form-preview__value"><%# Eval("workorder_qc") %></span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">申请数量</label>

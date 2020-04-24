@@ -69,6 +69,7 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         listBxInfo.DataBind();
         lbl_fg.Text = dt.Rows[0]["cur_result"].ToString();
         pgino.Text = dt.Rows[0]["pgino"].ToString();
+        workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString();
 
         DataTable dt1 = ds.Tables[1];
         Repeater_cz_one.DataSource = dt1;
@@ -304,8 +305,8 @@ public partial class WorkOrder_bhgp_sign : System.Web.UI.Page
         }
         string _sign_comment = sign_comment.Value.Trim();
 
-        string re_sql = @"exec [usp_app_bhgp_sign] '{0}', '{1}','{2}','{3}','{4}','{5}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, workorder_f.Text, stepid.Text, _fg_comment, _sign_comment);
+        string re_sql = @"exec [usp_app_bhgp_sign] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, workorder_f.Text, stepid.Text, _fg_comment, _sign_comment, workorder_qc.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
