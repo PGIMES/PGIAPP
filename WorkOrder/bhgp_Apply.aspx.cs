@@ -25,12 +25,12 @@ public partial class bhgp_Apply : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            emp_code_name.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
+            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            //emp_code_name.Text = lu.WorkCode + lu.UserName;
+            //domain.Text = lu.Domain;
 
-            //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            emp_code_name.Text = "02432何桂勤";
+            domain.Text = "200";
 
             init_data();
         }
@@ -49,10 +49,10 @@ public partial class bhgp_Apply : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string init_pgino(string domain,string workshop)
+    public static string init_pgino(string domain,string workshop,string emp)
     {
         string result = "";
-        string sql = @" exec [usp_app_bhgp_Apply_pgino] '" + domain + "','" + workshop + "'";
+        string sql = @" exec [usp_app_bhgp_Apply_pgino] '" + domain + "','" + workshop + "','" + emp + "'";
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
@@ -61,7 +61,10 @@ public partial class bhgp_Apply : System.Web.UI.Page
         DataTable dt_reason = ds.Tables[1];
         string json_reason = JsonConvert.SerializeObject(dt_reason);
 
-        result = "[{\"json\":" + json + ",\"json_reason\":" + json_reason + "}]";
+        DataTable dt_pgino_on = ds.Tables[2];
+        string json_pgino_on = JsonConvert.SerializeObject(dt_pgino_on);
+
+        result = "[{\"json\":" + json + ",\"json_reason\":" + json_reason + ",\"json_pgino_on\":" + json_pgino_on + "}]";
         return result;
 
     }
@@ -153,7 +156,6 @@ public partial class bhgp_Apply : System.Web.UI.Page
         else if (op_code >= 600 && op_code <= 700)
         {
             re_sql = @"exec usp_app_bhgp_Apply_QC '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-            return;
         }
         else
         {

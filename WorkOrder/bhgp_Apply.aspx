@@ -41,11 +41,29 @@
                 $("#div_ref_order").hide();
                 $("#lbl_ref_order").text("参考号/生产完成单号");
                 $("#ref_order").val("");
+            } else {
+                if ($("#op").val()!="") {
+                    var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
+                    if (parseInt(_op) > 700) {
+                        $("#lbl_ref_order").text("参考号");
+                    } else if (parseInt(_op) >= 600) {
+                        $("#lbl_ref_order").text("生产完成单号");
+                    }
+                }
             }
             if ($("#ref_order_two").val() == "") {
                 $("#div_ref_order_two").hide();
                 $("#lbl_ref_order_two").text("参考号/生产完成单号");
                 $("#ref_order_two").val("");
+            } else {
+                if ($("#op_two").val() != "") {
+                    var _op_two = ($("#op_two").val()).substr(0, ($("#op_two").val()).indexOf('-'));
+                    if (parseInt(_op_two) > 700) {
+                        $("#lbl_ref_order_two").text("参考号");
+                    } else if (parseInt(_op_two) >= 600) {
+                        $("#lbl_ref_order_two").text("生产完成单号");
+                    }
+                }
             }
         });
 
@@ -487,11 +505,11 @@
     </form>
 
     <script>
-        var datalist_pgino, datalist_reason;
+        var datalist_pgino, datalist_reason, datalist_pgino_on;
         $.ajax({
             type: "post",
             url: "bhgp_Apply.aspx/init_pgino",
-            data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "'}",
+            data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "','emp': '" + $("#emp_code_name").val() + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -499,6 +517,7 @@
                 var obj = eval(data.d);
                 datalist_pgino = obj[0].json;
                 datalist_reason = obj[0].json_reason;
+                datalist_pgino_on = obj[0].json_pgino_on;
             }
         });
         $("#pgino").select({
@@ -520,7 +539,7 @@
         });
         $("#pgino_two").select({
             title: "物料号",
-            items: datalist_pgino,
+            items: datalist_pgino_on,
             onChange: function (d) {
                 //alert(d.values);
                 pgino_change_two(d.values);
