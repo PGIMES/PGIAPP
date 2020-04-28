@@ -40,11 +40,77 @@
                 alert("请选择物料号.");
                 return false;
             }
+            if ($("#txt_dh").val() == "") {
+                alert("请输入生产完成单号.");
+                return false;
+            }
+
+            
+
             return true;
         }
     </script>
 </head>
 <body>
+      <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+      <script>
+
+         
+
+          function dh_change() {
+             
+             
+              if ($("#txt_dh").val().toUpperCase().substring(0, 1).toUpperCase() != "W" || $("#txt_dh").val().length != 8)
+              {
+                  alert("完成单号不正确，请重新扫描");
+                  $("#txt_dh").val("");
+                  return;
+              }
+          }
+
+
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var datad = JSON.parse(data.d); //转为Json字符串
+                wx.config({
+                    debug: false, // 开启调试模式
+                    appId: datad.appid, // 必填，公众号的唯一标识
+                    timestamp: datad.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: datad.noncestr, // 必填，生成签名的随机串
+                    signature: datad.signature,// 必填，签名，见附录1
+                    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+                });
+                //wx.error(function (res) {
+                //    alert(res);
+                //});
+                wx.ready(function () {
+                    //扫描二维码
+                    document.querySelector('img[id*=img_sm]').onclick = function () {
+                        wx.scanQRCode({
+                            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                            success: function (res) {
+                                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                                // code 在这里面写上扫描二维码之后需要做的内容                       
+                                $('#txt_dh').val(result);
+                                $('#txt_dh').change();
+
+                            }
+                        });
+                    };//end_document_scanQRCode
+                });
+            },
+            error: function (error) {
+                alert(error)
+            }
+        });
+    </script>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
@@ -96,7 +162,13 @@
                         <label class="weui-label">生产完成单号</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <asp:TextBox ID="txt_dh" class="weui-input" Style="max-width: 100%" runat="server" placeholder="请输入完成单号"></asp:TextBox>
+                       <%-- <asp:TextBox ID="txt_dh" class="weui-input" Style="max-width: 100%" runat="server" placeholder="请输入完成单号"></asp:TextBox>--%>
+                         <span style="float:left; width:90%">
+                        <asp:TextBox ID="txt_dh" class="weui-input" placeholder="请输入完成单号" runat="server"   onchange="dh_change()"></asp:TextBox>
+                    </span>
+                        <span style="float:left; width:10%">
+                            <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
+                    </span>
                     </div>
                 </div>
 
@@ -119,6 +191,15 @@
                         <asp:TextBox ID="txt_pn" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
                     </div>
                 </div>
+
+                 <%--<div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">整托数量</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <asp:TextBox ID="txt_ts" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
+                    </div>
+                </div>--%>
 
 
                   <div class="weui-cell">
@@ -146,7 +227,7 @@
                         <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                         <EditRowStyle BackColor="#999999" />
                         <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                        <HeaderStyle BackColor="#428bca" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
+                        <HeaderStyle BackColor="#669999" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 
                         <Columns>  
