@@ -29,7 +29,7 @@
     overflow: hidden;
     word-break: normal;
     word-wrap: break-word;
-    color:black;
+    color:DodgerBlue;
     font-size:large;
 }
 
@@ -39,10 +39,12 @@
     min-width: 4em;
     text-align: justify;
     text-align-last: justify;
-     color:DodgerBlue;
+     color:black;
     font-size:large;
 }
-
+       .weui-btn + .weui-btn{
+            margin-top:0px;
+        }
 
        .hidden { display:none;}
     </style>
@@ -110,20 +112,18 @@
             $("#txt_wlh").attr("readonly", "readonly");
             $("#txt_qty").attr("readonly", "readonly");
             var lotno = '<%=lotno%>';
-            Bind_Lotno(lotno);
+            var needno = '<%=_needno%>';
+            Bind_Lotno(lotno,needno);
 
-            $("#txt_lotno").change(function () {
-                var lotno_value=$("#txt_lotno").val();
-                Bind_Lotno(lotno_value);
-            })
+        
         });
 
         
-        function Bind_Lotno(lotno) {       
+        function Bind_Lotno(lotno,needno) {       
                 $.ajax({
                     type: "post",
                     url: "Load_Material.aspx/Set_Lotno",
-                    data: "{'lotno':'" + lotno + "'}",
+                    data: "{'lotno':'" + lotno + "','needno':'" + needno + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -140,9 +140,9 @@
                                 {
                                   //  $("#txt_lotno").val(lotno);
                                     //$("#txt_wlh").text(item.sku);
-                                    $("#txt_wlh").html(item.sku).css({color: "black"});
-                                    $("#sku_desc").text(item.sku_desc).css("color", "black");
-                                    $("#txt_qty").text(item.feed_qty).css("color", "black");
+                                    $("#txt_wlh").text(item.sku);
+                                    $("#sku_desc").text(item.sku_desc);
+                                    $("#txt_qty").text(item.feed_qty);
 
                                     $("#txt_need_person").text(item.need_person);
                                     $("#txt_line").text(item.line);
@@ -477,9 +477,10 @@
 
                         <%--</ContentTemplate>
                     </asp:UpdatePanel>--%>
-                    <div class="">
+                    <div class="weui-cell">
                         <asp:Button ID="btnsave"  class="weui-btn weui-btn_primary"  runat="server" Text="上线" OnClick="btnsave_Click" OnClientClick="return valid();" />
-                        
+                        <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary"  style="margin-left:10px;" runat="server" 
+                    Text="退回" OnClientClick="return valid_cancel();"/>
                     </div>
                      
                     
