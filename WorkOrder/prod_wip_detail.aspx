@@ -61,7 +61,7 @@
                             if (flag == "Y") {
                                 layer.alert(obj[0].msg);
                             } else {
-                                window.location.href = '/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>";
+                                window.location.href = "/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>";
                             }
                         }
                     });

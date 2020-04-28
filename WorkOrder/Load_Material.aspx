@@ -135,7 +135,7 @@
                             if (flag == "Y") {
                                 layer.alert(obj[0].msg);
                             } else {
-                                window.location.href = '/workorder/YL_List_new.aspx?workshop=<%=_workshop %>";
+                                window.location.href = "/workorder/YL_List_new.aspx?workshop=<%=_workshop %>";
                             }
                             
                         }
