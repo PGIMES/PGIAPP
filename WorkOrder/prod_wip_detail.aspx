@@ -58,9 +58,11 @@
                         success: function (data) {
                             var obj = eval(data.d);
                             var flag = obj[0].flag;
-                            var msg = obj[0].msg;
-
-                            layer.alert(obj[0].msg);
+                            if (flag == "Y") {
+                                layer.alert(obj[0].msg);
+                            } else {
+                                window.location.href = '/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>";
+                            }
                         }
                     });
                 }

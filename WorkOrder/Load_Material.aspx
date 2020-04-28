@@ -131,14 +131,13 @@
                         async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                         success: function (data) {
                             var obj = eval(data.d);
-                            //var flag = obj[0].flag;
-                            //if (flag == "Y") {
-                            //    layer.alert(obj[0].msg);
-                            //} else {
-                           
-                            //}
-                            layer.alert(obj[0].msg);
-                            return;
+                            var flag = obj[0].flag;
+                            if (flag == "Y") {
+                                layer.alert(obj[0].msg);
+                            } else {
+                                window.location.href = '/workorder/YL_List_new.aspx?workshop=<%=_workshop %>";
+                            }
+                            
                         }
                     });
                 }

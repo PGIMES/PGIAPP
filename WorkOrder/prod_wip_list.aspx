@@ -93,7 +93,7 @@
                                         <div class="weui-cells" id="YLZ">                                            
                                             <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
                                                 <ItemTemplate>
-                                                    <a class="weui-cell weui-cell_access"  href="prod_wip_detail.aspx?need_no=<%# Eval("need_no")%>&ngqty=<%# Eval("ng_qty")%>&wipqty=<%# Eval("wip_qty")%>&type=lot&dh=<%#Eval("lot_no") %>">
+                                                    <a class="weui-cell weui-cell_access"  href="prod_wip_detail.aspx?need_no=<%# Eval("need_no")%>&ngqty=<%# Eval("ng_qty")%>&wipqty=<%# Eval("wip_qty")%>&type=lot&dh=<%#Eval("lot_no") %>&workshop=<%=_workshop %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -129,7 +129,7 @@
                                         <div class="weui-cells" id="YLZ">                                            
                                             <asp:Repeater runat="server" ID="re_go_my" EnableTheming="False">
                                                 <ItemTemplate>
-                                                    <a class="weui-cell weui-cell_access"  href="prod_wip_detail.aspx?need_no=<%# Eval("need_no")%>&ngqty=<%# Eval("ng_qty")%>&wipqty=<%# Eval("wip_qty")%>&type=lot&dh=<%#Eval("lot_no") %>">
+                                                    <a class="weui-cell weui-cell_access"  href="prod_wip_detail.aspx?need_no=<%# Eval("need_no")%>&ngqty=<%# Eval("ng_qty")%>&wipqty=<%# Eval("wip_qty")%>&type=lot&dh=<%#Eval("lot_no") %>&workshop=<%=_workshop %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
