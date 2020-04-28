@@ -6,7 +6,9 @@
     <meta charset="utf-8">
     <title>生产上线</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
+    
+    <script src="/Scripts/jquery-1.10.2.min.js"></script> 
+    <script src="/Content/layer/layer.js"></script>
   
 
     <link href="../css/weui.css" rel="stylesheet" />

@@ -7,6 +7,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>生产操作明细</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+    
+    <script src="/Scripts/jquery-1.10.2.min.js"></script> 
+    <script src="/Content/layer/layer.js"></script>
+
     <link rel="stylesheet" href="../css/weui.css" />
     <link rel="stylesheet" href="../css/weuix.css" />
     <style>
@@ -60,7 +64,7 @@
 
                         //}
                         layer.alert(obj[0].msg);
-                        return;
+                        return false;
                     }
                 });
             }
