@@ -21,6 +21,7 @@ public partial class prod_wip_detail : System.Web.UI.Page
 
         LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
         _emp = lu.WorkCode + lu.UserName;
+        //_emp = "02432何桂勤";
 
         GetData();
        
