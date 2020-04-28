@@ -40,6 +40,31 @@
     <script src="../js/iscroll-lite.js"></script>
     <script>
 
+        function valid_cancel() {
+          var qty = "<%= Request["wipqty"] %>";
+            
+            if (confirm('确认要【退回】【数量' + qty + '】吗？')) {
+                $.ajax({
+                    type: "post",
+                    url: "prod_wip_detail.aspx/Reject_Sku",
+                    data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= Request["need_no"] %>" + "','lotno':'" + "<%= Request["dh"] %>" + "','reject_qty':'" + qty + "','source':'2'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        //var flag = obj[0].flag;
+                        //if (flag == "Y") {
+                        //    layer.alert(obj[0].msg);
+                        //} else {
+
+                        //}
+                        layer.alert(obj[0].msg);
+                        return;
+                    }
+                });
+            }
+        }
 
  
     </script>
@@ -135,6 +160,9 @@
                     </div>
                 </div>
 
+                <div class="weui-cell" >
+                    <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回" OnClientClick="return valid_cancel();"/>
+                </div>
 
             </div>
         </div>

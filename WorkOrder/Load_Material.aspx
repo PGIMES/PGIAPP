@@ -167,7 +167,31 @@
                 });
         }
 
-       
+        function valid_cancel() {
+            var qty = $("#txt_qty").text();
+            
+            if (confirm('确认要【退回】【数量' + qty + '】吗？')) {
+                $.ajax({
+                    type: "post",
+                    url: "Load_Material.aspx/Reject_Sku",
+                    data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= lotno %>" + "','reject_qty':'" + qty + "','source':'1'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        //var flag = obj[0].flag;
+                        //if (flag == "Y") {
+                        //    layer.alert(obj[0].msg);
+                        //} else {
+                           
+                        //}
+                        layer.alert(obj[0].msg);
+                        return;
+                    }
+                });
+            }
+        }
 
     </script>
     <form id="form1" runat="server">
@@ -479,8 +503,7 @@
                     </asp:UpdatePanel>--%>
                     <div class="weui-cell">
                         <asp:Button ID="btnsave"  class="weui-btn weui-btn_primary"  runat="server" Text="上线" OnClick="btnsave_Click" OnClientClick="return valid();" />
-                        <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary"  style="margin-left:10px;" runat="server" 
-                    Text="退回" OnClientClick="return valid_cancel();"/>
+                        <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回" OnClientClick="return valid_cancel();" style="margin-left:10px;" />
                     </div>
                      
                     

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class prod_wip_detail : System.Web.UI.Page
 {
+    public string _emp = "";//当前登入
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (WeiXin.GetCookie("workcode") == null)
@@ -16,6 +19,8 @@ public partial class prod_wip_detail : System.Web.UI.Page
             return;
         }
 
+        LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+        _emp = lu.WorkCode + lu.UserName;
 
         GetData();
        
@@ -52,6 +57,22 @@ public partial class prod_wip_detail : System.Web.UI.Page
 
 
 
+
+    }
+
+    [WebMethod]
+    public static string Reject_Sku(string emp, string needno, string lotno, string reject_qty, string source)
+    {
+        string result = "";
+
+        string re_sql = @"exec [usp_app_Reject] '{0}','{1}','{2}',{3},'{4}'";
+        re_sql = string.Format(re_sql, emp, needno, lotno, Convert.ToSingle(reject_qty == "" ? "0" : reject_qty), source);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
 
     }
 }

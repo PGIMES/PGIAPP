@@ -15,6 +15,7 @@ public partial class Load_Material : System.Web.UI.Page
     public string _workshop = "";
     public string lotno = "";
     public string _needno = "";
+    public string _emp = "";//当前登入
 
     //定义对象
     public string timestamp;//签名的时间戳
@@ -41,7 +42,8 @@ public partial class Load_Material : System.Web.UI.Page
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             txt_emp.Text = lu.WorkCode;
-           
+            _emp = lu.WorkCode + lu.UserName;
+
             ShowValue(lu.WorkCode); 
             
 
@@ -131,6 +133,22 @@ public partial class Load_Material : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string Reject_Sku(string emp, string needno, string lotno, string reject_qty, string source)
+    {
+        string result = "";
+
+        string re_sql = @"exec [usp_app_Reject] '{0}','{1}','{2}',{3},'{4}'";
+        re_sql = string.Format(re_sql, emp, needno, lotno, Convert.ToSingle(reject_qty == "" ? "0" : reject_qty), source);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+
     protected void btnsave_Click(object sender, EventArgs e)
     {
 
@@ -161,7 +179,5 @@ public partial class Load_Material : System.Web.UI.Page
             }
         }
     }
-
-
 
 }
