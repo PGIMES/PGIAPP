@@ -162,7 +162,7 @@
                 </div>
 
                 <div class="weui-cell" >
-                    <input id="btn_cancel" type="button" class="weui-btn weui-btn_primary" value="退回" />
+                    <input id="btn_cancel" type="button" class="weui-btn weui-btn_primary" value="退料" />
                 </div>
 
             </div>
