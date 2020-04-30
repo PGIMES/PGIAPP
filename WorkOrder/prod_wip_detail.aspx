@@ -57,12 +57,12 @@
                         ,actions: [{
                             text: "仓库",
                             onClick: function () {
-                                Reject_Sku("仓库");
+                                Reject_Sku("仓库", qty);
                             }
                         }, {
                             text: "线边库",
                             onClick: function () {
-                                Reject_Sku("线边库");
+                                Reject_Sku("线边库", qty);
                             }
                         }]
                     });
@@ -75,7 +75,7 @@
             });
         });
 
-        function Reject_Sku(reject_where) {
+        function Reject_Sku(reject_where, qty) {
             $.ajax({
                 type: "post",
                 url: "prod_wip_detail.aspx/Reject_Sku",
