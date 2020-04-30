@@ -14,7 +14,10 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = Request.QueryString["workshop"].ToString();
+        if (Request.QueryString["workshop"] != null)
+        {
+            _workshop = Request.QueryString["workshop"].ToString();
+        }
         if (Request.QueryString["workorder_f"] != null)
         {
             _workorder_f = Request.QueryString["workorder_f"].ToString();

@@ -50,6 +50,9 @@
     <dd id="btn4" class="menus-item"  > 
       <a href="/Cjgl1.aspx?workshop=四车间"> <span class="mi-info logo"></span> <span class="mi-info txt">四车间</span> <span class="mi-info check txt"></span> </a> 
      </dd>
+    <dd id="btn5" class="menus-item"  > 
+      <a href="/ck.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">仓库</span> <span class="mi-info check txt"></span> </a> 
+     </dd>
 
     </dl>
    </div> 
