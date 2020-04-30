@@ -86,7 +86,7 @@
                         <div id="tab1" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中<asp:Label ID="Label1" runat="server" Text=""></asp:Label> </div>
                                 <div class="weui-cells" id="YLZ">
                                     <asp:Repeater runat="server" ID="list_go" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                         <ItemTemplate>
@@ -141,7 +141,7 @@
 
                             <%-----已送料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<asp:Label ID="Label2" runat="server" Text=""></asp:Label> </div>
                                 <div class="weui-cells" id="YL_WC">
                                     <asp:Repeater runat="server" ID="list_wc" EnableTheming="False" OnItemDataBound="list_wc_ItemDataBound">
                                         <ItemTemplate>
@@ -192,7 +192,7 @@
 
                             <%-----已退料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<asp:Label ID="Label3" runat="server" Text=""></asp:Label> </div>
                                 <div class="weui-cells" id="YL_RJ">
                                     <asp:Repeater runat="server" ID="list_rj" EnableTheming="False" OnItemDataBound="list_rj_ItemDataBound">
                                         <ItemTemplate>
@@ -239,7 +239,7 @@
 
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<asp:Label ID="Label4" runat="server" Text=""></asp:Label> </div>
                                 <div class="weui-cells" id="YL_END">
                                     <asp:Repeater runat="server" ID="list_end" EnableTheming="False" OnItemDataBound="list_end_ItemDataBound">
                                         <ItemTemplate>
@@ -286,7 +286,7 @@
                         <div id="tab2" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 <asp:Label ID="Label5" runat="server" Text=""></asp:Label></div>
                                 <div class="weui-cells" id="YLZ_my">
                                     <asp:Repeater runat="server" ID="list_go_my" EnableTheming="False" OnItemDataBound="list_go_my_ItemDataBound">
                                         <ItemTemplate>
@@ -341,7 +341,7 @@
 
                             <%-----已送料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<asp:Label ID="Label6" runat="server" Text=""></asp:Label> </div>
                                 <div class="weui-cells" id="YL_WC_my">
                                     <asp:Repeater runat="server" ID="list_wc_my" EnableTheming="False" OnItemDataBound="list_wc_my_ItemDataBound">
                                         <ItemTemplate>
@@ -392,7 +392,7 @@
 
                             <%-----已退料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<asp:Label ID="Label7" runat="server" Text=""></asp:Label> </div>
                                 <div class="weui-cells" id="YL_RJ_my">
                                     <asp:Repeater runat="server" ID="list_rj_my" EnableTheming="False" OnItemDataBound="list_rj_my_ItemDataBound">
                                         <ItemTemplate>
@@ -439,7 +439,7 @@
 
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成 </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<asp:Label ID="Label8" runat="server" Text=""></asp:Label> </div>
                                 <div class="weui-cells" id="YL_END_my">
                                     <asp:Repeater runat="server" ID="list_end_my" EnableTheming="False" OnItemDataBound="list_end_my_ItemDataBound">
                                         <ItemTemplate>
