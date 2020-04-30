@@ -11,10 +11,12 @@ public partial class prod_wip_detail : System.Web.UI.Page
 {
     public string _workshop = "";
     public string _emp = "";//当前登入
+    public string _para = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
+        _para = Request.QueryString["para"].ToString();
 
         if (WeiXin.GetCookie("workcode") == null)
         {

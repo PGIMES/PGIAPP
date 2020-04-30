@@ -188,7 +188,7 @@
                     </div>
                 </div>
 
-                <div class="weui-cell" >
+                <div class="weui-cell" style="display:<%= _para=="Y"?"flex":"none"%>;">
                     <input id="btn_cancel" type="button" class="weui-btn weui-btn_primary" value="退料" />
                 </div>
 

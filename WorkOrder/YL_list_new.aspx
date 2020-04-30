@@ -249,7 +249,7 @@
                                             <asp:Repeater runat="server" ID="list_end_dt" EnableTheming="False">
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
-                                                    ><%--href="prod_wip_detail.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=S"--%>
+                                                    href="prod_wip_detail.aspx?need_no=<%# Eval("need_no")%>&ngqty=<%# Eval("ng_qty")%>&wipqty=<%# Eval("wip_qty")%>&type=lot&dh=<%#Eval("lot_no") %>&workshop=<%=_workshop %>&para=N">
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -449,7 +449,7 @@
                                             <asp:Repeater runat="server" ID="list_end_my_dt" EnableTheming="False">
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
-                                                    ><%--href="prod_wip_detail.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=S"--%>
+                                                     href="prod_wip_detail.aspx?need_no=<%# Eval("need_no")%>&ngqty=<%# Eval("ng_qty")%>&wipqty=<%# Eval("wip_qty")%>&type=lot&dh=<%#Eval("lot_no") %>&workshop=<%=_workshop %>&para=N">
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
