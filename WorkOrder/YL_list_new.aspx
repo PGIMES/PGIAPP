@@ -190,6 +190,53 @@
                                 </div>
                             </div>
 
+                            <%-----已退料----%>
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料 </div>
+                                <div class="weui-cells" id="YL_RJ">
+                                    <asp:Repeater runat="server" ID="list_rj" EnableTheming="False" OnItemDataBound="list_rj_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_rj_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access" 
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=Y">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd"> <%-- f-gray--%>
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
+                                                        </span>
+                                                    
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%#   Eval("pgino")+","+Eval("pn") %><br />
+                                                            <span class="padding5-r"><%# "Lot:"+Eval("lot_no").ToString()%></span>
+                                                            已送:<font class="f-blue padding5-r"><%# Eval("feed_qty")%></font>
+                                                            下料:<font class="f-blue padding5-r"><%# Eval("off_qty")%></font>
+                                                            NG:<font class="f-blue padding5-r"><%# Eval("ng_qty")%></font>
+                                                            已退:<font class="f-blue "><%# Eval("reject_qty")%></font>
+                                                        </span>
+
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("reject_date")+ " " 
+                                                             %>   
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+
                         </div>
                         <%--=======我的工单-----%>
                         <div id="tab2" class="weui-tab__content">
@@ -298,6 +345,54 @@
                                     </asp:Repeater>
                                 </div>
                             </div>
+
+                            <%-----已退料----%>
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料 </div>
+                                <div class="weui-cells" id="YL_RJ_my">
+                                    <asp:Repeater runat="server" ID="list_rj_my" EnableTheming="False" OnItemDataBound="list_rj_my_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_rj_my_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access" 
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=Y">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd"> <%-- f-gray--%>
+                                                        <span  class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
+                                                        </span>
+                                                    
+                                                       <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%#   Eval("pgino")+","+Eval("pn") %><br />
+                                                            <span class="padding5-r"><%# "Lot:"+Eval("lot_no").ToString()%></span>
+                                                            已送:<font class="f-blue padding5-r"><%# Eval("feed_qty")%></font>
+                                                            下料:<font class="f-blue padding5-r"><%# Eval("off_qty")%></font>
+                                                            NG:<font class="f-blue padding5-r"><%# Eval("ng_qty")%></font>
+                                                            已退:<font class="f-blue "><%# Eval("reject_qty")%></font>
+                                                        </span>
+
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("reject_date")+ " " 
+                                                             %>   
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
