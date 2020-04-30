@@ -166,7 +166,7 @@
                             
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要料人</label>
-                                <span class="weui-form-preview__value"><%# Eval("emp_code") %><%# Eval("emp_name") %></span>
+                                <span class="weui-form-preview__value"><%# Eval("emp_code") %><%# Eval("emp_name") %><%# Eval("req_date") %></span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">岗位</label>
@@ -278,6 +278,10 @@
                 <asp:TextBox ID="txt_act_date" class="weui-input" ReadOnly="true"  placeholder="" style="color:gray" runat="server"></asp:TextBox>
             </div>
 
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
+            </div>
 
             <div class="weui-cell">
                 <asp:Button ID="btn_sl" class="weui-btn weui-btn_primary" runat="server" 
