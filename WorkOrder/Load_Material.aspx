@@ -120,7 +120,7 @@
                 $.ajax({
                     type: "post",
                     url: "Load_Material.aspx/Set_Lotno",
-                    data: "{'lotno':'" + lotno + "','needno':'" + needno + "'}",
+                    data: "{'lotno':'" + lotno + "','needno':'" + needno + "','para':'" + "<%= _para %>" + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码

@@ -94,24 +94,21 @@ public partial class Load_Material : System.Web.UI.Page
 
     }
 
-   
+
 
     [WebMethod]
-    public static string Set_Lotno(string lotno,string needno)
+    public static string Set_Lotno(string lotno, string needno, string para)
     {
-        
+
         string result = "";
         string re_sql = @"exec [usp_app_load_material_lotno_change] '{0}','{1}','{2}'";
-        re_sql = string.Format(re_sql, lotno, needno);
+        re_sql = string.Format(re_sql, lotno, needno, para);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         result = Newtonsoft.Json.JsonConvert.SerializeObject(re_dt);
 
         return result;
-
-
-
-
     }
+
     [WebMethod]
     public static string Get_pn(string pgino, string domain)
     {
