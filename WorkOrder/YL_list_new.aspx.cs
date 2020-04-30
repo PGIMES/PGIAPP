@@ -31,25 +31,31 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         DataTable dt_go = new DataTable();
         DataTable dt_wc = new DataTable();
         DataTable dt_rj = new DataTable();
+        DataTable dt_end = new DataTable();
         DataTable dt_go_my = new DataTable();
         DataTable dt_wc_my = new DataTable();
         DataTable dt_rj_my = new DataTable();
+        DataTable dt_end_my = new DataTable();
 
         string sql = @"exec [usp_app_YL_list_new] '{0}','{1}'";
         sql = string.Format(sql, _workshop, emp);
         dt_go = SQLHelper.Query(sql).Tables[0];
         dt_wc = SQLHelper.Query(sql).Tables[1];
         dt_rj = SQLHelper.Query(sql).Tables[2];
-        dt_go_my = SQLHelper.Query(sql).Tables[3];
-        dt_wc_my = SQLHelper.Query(sql).Tables[4];
-        dt_rj_my = SQLHelper.Query(sql).Tables[5];
+        dt_end = SQLHelper.Query(sql).Tables[3];
+        dt_go_my = SQLHelper.Query(sql).Tables[4];
+        dt_wc_my = SQLHelper.Query(sql).Tables[5];
+        dt_rj_my = SQLHelper.Query(sql).Tables[6];
+        dt_end_my = SQLHelper.Query(sql).Tables[7];
 
         ViewState["dt_go"] = dt_go;
         ViewState["dt_wc"] = dt_wc;
         ViewState["dt_rj"] = dt_rj;
+        ViewState["dt_end"] = dt_end;
         ViewState["dt_go_my"] = dt_go_my;
         ViewState["dt_wc_my"] = dt_wc_my;
         ViewState["dt_rj_my"] = dt_rj_my;
+        ViewState["dt_end_my"] = dt_end_my;
 
         //list_go.DataSource = dt_go;
         DataTable rowsline_go = dt_go.DefaultView.ToTable(true, "line");
@@ -66,6 +72,11 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         list_rj.DataSource = rowsline_rj;
         list_rj.DataBind();
 
+        //list_end.DataSource = dt_end;
+        DataTable rowsline_end = dt_end.DefaultView.ToTable(true, "line");
+        list_end.DataSource = rowsline_end;
+        list_end.DataBind();
+
         //list_go_my.DataSource = dt_go_my;
         DataTable rowsline_go_my = dt_go_my.DefaultView.ToTable(true, "line");
         list_go_my.DataSource = rowsline_go_my;
@@ -80,6 +91,12 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         DataTable rowsline_rj_my = dt_rj_my.DefaultView.ToTable(true, "line");
         list_rj_my.DataSource = rowsline_rj_my;
         list_rj_my.DataBind();
+
+        //list_end_my.DataSource = dt_end_my;
+        DataTable rowsline_end_my = dt_end_my.DefaultView.ToTable(true, "line");
+        list_end_my.DataSource = rowsline_end_my;
+        list_end_my.DataBind();
+
     }
 
     protected void list_go_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -130,6 +147,22 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         }
     }
 
+    protected void list_end_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("list_end_dt");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = ViewState["dt_end"] as DataTable;
+            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+        }
+    }
+
     protected void list_go_my_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -170,6 +203,22 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_rj_my"] as DataTable;
+            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+        }
+    }
+
+    protected void list_end_my_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("list_end_my_dt");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = ViewState["dt_end_my"] as DataTable;
             dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
 
             detail.DataSource = dt_wk;
