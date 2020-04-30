@@ -120,8 +120,9 @@
 
             $('#btn_cancel').click(function () {
                 var qty = $("#txt_qty").text();
-            
-                if (confirm('确认要【退回】【数量' + qty + '】吗？')) {
+
+                $.confirm('确认要【退回】【数量' + qty + '】吗？', function () {
+                    //点击确认后的回调函数
                     $.ajax({
                         type: "post",
                         url: "Load_Material.aspx/Reject_Sku",
@@ -140,7 +141,9 @@
                             
                         }
                     });
-                }
+                }, function () {
+                    //点击取消后的回调函数
+                });
             });
         
         });

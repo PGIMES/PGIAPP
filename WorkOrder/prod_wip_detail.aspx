@@ -47,27 +47,54 @@
         $(function () {
             $('#btn_cancel').click(function () {
                 var qty = "<%= Request["wipqty"] %>";
-                if (confirm('确认要【退回】【数量' + qty + '】吗？')) {
-                    $.ajax({
-                        type: "post",
-                        url: "prod_wip_detail.aspx/Reject_Sku",
-                        data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= Request["need_no"] %>" + "','lotno':'" + "<%= Request["dh"] %>" + "','reject_qty':'" + qty + "','source':'2'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                        success: function (data) {
-                            var obj = eval(data.d);
-                            var flag = obj[0].flag;
-                            if (flag == "Y") {
-                                layer.alert(obj[0].msg);
-                            } else {
-                                window.location.href = "/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>";
+
+                $.confirm('确认要【退回】【数量' + qty + '】吗？', function () {
+                    //点击确认后的回调函数
+
+                    $.actions({
+                        title: "请选择【退料】位置"
+                        , onClose: function () {  }
+                        ,actions: [{
+                            text: "仓库",
+                            onClick: function () {
+                                Reject_Sku("仓库");
                             }
-                        }
+                        }, {
+                            text: "线边库",
+                            onClick: function () {
+                                Reject_Sku("线边库");
+                            }
+                        }]
                     });
-                }
+                    
+                }, function () {
+                    //点击取消后的回调函数
+                });
+
+
             });
         });
+
+        function Reject_Sku(reject_where) {
+            $.ajax({
+                type: "post",
+                url: "prod_wip_detail.aspx/Reject_Sku",
+                data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= Request["need_no"] %>" + "','lotno':'" + "<%= Request["dh"] %>" + "','reject_qty':'" + qty
+                    + "','source':'2','reject_where':'" + reject_where + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    var flag = obj[0].flag;
+                    if (flag == "Y") {
+                        layer.alert(obj[0].msg);
+                    } else {
+                        window.location.href = "/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>";
+                    }
+                }
+            });
+        }
     </script>
 </head>
 <body ontouchstart>

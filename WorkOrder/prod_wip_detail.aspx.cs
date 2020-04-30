@@ -65,12 +65,12 @@ public partial class prod_wip_detail : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string Reject_Sku(string emp, string needno, string lotno, string reject_qty, string source)
+    public static string Reject_Sku(string emp, string needno, string lotno, string reject_qty, string source, string reject_where)
     {
         string result = "";
 
-        string re_sql = @"exec [usp_app_Reject] '{0}','{1}','{2}',{3},'{4}'";
-        re_sql = string.Format(re_sql, emp, needno, lotno, Convert.ToSingle(reject_qty == "" ? "0" : reject_qty), source);
+        string re_sql = @"exec [usp_app_Reject] '{0}','{1}','{2}',{3},'{4}','{5}'";
+        re_sql = string.Format(re_sql, emp, needno, lotno, Convert.ToSingle(reject_qty == "" ? "0" : reject_qty), source, reject_where);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
