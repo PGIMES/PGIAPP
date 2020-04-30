@@ -52,8 +52,10 @@ public partial class Cjgl1 : System.Web.UI.Page
         DataTable dt_04 = SQLHelper.Query(sql).Tables[0];
         sql = @"exec [usp_app_bhgp_Apply_list_dv] '" + _workshop + "','','0005',''";
         DataTable dt_05 = SQLHelper.Query(sql).Tables[0];
+        sql = @"exec [usp_app_bhgp_Apply_list_dv] '" + _workshop + "','','9998',''";
+        DataTable dt_06 = SQLHelper.Query(sql).Tables[0];
 
-        int count_bhg = dt_01.Rows.Count + dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count;
+        int count_bhg = dt_01.Rows.Count + dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_06.Rows.Count;
 
         Label3.Text = "(" + count_bhg.ToString() + ")";
     }
