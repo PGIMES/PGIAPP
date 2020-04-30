@@ -22,11 +22,32 @@
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#qty").attr("readonly", "readonly");
+
+            if ("<%= _workorder_f %>"!="") {
+                init();
+            }
         });
 
         $(function () {
             sm_workorder();
         });
+
+        function init() {
+            $.ajax({
+                type: "post",
+                url: "CKSH.aspx/workorder_f_change",
+                data: "{'workorder_f':'" + "<%= _workorder_f %>" + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    $('#workorder').val(obj[0].workorder_gl);
+                    workorder_change();
+                }
+
+            });
+        }
 
         function sm_workorder() {
             $('#img_sm_workorder').click(function () {
