@@ -68,6 +68,8 @@
                 }--%>
 
                 window.location.href = "/workorder/bhgp_deal_new.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+            } else if (stepid == "9998") {//--待入库
+                window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
             }
             else{
                 window.location.href = "/workorder/bhgp_sign.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
