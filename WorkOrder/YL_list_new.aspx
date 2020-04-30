@@ -151,7 +151,7 @@
                                             <asp:Repeater runat="server" ID="list_wc_dt" EnableTheming="False">
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
-                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=S">
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -202,7 +202,7 @@
                                             <asp:Repeater runat="server" ID="list_rj_dt" EnableTheming="False">
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
-                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=Y">
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -307,7 +307,7 @@
                                             <asp:Repeater runat="server" ID="list_wc_my_dt" EnableTheming="False">
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
-                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=S">
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -358,7 +358,7 @@
                                             <asp:Repeater runat="server" ID="list_rj_my_dt" EnableTheming="False">
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
-                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=Y">
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>

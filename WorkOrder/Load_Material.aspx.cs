@@ -15,6 +15,7 @@ public partial class Load_Material : System.Web.UI.Page
     public string _workshop = "";
     public string lotno = "";
     public string _needno = "";
+    public string _para = "";
     public string _emp = "";//当前登入
 
     //定义对象
@@ -30,6 +31,8 @@ public partial class Load_Material : System.Web.UI.Page
        _workshop = Request.QueryString["workshop"].ToString();
         lotno= Request.QueryString["lotno"].ToString();
         _needno= Request.QueryString["need_no"].ToString();
+        _para = Request.QueryString["para"].ToString();
+
         // lotno = "00351694";
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -98,7 +101,7 @@ public partial class Load_Material : System.Web.UI.Page
     {
         
         string result = "";
-        string re_sql = @"exec [usp_app_load_material_lotno_change] '{0}','{1}'";
+        string re_sql = @"exec [usp_app_load_material_lotno_change] '{0}','{1}','{2}'";
         re_sql = string.Format(re_sql, lotno, needno);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         result = Newtonsoft.Json.JsonConvert.SerializeObject(re_dt);
@@ -162,8 +165,8 @@ public partial class Load_Material : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
             return;
         }
-        string sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}'";
-        sql = string.Format(sql, txt_emp.Text,lotno,_needno);
+        string sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}','{3}'";
+        sql = string.Format(sql, txt_emp.Text,lotno,_needno, _para);
         var value = SQLHelper.reDs(sql).Tables[0];
 
         if (value != null && value.Rows.Count > 0)
