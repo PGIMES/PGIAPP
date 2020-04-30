@@ -283,7 +283,7 @@
                 <asp:Button ID="btn_sl" class="weui-btn weui-btn_primary" runat="server" 
                     Text="送料" OnClick="btn_sl_Click" OnClientClick="return valid_sl();" /> 
                     <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" 
-                    Text="取消要料" OnClick="btn_cancel_Click" OnClientClick="return valid_cancel();"/>
+                    Text="取消要料" OnClick="btn_cancel_Click" OnClientClick="return valid_cancel();" style="margin-left:10px;"/>
             </div>
 
         </div>

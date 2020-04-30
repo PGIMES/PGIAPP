@@ -789,7 +789,7 @@
             </div>
             <div class="weui-cell" ><%--style="display:<%= _stepid!="9999"?"flex":"none"%>;"--%>
                 <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" Text="确认" OnClick="btn_sure_Click" />
-                <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回" OnClick="btn_cancel_Click"/>
+                <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" Text="退回" OnClick="btn_cancel_Click" style="margin-left:10px;"/>
             </div>
             
         </div>
