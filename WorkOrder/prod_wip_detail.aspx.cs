@@ -39,7 +39,12 @@ public partial class prod_wip_detail : System.Web.UI.Page
         string dh = Request["dh"].ToString();
         string need_no= Request["need_no"].ToString();
         string sql = string.Format(@"select * from Mes_App_WorkOrder_Wip where lot_no= '{0}' and need_no='{1}' ",dh,need_no);
-        DataTable dt  = SQLHelper.Query(sql).Tables[0];     
+        DataTable dt  = SQLHelper.Query(sql).Tables[0];
+        if (dt.Rows.Count<=0)
+        {
+            sql = string.Format(@"select distinct sku,sku_descr,qty,qty as off_qty from Mes_App_WorkOrder_History where lot_no= '{0}' and need_no='{1}' ", dh, need_no);
+            dt = SQLHelper.Query(sql).Tables[0];
+        }    
          
        // DataView dataView = dt_hist.DefaultView;
        // DataTable dtMainDistinct = dataView.ToTable(true, "pgino", "pn", "workorder","workorder_part","par_qty");//的第一个参数为是否DISTINCT
