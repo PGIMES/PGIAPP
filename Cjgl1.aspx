@@ -54,14 +54,24 @@
                         <a href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-user-circle-o padding-r"></i>上岗</span><span class="mi-info check txt"></span>  </a>
                     </dd>
                     <dd id="btn1_1" class="menus-item">
-                        <a href="/workorder/Emp_Login_list_new.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-group padding-r"></i>上岗监视</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/Emp_Login_list_new.aspx?workshop=<%=_workshop %>">
+                            <span class="mi-info txt">
+                                <i class="fa fa-group padding-r"></i>上岗监视
+                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                            </span> 
+                            <span class="mi-info check txt"></span></a>
                     </dd>
 
                     <dd id="btn3" class="menus-item">
                         <a href="/workorder/YL.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-cube padding-r"></i>要料</span> <span class="mi-info check txt"></span></a>
                     </dd>
                     <dd id="btn4" class="menus-item">
-                        <a href="/workorder/YL_list_new.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-cubes padding-r"></i>要料监视</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/YL_list_new.aspx?workshop=<%=_workshop %>">
+                            <span class="mi-info txt">
+                                <i class="fa fa-cubes padding-r"></i>要料监视
+                                <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+                            </span> 
+                            <span class="mi-info check txt"></span></a>
                     </dd>
                     <dd id="btn5" class="menus-item">
                         <a href="/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-gears padding-r"></i>生产监视</span> <span class="mi-info check txt"></span></a>
@@ -70,7 +80,12 @@
                         <a href="/workorder/bhgp_Apply.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-edit padding-r"></i>不合格申请</span> <span class="mi-info check txt"></span></a>
                     </dd>
                     <dd id="btn11" class="menus-item">
-                        <a href="/workorder/bhgp_Apply_list.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-bookmark-o padding-r"></i>不合格监视</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/bhgp_Apply_list.aspx?workshop=<%=_workshop %>">
+                            <span class="mi-info txt">
+                                <i class="fa fa-bookmark-o padding-r"></i>不合格监视
+                                <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
+                            </span> 
+                            <span class="mi-info check txt"></span></a>
                     </dd>
                     <dd id="btn6" class="menus-item">
                         <a href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>"><span class="mi-info txt"><i class="fa fa-check-square-o padding-r"></i>生产完成</span> <span class="mi-info check txt"></span></a>
