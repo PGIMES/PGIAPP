@@ -95,6 +95,48 @@
 
             });
         }
+
+        $(function () {
+            $('#lbl_lotno').click(function () {
+                if ($('#div_lotno').css("display") == "none") {
+                    $('#div_lotno').css("display", "block");
+
+                    $.ajax({
+                        type: "post",
+                        url: "SL.aspx/lotno_one",
+                        data: "{'pgino':'" + $("#pgino").val()+ "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                        success: function (data) {
+                            var obj = eval(data.d);
+                            var flag = obj[0].flag;
+                            if (flag == "Y") {
+                                layer.alert(obj[0].msg);
+                                $('#sp_ld_part').text("");
+                                $('#sp_ld_ref').text("");
+                                $('#sp_ld_loc').text("");
+                                $('#sp_ld_qty_oh').text("");
+                                $('#sp_loc_to').text("");
+                            } else {
+                                $('#sp_ld_part').text(obj[0].ld_part);
+                                $('#sp_ld_ref').text(obj[0].ld_ref);
+                                $('#sp_ld_loc').text(obj[0].ld_loc);
+                                $('#sp_ld_qty_oh').text(obj[0].ld_qty_oh);
+                                $('#sp_loc_to').text(obj[0].loc_to);
+                            }
+
+                            return;
+                        }
+
+                    });
+
+                } else {
+                    $('#div_lotno').css("display", "none");
+                }
+                
+            });
+        });
     </script>
     <script>
         $.ajax({
@@ -223,7 +265,29 @@
 
                 <div class="weui-form-preview__hd" style="border-top:1px solid #e5e5e5">
                     <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">送料信息</label>
+                        <label class="weui-form-preview__label" id="lbl_lotno">送料信息</label>
+                    </div>
+                </div>
+                <div class="weui-form-preview__bd" id="div_lotno" style="display:none;">
+                    <div class="weui-form-preview__item"> 
+                        <label class="weui-form-preview__label">物料号</label>
+                        <span class="weui-form-preview__value" id="sp_ld_part"></span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">参考号</label>
+                        <span class="weui-form-preview__value" id="sp_ld_ref"></span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">库位</label>
+                        <span class="weui-form-preview__value" id="sp_ld_loc"></span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">数量</label>
+                        <span class="weui-form-preview__value" id="sp_ld_qty_oh"></span>
+                    </div>              
+                    <div class="weui-form-preview__item" style="border-bottom:1px solid #e5e5e5">
+                        <label class="weui-form-preview__label">线边库位</label>
+                        <span class="weui-form-preview__value" id="sp_loc_to"></span>
                     </div>
                 </div>
                 <div class="weui-form-preview__bd">

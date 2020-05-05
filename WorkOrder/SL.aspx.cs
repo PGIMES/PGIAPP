@@ -129,7 +129,60 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         return result;
 
     }
+    [WebMethod]
+    public static string lotno_one(string pgino)
+    {
 
+
+        //送料信息里，第一笔 绑定库存明细里的
+        string sqlStr = @"select top 1 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
+                        where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0
+                        order by ld_date,ld_ref 
+                        with (nolock)";
+        sqlStr = string.Format(sqlStr, pgino);
+        DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+        string flag = "";
+        string msg = "";
+
+        string ld_part = "", ld_ref = "", ld_loc = "", ld_qty_oh = "", loc_to = "";
+        if (ldt == null)
+        {
+            flag = "Y"; msg = "Lot No不正确";
+        }
+        else if (ldt.Rows.Count <= 0)
+        {
+            flag = "Y"; msg = "Lot No不正确";
+        }
+        else
+        {
+            flag = "N"; msg = "";
+            ld_part = ldt.Rows[0]["ld_part"].ToString();
+            ld_ref = ldt.Rows[0]["ld_ref"].ToString();
+            ld_loc = ldt.Rows[0]["ld_loc"].ToString();
+            ld_qty_oh =ldt.Rows[0]["ld_qty_oh"].ToString();
+        }
+
+        if (flag == "N")
+        {
+            string re_sql = @"exec [usp_app_SL_lot_change_loc] '{0}'";
+            re_sql = string.Format(re_sql, pgino);
+            DataSet ds = SQLHelper.Query(re_sql);
+
+            DataTable re_dt = ds.Tables[0];
+            flag = re_dt.Rows[0][0].ToString();
+            msg = re_dt.Rows[0][1].ToString();
+
+            DataTable dt = ds.Tables[1];
+            loc_to = dt.Rows[0][0].ToString(); ;
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"ld_part\":\"" + ld_part 
+            + "\",\"ld_ref\":\"" + ld_ref + "\",\"ld_loc\":\"" + ld_loc + "\",\"ld_qty_oh\":\"" + ld_qty_oh 
+            + "\",\"loc_to\":\"" + loc_to + "\"}]";
+        return result;
+
+    }
 
     protected void btn_sl_Click(object sender, EventArgs e)
     {
