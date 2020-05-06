@@ -30,9 +30,10 @@ public partial class WorkOrder_YL_list_ck : System.Web.UI.Page
 
         ViewState["dt_go"] = dt_go;
 
-        //list_go.DataSource = dt_go;
-        DataTable rowsline_go = dt_go.DefaultView.ToTable(true, "workshop");
-        list_go.DataSource = rowsline_go;
+
+        sql = @"exec [usp_app_YL_list_new_ck]";
+        DataTable dt_wk = SQLHelper.Query(sql).Tables[0];
+        list_go.DataSource = dt_wk;
         list_go.DataBind();
 
     }
