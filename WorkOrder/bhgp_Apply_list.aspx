@@ -126,6 +126,9 @@
                                                                 <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
                                                                     <%# " 父单号" + Eval("workorder_f_a") %>
                                                                 </span>
+                                                                <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                                    <%# " 关联单号" + Eval("workorder_gl") %>
+                                                                </span>
                                                             </span>
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
                                                                 <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
