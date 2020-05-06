@@ -8,8 +8,6 @@ using System.Web.UI.WebControls;
 
 public partial class WorkOrder_bhgp_Apply_list_ck : System.Web.UI.Page
 {
-    public string _workcode = "";
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if (WeiXin.GetCookie("workcode") == null)
@@ -18,15 +16,10 @@ public partial class WorkOrder_bhgp_Apply_list_ck : System.Web.UI.Page
             return;
         }
 
-        LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-        _workcode = lu.WorkCode;
-        GetData(_workcode);
-
-        //_workcode = "02432";
-        //GetData("02432");
+        GetData();
     }
 
-    private void GetData(string emp)
+    private void GetData()
     {
         DataTable dt_wk = new DataTable();
 
