@@ -389,8 +389,8 @@
                             <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
                         </div>
                         <div class="weui-cell">
-                            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
-                                Text="提交" OnClick="btnsave_Click" OnClientClick="return valid();" />
+                            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"
+                                Text="提交" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /><%--OnClientClick="return valid();"--%>
                         </div>
                     </div>
 
@@ -493,7 +493,8 @@
                                 <asp:Button ID="Button1" class="weui-btn weui-btn_mini weui-btn_primary" runat="server" Text="再加一条" OnClick="Button1_Click" />
                             </div>
                             <div class="weui-cell">
-                                <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" Text="处置"  OnClientClick="return valid_two();" OnClick="btn_sure_Click" />
+                                <asp:Button ID="btn_sure" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"
+                                     Text="处置" OnClientClick="if(!valid_two()){return false;}this.disabled=false;this.value='处理中…';" OnClick="btn_sure_Click" /><%--OnClientClick="return valid_two();"--%>
                             </div>
                         </ContentTemplate>
                         </asp:UpdatePanel>
