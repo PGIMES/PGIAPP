@@ -52,15 +52,24 @@
                 <dl class="menus-module" style="">
                     
                     <dd id="btn4" class="menus-item">
-                        <a href="/workorder/YL_list_ck.aspx"><span class="mi-info txt"><i class="fa fa-cubes padding-r"></i>要料监视</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/YL_list_ck.aspx">
+                            <span class="mi-info txt"><i class="fa fa-cubes padding-r"></i>要料监视<asp:Label ID="Label1" runat="server" Text=""></asp:Label></span> 
+                            <span class="mi-info check txt"></span>
+                        </a>
                     </dd>
                     
                     <dd id="btn2" class="menus-item">
-                        <a href="/workorder/CKSH.aspx"><span class="mi-info txt"><i class="fa fa-random padding-r"></i>仓库接收</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/CKSH.aspx">
+                            <span class="mi-info txt"><i class="fa fa-random padding-r"></i>仓库接收</span> 
+                            <span class="mi-info check txt"></span>
+                        </a>
                     </dd>
                     
                     <dd id="btn11" class="menus-item">
-                        <a href="/workorder/bhgp_Apply_list_ck.aspx"><span class="mi-info txt"><i class="fa fa-bookmark-o padding-r"></i>不合格监视</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/bhgp_Apply_list_ck.aspx">
+                            <span class="mi-info txt"><i class="fa fa-bookmark-o padding-r"></i>不合格监视<asp:Label ID="Label2" runat="server" Text=""></asp:Label></span> 
+                            <span class="mi-info check txt"></span>
+                        </a>
                     </dd>
                 </dl>
             </div>
