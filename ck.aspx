@@ -52,7 +52,7 @@
                 <dl class="menus-module" style="">
                     
                     <dd id="btn4" class="menus-item">
-                        <a href="#"><span class="mi-info txt"><i class="fa fa-cubes padding-r"></i>要料监视</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/YL_list_ck.aspx"><span class="mi-info txt"><i class="fa fa-cubes padding-r"></i>要料监视</span> <span class="mi-info check txt"></span></a>
                     </dd>
                     
                     <dd id="btn2" class="menus-item">
@@ -60,7 +60,7 @@
                     </dd>
                     
                     <dd id="btn11" class="menus-item">
-                        <a href="#"><span class="mi-info txt"><i class="fa fa-bookmark-o padding-r"></i>不合格监视</span> <span class="mi-info check txt"></span></a>
+                        <a href="/workorder/bhgp_Apply_list_ck.aspx"><span class="mi-info txt"><i class="fa fa-bookmark-o padding-r"></i>不合格监视</span> <span class="mi-info check txt"></span></a>
                     </dd>
                 </dl>
             </div>
