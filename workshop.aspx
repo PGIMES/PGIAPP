@@ -7,56 +7,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>车间</title>
-
- <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
-<script type="text/javascript" src="js/jquery.form.min.js"></script>
-<script type="text/javascript" src="js/json2.min.js"></script>
-<script type="text/javascript" src="js/jweixin-1.2.0.js"></script>
-<script id="commonJsScript" type="text/javascript" src="js/common.js?v=201810311922" ></script>
-<script type="text/javascript" src="js/jquery.weixintools.js?v=201809201357"></script>
-
-<link href="css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-<link href="css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-<link href="css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-<link href="css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-<link href="css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
-
-
-    <meta name="layout" content="main"/>
+    <link href="/css/weui.css" rel="stylesheet" />
+    <link href="/css/weuix.css" rel="stylesheet" />
+    <script src="/js/jquery-3.0.0.min.js"></script>
+    <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        .weui-cells {
+            margin-top: 0px;
+            line-height: 2.5;
+        }
+        .weui-cell:before {
+            left: 0px;
+                     
+        }
+        .weui-cell{
+            padding:10px 20px;  
+        }
+        i{ color:#03a9f4}
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-   <div class="resume-setting-page normal-page-wrap"> 
-   <div id="allContainer" class="menus-normal">
-    <dl class="menus-module" style=""> 
-       
-    <%-- <dt class="menus-title" style="background-color:#008083;height:35px">
-         <div  style="float:left;width:49%;border:0px solid #F00;">MES</div> 
-         <div style="float:left;width:49%;border:0px solid #000; text-align:right;"><a href="Index.aspx"><img src="img/home.png" width="22px" height="22px" style="text-align:right;"></a></div> 
-     </dt> --%>
-
-    <%--<div class="headimg" module="headerImg"> 
-        <img src="img/logo11.jpg"> 
-    </div> --%>
-    <dd id="btn1" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">一车间</span> <span class="mi-info check txt"></span> </a> 
-     </dd> 
-    <dd id="btn2" class="menus-item"  > 
-      <a href="/Cjgl1.aspx?workshop=二车间"> <span class="mi-info logo"></span> <span class="mi-info txt">二车间</span> <span class="mi-info check txt"></span> </a> 
-     </dd> 
-    <dd id="btn3" class="menus-item"  > 
-      <a href="#"> <span class="mi-info logo"></span> <span class="mi-info txt">三车间</span> <span class="mi-info check txt"></span> </a> 
-     </dd>
-    <dd id="btn4" class="menus-item"  > 
-      <a href="/Cjgl1.aspx?workshop=四车间"> <span class="mi-info logo"></span> <span class="mi-info txt">四车间</span> <span class="mi-info check txt"></span> </a> 
-     </dd>
-    <dd id="btn5" class="menus-item"  > 
-      <a href="/ck.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">仓库</span> <span class="mi-info check txt"></span> </a> 
-     </dd>
-
-    </dl>
-   </div> 
-  </div>
+        <div class="page-bd">
+            <div class="weui-cells">
+                <a class="weui-cell weui-cell_access" href="#">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cog margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>一车间<span class="f12">（未开放）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/Cjgl1.aspx?workshop=二车间">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cog margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>二车间</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="#">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cog margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>三车间<span class="f12">（未开放）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/Cjgl1.aspx?workshop=四车间">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cog margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>四车间</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/ck.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-home margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>仓库</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+            </div>
+        </div>
+        <div id="errmsg"class="f14"></div>  
+        <div class="weui-footer weui-footer_fixed-bottom">
+            <p class="weui-footer__text">
+                <% =WeiXin.GetCookie("workcode")==""?"获取信息失败":WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %>
+            </p>
+        </div>
     </form>
 </body>
 </html>

@@ -24,8 +24,7 @@ public partial class ck : System.Web.UI.Page
         dt_go = SQLHelper.Query(sql).Tables[0];
 
         int count_yl = dt_go.Rows.Count;
-
-        Label1.Text = "(" + count_yl.ToString() + ")";
+        Label1.Text = count_yl.ToString();
 
 
         //不合格监视
@@ -33,7 +32,6 @@ public partial class ck : System.Web.UI.Page
         DataTable dt_06 = SQLHelper.Query(sql).Tables[0];
 
         int count_bhg = dt_06.Rows.Count;
-
-        Label2.Text = "(" + count_bhg.ToString() + ")";
+        Label2.Text = count_bhg.ToString();
     }
 }

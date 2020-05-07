@@ -8,32 +8,24 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>仓库</title>
-    <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
-    <script type="text/javascript" src="js/jquery.form.min.js"></script>
-    <script type="text/javascript" src="js/json2.min.js"></script>
-    <script type="text/javascript" src="js/jweixin-1.2.0.js"></script>
-    <script id="commonJsScript" type="text/javascript" src="js/common.js?v=201810311922"></script>
-    <script type="text/javascript" src="js/jquery.weixintools.js?v=201809201357"></script>
+    <link href="/css/weui.css" rel="stylesheet" />
+    <link href="/css/weuix.css" rel="stylesheet" />
+    <script src="/js/jquery-3.0.0.min.js"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
-
-    <link href="css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-    <link href="css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-    <link href="css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
-
     <style>
         .weui-cells {
             margin-top: 0px;
+            line-height: 2.5;
         }
-        .padding-r{
-            padding-right:10px;
-            color:#03a9f4;
+        .weui-cell:before {
+            left: 0px;
+                     
         }
+        .weui-cell{
+            padding:10px 20px;  
+        }
+        i{ color:#03a9f4}
     </style>
-    <meta name="layout" content="main" />
-
     <%-- <script type="text/javascript">
         function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -47,33 +39,50 @@
 <body>
     <form id="form1" runat="server">
 
-        <div class="resume-setting-page normal-page-wrap">
-            <div id="allContainer" class="menus-normal">
-                <dl class="menus-module" style="">
-                    
-                    <dd id="btn4" class="menus-item">
-                        <a href="/workorder/YL_list_ck.aspx">
-                            <span class="mi-info txt"><i class="fa fa-cubes padding-r"></i>要料监视<asp:Label ID="Label1" runat="server" Text=""></asp:Label></span> 
-                            <span class="mi-info check txt"></span>
-                        </a>
-                    </dd>
-                    
-                    <dd id="btn2" class="menus-item">
-                        <a href="/workorder/CKSH.aspx">
-                            <span class="mi-info txt"><i class="fa fa-random padding-r"></i>仓库接收</span> 
-                            <span class="mi-info check txt"></span>
-                        </a>
-                    </dd>
-                    
-                    <dd id="btn11" class="menus-item">
-                        <a href="/workorder/bhgp_Apply_list_ck.aspx">
-                            <span class="mi-info txt"><i class="fa fa-bookmark-o padding-r"></i>不合格监视<asp:Label ID="Label2" runat="server" Text=""></asp:Label></span> 
-                            <span class="mi-info check txt"></span>
-                        </a>
-                    </dd>
-                </dl>
+        <div class="page-bd">
+            <div class="weui-cells">
+                <a class="weui-cell weui-cell_access" href="/workorder/YL_list_ck.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cubes margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>要料监视</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> 
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-random margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>仓库接收</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_ck.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-bookmark-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>不合格监视</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i2 = Label2.Text; Response.Write("<span class='weui-badge  bg-" + (i2 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2 + "</span>"); %> 
+                    </div>
+                </a>
             </div>
         </div>
+        <div id="errmsg"class="f14"></div>  
+        <div class="weui-footer weui-footer_fixed-bottom">
+            <p class="weui-footer__text">
+                <% =WeiXin.GetCookie("workcode")==""?"获取信息失败":WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %>
+            </p>
+        </div>
+
     </form>
 </body>
 </html>

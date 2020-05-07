@@ -24,7 +24,8 @@ public partial class Cjgl1 : System.Web.UI.Page
             where off_date is null and on_date is not null 
                 and id in (select distinct login_id from Mes_App_EmployeeLogin_Location where workshop='" + _workshop + "')";
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
-        Label1.Text = "(" + re_dt.Rows[0][0].ToString() + ")";
+
+        Label1.Text = re_dt.Rows[0][0].ToString();
 
         //要料监视
         DataTable dt_go = new DataTable();
@@ -37,9 +38,7 @@ public partial class Cjgl1 : System.Web.UI.Page
         dt_rj = SQLHelper.Query(sql).Tables[2];
 
         int count_yl = dt_go.Rows.Count + dt_wc.Rows.Count + dt_rj.Rows.Count;
-
-        Label2.Text = "(" + count_yl.ToString() + ")";
-
+        Label2.Text = count_yl.ToString();
 
         //不合格监视
         sql = @"exec [usp_app_bhgp_Apply_list_dv] '"+ _workshop + "','','0001',''";
@@ -56,7 +55,6 @@ public partial class Cjgl1 : System.Web.UI.Page
         DataTable dt_06 = SQLHelper.Query(sql).Tables[0];
 
         int count_bhg = dt_01.Rows.Count + dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_06.Rows.Count;
-
-        Label3.Text = "(" + count_bhg.ToString() + ")";
+        Label3.Text = count_bhg.ToString();
     }
 }
