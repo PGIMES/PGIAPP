@@ -39,7 +39,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
     void init_data()
     {
-        string sql = @"exec [usp_app_bhgp_Apply_deal_init]";
+        string sql = @"exec [usp_app_bhgp_Apply_deal_init_V1]";
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
@@ -52,7 +52,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     public static string init_pgino(string domain,string workshop,string emp)
     {
         string result = "";
-        string sql = @" exec [usp_app_bhgp_Apply_pgino] '" + domain + "','" + workshop + "','" + emp + "'";
+        string sql = @" exec [usp_app_bhgp_Apply_pgino_V1] '" + domain + "','" + workshop + "','" + emp + "'";
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
@@ -61,10 +61,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         DataTable dt_reason = ds.Tables[1];
         string json_reason = JsonConvert.SerializeObject(dt_reason);
 
-        DataTable dt_pgino_on = ds.Tables[2];
-        string json_pgino_on = JsonConvert.SerializeObject(dt_pgino_on);
-
-        result = "[{\"json\":" + json + ",\"json_reason\":" + json_reason + ",\"json_pgino_on\":" + json_pgino_on + "}]";
+        result = "[{\"json\":" + json + ",\"json_reason\":" + json_reason + "}]";
         return result;
 
     }
@@ -150,12 +147,12 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         string re_sql = "";
         if (op_code < 600 || _b_use_routing == "0")
         {
-            re_sql = @"exec usp_app_bhgp_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
 
         }
         else if (op_code >= 600 && op_code <= 700)
         {
-            re_sql = @"exec usp_app_bhgp_Apply_QC '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+            re_sql = @"exec usp_app_bhgp_Apply_V1_QC '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
         }
         else
         {
@@ -294,31 +291,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         //=================================处理数据
         try
         {
-            bhgp_Apply_Class bdn = new bhgp_Apply_Class();
-
-            string _op_two = op_two.Text;
-            string _b_use_routing_two = b_use_routing_two.Text;
-
-            int op_code_two = Convert.ToInt32(_op_two.Substring(0, _op_two.IndexOf('-')));
-            string re_flag = "";
-            if (op_code_two < 600 || _b_use_routing_two == "0")
-            {
-                re_flag = "1";
-
-            }
-            else if (op_code_two >= 600 && op_code_two <= 700)
-            {
-                re_flag = "2";
-            }
-            else
-            {
-                re_flag = "3";
-                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
-                return;
-            }
-
-            DataTable re_dt = bdn.save_data(dt, workorder_two.Text, emp_code_name.Text, pgino_two.Text, pn_two.Text
-               , descr_two.Text , op_two.Text, comment_two.Value, _b_use_routing_two, re_flag, ref_order_two.Text);
+            bhgp_Apply_V1_Class bdn = new bhgp_Apply_V1_Class();
+            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
 
             string flag = re_dt.Rows[0][0].ToString();
             string msg_f = re_dt.Rows[0][1].ToString();
@@ -343,9 +317,9 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 }
 
 
-public class bhgp_Apply_Class
+public class bhgp_Apply_V1_Class
 {
-    public bhgp_Apply_Class()
+    public bhgp_Apply_V1_Class()
     {
         //
         // TODO: 在此处添加构造函数逻辑
@@ -353,37 +327,15 @@ public class bhgp_Apply_Class
     }
     SQLHelper SQLHelper = new SQLHelper();
 
-    public DataTable save_data(DataTable dt, string workorder_two, string emp_code_name, string pgino_two, string pn_two
-        , string descr_two, string op_two, string comment_two, string b_use_routing_two, string re_flag, string ref_order_two)
+    public DataTable save_data(DataTable dt, string workorder, string emp_code_name)
     {
         SqlParameter[] param = new SqlParameter[]
       {
             new SqlParameter("@dt",dt),
-            new SqlParameter("@workorder",workorder_two),
-            new SqlParameter("@emp",emp_code_name),
-            new SqlParameter("@pgino",pgino_two),
-            new SqlParameter("@pn",pn_two),
-            new SqlParameter("@descr",descr_two),
-            new SqlParameter("@op",op_two),
-            new SqlParameter("@comment",comment_two),
-            new SqlParameter("@b_use_routing",b_use_routing_two),
-            new SqlParameter("@ref_order",ref_order_two)
+            new SqlParameter("@workorder",workorder),
+            new SqlParameter("@emp",emp_code_name)
       };
-
-        string sql = "";
-        if (re_flag == "1")
-        {
-            sql = "usp_app_bhgp_Apply_deal";
-        }
-        else if (re_flag == "2")
-        {
-            sql = "usp_app_bhgp_Apply_deal_QC";
-        }
-        else if (re_flag == "3")
-        {
-
-        }
-        return SQLHelper.GetDataTable(sql, param);
+        return SQLHelper.GetDataTable("usp_app_bhgp_Apply_deal_V1", param);
 
     }
 }

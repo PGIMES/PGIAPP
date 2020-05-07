@@ -206,65 +206,6 @@
         }
 
         //====================================two=============================
-        function saomiao_workorder_two() {
-            $('#img_sm_workorder_two').click(function () {
-                wx.ready(function () {
-                    wx.scanQRCode({
-                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                        success: function (res) {
-                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                            // code 在这里面写上扫描二维码之后需要做的内容                       
-                            $('#workorder_two').val(result);
-                        }
-                    });
-                });
-            });
-        }
-
-        function saomiao_pgino_two() {
-            $('#img_sm_pgino_two').click(function () {
-                wx.ready(function () {
-                    wx.scanQRCode({
-                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                        success: function (res) {
-                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                            // code 在这里面写上扫描二维码之后需要做的内容                       
-                            $('#pgino_two').val(result);
-                            pgino_change_two(result);
-                        }
-                    });
-                });
-            });
-        }
-
-        function pgino_change_two(pgino) {
-            $.ajax({
-                type: "post",
-                url: "bhgp_Apply.aspx/pgino_change",
-                data: "{'pgino':'" + pgino + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                success: function (data) {
-                    var obj = eval(data.d);
-                    $('#pn_two').val(obj[0].pn);
-                    $('#descr_two').val(obj[0].descr);
-                    $('#b_use_routing_two').val(obj[0].b_use_routing);
-
-                    var json_op = obj[0].json_op;
-                    $("#op_two").select("update", { items: json_op });
-                    $('#op_two').val('');
-
-                    $("#div_ref_order_two").hide();
-                    $("#lbl_ref_order_two").text("参考号/生产完成单号");
-                    $("#ref_order_two").val("");
-                }
-
-            });
-        }
-
         function saomiao_workorder_gl() {
             $('#UpdatePanel1 img[id*=img_sm_gl]').click(function () {
                 var obj = $(this);
@@ -397,56 +338,10 @@
                 </div>
                  <%--=======申请&处置-----%>
                 <div id="tab2" class="weui-tab__content">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
-                        <div class="weui-cell__bd">
-                            <span style="float:left; width:90%">
-                                <asp:TextBox ID="workorder_two" class="weui-input" placeholder="请输入不合格处置单号" runat="server"></asp:TextBox>
-                            </span>
-                            <span style="float:left; width:10%">
-                                <img id="img_sm_workorder_two" src="../img/fdj2.png"/>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd f-red "><label class="weui-label">物料号</label></div>
-                        <div class="weui-cell__bd">
-                            <span style="float:left; width:90%">
-                                <asp:TextBox ID="pgino_two" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
-                            </span>
-                            <span style="float:left; width:10%">
-                                <img id="img_sm_pgino_two" src="../img/fdj2.png" />
-                            </span>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>              
-                        <asp:TextBox ID="pn_two" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">物料名称</label></div>                          
-                        <asp:TextBox ID="descr_two" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd f-red "><label class="weui-label">工序</label></div>
-                        <asp:TextBox ID="op_two" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
-                        <asp:TextBox ID="b_use_routing_two" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
-                    </div>
-                    <div class="weui-cell" id="div_ref_order_two">
-                        <div class="weui-cell__hd f-red "><label class="weui-label" id="lbl_ref_order_two"></label></div>
-                        <asp:TextBox ID="ref_order_two" class="weui-input"  runat="server"></asp:TextBox>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
-                        <textarea id="comment_two" class="weui-textarea"  placeholder="请输入说明" rows="2"  runat="server"></textarea>
-                    </div>
+                                        
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <div class="weui-form-preview__hd" style="border-bottom:none;border-top:1px solid #e5e5e5;line-height:1.2rem;">
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">处置</label>
-                            </div>
-                        </div>
+                       
                         <asp:Repeater runat="server" ID="listBx_deal">
                             <ItemTemplate>
                                 <div class="weui-cell" style="display:none;">
@@ -504,7 +399,7 @@
     </form>
 
     <script>
-        var datalist_pgino, datalist_reason, datalist_pgino_on;
+        var datalist_pgino, datalist_reason;
         $.ajax({
             type: "post",
             url: "bhgp_Apply.aspx/init_pgino",
@@ -516,7 +411,6 @@
                 var obj = eval(data.d);
                 datalist_pgino = obj[0].json;
                 datalist_reason = obj[0].json_reason;
-                datalist_pgino_on = obj[0].json_pgino_on;
             }
         });
         $("#pgino").select({
@@ -536,23 +430,7 @@
             },
 
         });
-        $("#pgino_two").select({
-            title: "物料号",
-            items: datalist_pgino_on,
-            onChange: function (d) {
-                //alert(d.values);
-                pgino_change_two(d.values);
-            },
-            onClose: function (d) {
-                //var obj = eval(d.data);
-                //alert(obj.values);
-
-            },
-            onOpen: function () {
-                //  console.log("open");
-            },
-
-        });
+        
         $("#reason").select({
             title: "原因名称",
             items: datalist_reason,
@@ -598,42 +476,13 @@
                 //  console.log("open");
             },
 
-        });
-        $("#op_two").select({
-            title: "工序",
-            items: [{ title: '', value: '' }],
-            onChange: function (d) {
-                //alert(d.values);
-                if (parseInt(d.values) < 600 || $("#b_use_routing_two").val() == "0") {
-                    $("#div_ref_order_two").hide();
-                    $("#lbl_ref_order_two").text("参考号/生产完成单号");
-                    $("#ref_order_two").val("");
-                } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
-                    $("#div_ref_order_two").show();
-                    $("#lbl_ref_order_two").text("生产完成单号");
-                    $("#ref_order_two").val("");
-                } else if (true) {
-                    $("#div_ref_order_two").show();
-                    $("#lbl_ref_order_two").text("参考号");
-                    $("#ref_order_two").val("");
-                }
-            },
-            onClose: function (d) {
-                //var obj = eval(d.data);
-                //alert(obj.values);
-
-            },
-            onOpen: function () {
-                //  console.log("open");
-            },
-
-        });        
+        }); 
     </script>
     <script type="text/javascript">
         var datalist_reason_two;
         $.ajax({
             type: "post",
-            url: "bhgp_deal_new.aspx/init_rs",
+            url: "bhgp_Apply_V1.aspx/init_rs",
             data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
