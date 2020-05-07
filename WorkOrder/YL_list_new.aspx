@@ -86,7 +86,10 @@
                         <div id="tab1" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中<asp:Label ID="Label1" runat="server" Text=""></asp:Label> </div>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中<asp:Label ID="Label1" runat="server" Text=""></asp:Label> 
+                                   <%-- <asp:Label ID="Label1" runat="server" Text=""  style="display:none;"></asp:Label>
+                                   <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %>   --%>
+                                </div>
                                 <div class="weui-cells" id="YLZ">
                                     <asp:Repeater runat="server" ID="list_go" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                         <ItemTemplate>
