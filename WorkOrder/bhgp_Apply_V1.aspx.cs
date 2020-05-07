@@ -292,7 +292,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         try
         {
             bhgp_Apply_V1_Class bdn = new bhgp_Apply_V1_Class();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, emp_code_name.Text);
+            DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text, ref_order.Text);
 
             string flag = re_dt.Rows[0][0].ToString();
             string msg_f = re_dt.Rows[0][1].ToString();
@@ -327,15 +327,17 @@ public class bhgp_Apply_V1_Class
     }
     SQLHelper SQLHelper = new SQLHelper();
 
-    public DataTable save_data(DataTable dt, string workorder, string emp_code_name)
+    public DataTable save_data(DataTable dt, string workorder, string workorder_f, string emp_code_name, string workorder_qc)
     {
         SqlParameter[] param = new SqlParameter[]
       {
             new SqlParameter("@dt",dt),
             new SqlParameter("@workorder",workorder),
-            new SqlParameter("@emp",emp_code_name)
+            new SqlParameter("@workorder_f",workorder_f),
+            new SqlParameter("@emp",emp_code_name),
+            new SqlParameter("@workorder_qc",workorder_qc)
       };
-        return SQLHelper.GetDataTable("usp_app_bhgp_Apply_deal_V1", param);
+        return SQLHelper.GetDataTable("usp_app_bhgp_deal_V1", param);
 
     }
 }
