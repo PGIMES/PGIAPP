@@ -111,8 +111,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
                 //qty = Convert.ToSingle(ldt.Rows[0][0].ToString()).ToString();
                 float qty_c = Convert.ToSingle(ldt.Rows[0][0].ToString());
 
-                string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}";
-                sql_q = string.Format(sql_q, pgino, lotno, qty_c);
+                string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}, '{3}'";
+                sql_q = string.Format(sql_q, pgino, lotno, qty_c, need_no);
                 DataTable re_dt_q = SQLHelper.Query(sql_q).Tables[0];
 
                 flag = re_dt_q.Rows[0][0].ToString();
