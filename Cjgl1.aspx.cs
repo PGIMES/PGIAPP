@@ -64,6 +64,7 @@ public partial class Cjgl1 : System.Web.UI.Page
 
         int count_bhg = dt_01.Rows.Count + dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_06.Rows.Count;
         Label3.Text = count_bhg.ToString();
+        Label3_V1.Text = count_bhg.ToString();
     }
 
     [WebMethod]

@@ -177,7 +177,7 @@
                         <p>不合格监视</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label4" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i3 = Label3.Text; Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "</span>"); %>   
                     </div>
                 </a>
@@ -198,8 +198,8 @@
                         <p>不合格监视V1</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label3" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i3 = Label3.Text; Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "</span>"); %>   
+                        <asp:Label ID="Label3_V1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>   
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>">
