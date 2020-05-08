@@ -39,6 +39,13 @@
             $("#descr").attr("readonly", "readonly");
             $("#b_use_routing").attr("readonly", "readonly");
 
+            if ("<%= _ismodify %>"=="Y1") {
+                $("#pgino").attr("readonly", "readonly");
+                $("#op").attr("readonly", "readonly");
+                $("#reason").attr("readonly", "readonly");
+                $("#rscode").attr("readonly", "readonly");
+            }
+
             if ($("#ref_order").val() == "") {
                 $("#div_ref_order").hide();
                 $("#lbl_ref_order").text("参考号/生产完成单号");
@@ -346,7 +353,7 @@
                         </div>
                     </div>
                     
-                    <div class="weui-form-preview" style="display:<%= _tab_index!=0?"block":"none"%>;">
+                    <div class="weui-form-preview" style="display:<%= _tab_index==1?"block":"none"%>;">
                         <div class="weui-form-preview__hd">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">申请信息</label>

@@ -153,15 +153,6 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-edit margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>不合格申请</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
                 <a class="weui-cell weui-cell_access" href="javascript:void_bhg();">
                     <div class="weui-cell__hd">
                         <i class="fa fa-edit margin10-r"></i>
@@ -171,7 +162,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list.aspx?workshop=<%=_workshop %>">
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-bookmark-o margin10-r"></i>
                     </div>

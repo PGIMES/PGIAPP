@@ -14,6 +14,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     public string _workshop = "";
     public string _workorder = "";
     public string _workorder_f = "";
+    public string _ismodify = "Y";
     public int _tab_index = 0;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -30,12 +31,12 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            //LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            //emp_code_name.Text = lu.WorkCode + lu.UserName;
-            //domain.Text = lu.Domain;
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            emp_code_name.Text = lu.WorkCode + lu.UserName;
+            domain.Text = lu.Domain;
 
-            emp_code_name.Text = "02432何桂勤";
-            domain.Text = "200";
+            //emp_code_name.Text = "02432何桂勤";
+            //domain.Text = "200";
 
             workorder.Text = _workorder; workorder_f.Text = _workorder_f;
             init_data(_workorder, _workorder_f);
@@ -54,6 +55,14 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         DataTable dt = ds.Tables[0];
         if (dt.Rows.Count == 1)
         {
+            pgino.Text= dt.Rows[0]["pgino"].ToString();
+            pn.Text = dt.Rows[0]["pn"].ToString();
+            descr.Text = dt.Rows[0]["descr"].ToString();
+            op.Text = dt.Rows[0]["op"].ToString() + "-" + dt.Rows[0]["op_descr"].ToString();
+            qty.Text = dt.Rows[0]["qty"].ToString();
+            reason.Text = dt.Rows[0]["reason_code"].ToString() + "-" + dt.Rows[0]["reason"].ToString();
+            comment.Value= dt.Rows[0]["comment"].ToString();
+
             listBxInfo.DataSource = dt;
             listBxInfo.DataBind();
 
@@ -67,6 +76,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 UpdatePanel1.Visible = false;
             }
         }
+        
 
         //是否可以修改数量:申请人本人，且申请数量=剩余数量
         string sql_wk = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder='"+ workorder + "'";
@@ -74,16 +84,16 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
         if (dt.Rows.Count <= 0)
         {
-            _tab_index = 0;
+            _tab_index = 0; _ismodify = "Y";
         }
         else if (emp_code_name.Text == (dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString())
             && dt_wk.Rows.Count <= 0)//dt.Rows[0]["qty"].ToString() == dt.Rows[0]["sy_qty"].ToString()
         {
-            _tab_index = 0;
+            _tab_index = 0; _ismodify = "Y1";
         }
         else
         {
-            _tab_index = 1;
+            _tab_index = 1; _ismodify = "N";
         }
 
         DataTable dt1 = ds.Tables[1];
@@ -390,7 +400,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         if (flag == "N")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-            Response.Redirect("/workorder/bhgp_Apply_list.aspx?workshop=" + _workshop);
+            Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
         }
         else
         {
