@@ -81,10 +81,6 @@
                         workorder_f = json_wk[0]["workorder_f"];
                         window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
                     } else {
-                       <%-- layer.open({
-                            type: 1,
-                            content: "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder + "&workshop=<%=_workshop %>" //这里content是一个普通的String
-                        });--%>
                         window.location.href = "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder + "&workshop=<%=_workshop %>";
                     }
 
