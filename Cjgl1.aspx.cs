@@ -17,6 +17,12 @@ public partial class Cjgl1 : System.Web.UI.Page
     {
         _workshop = Request.QueryString["workshop"].ToString();
         bind_data();
+
+        if (!IsPostBack)
+        {
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            emp_code_name.Text = lu.WorkCode + lu.UserName;
+        }
     }
 
     public void bind_data()

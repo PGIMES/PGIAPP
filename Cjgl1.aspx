@@ -39,6 +39,11 @@
         //alert(workshop);--%>
 
         $(function () {
+            if ($("#emp_code_name").val() == "02432何桂勤" || $("#emp_code_name").val() == "02274李晓根") {
+                $("#a_div").show(); $("#a_div2").show();
+            } else {
+                $("#a_div").hide(); $("#a_div2").hide();
+            }
             sm_workorder();
         });
 
@@ -99,6 +104,8 @@
 <body>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> 
     <form id="form1" runat="server">
+        
+        <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <div class="page-bd">
             <div class="weui-cells">
@@ -153,21 +160,42 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void_bhg();">
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-edit margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格处理<img id="img_sm_workorder" src="../img/fdj2.png" style="display:none;"/></p>
+                        <p>不合格申请</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>">
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-bookmark-o margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
                         <p>不合格监视</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label4" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i3 = Label3.Text; Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "</span>"); %>   
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void_bhg();" id="a_div">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-edit margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>不合格处理V1<img id="img_sm_workorder" src="../img/fdj2.png" style="display:none;"/></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>" id="a_div2">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-bookmark-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>不合格监视V1</p>
                     </div>
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label3" runat="server" Text="" style="display:none;"></asp:Label>
