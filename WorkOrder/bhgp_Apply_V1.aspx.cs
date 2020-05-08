@@ -54,7 +54,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             ng_reason_main.Text = dt.Rows[0]["reason_code"].ToString();
             ng_reason_desc_main.Text = dt.Rows[0]["reason"].ToString();
             workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString();
-        }       
+        }
 
         DataTable dt1 = ds.Tables[1];
         Repeater_cz_one.DataSource = dt1;
@@ -80,13 +80,14 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         listBx_deal.DataSource = dt6;
         listBx_deal.DataBind();
 
+        ViewState["dt"] = dt.Rows.Count.ToString();
         ViewState["dt1"] = dt1.Rows.Count.ToString();
         ViewState["dt2"] = dt2.Rows.Count.ToString();
         ViewState["dt3"] = dt3.Rows.Count.ToString();
         ViewState["dt4"] = dt4.Rows.Count.ToString();
         ViewState["dt5"] = dt5.Rows.Count.ToString();
     }
-
+    
     [WebMethod]
     public static string init_pgino(string domain,string workshop,string emp)
     {
@@ -176,7 +177,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
     }
 
-
+    
     protected void listBxInfo_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -325,6 +326,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             detail_sg.DataBind();
         }
     }
+
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
