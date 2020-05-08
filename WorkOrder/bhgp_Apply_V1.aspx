@@ -32,6 +32,7 @@
             //    $("#div_test").hide();
             //}
 
+            $("#workorder").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
             $("#b_use_routing").attr("readonly", "readonly");
@@ -58,13 +59,13 @@
                 defaultIndex: 0,
                 activeClass: 'tab-green',
                 onToggle: function (index) {
-                    console.log('index' + index);
+                    //console.log('index' + index);
+
                 }
             });
 
             sm_workorder();
             sm_pgino();
-
             saomiao_workorder_gl();
 
             $("#rscode").change(function () {
@@ -84,6 +85,10 @@
                     }
                 });
             });
+
+
+            $("#img_sm_workorder").trigger("click");
+
         });
 
         function sm_workorder() {
@@ -233,15 +238,15 @@
                  <%--=======申请-----%>
                 <div id="tab1" class="weui-tab__content">
 
-                    <div class="weui-cells weui-cells_form">     
+                    <div class="weui-cells weui-cells_form" style="display:<%= ViewState["dt"].ToString()=="0"?"block":"none"%>;">     
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
                             <div class="weui-cell__bd">
                                 <span style="float:left; width:90%">
-                                    <asp:TextBox ID="workorder" class="weui-input" placeholder="请输入不合格处置单号" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
                                 </span>
                                 <span style="float:left; width:10%">
-                                    <img id="img_sm_workorder" src="../img/fdj2.png"/>
+                                    <img id="img_sm_workorder" src="../img/fdj2.png" style="display:none;"/>
                                 </span>
                             </div>
                         </div>
@@ -292,11 +297,12 @@
                         </div>
                     </div>
                     
-                    <div class="weui-form-preview" style="display:none;">
+                    <div class="weui-form-preview" style="display:<%= ViewState["dt"].ToString()!="0"?"block":"none"%>;">
                         <div class="weui-form-preview__hd">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">申请信息</label>
-                                <label class="weui-form-preview__">单号:<% ="<font class='tag'/>"+workorder.Text %></label>
+                                <label class="weui-form-preview__">单号:<% string _workorder = workorder.Text; Response.Write(_workorder); %>
+                                </label>
                             </div>
                         </div>
                         <div class="weui-form-preview__bd">
@@ -371,6 +377,7 @@
                             </asp:Repeater>
                         </div>
                     </div>
+
                 </div>
                  <%--=======申请&处置-----%>
                 <div id="tab2" class="weui-tab__content">
@@ -819,10 +826,10 @@
                                 </ItemTemplate>
                             </asp:Repeater> 
                         </ul>
-
+  
 
                     </div>
-                                        
+                                    
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                        
@@ -850,7 +857,7 @@
                                     <asp:TextBox ID="reason" class="weui-input" placeholder="" runat="server" 
                                         Text='<%# Eval("reason") %>'></asp:TextBox>
                                 </div>
-                                <div class="weui-cell" style="display:none;">
+                                <div class="weui-cell">
                                     <div class="weui-cell__hd f-red"><label class="weui-label">关联单号</label></div>
                                     <span style="float:left; width:90%">
                                         <asp:TextBox ID="workorder_gl" class="weui-input" placeholder="" runat="server" 
