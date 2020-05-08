@@ -1,9 +1,11 @@
 ﻿using LitJson;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -57,4 +59,22 @@ public partial class Cjgl1 : System.Web.UI.Page
         int count_bhg = dt_01.Rows.Count + dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_06.Rows.Count;
         Label3.Text = count_bhg.ToString();
     }
+
+    [WebMethod]
+    public static string workorder_change(string workorder)
+    {
+
+        string re_sql = @"exec [usp_app_Cjgl1_V1] '{0}'";
+        re_sql = string.Format(re_sql, workorder);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+
+        string json_wk = JsonConvert.SerializeObject(re_dt);
+
+        string result = "[{\"json_wk\":" + json_wk + "}]";
+        return result;
+
+    }
+
+
+
 }

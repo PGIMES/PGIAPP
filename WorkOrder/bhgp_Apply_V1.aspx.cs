@@ -19,6 +19,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     {
         _workshop = Request.QueryString["workshop"].ToString();
         _workorder = Request.QueryString["workorder"].ToString();
+        _workorder_f = Request.QueryString["workorder_f"].ToString();
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -390,6 +391,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         {
             TextBox txt_num = (TextBox)item.FindControl("num");
             TextBox txt_cz_qty = (TextBox)item.FindControl("cz_qty");
+            TextBox txt_sy_qty = (TextBox)item.FindControl("sy_qty");
             TextBox txt_result = (TextBox)item.FindControl("result");
             TextBox txt_rscode = (TextBox)item.FindControl("rscode");
             TextBox txt_reason = (TextBox)item.FindControl("reason");
@@ -403,6 +405,14 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             else if (Convert.ToInt32(txt_cz_qty.Text.Trim()) <= 0)
             {
                 msg_row += "第" + (i + 1).ToString() + "组【处置数量】必须大于0 <br />";
+            }
+            if (txt_sy_qty.Text.Trim() == "")
+            {
+                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】不可为空 <br />";
+            }
+            else if (Convert.ToInt32(txt_sy_qty.Text.Trim()) < 0)
+            {
+                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】必须大于等于0 <br />";
             }
             if (txt_result.Text.Trim() == "")
             {
@@ -424,17 +434,17 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                     }
                 }
             }
-            //if (txt_workorder_gl.Text.Trim() == "")
-            //{
-            //    msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
-            //}
+            if (txt_workorder_gl.Text.Trim() == "")
+            {
+                msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
+            }
 
             if (msg_row == "")//此行正确，添加到datatable
             {
                 DataRow dr_s = dt.NewRow();
                 dr_s["num"] = txt_num.Text;
                 dr_s["cz_qty"] = txt_cz_qty.Text.Trim();
-                dr_s["sy_qty"] = "0";
+                dr_s["sy_qty"] = txt_sy_qty.Text.Trim();
                 dr_s["result"] = txt_result.Text.Trim();
                 dr_s["reason"] = txt_reason.Text.Trim();
                 dr_s["comment"] = txt_comment.Value.Trim();
@@ -459,7 +469,11 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
             return;
         }
-
+        if (dt.Rows[dt.Rows.Count - 1]["sy_qty"].ToString() == "0")
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【剩余数量】为0，不可再新增')", true);
+            return;
+        }
         //=================================add 一空行
         DataRow dr = dt.NewRow();
         dr["num"] = dt.Rows.Count + 1;
@@ -487,7 +501,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         try
         {
             bhgp_Apply_V1_Class bdn = new bhgp_Apply_V1_Class();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text, ref_order.Text);
+            DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text, workorder_qc.Text);
 
             string flag = re_dt.Rows[0][0].ToString();
             string msg_f = re_dt.Rows[0][1].ToString();

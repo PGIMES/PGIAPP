@@ -12,6 +12,7 @@
     <link href="/css/weui.css" rel="stylesheet" />
     <link href="/css/weuix.css" rel="stylesheet" />
     <script src="/js/jquery-3.0.0.min.js"></script>
+    <script src="/Content/layer/layer.js"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -43,21 +44,55 @@
 
         function sm_workorder() {
             $('#img_sm_workorder').click(function () {
-                wx.ready(function () {
-                    wx.scanQRCode({
-                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                        success: function (res) {
-                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                            // code 在这里面写上扫描二维码之后需要做的内容  
-                            //$('#workorder').val(result);
+                //wx.ready(function () {
+                //    wx.scanQRCode({
+                //        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                //        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                //        success: function (res) {
+                //            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                //            // code 在这里面写上扫描二维码之后需要做的内容 
+                //            workorder_change(result);
+                            
+                //        }
+                //    });
+                //});
 
-                            var workorder_f = "";
-                            window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + result + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
-                        }
-                    });
-                });
+                workorder_change("Q0001208");
             });
+        }
+
+        function workorder_change(workorder) {
+            
+            $.ajax({
+                type: "post",
+                url: "Cjgl1.aspx/workorder_change",
+                data: "{'workorder':'" + workorder + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    var json_wk = obj[0].json_wk;
+
+                    var workorder_f = "";
+                    if (json_wk.length ==0) {
+                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                    } else if (json_wk.length == 1) {
+                        workorder_f = json_wk[0]["workorder_f"];
+                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                    } else {
+                       <%-- layer.open({
+                            type: 1,
+                            content: "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder + "&workshop=<%=_workshop %>" //这里content是一个普通的String
+                        });--%>
+                        window.location.href = "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder + "&workshop=<%=_workshop %>";
+                    }
+
+                   
+                }
+
+            });
+            
         }
 
         function void_bhg() {

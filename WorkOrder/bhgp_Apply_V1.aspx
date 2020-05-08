@@ -86,8 +86,55 @@
                 });
             });
 
+            
 
-            //$("#img_sm_workorder").trigger("click");
+            $('.collapse .js-category').click(function(){
+                $parent = $(this).parent('li');
+                if($parent.hasClass('js-show')){
+                    $parent.removeClass('js-show');
+                    $(this).children('i').removeClass('icon-35').addClass('icon-74');
+                }else{
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+                }
+            });
+
+            var bg = 0;
+            $("ul li").find("#dh_s").each(function () {
+                if ("<%= _workorder_f %>" == $(this).text()) {
+                    $(this).parent().parent().parent().siblings().removeClass('js-show');
+                    $(this).parent().parent().parent().addClass('js-show');
+                    $(this).parent().parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
+                    $(this).parent().parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+                    //单号红色
+                    $(this).parent().css("color", "red");
+                    $(this).parent().css("font-weight", "800");
+
+                    //处置信息
+                    $(this).parent().parent().children('div').children().css("color", "red");
+                    $(this).parent().parent().children('div').children().css("font-weight", "800");
+
+                    bg = 1;
+                } 
+            });
+
+            if (bg == 0 && "<%= _workorder_f %>" !="") {
+                $("#sp_cz").parent().parent().parent().siblings().removeClass('js-show');
+                $("#sp_cz").parent().parent().parent().addClass('js-show');
+                $("#sp_cz").parent().parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
+                $("#sp_cz").parent().parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+                //单号红色
+                $("#sp_cz").parent().css("color", "red");
+                $("#sp_cz").parent().css("font-weight", "800");
+
+                //处置信息
+                $("#sp_cz").parent().parent().children('div').children().css("color", "red");
+                $("#sp_cz").parent().parent().children('div').children().css("font-weight", "800");
+            }
 
         });
 
@@ -301,7 +348,7 @@
                         <div class="weui-form-preview__hd">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">申请信息</label>
-                                <label class="weui-form-preview__">单号:<% ="<font class='tag'/>"+_workorder %></label>
+                                <label class="weui-form-preview__">单号:<% = _workorder %></label>
                             </div>
                         </div>
                         <div class="weui-form-preview__bd">
@@ -845,6 +892,10 @@
                                         Text='<%# Eval("cz_qty") %>'></asp:TextBox>
                                 </div>
                                 <div class="weui-cell">
+                                    <div class="weui-cell__hd"><label class="weui-label">剩余数量</label></div>
+                                    <asp:TextBox ID="sy_qty" class="weui-input" placeholder="" style="color:gray" runat="server" Text='<%# Eval("sy_qty") %>'></asp:TextBox>
+                                </div>
+                                <div class="weui-cell">
                                     <div class="weui-cell__hd f-red"><label class="weui-label">判断为</label></div>
                                     <asp:TextBox ID="result" class="weui-input" placeholder="" runat="server" 
                                         Text='<%# Eval("result") %>'></asp:TextBox>
@@ -986,6 +1037,21 @@
         init_data();
 
         function init_data() {
+            $("#UpdatePanel1 input[name*=sy_qty]").attr("readonly", "readonly");
+
+             $("#UpdatePanel1 input[name*=cz_qty]").change(function () {
+                var result = $("#cur_qty").val();//总数量
+                $("#UpdatePanel1").find("input[id*=cz_qty]").each(function () {
+                    var cz_qty = $(this).val();
+                    result = result - cz_qty;
+                    $(this).parent().next().find("input[id*=sy_qty]").val(result);
+                    if (result == "0") {
+                        //默认关联单号为 当前主单号
+                        $(this).parent().parent().find("input[id*=workorder_gl]").val("<%= _workorder %>");
+                    }
+                });
+             });
+
             $("#UpdatePanel1 input[name*=result]").select({
                 title: "判断为",
                 items: [{ title: '合格', value: '合格' }, { title: '不合格', value: '不合格' }
@@ -1023,6 +1089,16 @@
                     $(this).parent().next().show();
                     $(this).parent().next().find("input[name*=reason]").val("");
                     $(this).parent().next().find("input[name*=rscode]").val("");
+
+                    //剩余数量为0，选择不合格时，若是主表的也是工料废 原因，直接默认
+                    if ($(this).parent().parent().find("input[name*=sy_qty]").val() == "0") {
+                        if ($("#ng_reason_main").val().startsWith("1") || $("#ng_reason_main").val().startsWith("3")
+                            || $("#ng_reason_main").val().startsWith("5")) {
+                            var res = $("#ng_reason_main").val() + "-" + $("#ng_reason_desc_main").val();
+                            $(this).parent().parent().find("input[name*=reason]").val(res);
+                        }
+                    }
+
                 } else {
                     $(this).parent().next().hide();
                     $(this).parent().next().find("input[name*=reason]").val("");
