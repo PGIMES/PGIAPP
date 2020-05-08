@@ -28,17 +28,45 @@
         i{ color:#03a9f4}
     </style>
 
-    <%-- <script type="text/javascript">
-        function getQueryString(name) {
+    <script type="text/javascript">
+        <%-- function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
             var r = decodeURI(window.location.search).substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;
         }
         var workshop = getQueryString("workshop");
-        //alert(workshop);
-    </script>--%>
+        //alert(workshop);--%>
+
+        $(function () {
+            sm_workorder();
+        });
+
+        function sm_workorder() {
+            $('#img_sm_workorder').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容  
+                            //$('#workorder').val(result);
+
+                            var workorder_f = "";
+                            window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + result + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                        }
+                    });
+                });
+            });
+        }
+
+        function void_bhg() {
+            $("#img_sm_workorder").trigger("click");
+        }
+    </script>
 </head>
 <body>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> 
     <form id="form1" runat="server">
 
         <div class="page-bd">
@@ -100,6 +128,15 @@
                     </div>
                     <div class="weui-cell__bd">
                         <p>不合格申请</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void_bhg();">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-edit margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>不合格处理<img id="img_sm_workorder" src="../img/fdj2.png" style="display:none;"/></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -180,4 +217,29 @@
 
     </form>
 </body>
+    <script>
+        var datad = [];
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                datad = JSON.parse(data.d); //转为Json字符串
+            },
+            error: function (error) {
+                alert(error)
+            }
+        });
+        wx.config({
+            debug: false, // 开启调试模式
+            appId: datad.appid, // 必填，公众号的唯一标识
+            timestamp: datad.timestamp, // 必填，生成签名的时间戳
+            nonceStr: datad.noncestr, // 必填，生成签名的随机串
+            signature: datad.signature,// 必填，签名，见附录1
+            jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+        });
+    </script>
 </html>

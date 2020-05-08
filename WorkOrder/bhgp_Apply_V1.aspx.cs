@@ -12,10 +12,13 @@ using System.Web.UI.WebControls;
 public partial class bhgp_Apply_V1 : System.Web.UI.Page
 {
     public string _workshop = "";
+    public string _workorder = "";
+    public string _workorder_f = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
+        _workorder = Request.QueryString["workorder"].ToString();
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -32,7 +35,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             emp_code_name.Text = "02432何桂勤";
             domain.Text = "200";
 
-            init_data(workorder.Text, workorder_f.Text);
+            workorder.Text = _workorder; workorder_f.Text = _workorder_f;
+            init_data(_workorder, _workorder_f);
         }
         
     }

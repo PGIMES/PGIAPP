@@ -87,7 +87,7 @@
             });
 
 
-            $("#img_sm_workorder").trigger("click");
+            //$("#img_sm_workorder").trigger("click");
 
         });
 
@@ -301,8 +301,7 @@
                         <div class="weui-form-preview__hd">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">申请信息</label>
-                                <label class="weui-form-preview__">单号:<% string _workorder = workorder.Text; Response.Write(_workorder); %>
-                                </label>
+                                <label class="weui-form-preview__">单号:<% ="<font class='tag'/>"+_workorder %></label>
                             </div>
                         </div>
                         <div class="weui-form-preview__bd">
