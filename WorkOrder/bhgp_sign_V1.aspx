@@ -174,7 +174,7 @@
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">申请信息</label>
-                            <label class="weui-form-preview__">单号:<% ="<font class='tag'/>"+_workorder %></label>
+                            <label class="weui-form-preview__">单号:<% = _workorder %></label>
                         </div>
                     </div>
                     <div class="weui-form-preview__bd">
