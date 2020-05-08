@@ -715,7 +715,7 @@
                                 runat="server" value=''></textarea>
                         </div>
                         <div class="weui-cell" ><%--style="display:<%= _stepid!="9999"?"flex":"none"%>;"--%>
-                            <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false" 
+                            <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"  
                                 Text="确认" OnClientClick="this.disabled=false;this.value='处理中…';" OnClick="btn_sure_Click" />
                             <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"  
                                 Text="退回" OnClientClick="this.disabled=false;this.value='处理中…';" OnClick="btn_cancel_Click" style="margin-left:10px;"/>
