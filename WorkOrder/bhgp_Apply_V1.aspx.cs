@@ -252,7 +252,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
             Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_one_dt");
             DataTable dt_wk_sg = new DataTable();
-            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}'";
+            string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
 
@@ -279,7 +279,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
             Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_fg_sg_dt");
             DataTable dt_wk_sg = new DataTable();
-            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}','返工'";
+            string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}','返工'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
 
@@ -305,7 +305,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
             Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_again_dt");
             DataTable dt_wk_sg = new DataTable();
-            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}'";
+            string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
 
@@ -332,7 +332,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
             Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_fx_sg_dt");
             DataTable dt_wk_sg = new DataTable();
-            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}','分选'";
+            string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}','分选'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
 
@@ -358,7 +358,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
             Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_fx_again_dt");
             DataTable dt_wk_sg = new DataTable();
-            string sql_sg = @"exec [usp_app_bhgp_sign_record] '{0}'";
+            string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
 
