@@ -14,6 +14,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     public string _workshop = "";
     public string _workorder = "";
     public string _workorder_f = "";
+    public int _tab_index = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -45,20 +46,44 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     void init_data(string workorder, string workorder_f)
     {
 
+        //-------------
         string sql = @"exec [usp_app_bhgp_Apply_init_V1] '{0}','{1}'";
         sql = string.Format(sql, workorder, workorder_f);
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
-        listBxInfo.DataSource = dt;
-        listBxInfo.DataBind();
-
         if (dt.Rows.Count == 1)
         {
+            listBxInfo.DataSource = dt;
+            listBxInfo.DataBind();
+
             cur_qty.Text = dt.Rows[0]["cur_qty"].ToString();
             ng_reason_main.Text = dt.Rows[0]["reason_code"].ToString();
             ng_reason_desc_main.Text = dt.Rows[0]["reason"].ToString();
             workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString();
+
+            if (cur_qty.Text == "0")//剩余数量为0
+            {
+                UpdatePanel1.Visible = false;
+            }
+        }
+
+        //是否可以修改数量:申请人本人，且申请数量=剩余数量
+        string sql_wk = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder='"+ workorder + "'";
+        DataTable dt_wk = SQLHelper.Query(sql_wk).Tables[0];
+
+        if (dt.Rows.Count <= 0)
+        {
+            _tab_index = 0;
+        }
+        else if (emp_code_name.Text == (dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString())
+            && dt_wk.Rows.Count <= 0)//dt.Rows[0]["qty"].ToString() == dt.Rows[0]["sy_qty"].ToString()
+        {
+            _tab_index = 0;
+        }
+        else
+        {
+            _tab_index = 1;
         }
 
         DataTable dt1 = ds.Tables[1];

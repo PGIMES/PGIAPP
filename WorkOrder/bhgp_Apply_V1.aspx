@@ -26,11 +26,13 @@
     
     <script>
         $(document).ready(function () {
-            //if ($("#emp_code_name").val()=="02432何桂勤") {
-            //    $("#div_test").show();
-            //} else {
-            //    $("#div_test").hide();
-            //}
+            if ($("#workorder_qc").val() != "") {
+                if ($("#workorder_qc").val().substr(0,1).toUpperCase()=="W") {
+                    $("#lbl_workorder_qc").text("生产完成单号");
+                } else {
+                    $("#lbl_workorder_qc").text("参考号");
+                }
+            }
 
             $("#workorder").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
@@ -56,7 +58,7 @@
 
         $(function () {
             $('#t1').tab({
-                defaultIndex: 0,
+                defaultIndex: <%= _tab_index %>,
                 activeClass: 'tab-green',
                 onToggle: function (index) {
                     //console.log('index' + index);
@@ -285,7 +287,7 @@
                  <%--=======申请-----%>
                 <div id="tab1" class="weui-tab__content">
 
-                    <div class="weui-cells weui-cells_form" style="display:<%= ViewState["dt"].ToString()=="0"?"block":"none"%>;">     
+                    <div class="weui-cells weui-cells_form" style="display:<%= _tab_index==0?"block":"none"%>;">     
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
                             <div class="weui-cell__bd">
@@ -344,7 +346,7 @@
                         </div>
                     </div>
                     
-                    <div class="weui-form-preview" style="display:<%= ViewState["dt"].ToString()!="0"?"block":"none"%>;">
+                    <div class="weui-form-preview" style="display:<%= _tab_index!=0?"block":"none"%>;">
                         <div class="weui-form-preview__hd">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">申请信息</label>
