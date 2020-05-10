@@ -95,135 +95,864 @@
                     <div class="weui-tab__panel" style="background-color:lightgray">
                         <%--=======不合格监视-----%>
                         <div id="tab1" class="weui-tab__content">
-                            <asp:Repeater ID="list_go" runat="server" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
-                                <ItemTemplate>
-                                    <div class="weui-form-preview">
-                                        <div class="weui-cells__title  ">
-                                            <i class="icon nav-icon icon-49"></i><%# Eval("stepname") %>
-                                            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                                        </div>
-                                        <div class="weui-cells" id="YLZ">
-                                            <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
-                                                <ItemTemplate>
-                                                    <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
-                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                        <div class="weui-cell__hd">
-                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                        </div>
-                                                        <div class="weui-cell__bd">
-                                                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                                <%# "单号"+Eval("workorder") %>
-                                                                <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
-                                                                    <%# " 分单号" + Eval("workorder_f") %>
-                                                                </span>
-                                                                <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
-                                                                    <%# " 父单号" + Eval("workorder_f_a") %>
-                                                                </span>
-                                                                <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
-                                                                    <%# " 关联单号" + Eval("workorder_gl") %>
-                                                                </span>
+                            
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>检验处置
+                                    <asp:Label ID="Label_02" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_02">
+                                    <asp:Repeater runat="server" ID="list_02" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
                                                             </span>
-                                                            <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
-                                                            </span>
-                                                            <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
-                                                                <%# Eval("cur_qty")+"件" %>
-                                                                <span class="weui-mark-rt- weui-badge" 
-                                                                    style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                     font-size: x-small; color: white; 
-                                                                     display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                                    <%#Eval("type") %>
-                                                                </span>
-                                                                <span class="weui-mark-rt- weui-badge" 
-                                                                    style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                     font-size: x-small; color: white; 
-                                                                     display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
-                                                                    <%#Eval("result") %>
-                                                                </span>
-                                                            </span>
-                                                             <span class="weui-agree__text" style="font-size: smaller">
-                                                                 <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
-                                                                 <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
-                                                                 <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                                     <%# Eval("times") %>
-                                                                 </span>
-                                                             </span>
-                                                        </div>
-                                                    </a>
+                                                        </span>
+                                                </div>
+                                            </a>
 
-                                                </ItemTemplate>
-                                            </asp:Repeater>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
                                        
-                                        </div>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                           
+                                </div>
+                            </div>
+                                                        
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>质量工程师)
+                                    <asp:Label ID="Label_03" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_03">
+                                    <asp:Repeater runat="server" ID="list_03" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                                                        
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>质量经理
+                                    <asp:Label ID="Label_04" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_04">
+                                    <asp:Repeater runat="server" ID="list_04" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                                                        
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>总经理
+                                    <asp:Label ID="Label_05" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_05">
+                                    <asp:Repeater runat="server" ID="list_05" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                                                        
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>需返工/挑选
+                                    <asp:Label ID="Label_01" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_01">
+                                    <asp:Repeater runat="server" ID="list_01" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                                                        
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>待入库
+                                    <asp:Label ID="Label_98" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_98">
+                                    <asp:Repeater runat="server" ID="list_98" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                                                       
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>已入库(24h内)
+                                    <asp:Label ID="Label_99" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_99">
+                                    <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                                                           
                         </div>
                         <%--=======我的不合格-----%>
                         <div id="tab2" class="weui-tab__content">
                             
-                            <asp:Repeater ID="list_go_my" runat="server" EnableTheming="False" OnItemDataBound="list_go_my_ItemDataBound">
-                                <ItemTemplate>
-                                    <div class="weui-form-preview">
-                                        <div class="weui-cells__title  ">
-                                            <i class="icon nav-icon icon-49"></i><%# Eval("stepname") %>
-                                            <asp:Label ID="Label1_my" runat="server" Text="Label"></asp:Label>
-                                        </div>
-                                        <div class="weui-cells" id="YLZ_MY">
-                                            <asp:Repeater runat="server" ID="re_go_my" EnableTheming="False">
-                                                <ItemTemplate>
-                                                    <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
-                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                        <div class="weui-cell__hd">
-                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                        </div>
-                                                        <div class="weui-cell__bd">
-                                                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                                <%# "单号"+Eval("workorder") %>
-                                                                <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
-                                                                    <%# " 分单号" + Eval("workorder_f") %>
-                                                                </span>
-                                                                <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
-                                                                    <%# " 父单号" + Eval("workorder_f_a") %>
-                                                                </span>
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>检验处置
+                                    <asp:Label ID="Label_02_my" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_02_my">
+                                    <asp:Repeater runat="server" ID="list_02_my" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
                                                             </span>
-                                                            <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
-                                                            </span>
-                                                            <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("reason_code") + "" + Eval("reason") + "," +Eval("cur_qty")+"件" %>
-                                                                <span class="weui-mark-rt- weui-badge" 
-                                                                    style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                     font-size: x-small; color: white; 
-                                                                     display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
-                                                                    <%#Eval("type") %>
-                                                                </span>
-                                                                <span class="weui-mark-rt- weui-badge" 
-                                                                    style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                     font-size: x-small; color: white; 
-                                                                     display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
-                                                                    <%#Eval("result") %>
-                                                                </span>
-                                                            </span>
-                                                             <span class="weui-agree__text" style="font-size: smaller">
-                                                                 <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长: "%>   
-                                                                 <%--<font class='f-blue'>"+Eval("times")+"</font>--%>
-                                                                 <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"f-red":"f-blue" %>;">
-                                                                     <%# Eval("times") %>
-                                                                 </span>
-                                                             </span>
-                                                        </div>
-                                                    </a>
+                                                        </span>
+                                                </div>
+                                            </a>
 
-                                                </ItemTemplate>
-                                            </asp:Repeater>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
                                        
-                                        </div>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:Repeater>
+                                </div>
+                            </div>
+                            
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>质量工程师
+                                    <asp:Label ID="Label_03_my" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_03_my">
+                                    <asp:Repeater runat="server" ID="list_03_my" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                            
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>质量经理
+                                    <asp:Label ID="Label_04_my" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_04_my">
+                                    <asp:Repeater runat="server" ID="list_04_my" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                            
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>总经理
+                                    <asp:Label ID="Label_05_my" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_05_my">
+                                    <asp:Repeater runat="server" ID="list_05_my" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                            
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>需返工/挑选
+                                    <asp:Label ID="Label_01_my" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_01_my">
+                                    <asp:Repeater runat="server" ID="list_01_my" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+                            
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>待入库
+                                    <asp:Label ID="Label_98_my" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_98_my">
+                                    <asp:Repeater runat="server" ID="list_98_my" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
+
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  ">
+                                    <i class="icon nav-icon icon-49"></i>已入库(24h内)
+                                    <asp:Label ID="Label_99_my" runat="server" Text="Label"></asp:Label>
+                                </div>
+                                <div class="weui-cells" id="_99_my">
+                                    <asp:Repeater runat="server" ID="list_99_my" EnableTheming="False">
+                                        <ItemTemplate>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                <div class="weui-cell__hd">
+                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                        <%# "单号"+Eval("workorder") %>
+                                                        <span style="display:<%# Eval("workorder_f").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 分单号" + Eval("workorder_f") %>
+                                                        </span>
+                                                        <span style="display:<%# Eval("workorder_f_a").ToString()!=""?"inline-block":"none"%>; ">
+                                                            <%# " 父单号" + Eval("workorder_f_a") %>
+                                                        </span>
+                                                        <span style="display:<%# (Eval("stepid").ToString()=="9998" || Eval("stepid").ToString()=="9999")?"inline-block":"none"%>; ">
+                                                            <%# " 关联单号" + Eval("workorder_gl") %>
+                                                        </span>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <%# Eval("pgino") + "," + Eval("pn") + "," +Eval("op") + "" +Eval("op_descr")  %>
+                                                    </span>
+                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                        <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
+                                                        <%# Eval("cur_qty")+"件" %>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                            <%#Eval("type") %>
+                                                        </span>
+                                                        <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
+                                                                font-size: x-small; color: white; 
+                                                                display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
+                                                        </span>
+                                                    </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                            <%-- <font class='f-blue'>"+Eval("times")+"</font>--%>
+                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                <%# Eval("times") %>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                            </a>
+
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                       
+                                </div>
+                            </div>
 
                         </div>
 
