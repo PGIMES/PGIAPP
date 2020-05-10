@@ -45,15 +45,15 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
         DataTable dt_04_my = ds.Tables[1]; DataTable dt_05_my = ds.Tables[1]; DataTable dt_98_my = ds.Tables[1];
         DataTable dt_99_my = ds.Tables[1];
 
-        dt_01.DefaultView.RowFilter = "steptid='0001'"; dt_02.DefaultView.RowFilter = "steptid='0002'";
-        dt_03.DefaultView.RowFilter = "steptid='0003'"; dt_04.DefaultView.RowFilter = "steptid='0004'";
-        dt_05.DefaultView.RowFilter = "steptid='0005'"; dt_98.DefaultView.RowFilter = "steptid='9998'";
-        dt_99.DefaultView.RowFilter = "steptid='9999'";
+        dt_01.DefaultView.RowFilter = "stepid='0001'"; dt_02.DefaultView.RowFilter = "stepid='0002'";
+        dt_03.DefaultView.RowFilter = "stepid='0003'"; dt_04.DefaultView.RowFilter = "stepid='0004'";
+        dt_05.DefaultView.RowFilter = "stepid='0005'"; dt_98.DefaultView.RowFilter = "stepid='9998'";
+        dt_99.DefaultView.RowFilter = "stepid='9999'";
 
-        dt_01_my.DefaultView.RowFilter = "steptid='0001'"; dt_02_my.DefaultView.RowFilter = "steptid='0002'";
-        dt_03_my.DefaultView.RowFilter = "steptid='0003'"; dt_04_my.DefaultView.RowFilter = "steptid='0004'";
-        dt_05_my.DefaultView.RowFilter = "steptid='0005'"; dt_98_my.DefaultView.RowFilter = "steptid='9998'";
-        dt_99_my.DefaultView.RowFilter = "steptid='9999'";
+        dt_01_my.DefaultView.RowFilter = "stepid='0001'"; dt_02_my.DefaultView.RowFilter = "stepid='0002'";
+        dt_03_my.DefaultView.RowFilter = "stepid='0003'"; dt_04_my.DefaultView.RowFilter = "stepid='0004'";
+        dt_05_my.DefaultView.RowFilter = "stepid='0005'"; dt_98_my.DefaultView.RowFilter = "stepid='9998'";
+        dt_99_my.DefaultView.RowFilter = "stepid='9999'";
 
         list_01.DataSource = dt_01; list_01.DataBind(); Label_01.Text = "(" + dt_01.Rows.Count + ")";
         list_02.DataSource = dt_02; list_02.DataBind(); Label_02.Text = "(" + dt_02.Rows.Count + ")";
