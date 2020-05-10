@@ -68,17 +68,17 @@ public partial class Cjgl1 : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string workorder_change(string workorder)
+    public static string workorder_change(string result)
     {
 
         string re_sql = @"exec [usp_app_Cjgl1_V1] '{0}'";
-        re_sql = string.Format(re_sql, workorder);
+        re_sql = string.Format(re_sql, result);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
 
         string json_wk = JsonConvert.SerializeObject(re_dt);
 
-        string result = "[{\"json_wk\":" + json_wk + "}]";
-        return result;
+        string res= "[{\"json_wk\":" + json_wk + "}]";
+        return res;
 
     }
 

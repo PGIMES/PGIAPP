@@ -66,12 +66,12 @@
             });
         }
 
-        function workorder_change(workorder) {
+        function workorder_change(result) {
             
             $.ajax({
                 type: "post",
                 url: "Cjgl1.aspx/workorder_change",
-                data: "{'workorder':'" + workorder + "'}",
+                data: "{'result':'" + result + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -79,14 +79,20 @@
                     var obj = eval(data.d);
                     var json_wk = obj[0].json_wk;
 
+                    var workorder = "";
                     var workorder_f = "";
                     if (json_wk.length ==0) {
-                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
+                            + "&workshop=<%=_workshop %>";
                     } else if (json_wk.length == 1) {
+                        workorder = json_wk[0]["workorder"];
                         workorder_f = json_wk[0]["workorder_f"];
-                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
+                            + "&workshop=<%=_workshop %>";
                     } else {
-                        window.location.href = "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder + "&workshop=<%=_workshop %>";
+                        workorder = json_wk[0]["workorder"];
+                        window.location.href = "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder
+                            + "&workshop=<%=_workshop %>";
                     }
 
                    
