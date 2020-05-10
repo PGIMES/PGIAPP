@@ -81,7 +81,8 @@
 
                     var workorder = "";
                     var workorder_f = "";
-                    if (json_wk.length ==0) {
+                    if (json_wk.length == 0) {
+                        workorder = result;
                         window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
                             + "&workshop=<%=_workshop %>";
                     } else if (json_wk.length == 1) {
