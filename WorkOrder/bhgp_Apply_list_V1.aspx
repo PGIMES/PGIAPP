@@ -410,7 +410,7 @@
                                     <asp:Repeater runat="server" ID="list_98" EnableTheming="False">
                                         <ItemTemplate>
                                             <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-orange"></span></div>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
@@ -841,7 +841,7 @@
                                     <asp:Repeater runat="server" ID="list_98_my" EnableTheming="False">
                                         <ItemTemplate>
                                             <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-orange"></span></div>
+                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
