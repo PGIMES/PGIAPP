@@ -159,7 +159,7 @@
                                                         
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
-                                    <i class="icon nav-icon icon-49"></i>质量工程师)
+                                    <i class="icon nav-icon icon-49"></i>质量工程师
                                     <asp:Label ID="Label_03" runat="server" Text="Label"></asp:Label>
                                 </div>
                                 <div class="weui-cells" id="_03">
