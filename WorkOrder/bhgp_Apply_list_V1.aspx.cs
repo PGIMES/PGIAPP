@@ -31,7 +31,7 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
 
     private void GetData(string emp)
     {
-        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}'";
+        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}',''";
         sql = string.Format(sql, _workshop, emp);
         DataSet ds = SQLHelper.Query(sql);
 

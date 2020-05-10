@@ -42,8 +42,8 @@ public partial class WorkOrder_bhgp_Apply_list_ck : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = new DataTable();
-            string sql = @"exec [usp_app_bhgp_Apply_list_dv] '{0}','{1}','{2}','{3}'";
-            sql = string.Format(sql, item["workshop"].ToString(), item["stepname"].ToString(), item["stepid"].ToString(), "");
+            string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}','{2}'";
+            sql = string.Format(sql, item["workshop"].ToString(), "", item["stepid"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
             detail.DataSource = dt_wk;

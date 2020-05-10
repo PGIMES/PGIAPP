@@ -28,10 +28,14 @@ public partial class ck : System.Web.UI.Page
 
 
         //不合格监视
-        sql = @"exec [usp_app_bhgp_Apply_list_dv] '','','9998',''";
-        DataTable dt_06 = SQLHelper.Query(sql).Tables[0];
+        //sql = @"exec [usp_app_bhgp_Apply_list_dv] '','','9998',''";
+        //DataTable dt_06 = SQLHelper.Query(sql).Tables[0];
+        //int count_bhg = dt_06.Rows.Count;
 
-        int count_bhg = dt_06.Rows.Count;
+        sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','9998'";
+        DataTable dt_98 = SQLHelper.Query(sql).Tables[0];
+        int count_bhg = dt_98.Rows.Count;
+
         Label2.Text = count_bhg.ToString();
     }
 }
