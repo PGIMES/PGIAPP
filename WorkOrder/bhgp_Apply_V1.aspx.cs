@@ -401,7 +401,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         if (flag == "N")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-            Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+            //Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+            Response.Redirect("/Cjgl1.aspx.aspx?workshop=" + _workshop);
         }
         else
         {
@@ -544,7 +545,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             if (flag == "N")
             {
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
-                Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+                //Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+                Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
             }
             else
             {
