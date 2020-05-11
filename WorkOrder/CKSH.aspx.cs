@@ -92,7 +92,8 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
 
         if (flag == "N")
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "');$('#workorder').val('');$('#comment').val('');", true);
+            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "');$('#workorder').val('');$('#comment').val('');", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
             return;
         }
         else
