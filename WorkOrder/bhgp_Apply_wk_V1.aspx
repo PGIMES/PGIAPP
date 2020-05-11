@@ -48,8 +48,7 @@
         function deal(cur_sign_step, workorder, workorder_f) {
             if (cur_sign_step == "0002" || cur_sign_step == "") {//--检验处置
                 window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
-            } 
-            if (cur_sign_step == "0001") {//--返工
+            } else {//--返工,质量工程师，质量经理，总经理
                 window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + cur_sign_step + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
             }
         }
@@ -88,7 +87,7 @@
                         </span>
                     </span>
                     <span class="weui-agree__text" style="font-size: smaller">
-                        当前步骤:<%# (Eval("cur_sign_step").ToString()=="" || Eval("cur_sign_step").ToString()=="0002")?"检验处置":"需返工/挑选" %>   
+                        当前步骤:<%# Eval("cur_sign_step_name") %>   
                        
                     </span>
                 </div>

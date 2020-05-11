@@ -93,7 +93,7 @@
                         workorder = json_wk[0]["workorder"];
                         workorder_f = json_wk[0]["workorder_f"];
                         cur_sign_step = json_wk[0]["cur_sign_step"];
-                        if (cur_sign_step == "0001") {//当前签核步骤在 返工，且只有一笔
+                        if (cur_sign_step == "0001" || cur_sign_step == "0003" || cur_sign_step == "0004" || cur_sign_step == "0005") {//当前签核步骤在 返工，且只有一笔
                             window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + cur_sign_step + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
                         } else {
                             window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
