@@ -59,6 +59,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             pn.Text = dt.Rows[0]["pn"].ToString();
             descr.Text = dt.Rows[0]["descr"].ToString();
             op.Text = dt.Rows[0]["op"].ToString() + "-" + dt.Rows[0]["op_descr"].ToString();
+            b_use_routing.Text = dt.Rows[0]["b_use_routing"].ToString();
             qty.Text = dt.Rows[0]["qty"].ToString();
             reason.Text = dt.Rows[0]["reason_code"].ToString() + "-" + dt.Rows[0]["reason"].ToString();
             comment.Value= dt.Rows[0]["comment"].ToString();
