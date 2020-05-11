@@ -402,7 +402,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
             //Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
-            Response.Redirect("/Cjgl1.aspx.aspx?workshop=" + _workshop);
+            Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
         }
         else
         {
