@@ -16,11 +16,21 @@
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
     <style>
+        .demos-header{
+            padding:15px 0px;
+        }
         .weui-cell{
             padding:4px 15px;
         }
         #UpdatePanel1 .weui-cell:before{
             border-top:none;
+        }
+        .demos-title {
+          text-align: center;
+          font-size: 24px;
+          color: #3cc51f;
+          font-weight: 400;
+          margin: 0 15%;
         }
     </style>
     
@@ -35,7 +45,14 @@
 
         });
 
-      
+        function deal(cur_sign_step, workorder, workorder_f) {
+            if (cur_sign_step == "0002" || cur_sign_step == "") {//--检验处置
+                window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+            } 
+            if (cur_sign_step == "0001") {//--返工
+                window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + cur_sign_step + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+            }
+        }
 
     </script>
 </head>
@@ -44,11 +61,13 @@
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
 
+    <header class="demos-header">
+        <h1 class="demos-title">请选择不合格单号</h1>
+    </header>
+
     <asp:Repeater runat="server" ID="listBxInfo">
         <ItemTemplate>
-            <a class="weui-cell weui-cell_access" 
-                href="/workorder/bhgp_Apply_V1.aspx?workorder=<%#Eval("workorder") %> &workorder_f=<%#Eval("workorder_f") %>&workshop=<%=_workshop %>">
-                <%--<div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>--%>
+            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("cur_sign_step") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>')>
                 <div class="weui-cell__hd">
                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                 </div>
@@ -67,6 +86,10 @@
                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                             <%#Eval("result") %>
                         </span>
+                    </span>
+                    <span class="weui-agree__text" style="font-size: smaller">
+                        当前步骤:<%# (Eval("cur_sign_step").ToString()=="" || Eval("cur_sign_step").ToString()=="0002")?"检验处置":"需返工/挑选" %>   
+                       
                     </span>
                 </div>
                 <div class="weui-cell__ft">
