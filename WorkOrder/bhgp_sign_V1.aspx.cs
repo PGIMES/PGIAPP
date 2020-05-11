@@ -273,7 +273,16 @@ public partial class WorkOrder_bhgp_sign_V1 : System.Web.UI.Page
         if (flag == "N")
         {
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "');", true);
-            Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+            //Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+
+            if (_stepid == "0001")//需返工
+            {
+                Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
+            }
+            else
+            {
+                Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+            }           
         }
         else
         {
