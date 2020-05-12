@@ -4,15 +4,20 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title><%=_workshop %></title>
 
-    <link href="/css/weui.css" rel="stylesheet" />
-    <link href="/css/weuix.css" rel="stylesheet" />
-    <script src="/js/jquery-3.0.0.min.js"></script>
+    <script src="/Scripts/jquery-1.10.2.min.js"></script> 
+    <%--<script src="/js/jquery-3.0.0.min.js"></script>--%>
     <script src="/Content/layer/layer.js"></script>
+
+    <link href="/css/weui.css" rel="stylesheet" />
+    <link href="/css/weuix.css" rel="stylesheet" />    
+    <script src="/js/zepto.min.js"></script>
+    <script src="/js/zepto.weui.js"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -44,30 +49,26 @@
             //} else {
             //    $("#a_div").hide(); $("#a_div2").hide();
             //}
-            sm_workorder();
         });
 
         function sm_workorder() {
-            $('#img_sm_workorder').click(function () {
-                wx.ready(function () {
-                    wx.scanQRCode({
-                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                        success: function (res) {
-                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                            // code 在这里面写上扫描二维码之后需要做的内容 
-                            workorder_change(result);
-                            
-                        }
-                    });
-                });
+            wx.ready(function () {
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (res) {
+                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                        // code 在这里面写上扫描二维码之后需要做的内容 
+                         workorder_change(result);
 
-                //workorder_change("Q0001208");
+                    }
+                });
             });
-        }
+
+            //workorder_change("Q0001208");
+        };
 
         function workorder_change(result) {
-            
             $.ajax({
                 type: "post",
                 url: "Cjgl1.aspx/workorder_change",
@@ -113,10 +114,6 @@
 
             });
             
-        }
-
-        function void_bhg() {
-            $("#img_sm_workorder").trigger("click");
         }
     </script>
 </head>
@@ -200,12 +197,12 @@
                         <% string i3 = Label3.Text; Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "</span>"); %>   
                     </div>
                 </a>--%>
-                <a class="weui-cell weui-cell_access" href="javascript:void_bhg();" id="a_div">
+                <a class="weui-cell weui-cell_access"  href="javascript:sm_workorder();"   id="a_div">
                     <div class="weui-cell__hd">
                         <i class="fa fa-edit margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格处理<img id="img_sm_workorder" src="../img/fdj2.png" style="display:none;"/></p>
+                        <p>不合格处理</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -299,7 +296,7 @@
                 datad = JSON.parse(data.d); //转为Json字符串
             },
             error: function (error) {
-                alert(error)
+                alert(error);
             }
         });
         wx.config({
