@@ -44,12 +44,28 @@
         //alert(workshop);--%>
 
         $(function () {
-            //if ($("#emp_code_name").val() == "02432何桂勤" || $("#emp_code_name").val() == "02274李晓根") {
-            //    $("#a_div").show(); $("#a_div2").show();
-            //} else {
-            //    $("#a_div").hide(); $("#a_div2").hide();
-            //}
+            if ($("#emp_code_name").val() == "01968孙娟" || $("#emp_code_name").val() == "02274李晓根") {
+                $("#sc_div").show();
+            } else {
+                $("#sc_div").hide(); 
+            }
         });
+
+        function sm_product_off() {
+            wx.ready(function () {
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (res) {
+                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                        // code 在这里面写上扫描二维码之后需要做的内容 
+                          window.location.href = "/workorder/Off_Material.aspx?dh=" + result + "&workshop=<%=_workshop %>";
+
+                    }
+                });
+            });
+        };
+
 
         function sm_workorder() {
             wx.ready(function () {
@@ -218,7 +234,7 @@
                         <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>   
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>">
+                <a class="weui-cell weui-cell_access"  href="/workorder/Off_Material.aspx?workshop=<%=_workshop %>">  <%-- href="javascript:sm_product_off();" --%>
                     <div class="weui-cell__hd">
                         <i class="fa fa-check-square-o margin10-r"></i>
                     </div>
@@ -227,6 +243,9 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
+
+                 
+
                 <a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-list-alt margin10-r"></i>
