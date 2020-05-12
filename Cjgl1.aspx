@@ -44,11 +44,11 @@
         //alert(workshop);--%>
 
         $(function () {
-            if ($("#emp_code_name").val() == "01968孙娟" || $("#emp_code_name").val() == "02274李晓根") {
-                $("#sc_div").show();
-            } else {
-                $("#sc_div").hide(); 
-            }
+            //if ($("#emp_code_name").val() == "01968孙娟" || $("#emp_code_name").val() == "02274李晓根") {
+            //    $("#sc_div").show();
+            //} else {
+            //    $("#sc_div").hide(); 
+            //}
         });
 
         function sm_product_off() {
