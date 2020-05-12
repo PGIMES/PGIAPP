@@ -46,6 +46,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
     void init_data(string workorder, string workorder_f)
     {
+        yb_qty.Text = "0";
 
         //-------------
         string sql = @"exec [usp_app_bhgp_Apply_init_V1] '{0}','{1}'";
@@ -60,7 +61,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             descr.Text = dt.Rows[0]["descr"].ToString();
             op.Text = dt.Rows[0]["op"].ToString() + "-" + dt.Rows[0]["op_descr"].ToString();
             b_use_routing.Text = dt.Rows[0]["b_use_routing"].ToString();
-            qty.Text = dt.Rows[0]["qty"].ToString();
+            //qty.Text = dt.Rows[0]["qty"].ToString();
+            yb_qty.Text = dt.Rows[0]["qty"].ToString();
             reason.Text = dt.Rows[0]["reason_code"].ToString() + "-" + dt.Rows[0]["reason"].ToString();
             comment.Value= dt.Rows[0]["comment"].ToString();
 

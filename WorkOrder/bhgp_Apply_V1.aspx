@@ -38,6 +38,8 @@
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
             $("#b_use_routing").attr("readonly", "readonly");
+            $("#yb_qty").attr("readonly", "readonly");
+            $("#bc_qty").attr("readonly", "readonly");
 
             if ("<%= _ismodify %>"=="Y1") {
                 $("#pgino").attr("readonly", "readonly");
@@ -77,6 +79,13 @@
             sm_pgino();
             saomiao_workorder_gl();
 
+            $("#qty").change(function () {
+                var _qty=$("#qty").val();
+                var _yb_qty=$("#yb_qty").val();
+                var _bc_qty=parseInt(_qty)-parseInt(_yb_qty);
+                $("#bc_qty").val(_bc_qty);
+            });
+
             $("#rscode").change(function () {
                 $.ajax({
                     type: "post",
@@ -93,9 +102,7 @@
                         $("#reason").val(obj[0].title);
                     }
                 });
-            });
-
-            
+            });                        
 
             $('.collapse .js-category').click(function(){
                 $parent = $(this).parent('li');
@@ -233,6 +240,9 @@
             if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
                 layer.alert("请输入【数量】.");
                 return false;
+            }else if (parseInt($("#qty").val()) <=0) {
+                layer.alert("【数量】不可小于等于0.");
+                return false;
             }
             if ($("#reason").val() == "") {
                 layer.alert("请输入【原因名称】.");
@@ -246,8 +256,24 @@
                     }
                 }
             }
+            
+            //当前数量 小于 之前 报的数量，需要提示
+            if (parseInt($("#qty").val())<parseInt($("#yb_qty").val())) {
+                //$.confirm('【数量】' + $("#qty").val() + '小于【已报不合格数量】'+$("#yb_qty").val()+',确定要提交吗？', function () {
+                //    //点击确认后的回调函数
+                //    return true;
+                //}, function () {
+                //    //点击取消后的回调函数
+                //    return false;
+                //});
+                
+                return confirm('【数量】' + $("#qty").val() + '小于【已报不合格数量】'+$("#yb_qty").val()+',确定要提交吗？');
+            }else {
+                return true;
+            }
+
            
-            return true;
+            //return true;
         }
 
         //====================================two=============================
@@ -337,6 +363,14 @@
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">数量</label></div>
                             <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="请输入处置数量" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="weui-cell" style="font-size:12px;color:gray;">
+                          <div class="weui-flex__item">已报不合格数量
+                               <asp:TextBox ID="yb_qty" class="weui-input" runat="server" style="color:gray;width:20%; border-bottom:1px solid #e5e5e5; text-align:center;" ></asp:TextBox>
+                          </div>
+                          <div class="weui-flex__item">本次不合格数量
+                               <asp:TextBox ID="bc_qty" class="weui-input" runat="server" style="color:gray;width:20%; border-bottom:1px solid #e5e5e5; text-align:center;" ></asp:TextBox>
+                          </div>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">原因名称</label></div>
