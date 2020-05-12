@@ -182,16 +182,7 @@
                         <asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2 = Label2.Text; Response.Write("<span class='weui-badge  bg-" + (i2 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2 + "</span>"); %>   
                     </div>
-                </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-gears margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>生产监视</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
+                </a>                
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-edit margin10-r"></i>
@@ -243,33 +234,12 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-
-                 
-
-                <a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-list-alt margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>生产完成监视</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/quantity_checked.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-wpexplorer margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>终检完成</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/prod_qc_list.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-reorder margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>终检完成监视</p>
+                        <p>检验完成</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -282,15 +252,42 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-gears margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>生产监视</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>   
+                <a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-list-alt margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>生产完成监视<span class="f12">（临时）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/prod_qc_list.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-reorder margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>终检完成监视<span class="f12">（临时）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <%--<a class="weui-cell weui-cell_access" href="javascript:void(0);">
                     <div class="weui-cell__hd">
                         <i class="fa fa-bar-chart margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>报表查看</p>
+                        <p>报表查看<span class="f12">（未开放）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
-                </a>
+                </a>--%>
             </div>
         </div>
         <div id="errmsg"class="f14"></div>  

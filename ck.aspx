@@ -53,6 +53,15 @@
                         <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> 
                     </div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-shopping-basket margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>成品领用<span class="f12">（未开放）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx">
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
