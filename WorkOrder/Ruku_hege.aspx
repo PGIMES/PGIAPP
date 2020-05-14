@@ -98,6 +98,10 @@
                 layer.alert("请输入【来源单号】.");
                 return false;
             }
+            if ($.trim($("#loc_hg").val()) == "") {
+                layer.alert("请输入【库位】.");
+                return false;
+            }
             if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
                 layer.alert("请输入【数量】.");
                 return false;
