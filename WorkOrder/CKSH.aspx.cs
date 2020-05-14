@@ -10,18 +10,16 @@ using System.Web.UI.WebControls;
 public partial class WorkOrder_CKSH : System.Web.UI.Page
 {
     public string _workshop = "";
-    public string _workorder_f = "";
+    public string _workorder_f = "";//不合格监视页面传递过来的
+    public string _dh = "";//仓库接收 扫码进来
+    public string _ck = "";//仓库接收 扫码进来  上级菜单是 仓库
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["workshop"] != null)
-        {
-            _workshop = Request.QueryString["workshop"].ToString();
-        }
-        if (Request.QueryString["workorder_f"] != null)
-        {
-            _workorder_f = Request.QueryString["workorder_f"].ToString();
-        }
+        if (Request.QueryString["workshop"] != null) { _workshop = Request.QueryString["workshop"].ToString(); }
+        if (Request.QueryString["workorder_f"] != null) { _workorder_f = Request.QueryString["workorder_f"].ToString(); }
+        if (Request.QueryString["dh"] != null) { _dh = Request.QueryString["dh"].ToString(); }
+        if (Request.QueryString["ck"] != null) { _ck = Request.QueryString["ck"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -93,12 +91,30 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
         if (flag == "N")
         {
             //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "');$('#workorder').val('');$('#comment').val('');", true);
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
+            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
+            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
+
+            if (_workorder_f != "")
+            {
+                Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
+            }
+            if (_dh != "")
+            {
+                if (_ck == "Y")//车间的
+                {
+                    Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
+                }
+                if (_ck == "N")//仓库的
+                {
+                    Response.Redirect("/ck.aspx");
+                }
+            }
             return;
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
+            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
             return;
         }
     }

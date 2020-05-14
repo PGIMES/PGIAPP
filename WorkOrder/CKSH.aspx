@@ -19,17 +19,23 @@
 
     <script>
         $(document).ready(function () {
+            $("#workorder").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#qty").attr("readonly", "readonly");
 
-            if ("<%= _workorder_f %>"!="") {
+            if ("<%= _workorder_f %>" != "") {//不合格监视页面传递过来的
                 init();
+            }
+            if ("<%= _dh %>" != "") {//仓库接收 扫码进来
+                $("#img_sm_workorder").hide();
+                $('#workorder').val("<%= _dh %>");
+                workorder_change();
             }
         });
 
         $(function () {
-            sm_workorder();
+            //sm_workorder();
         });
 
         function init() {
@@ -49,22 +55,22 @@
             });
         }
 
-        function sm_workorder() {
-            $('#img_sm_workorder').click(function () {
-                wx.ready(function () {
-                    wx.scanQRCode({
-                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                        success: function (res) {
-                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                            // code 在这里面写上扫描二维码之后需要做的内容  
-                            $('#workorder').val(result);
-                            workorder_change();
-                        }
-                    });
-                });
-            });
-        }
+        //function sm_workorder() {
+        //    $('#img_sm_workorder').click(function () {
+        //        wx.ready(function () {
+        //            wx.scanQRCode({
+        //                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        //                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+        //                success: function (res) {
+        //                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+        //                    // code 在这里面写上扫描二维码之后需要做的内容  
+        //                    $('#workorder').val(result);
+        //                    workorder_change();
+        //                }
+        //            });
+        //        });
+        //    });
+        //}
 
         function workorder_change() {
             $("#pgino").val('');
@@ -116,7 +122,7 @@
     </script>
 </head>
 <body> 
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>   
+    <%--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>--%>   
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
@@ -125,17 +131,18 @@
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
+        <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>--%>
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
                 <div class="weui-cell__bd">
-                    <span style="float:left; width:90%">
+                    <%--<span style="float:left; width:90%">
                         <asp:TextBox ID="workorder" class="weui-input" placeholder="请输入单号" runat="server" onkeyup="this.value=this.value.toUpperCase()" onchange="workorder_change()"></asp:TextBox>
                     </span>
                     <span style="float:left; width:10%">
                         <img id="img_sm_workorder" src="../img/fdj2.png"/>
-                    </span>
+                    </span>--%>
+                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
                 </div>
             </div>
             <div class="weui-cell">
@@ -162,12 +169,12 @@
                 <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
                     Text="提交" OnClick="btnsave_Click" OnClientClick="return valid();" />
             </div>
-        </ContentTemplate>
-        </asp:UpdatePanel>
+       <%-- </ContentTemplate>
+        </asp:UpdatePanel>--%>
     </div>
     </form>
 </body>
-    <script>
+    <%--<script>
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
             sm_workorder();
         });
@@ -195,5 +202,5 @@
             signature: datad.signature,// 必填，签名，见附录1
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
-    </script>
+    </script>--%>
 </html>
