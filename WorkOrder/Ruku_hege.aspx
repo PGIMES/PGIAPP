@@ -102,18 +102,6 @@
                 layer.alert("请输入【库位】.");
                 return false;
             }
-            if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
-                layer.alert("请输入【数量】.");
-                return false;
-            }
-            if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
-                layer.alert("请输入【接收数量】.");
-                return false;
-            }
-            if (parseInt($("#act_qty").val()) > parseInt($("#qty").val())) {
-                layer.alert("【接收数量】不可大于【数量】.");
-                return false;
-            }
             return true;
         }
     </script>
