@@ -92,13 +92,12 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
         {
             //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "');$('#workorder').val('');$('#comment').val('');", true);
             //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
-            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
 
             if (_workorder_f != "")
             {
                 Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
             }
-            if (_dh != "")
+            else if (_dh != "")
             {
                 if (_ck == "Y")//车间的
                 {
@@ -108,6 +107,10 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
                 {
                     Response.Redirect("/ck.aspx");
                 }
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
             }
             return;
         }
