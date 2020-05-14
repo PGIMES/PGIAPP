@@ -289,8 +289,8 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">             
-                <%--<a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh();">--%>
+                <%--<a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">--%>         
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh();">
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
                     </div>

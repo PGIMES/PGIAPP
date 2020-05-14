@@ -99,11 +99,11 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
             }
             else if (_dh != "")
             {
-                if (_ck == "Y")//车间的
+                if (_ck == "N")//车间的
                 {
                     Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
                 }
-                if (_ck == "N")//仓库的
+                if (_ck == "Y")//仓库的
                 {
                     Response.Redirect("/ck.aspx");
                 }
