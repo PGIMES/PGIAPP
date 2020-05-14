@@ -17,12 +17,61 @@
 
     <script>
         $(document).ready(function () {
+            $("#dh").attr("readonly", "readonly");
+            $("#dh_source").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#qty").attr("readonly", "readonly");
 
+            if ("<%= _dh %>" != "") {//仓库接收 扫码进来
+                $('#dh_source').val("<%= _dh %>");
+                workorder_change();
+            }
             
         });
+
+        function workorder_change() {
+            $("#pgino").val('');
+            $("#pn").val('');
+            $('#qty').val('');
+            $('#act_qty').val('');
+
+            $.ajax({
+                type: "post",
+                url: "Ruku_Print.aspx/workorder_change",
+                data: "{'workorder':'" + $('#workorder').val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+
+                    if (obj[0].flag == "Y") {
+                        layer.alert(obj[0].msg);
+                    }
+                    $("#pgino").val(obj[0].pgino);
+                    $("#pn").val(obj[0].pn);
+                    $('#qty').val(obj[0].qty);
+                    $('#act_qty').val(obj[0].qty);
+                }
+
+            });
+        }
+        function valid() {
+            if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
+                layer.alert("请输入【数量】.");
+                return false;
+            }
+            if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
+                layer.alert("请输入【接收数量】.");
+                return false;
+            }
+            if (parseInt($("#act_qty").val()) > parseInt($("#qty").val())) {
+                layer.alert("【接收数量】不可大于【数量】.");
+                return false;
+            }
+            return true;
+        }
     </script>
 </head>
 <body>
@@ -34,6 +83,39 @@
         
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+
+        <div class="weui-cell">
+            <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>
+            <asp:TextBox ID="dh" class="weui-input" placeholder="系统自动生成" style="color:gray" runat="server"></asp:TextBox>                
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
+            <asp:TextBox ID="dh_source" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
+            <asp:TextBox ID="pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>                          
+            <asp:TextBox ID="pn" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">交付数量</label></div>
+            <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="" style="color:gray" runat="server"></asp:TextBox>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd f-red "><label class="weui-label">接收数量</label></div>
+            <asp:TextBox ID="act_qty" class="weui-input" type='number' placeholder="请输入接收数量" runat="server"></asp:TextBox>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+            <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
+        </div>
+        <div class="weui-cell">
+            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
+                Text="打印" OnClick="btnsave_Click" OnClientClick="return valid();" />
+        </div>
 
     </div>
     </form>
