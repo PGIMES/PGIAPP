@@ -28,7 +28,6 @@
                 init();
             }
             if ("<%= _dh %>" != "") {//仓库接收 扫码进来
-                $("#img_sm_workorder").hide();
                 $('#workorder').val("<%= _dh %>");
                 workorder_change();
             }
