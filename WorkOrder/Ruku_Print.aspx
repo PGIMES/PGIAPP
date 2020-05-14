@@ -39,7 +39,7 @@
             $.ajax({
                 type: "post",
                 url: "Ruku_Print.aspx/workorder_change",
-                data: "{'workorder':'" + $('#workorder').val() + "'}",
+                data: "{'workorder':'" + $('#dh_source').val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
