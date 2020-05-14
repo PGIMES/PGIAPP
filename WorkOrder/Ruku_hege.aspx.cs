@@ -34,18 +34,18 @@ public partial class WorkOrder_Ruku_hege : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string workorder_change(string workorder)
+    public static string dh_change(string dh)
     {
 
         string re_sql = @"exec [usp_app_Ruku_hege_workorder_change] '{0}'";
-        re_sql = string.Format(re_sql, workorder);
+        re_sql = string.Format(re_sql, dh);
         DataSet ds = SQLHelper.Query(re_sql);
 
         DataTable re_dt = ds.Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string domain = "", pgino = "", pn = "", qty = "", act_qty = "";
+        string domain = "", pgino = "", pn = "", qty = "", act_qty = "", phone = "", create_date = "";
 
         if (flag == "N")
         {
@@ -55,18 +55,21 @@ public partial class WorkOrder_Ruku_hege : System.Web.UI.Page
             pn = re_dt_2.Rows[0]["pn"].ToString();
             qty = re_dt_2.Rows[0]["qty"].ToString();
             act_qty = re_dt_2.Rows[0]["act_qty"].ToString();
+            phone = re_dt_2.Rows[0]["phone"].ToString();
+            create_date = re_dt_2.Rows[0]["create_date"].ToString();
         }
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"domain\":\"" + domain 
-            + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\",\"act_qty\":\"" + act_qty + "\"}]";
+            + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\",\"act_qty\":\"" 
+            + act_qty + "\",\"phone\":\"" + phone + "\",\"create_date\":\"" + create_date + "\"}]";
         return result;
 
     }
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        string re_sql = re_sql = @"exec usp_app_Ruku_hege '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, dh_source.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
+        string re_sql = re_sql = @"exec usp_app_Ruku_hege '{0}', '{1}','{2}','{3}','{4}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, dh.Text, workorder.Text, loc_hg.Text, comment.Value);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
