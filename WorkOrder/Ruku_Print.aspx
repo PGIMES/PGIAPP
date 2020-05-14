@@ -91,7 +91,7 @@
             <asp:TextBox ID="dh" class="weui-input" placeholder="系统自动生成" style="color:gray" runat="server"></asp:TextBox>                
         </div>
         <div class="weui-cell">
-            <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
+            <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div>
             <asp:TextBox ID="dh_source" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
         </div>
         <div class="weui-cell">
