@@ -134,15 +134,15 @@
         <ContentTemplate>--%>
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
-                <div class="weui-cell__bd">
-                    <%--<span style="float:left; width:90%">
+                <%--<div class="weui-cell__bd">
+                    <span style="float:left; width:90%">
                         <asp:TextBox ID="workorder" class="weui-input" placeholder="请输入单号" runat="server" onkeyup="this.value=this.value.toUpperCase()" onchange="workorder_change()"></asp:TextBox>
                     </span>
                     <span style="float:left; width:10%">
                         <img id="img_sm_workorder" src="../img/fdj2.png"/>
-                    </span>--%>
-                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
-                </div>
+                    </span>
+                </div>--%>
+                <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
