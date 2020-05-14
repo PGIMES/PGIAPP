@@ -29,10 +29,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
-            domain.Text = lu.Domain;
-
             //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
 
         }
     }
@@ -49,25 +46,26 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string pgino = "", pn = "", qty = "";
+        string domain = "", pgino = "", pn = "", qty = "";
 
         if (flag == "N")
         {
             DataTable re_dt_2 = ds.Tables[1];
+            domain = re_dt_2.Rows[0]["domain"].ToString();
             pgino = re_dt_2.Rows[0]["pgino"].ToString();
             pn = re_dt_2.Rows[0]["pn"].ToString();
             qty = re_dt_2.Rows[0]["qty"].ToString();
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"domain\":\"" + domain + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\"}]";
         return result;
 
     }
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        string re_sql = re_sql = @"exec usp_app_Ruku_Print '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, dh_source.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
+        string re_sql = re_sql = @"exec usp_app_Ruku_Print '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, dh_source.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();

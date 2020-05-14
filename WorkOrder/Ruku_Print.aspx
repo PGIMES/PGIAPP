@@ -19,6 +19,7 @@
         $(document).ready(function () {
             $("#dh").attr("readonly", "readonly");
             $("#dh_source").attr("readonly", "readonly");
+            $("#domain").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#qty").attr("readonly", "readonly");
@@ -31,6 +32,7 @@
         });
 
         function workorder_change() {
+            $("#domain").val('');
             $("#pgino").val('');
             $("#pn").val('');
             $('#qty').val('');
@@ -49,6 +51,7 @@
                     if (obj[0].flag == "Y") {
                         layer.alert(obj[0].msg);
                     }
+                    $("#domain").val(obj[0].domain);
                     $("#pgino").val(obj[0].pgino);
                     $("#pn").val(obj[0].pn);
                     $('#qty').val(obj[0].qty);
@@ -75,14 +78,13 @@
     </script>
 </head>
 <body>
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>  
+    <%--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>  --%>
     <form id="form1" runat="server">
     <asp:ScriptManager runat="server">
     </asp:ScriptManager>
     <div class="weui-cells weui-cells_form">
         
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
-        <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <div class="weui-cell">
             <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>
@@ -95,6 +97,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
             <asp:TextBox ID="pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+            <asp:TextBox ID="domain" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>                          
@@ -120,7 +123,7 @@
     </div>
     </form>
 </body>
-    <script>
+   <%-- <script>
         var datad = [];
         $.ajax({
             url: "/getwxconfig.aspx/GetScanQRCode",
@@ -144,5 +147,5 @@
             signature: datad.signature,// 必填，签名，见附录1
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
-    </script>
+    </script>--%>
 </html>

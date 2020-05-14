@@ -20,6 +20,7 @@
     <script>
         $(document).ready(function () {
             $("#workorder").attr("readonly", "readonly");
+            $("#domain").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#qty").attr("readonly", "readonly");
@@ -72,6 +73,7 @@
         //}
 
         function workorder_change() {
+            $("#domain").val('');
             $("#pgino").val('');
             $("#pn").val('');
             $('#qty').val('');
@@ -90,6 +92,7 @@
                     if (obj[0].flag=="Y") {
                         layer.alert(obj[0].msg);
                     }
+                    $("#domain").val(obj[0].domain);
                     $("#pgino").val(obj[0].pgino);
                     $("#pn").val(obj[0].pn);
                     $('#qty').val(obj[0].qty);
@@ -128,7 +131,6 @@
     <div class="weui-cells weui-cells_form">
         
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
-        <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
         <ContentTemplate>--%>
@@ -147,6 +149,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
                 <asp:TextBox ID="pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                <asp:TextBox ID="domain" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>                          
