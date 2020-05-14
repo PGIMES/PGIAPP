@@ -65,7 +65,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
     protected void btnsave_Click(object sender, EventArgs e)
     {
         string re_sql = re_sql = @"exec usp_app_Ruku_Print '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, dh_source.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();

@@ -18,14 +18,14 @@
     <script>
         $(document).ready(function () {
             $("#dh").attr("readonly", "readonly");
-            $("#dh_source").attr("readonly", "readonly");
+            $("#workorder").attr("readonly", "readonly");
             $("#domain").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#qty").attr("readonly", "readonly");
 
             if ("<%= _dh %>" != "") {//仓库接收 扫码进来
-                $('#dh_source').val("<%= _dh %>");
+                $('#workorder').val("<%= _dh %>");
                 workorder_change();
             }
             
@@ -41,7 +41,7 @@
             $.ajax({
                 type: "post",
                 url: "Ruku_Print.aspx/workorder_change",
-                data: "{'workorder':'" + $('#dh_source').val() + "'}",
+                data: "{'workorder':'" + $('#workorder').val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -92,7 +92,7 @@
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div>
-            <asp:TextBox ID="dh_source" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
+            <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
