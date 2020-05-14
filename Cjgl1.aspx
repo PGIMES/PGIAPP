@@ -66,6 +66,52 @@
             });
         };
 
+        function sm_ck_dh() {
+            wx.ready(function () {
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (res) {
+                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                        // code 在这里面写上扫描二维码之后需要做的内容 
+                        ck_dh_change(result);
+
+                    }
+                });
+            });
+        }
+        function ck_dh_change(result) {
+            $.ajax({
+                type: "post",
+                url: "Cjgl1.aspx/ck_dh_change",
+                data: "{'result':'" + result + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    var flag = obj[0].flag;
+                    var msg = obj[0].msg;
+
+                    if (flag == "Y") {
+                        layer.alert(msg);
+                        return;
+                    }
+
+                    if (msg == "hg") {
+                        window.location.href = "/workorder/Ruku_Print.aspx?dh=" + result + "&workshop=<%=_workshop %>" + "&ck=N";
+                    }
+                    else if (msg == "bf") {
+                        window.location.href = "/workorder/CKSH.aspx?dh=" + result + "&workshop=<%=_workshop %>" + "&ck=N";
+                    }
+                    else if (msg == "rk") {                        
+                        window.location.href = "/workorder/Ruku_hege.aspx?dh=" + result + "&workshop=<%=_workshop %>" + "&ck=N";
+                    }
+                }
+
+            });
+            
+        }
 
         function sm_workorder() {
             wx.ready(function () {
@@ -243,7 +289,8 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">
+                <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">             
+                <%--<a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh();">--%>
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
                     </div>

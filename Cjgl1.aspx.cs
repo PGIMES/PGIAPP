@@ -75,6 +75,22 @@ public partial class Cjgl1 : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string ck_dh_change(string result)
+    {
+
+        string re_sql = @"exec [usp_app_Cjgl1_ck_dh_V1] '{0}'";
+        re_sql = string.Format(re_sql, result);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        string res = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return res;
+
+    }
+
+    [WebMethod]
     public static string workorder_change(string result)
     {
 
