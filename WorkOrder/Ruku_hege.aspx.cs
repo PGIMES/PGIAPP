@@ -45,11 +45,12 @@ public partial class WorkOrder_Ruku_hege : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string domain = "", pgino = "", pn = "", qty = "", act_qty = "", phone = "", create_date = "";
+        string workorder = "", domain = "", pgino = "", pn = "", qty = "", act_qty = "", phone = "", create_date = "";
 
         if (flag == "N")
         {
             DataTable re_dt_2 = ds.Tables[1];
+            workorder = re_dt_2.Rows[0]["workorder"].ToString();
             domain = re_dt_2.Rows[0]["domain"].ToString();
             pgino = re_dt_2.Rows[0]["pgino"].ToString();
             pn = re_dt_2.Rows[0]["pn"].ToString();
@@ -59,7 +60,8 @@ public partial class WorkOrder_Ruku_hege : System.Web.UI.Page
             create_date = re_dt_2.Rows[0]["create_date"].ToString();
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"domain\":\"" + domain 
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg 
+            + "\",\"workorder\":\"" + workorder + "\",\"domain\":\"" + domain 
             + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\",\"act_qty\":\"" 
             + act_qty + "\",\"phone\":\"" + phone + "\",\"create_date\":\"" + create_date + "\"}]";
         return result;
