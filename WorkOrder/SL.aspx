@@ -112,7 +112,7 @@
                             var obj = eval(data.d);
                             var flag = obj[0].flag;
                             if (flag == "Y") {
-                                layer.alert(obj[0].msg);
+                                $.toptip(obj[0].msg, 'warning');//layer.alert(obj[0].msg);
                                 $('#sp_ld_part').text("");
                                 $('#sp_ld_ref').text("");
                                 $('#sp_ld_loc').text("");

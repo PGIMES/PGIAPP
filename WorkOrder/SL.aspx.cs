@@ -148,11 +148,11 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         string ld_part = "", ld_ref = "", ld_loc = "", ld_qty_oh = "", loc_to = "";
         if (ldt == null)
         {
-            flag = "Y"; msg = "Lot No不正确";
+            flag = "Y"; msg = "没有符合条件的Lot No";
         }
         else if (ldt.Rows.Count <= 0)
         {
-            flag = "Y"; msg = "Lot No不正确";
+            flag = "Y"; msg = "没有符合条件的Lot No";
         }
         else
         {
