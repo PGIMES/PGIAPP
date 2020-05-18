@@ -5,15 +5,29 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Services;
 
 
 public partial class Off_Material : System.Web.UI.Page
 {
     public string _workshop = "";
+    public string _dh = "";
+    public DataTable dt_append;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-      _workshop = Request.QueryString["workshop"].ToString();
+        _workshop = "四车间";  //Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh = "W1497589";// Request.QueryString["dh"].ToString(); //"W1497589";
+
+
+        dt_append = new DataTable();
+        dt_append.Columns.Add("sku");
+        dt_append.Columns.Add("lot_no");
+        dt_append.Columns.Add("need_off_qty");
+        dt_append.Columns.Add("need_no");
+        dt_append.Columns.Add("idno");
+
+
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -23,110 +37,55 @@ public partial class Off_Material : System.Web.UI.Page
 
         if (!IsPostBack)
         {
+            ViewState["STEPVALUE"] = "";
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = lu.WorkCode;
+            txt_emp.Text = "01968";// lu.WorkCode;
+            txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
-           
+
         }
     }
 
     public void ShowValue(string WorkCode)
     {
-        //取当前登录者
-        //string sql = @"select top 1 1  from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null   ";
-        //sql = string.Format(sql, WorkCode);
-        //var value = SQLHelper.Query(sql).Tables[0];
-        //if (value != null && value.Rows.Count > 0)
-        //{
-            string sql_str = @"exec usp_app_off_material_Sel_xmh '{0}','{1}','{2}'";
-            sql_str = string.Format(sql_str,"", WorkCode,_workshop);
-            DataTable dt = SQLHelper.Query(sql_str).Tables[0];
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                txt_xmh.DataSource = dt;
-                txt_xmh.DataTextField = "pgino";
-                txt_xmh.DataValueField = "pgino";
-                txt_xmh.DataBind();
-                if (dt.Rows.Count > 1)
-                {
-                    txt_xmh.Items.Insert(0, new ListItem("--请选择--", ""));
-                }
-                bind_gv();
-            }
-            
-
-        //}
-        //else
-        //{
-        //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
-        //    return;
-        //}
-    }
-
-    void bind_gv()
-    {
-        DataTable dt = new DataTable();
-
-        string sql = @"exec usp_app_off_material_Bind_xmh '{0}','{1}'";
-        sql = string.Format(sql, txt_xmh.SelectedValue,txt_emp.Text);
-        txt_pn.Text = txt_xmh.SelectedValue;
-        DataTable redt = SQLHelper.Query(sql).Tables[0];
-        //根据项目号取整托数
-        if (txt_xmh.SelectedValue != "")
-        {
-            if (redt.Rows.Count>0)
-            {
-                DataRow[] drs2 = redt.Select("pgino = '" + txt_xmh.SelectedItem.Text + "' ");
-                txt_qty.Text = drs2.CopyToDataTable().Rows[0]["ztsl"].ToString();
-            }
-        }
-        DataRow[] dr = redt.Select("pgino='" + txt_xmh.SelectedValue + "'");
-        if (dr != null && dr.Length > 0)
-        {
-            txt_pn.Text = dr[0]["pn"].ToString();
-        }
-        
-        dt = SQLHelper.Query(sql).Tables[1];
-        GridView1.DataSource = dt;
-        GridView1.DataBind();
-        
-    }
-
-    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        this.GridView1.PageIndex = e.NewPageIndex;
-        bind_gv();
-    }
-
  
+        string sql_str = @"exec usp_app_off_material_Sel_xmh '{0}','{1}','{2}'";
+        sql_str = string.Format(sql_str, "", WorkCode, _workshop);
+        DataTable dt = SQLHelper.Query(sql_str).Tables[0];
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            txt_xmh.DataSource = dt;
+            txt_xmh.DataTextField = "pgino";
+            txt_xmh.DataValueField = "pgino";
+            txt_xmh.DataBind();
+            if (dt.Rows.Count > 1)
+            {
+                txt_xmh.Items.Insert(0, new ListItem("--请选择--", ""));
+            }
+           
+        }
+
+    }
+
+
+   
+
+   
+
     protected void btnsave_Click(object sender, EventArgs e)
     {
-
-        string sqlstr = @"select emp_code+emp_name,pgino,location,id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
-        sqlstr = string.Format(sqlstr, txt_emp.Text);
-        var dt = SQLHelper.reDs(sqlstr).Tables[0];
-        if (dt.Rows.Count <= 0)
-        {
-
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
-            return;
-        }
-
-        string sql = @"exec usp_app_down_material '{0}','{1}','{2}','{3}','{4}'";
-        sql = string.Format(sql, txt_dh.Text, txt_emp.Text,txt_xmh.SelectedItem.Text,txt_pn.Text, txt_qty.Text);
-        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
-        string flag = re_dt.Rows[0][0].ToString();
-        string msg = re_dt.Rows[0][1].ToString();
-
-        if (flag == "N")
-        {
-            bind_gv();
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"下料完成.\");$('#txt_qty').val('');$('#txt_dh').val('')", true);
+        txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+        if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
+        {   
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认下线吗？', function () { $('#btn_wc').click(); }, function () {});", true);
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + msg + "')", true);
+            save("下线完成");
+            txt_dh.Text = "";
         }
+
+
     }
 
 
@@ -134,6 +93,196 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void txt_xmh_SelectedIndexChanged(object sender, EventArgs e)
     {
-        bind_gv();
+        Bind_reperter();
     }
+
+    protected void btn_bind_data_Click(object sender, EventArgs e)
+    {
+        string dh = dh_record.Text;
+       
+        DataRow drow = dt_append.NewRow();
+        string sql = "";
+        string strsql = "select sku,lot_no,cast(qty-off_qty as decimal(18,4)) as need_off_qty,need_no from Mes_App_WorkOrder_Wip where 1=1 and loading_type=1 ";
+        dh = dh.Substring(1, dh.Length - 1)+",";
+        string[] strdh = dh.Split(',');
+        int strdh_lenth = strdh.Length;
+        DataTable dt = new DataTable();
+
+        for (int i = 0; i < strdh.Length - 1; i++)
+        {
+           
+                sql = strsql+ " and lot_no='" + strdh[i].ToString() + "'";
+                DataTable dt_ = SQLHelper.Query(sql).Tables[0];
+                if (dt_.Rows.Count == 0 || dt_ == null)
+                {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", @"$.toptip('来源单号不存在',3000);  ", true);
+                    return;
+                }
+            
+        }
+                
+              strsql += " and lot_no in  (select *  from dbo.StrToTable('" + dh.Substring(0, dh.Length - 1)+"'))";
+             dt = SQLHelper.Query(strsql).Tables[0];
+           
+        
+             ViewState["DT_Source"] = dt;
+            DataTable dtnew = GetAll();
+            Repeater_lotno.DataSource = dtnew;
+            Repeater_lotno.DataBind();
+           
+
+
+    }
+    protected DataTable GetAll()
+    {
+        DataRow drow = dt_append.NewRow();
+       
+        DataTable DT_Source = (DataTable)ViewState["DT_Source"];
+        if (DT_Source!=null && DT_Source.Rows.Count > 0)
+        {
+            for (int i = 0; i < DT_Source.Rows.Count; i++)
+            {
+                drow["sku"] = DT_Source.Rows[i]["sku"].ToString();
+                drow["lot_no"] = DT_Source.Rows[i]["lot_no"].ToString();
+                drow["need_off_qty"] = DT_Source.Rows[i]["need_off_qty"].ToString();
+                drow["need_no"] = DT_Source.Rows[i]["need_no"].ToString();
+                drow["idno"] =i;
+                dt_append.Rows.Add(drow.ItemArray);
+            }
+        }
+        DataTable dt_grid = (DataTable)ViewState["DT_Grid"];
+        if (dt_grid != null && dt_grid.Rows.Count > 0)
+        {
+            for (int i = 0; i < dt_grid.Rows.Count; i++)
+            {
+                drow["sku"] = dt_grid.Rows[i]["sku"].ToString();
+                drow["lot_no"] = dt_grid.Rows[i]["lot_no"].ToString();
+                drow["need_off_qty"] = dt_grid.Rows[i]["need_off_qty"].ToString();
+                drow["need_no"] = dt_grid.Rows[i]["need_no"].ToString();
+                drow["idno"] = 0;
+                dt_append.Rows.Add(drow.ItemArray);
+            }
+        }
+        return dt_append;
+
+    }
+
+    protected void btnzc_Click(object sender, EventArgs e)
+    {
+        save(btnzc.Text);
+    }
+    protected void btn_wc_Click(object sender, EventArgs e)
+    {
+        save("下线完成");
+        txt_dh.Text = "";
+    }
+
+
+
+    [WebMethod]
+    public static string Set_Page(string workorder)
+    {
+
+        string result = "";
+        string re_sql = @"exec [usp_app_off_num] '{0}',''";
+        re_sql = string.Format(re_sql, workorder);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        result = Newtonsoft.Json.JsonConvert.SerializeObject(re_dt);
+        return result;
+    }
+
+    protected void save(string btn)
+    {
+        string sqlstr = @"select emp_code+emp_name,pgino,location,id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
+        sqlstr = string.Format(sqlstr, txt_emp.Text);
+        var dt = SQLHelper.reDs(sqlstr).Tables[0];
+        if (dt.Rows.Count <= 0)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
+            return;
+        }
+        string script = "";
+        string dh_source = "";
+        txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+      
+      
+
+        string sql = @"exec usp_app_down_material_0514 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        if(dh_record.Text.Contains(","))
+        { dh_source = dh_record.Text.Substring(1, dh_record.Text.Length - 1); }
+        sql = string.Format(sql, txt_dh.Text, txt_emp.Text, txt_xmh.SelectedItem.Text, txt_pn.Text, txt_curr_qty.Text,btn, dh_source, ViewState["STEPVALUE"], txt_remark.Value);
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        if (flag == "N")
+        {
+            if (btn== "部分完成")
+            { 
+                script = "$('#txt_curr_qty').val('')";
+            }
+            //else
+            //{
+            //    script = "$('input[type =text]').val('');";
+              
+            //}
+
+           // bind_gv();
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + btn + "');" + script + "", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + msg + "')", true);
+        }
+    }
+
+    protected void Bind_reperter()
+    {
+        DataTable dt1 = new DataTable();
+
+        string sql = @"exec usp_app_off_material_Bind_xmh_ver '{0}','{1}'";
+        sql = string.Format(sql, txt_xmh.SelectedValue, txt_emp.Text);
+        DataTable redt = SQLHelper.Query(sql).Tables[0];
+        //根据项目号取整托数
+        if (txt_xmh.SelectedValue != "")
+        {
+            if (redt.Rows.Count > 0)
+            {
+                DataRow[] drs2 = redt.Select("pgino = '" + txt_xmh.SelectedItem.Text + "' ");
+                if (drs2 != null && drs2.Length > 0)
+                {
+                    txt_qty.Text = drs2[0]["ztsl"].ToString();
+                    txt_pn.Text = drs2[0]["pn"].ToString();
+                    txt_ztsl.Text = drs2[0]["ztsl"].ToString();
+                }
+            }
+            dt1 = SQLHelper.Query(sql).Tables[1];
+
+            ViewState["DT_Grid"] = dt1;
+            DataTable dtnew = GetAll();
+            Repeater_lotno.DataSource = dtnew;
+            Repeater_lotno.DataBind();
+            string strsql = @"exec usp_app_off_num '{0}','{1}'";
+            strsql = string.Format(strsql, txt_dh.Text, txt_xmh.SelectedValue);
+            DataTable dt2 = SQLHelper.Query(strsql).Tables[0];
+
+            txt_off_qty.Text = dt2.Rows[0]["off_qty"].ToString();
+            txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+            ViewState["STEPVALUE"] = dt2.Rows[0]["step"].ToString();
+            DataTable dt_record = SQLHelper.Query(strsql).Tables[1];
+            if (dt_record.Rows.Count > 0)
+            {
+                Repeater_record.DataSource = SQLHelper.Query(strsql).Tables[1];
+                Repeater_record.DataBind();
+            }
+
+        }
+    }
+    protected void btn_bind_xm_Click(object sender, EventArgs e)
+    {
+        Bind_reperter();
+
+    }
+
+    
 }
