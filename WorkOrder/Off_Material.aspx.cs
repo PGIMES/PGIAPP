@@ -16,7 +16,7 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = "四车间";  //Request.QueryString["workshop"].ToString(); // "四车间";  
+        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
         _dh = "W1497589";// Request.QueryString["dh"].ToString(); //"W1497589";
 
 
@@ -39,7 +39,7 @@ public partial class Off_Material : System.Web.UI.Page
         {
             ViewState["STEPVALUE"] = "";
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = "01968";// lu.WorkCode;
+            txt_emp.Text =  lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -115,7 +115,7 @@ public partial class Off_Material : System.Web.UI.Page
                 DataTable dt_ = SQLHelper.Query(sql).Tables[0];
                 if (dt_.Rows.Count == 0 || dt_ == null)
                 {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", @"$.toptip('来源单号不存在',3000);  ", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", @"$.toptip('来源单号不存在',3000); $('#source_dh').val('') ", true);
                     return;
                 }
             
