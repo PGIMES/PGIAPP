@@ -35,40 +35,44 @@ public partial class Load_Material : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             _emp = lu.WorkCode + lu.UserName;
 
-            ShowValue(lu.WorkCode); 
+            load_data();
         }
     }
 
-
-    public void ShowValue(string WorkCode)
+    void load_data()
     {
-        //取当前登录者
-        string gw = "";
-        string sql = @"select emp_code+emp_name,pgino,location,id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
-        sql = string.Format(sql, WorkCode);
-        var value = SQLHelper.reDs(sql).Tables[0];
-        if (value.Rows.Count >0)
-        {
-            string strsql = "select workshop+'/'+line+'/'+location as location from Mes_App_EmployeeLogin_Location where login_id='{0}'";
-            strsql = string.Format(strsql, value.Rows[0]["id"].ToString());
-            var dt = SQLHelper.reDs(strsql).Tables[0];
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                gw += dt.Rows[i][0].ToString() + "<br/>";
-            }
-            txt_location.Text = gw;
-        }
-    }
+        string re_sql = @"exec [usp_app_load_material_load_data] '{0}','{1}','{2}'";
+        re_sql = string.Format(re_sql, _lotno, _needno, _para);
+        DataSet ds = SQLHelper.Query(re_sql);
 
+        DataTable dt0 = ds.Tables[0];
+        listBxInfo_YL.DataSource = dt0;
+        listBxInfo_YL.DataBind();
+
+        DataTable dt1 = ds.Tables[1];
+        listBxInfo_SL.DataSource = dt1;
+        listBxInfo_SL.DataBind();
+
+        DataTable dt2 = ds.Tables[2];
+        listBxInfo_LL.DataSource = dt2;
+        listBxInfo_LL.DataBind();
+
+        DataTable dt3 = ds.Tables[3];
+        listBxInfo_TL.DataSource = dt3;
+        listBxInfo_TL.DataBind();
+
+        ViewState["dt2"] = dt2.Rows.Count.ToString();
+        ViewState["dt3"] = dt3.Rows.Count.ToString();
+    }
 
 
     [WebMethod]
-    public static string Set_Lotno(string lotno, string needno, string para)
+    public static string Set_Lotno(string lotno, string needno, string para, string emp)
     {
 
         string result = "";
-        string re_sql = @"exec [usp_app_load_material_lotno_change] '{0}','{1}','{2}'";
-        re_sql = string.Format(re_sql, lotno, needno, para);
+        string re_sql = @"exec [usp_app_load_material_lotno_change_V1] '{0}','{1}','{2}','{3}'";
+        re_sql = string.Format(re_sql, lotno, needno, para, emp);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         result = Newtonsoft.Json.JsonConvert.SerializeObject(re_dt);
 
@@ -106,7 +110,7 @@ public partial class Load_Material : System.Web.UI.Page
             return;
         }
 
-        string sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}','{3}'";
+        string sql = @"exec usp_app_load_material_V1 '{0}','{1}','{2}','{3}'";
         sql = string.Format(sql, _emp.Substring(0, 5), _lotno, _needno, _para);
         var value = SQLHelper.reDs(sql).Tables[0];
 

@@ -37,6 +37,22 @@
         .weui-btn + .weui-btn{
             margin-top:0px;
         }
+        
+       .collapse li.js-show .weui-flex{
+           opacity:1;
+       }
+        /*.weui-cells:before{
+            border-top:1px dashed #e5e5e5
+        }
+        .weui-cells:after{
+            border-bottom:1px dashed #e5e5e5
+        }
+        .weui-form-preview:before{
+            border-top:1px dashed #e5e5e5
+        }
+        .weui-form-preview:after{
+            border-bottom:1px dashed #e5e5e5
+        }*/
     </style>
     
 </head>
@@ -50,6 +66,26 @@
         });
 
         $(function () {
+            $('.collapse .js-category').find('label').css("color", "#e0e0e0");
+            $('.collapse .js-category').find('label').css("color", "#e0e0e0");
+
+            $('.collapse .js-category').click(function () {
+                $parent = $(this).parent('li');
+                if ($parent.hasClass('js-show')) {
+                    $parent.removeClass('js-show');
+                    $(this).children('i').removeClass('icon-35').addClass('icon-74');
+
+                    $(this).find('label').css("color", "#e0e0e0");
+                } else {
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+                    $(this).find('label').css("color", "#428BCA");
+                }
+            });
+
             $('#btn_cancel').click(function () {
                 var qty = $("#txt_qty").text();
 
@@ -84,7 +120,7 @@
             $.ajax({
                 type: "post",
                 url: "Load_Material.aspx/Set_Lotno",
-                data: "{'lotno':'" + lotno + "','needno':'" + needno + "','para':'" + "<%= _para %>" + "'}",
+                data: "{'lotno':'" + lotno + "','needno':'" + needno + "','para':'" + "<%= _para %>" + "','emp':'" + "<%= _emp %>" + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -93,18 +129,20 @@
                         $.each(eval(data.d), function (i, item) {
                             if (item.text == "Y") {
                                 layer.alert(item.value);
-                                $("#txt_feed_person").text("");
-                                $("#txt_feed_time").text("");
                                 $("#txt_wlh").text("");
                                 $("#sku_desc").text("");
                                 $("#txt_qty").text("");
+                                $("#txt_location").text("");
+                                $("#txt_load_person").text("");
+                                $("#txt_load_time").text("");
                             }
                             else {
-                                $("#txt_feed_person").text(item.feed_person);
-                                $("#txt_feed_time").text(item.feed_time);
                                 $("#txt_wlh").text(item.sku);
                                 $("#sku_desc").text(item.sku_desc);
-                                $("#txt_qty").text(item.feed_qty);
+                                $("#txt_qty").text(item.qty);
+                                $("#txt_location").text(item.location);
+                                $("#txt_load_person").text(item.person);
+                                $("#txt_load_time").text(item.times);
                             }
                         });
                     }
@@ -120,40 +158,185 @@
         <div class="weui-cells weui-cells_form">
 
             <div class="weui-form-preview">
+                <%--要料信息--%>
+                <ul class="collapse">
+                    <li>
+                        <div class="weui-flex js-category">
+                            <div class="weui-flex__item" >
+                                <label class="weui-form-preview__label">要料信息</label>
+                            </div>
+                            <label class="weui-form-preview__label">单号:<%= _needno%></label>
+                            <i class="icon icon-74"></i>
+                        </div>
+                        <div class="page-category js-categoryInner">
+                            <div class="weui-cells page-category-content">
+                                <div class="weui-form-preview__bd">
+                                    <asp:Repeater runat="server" ID="listBxInfo_YL">
+                                        <ItemTemplate>
+                                            <div class="weui-mark-vip"><span class="weui-mark-lt <%# Eval("type").ToString()=="部分"?"bg-red":""%>"><%#Eval("type") %></span></div>                            
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">要料人</label>
+                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
+                                            </div>                          
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">要料时间</label>
+                                                <span class="weui-form-preview__value"><%# Eval("req_date") %></span>
+                                            </div>
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">岗位</label>
+                                                <span class="weui-form-preview__value"><%# Eval("location_desc") %></span>
+                                            </div>
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">物料号</label>
+                                                <span class="weui-form-preview__value"><%# Eval("pgino") %></span>
+                                            </div>
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">零件号</label>
+                                                <span class="weui-form-preview__value"><%# Eval("pn") %></span>
+                                            </div>
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">要料数量</label>
+                                                <span class="weui-form-preview__value"><%# Eval("need_qty") %></span>
+                                            </div>
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">要求送到时间</label>
+                                                <span class="weui-form-preview__value">
+                                                    <%# Eval("need_date","{0:MM/dd HH:mm}")%>
+                                                    <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
+                                                        <%# Eval("times_type") %><%# Eval("times") %>
+                                                    </span>
+                                                </span>
+                                            </div>  
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
 
-                <div hidden="hidden">
-                    <div class="weui-cell__hd"><label class="weui-label">登入人</label></div>
-                    <div class="weui-cell__bd">
-                        <asp:TextBox ID="txt_emp"  class="weui-input"  placeholder="" Style="max-width: 100%" runat="server" ></asp:TextBox>
-                    </div>
-                </div>
+                <%--送料信息--%>
+                <ul class="collapse">
+                    <li>
+                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5">
+                            <div class="weui-flex__item" >
+                                <label class="weui-form-preview__label">送料信息</label>
+                            </div>
+                            <label class="weui-form-preview__label">Lot No:<%= _lotno%></label>
+                            <i class="icon icon-74"></i>
+                        </div>
+                        <div class="page-category js-categoryInner">
+                            <div class="weui-cells page-category-content">
+                                <div class="weui-form-preview__bd">
+                                    <asp:Repeater runat="server" ID="listBxInfo_SL">
+                                        <ItemTemplate>                        
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">送料人</label>
+                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
+                                            </div>   
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">送料数量</label>
+                                                <span class="weui-form-preview__value"><%# Eval("act_qty")+","+ Eval("lot_no") %></span>
+                                            </div>  
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">送料时间</label>
+                                                <span class="weui-form-preview__value">
+                                                    <%# Eval("act_date")%>
+                                                    <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
+                                                        <%# Eval("times_type") %><%# Eval("times") %>
+                                                    </span>
+                                                </span>
+                                            </div>  
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <%--上料信息--%>
+                <ul class="collapse" style="display:<%= ViewState["dt2"].ToString()!="0"?"block":"none"%>;">
+                    <li>
+                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5">
+                            <div class="weui-flex__item" >
+                                <label class="weui-form-preview__label">上料信息</label>
+                            </div>
+                            <label class="weui-form-preview__label">上料单号:<%= _lotno%></label>
+                            <i class="icon icon-74"></i>
+                        </div>
+                        <div class="page-category js-categoryInner">
+                            <div class="weui-cells page-category-content">
+                                <div class="weui-form-preview__bd">
+                                    <asp:Repeater runat="server" ID="listBxInfo_LL">
+                                        <ItemTemplate>                        
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">上料人</label>
+                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
+                                            </div>   
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">上料数量</label>
+                                                <span class="weui-form-preview__value"><%# Eval("act_qty")+","+ Eval("lot_no") %></span>
+                                            </div>  
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">上料时间</label>
+                                                <span class="weui-form-preview__value"><%# Eval("b_on_m_date")%></span>
+                                            </div>  
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <%--退料信息--%>
+                <ul class="collapse" style="display:<%= ViewState["dt3"].ToString()!="0"?"block":"none"%>;">
+                    <li>
+                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5">
+                            <div class="weui-flex__item" >
+                                <label class="weui-form-preview__label">退料信息</label>
+                            </div>
+                            <label class="weui-form-preview__label">退料单号:<%= _lotno%></label>
+                            <i class="icon icon-74"></i>
+                        </div>
+                        <div class="page-category js-categoryInner">
+                            <div class="weui-cells page-category-content">
+                                <div class="weui-form-preview__bd">
+                                    <asp:Repeater runat="server" ID="listBxInfo_TL">
+                                        <ItemTemplate>                        
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">退料人</label>
+                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
+                                            </div>   
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">退料数量</label>
+                                                <span class="weui-form-preview__value"><%# Eval("reject_qty")+","+ Eval("lot_no") %></span>
+                                            </div>  
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">退料时间</label>
+                                                <span class="weui-form-preview__value"><%# Eval("reject_date")%></span>
+                                            </div>  
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="weui-form-preview">
 
                  <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
                        
-                       <label class="weui-form-preview__">上料单号:<% ="<font class='tag'/>"+_lotno %></label>
+                       <label class="weui-form-preview__">上料单号:<% =_lotno %></label>
                     </div>
                 </div>
 
                 <div class="weui-form-preview__bd">
-
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">岗位</label>
-                        <span class="weui-form-preview__value">
-                            <asp:Label ID="txt_location" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:Label>
-                        </span>
-                    </div>
-
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">送料人</label>
-                        <span class="weui-form-preview__value" id="txt_feed_person"></span>
-                    </div>
-
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label ">送料时间</label>
-                        <span class="weui-form-preview__value" id="txt_feed_time"></span>
-                    </div>
-
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label1  ">物料号</label>
                         <span class="weui-form-preview__value1" ID="txt_wlh"></span>
@@ -164,11 +347,25 @@
                         <span class="weui-form-preview__value1" ID="sku_desc"></span>
                     </div>
 
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label1 ">上料数量</label>
+                        <span class="weui-form-preview__value1" ID="txt_qty"></span>
+                    </div> 
 
                     <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label1 ">数量</label>
-                        <span class="weui-form-preview__value1" ID="txt_qty"></span>
-                    </div>                           
+                        <label class="weui-form-preview__label">岗位</label>
+                        <span class="weui-form-preview__value" ID="txt_location"></span>
+                    </div>
+
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">上料人</label>
+                        <span class="weui-form-preview__value" id="txt_load_person"></span>
+                    </div>
+
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label ">上料时间</label>
+                        <span class="weui-form-preview__value" id="txt_load_time"></span>
+                    </div>                          
 
                 </div>
             </div>
