@@ -148,8 +148,8 @@ public partial class WorkOrder_bhgp_sign_V1 : System.Web.UI.Page
             detail_sg.DataBind();
 
             Repeater detail_rk = (Repeater)e.Item.FindControl("Repeater_rk_one_dt");
-            detail_sg.DataSource = ds.Tables[1];
-            detail_sg.DataBind();
+            detail_rk.DataSource = ds.Tables[1];
+            detail_rk.DataBind();
         }
     }
 
