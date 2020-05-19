@@ -67,7 +67,7 @@
 
         $(function () {
             $('.collapse .js-category').find('label').css("color", "#e0e0e0");
-            $('.collapse .js-category').find('label').css("color", "#e0e0e0");
+            $('#div_sl').find('label').css("color", "#428BCA");
 
             $('.collapse .js-category').click(function () {
                 $parent = $(this).parent('li');
@@ -172,8 +172,7 @@
                             <div class="weui-cells page-category-content">
                                 <div class="weui-form-preview__bd">
                                     <asp:Repeater runat="server" ID="listBxInfo_YL">
-                                        <ItemTemplate>
-                                            <div class="weui-mark-vip"><span class="weui-mark-lt <%# Eval("type").ToString()=="部分"?"bg-red":""%>"><%#Eval("type") %></span></div>                            
+                                        <ItemTemplate>                         
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">要料人</label>
                                                 <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
@@ -201,10 +200,8 @@
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">要求送到时间</label>
                                                 <span class="weui-form-preview__value">
-                                                    <%# Eval("need_date","{0:MM/dd HH:mm}")%>
-                                                    <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
-                                                        <%# Eval("times_type") %><%# Eval("times") %>
-                                                    </span>
+                                                    <%# Eval("need_date")%>
+                                                    <span style="color:red;"><%# Eval("need_date_dl_desc") %></span>
                                                 </span>
                                             </div>  
                                         </ItemTemplate>
@@ -217,13 +214,13 @@
 
                 <%--送料信息--%>
                 <ul class="collapse">
-                    <li>
-                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5">
+                    <li class="js-show">
+                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5" id="div_sl">
                             <div class="weui-flex__item" >
                                 <label class="weui-form-preview__label">送料信息</label>
                             </div>
                             <label class="weui-form-preview__label">Lot No:<%= _lotno%></label>
-                            <i class="icon icon-74"></i>
+                            <i class="icon icon-35"></i>
                         </div>
                         <div class="page-category js-categoryInner">
                             <div class="weui-cells page-category-content">
