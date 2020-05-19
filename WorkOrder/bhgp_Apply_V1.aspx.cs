@@ -253,14 +253,26 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
-            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_one_dt");
-            DataTable dt_wk_sg = new DataTable();
+            //Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_one_dt");
+            //DataTable dt_wk_sg = new DataTable();
+            //string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
+            //sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
+            //dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+
+            //detail_sg.DataSource = dt_wk_sg;
+            //detail_sg.DataBind();
+
             string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
-            dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+            DataSet ds = SQLHelper.Query(sql_sg);
 
-            detail_sg.DataSource = dt_wk_sg;
+            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_one_dt");
+            detail_sg.DataSource = ds.Tables[0];
             detail_sg.DataBind();
+
+            Repeater detail_rk = (Repeater)e.Item.FindControl("Repeater_rk_one_dt");
+            detail_rk.DataSource = ds.Tables[1];
+            detail_rk.DataBind();
         }
     }
 
@@ -306,14 +318,26 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
-            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_again_dt");
-            DataTable dt_wk_sg = new DataTable();
+            //Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_again_dt");
+            //DataTable dt_wk_sg = new DataTable();
+            //string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
+            //sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
+            //dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+
+            //detail_sg.DataSource = dt_wk_sg;
+            //detail_sg.DataBind();
+
             string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
-            dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+            DataSet ds = SQLHelper.Query(sql_sg);
 
-            detail_sg.DataSource = dt_wk_sg;
+            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_again_dt");
+            detail_sg.DataSource = ds.Tables[0];
             detail_sg.DataBind();
+
+            Repeater detail_rk = (Repeater)e.Item.FindControl("Repeater_rk_again_dt");
+            detail_rk.DataSource = ds.Tables[1];
+            detail_rk.DataBind();
         }
     }
 
@@ -359,14 +383,26 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
-            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_fx_again_dt");
-            DataTable dt_wk_sg = new DataTable();
+            //Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_fx_again_dt");
+            //DataTable dt_wk_sg = new DataTable();
+            //string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
+            //sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
+            //dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+
+            //detail_sg.DataSource = dt_wk_sg;
+            //detail_sg.DataBind();
+
             string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
-            dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
+            DataSet ds = SQLHelper.Query(sql_sg);
 
-            detail_sg.DataSource = dt_wk_sg;
+            Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_fx_again_dt");
+            detail_sg.DataSource = ds.Tables[0];
             detail_sg.DataBind();
+
+            Repeater detail_rk = (Repeater)e.Item.FindControl("Repeater_rk_fx_again_dt");
+            detail_rk.DataSource = ds.Tables[1];
+            detail_rk.DataBind();
         }
     }
 
