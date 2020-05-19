@@ -200,8 +200,8 @@
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">要求送到时间</label>
                                                 <span class="weui-form-preview__value">
-                                                    <%# Eval("need_date")%>
-                                                    <span style="color:blue;"><%# "|"+Eval("need_date_dl_desc") %></span>
+                                                    <%# Eval("need_date","{0:MM-dd HH:mm}") +""%>
+                                                    <font class="f-blue"><%# "|"+Eval("need_date_dl_desc") %></font>
                                                 </span>
                                             </div>  
                                         </ItemTemplate>
@@ -215,7 +215,7 @@
                 <%--送料信息--%>
                 <ul class="collapse">
                     <li class="js-show">
-                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5" id="div_sl">
+                        <div class="weui-flex js-category"  id="div_sl">
                             <div class="weui-flex__item" >
                                 <label class="weui-form-preview__label">送料信息</label>
                             </div>
@@ -238,7 +238,7 @@
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">送料时间</label>
                                                 <span class="weui-form-preview__value">
-                                                    <%# Eval("act_date")%>
+                                                    <%# Eval("act_date","{0:MM-dd HH:mm}") +""%>
                                                     <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
                                                         <%# Eval("times_type") %><%# Eval("times") %>
                                                     </span>
@@ -255,7 +255,7 @@
                 <%--上料信息--%>
                 <ul class="collapse" style="display:<%= ViewState["dt2"].ToString()!="0"?"block":"none"%>;">
                     <li>
-                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5">
+                        <div class="weui-flex js-category" >
                             <div class="weui-flex__item" >
                                 <label class="weui-form-preview__label">上料信息</label>
                             </div>
@@ -277,7 +277,7 @@
                                             </div>  
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">上料时间</label>
-                                                <span class="weui-form-preview__value"><%# Eval("b_on_m_date")%></span>
+                                                <span class="weui-form-preview__value"><%# Eval("b_on_m_date","{0:MM-dd HH:mm}") +"" %></span>
                                             </div>  
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -290,7 +290,7 @@
                 <%--退料信息--%>
                 <ul class="collapse" style="display:<%= ViewState["dt3"].ToString()!="0"?"block":"none"%>;">
                     <li>
-                        <div class="weui-flex js-category"  style="border-top:1px solid #e5e5e5">
+                        <div class="weui-flex js-category">
                             <div class="weui-flex__item" >
                                 <label class="weui-form-preview__label">退料信息</label>
                             </div>
@@ -312,7 +312,7 @@
                                             </div>  
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">退料时间</label>
-                                                <span class="weui-form-preview__value"><%# Eval("reject_date")%></span>
+                                                <span class="weui-form-preview__value"><%# Eval("reject_date","{0:MM-dd HH:mm}")  +"" %></span>
                                             </div>  
                                         </ItemTemplate>
                                     </asp:Repeater>
