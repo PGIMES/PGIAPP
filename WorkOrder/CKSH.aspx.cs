@@ -36,19 +36,19 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
         }
     }
 
-    [WebMethod]
-    public static string workorder_f_change(string workorder_f)
-    {
+    //[WebMethod]
+    //public static string workorder_f_change(string workorder_f)
+    //{
 
-        string re_sql = @"select workorder_gl from Mes_App_WorkOrder_Ng_deal_Detail where  workorder_f='{0}'";
-        re_sql = string.Format(re_sql, workorder_f);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
-        string workorder_gl = re_dt.Rows[0][0].ToString();
+    //    string re_sql = @"select workorder_gl from Mes_App_WorkOrder_Ng_deal_Detail where  workorder_f='{0}'";
+    //    re_sql = string.Format(re_sql, workorder_f);
+    //    DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+    //    string workorder_gl = re_dt.Rows[0][0].ToString();
 
-        string result = "[{\"workorder_gl\":\"" + workorder_gl + "\"}]";
-        return result;
+    //    string result = "[{\"workorder_gl\":\"" + workorder_gl + "\"}]";
+    //    return result;
 
-    }
+    //}
 
     [WebMethod]
     public static string workorder_change(string workorder)
