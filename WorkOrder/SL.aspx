@@ -212,7 +212,9 @@
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">岗位</label>
-                                <span class="weui-form-preview__value"><%# Eval("location_desc") %></span>
+                                <span class="weui-form-preview__value"><%# Eval("location_desc") %>
+                                   <span style="font-weight:800"><%# "["+ Eval("sku_area")+"]" %></span>
+                                </span>
                             </div>
                             <%--<div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要料人时间</label>
