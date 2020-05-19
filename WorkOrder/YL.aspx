@@ -26,6 +26,14 @@
                 layer.alert("请输入【物料号】.");
                 return false;
             }
+            if ($("#pn").val() == "") {
+                layer.alert("【零件号】不可为空.");
+                return false;
+            }
+            if ($("#descr").val() == "") {
+                layer.alert("【物料名称】不可为空.");
+                return false;
+            }
             if ($.trim($("#need_qty").val()) == "" || $.trim($("#need_qty").val()) == "0") {
                 layer.alert("请输入【要料数量】.");
                 return false;
