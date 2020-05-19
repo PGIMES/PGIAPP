@@ -184,7 +184,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">送到时间</label></div>
                     <div class="weui-cell__hd" style="width:30%">
-                        <input class="weui-input" id="need_date_dl" type="text" value=""  runat="server" placeholder="请选择" readonly="readonly" />
+                        <input class="weui-input" id="need_date_dl" type="text" value=""  runat="server" placeholder="请选择" style="color:gray" />
                     </div>
                     <div class="weui-cell__hd" style="width:70%; text-align:right;">
                         <asp:TextBox ID="need_date" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
