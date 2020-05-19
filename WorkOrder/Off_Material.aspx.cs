@@ -17,7 +17,7 @@ public partial class Off_Material : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh = "W1497589";// Request.QueryString["dh"].ToString(); //"W1497589";
+        _dh =  Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -77,12 +77,12 @@ public partial class Off_Material : System.Web.UI.Page
         txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
         if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
         {   
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认下线吗？', function () { $('#btn_wc').click(); }, function () {});", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认下料吗？', function () { $('#btn_wc').click(); }, function () {});", true);
         }
         else
         {
-            save("下线完成");
-            txt_dh.Text = "";
+            save("下料");
+           
         }
 
 
@@ -173,8 +173,8 @@ public partial class Off_Material : System.Web.UI.Page
     }
     protected void btn_wc_Click(object sender, EventArgs e)
     {
-        save("下线完成");
-        txt_dh.Text = "";
+        save("下料");
+       
     }
 
 
@@ -207,7 +207,7 @@ public partial class Off_Material : System.Web.UI.Page
       
       
 
-        string sql = @"exec usp_app_down_material_0514 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        string sql = @"exec usp_app_down_material '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
         if(dh_record.Text.Contains(","))
         { dh_source = dh_record.Text.Substring(1, dh_record.Text.Length - 1); }
         sql = string.Format(sql, txt_dh.Text, txt_emp.Text, txt_xmh.SelectedItem.Text, txt_pn.Text, txt_curr_qty.Text,btn, dh_source, ViewState["STEPVALUE"], txt_remark.Value);
@@ -217,10 +217,10 @@ public partial class Off_Material : System.Web.UI.Page
 
         if (flag == "N")
         {
-            if (btn== "部分完成")
-            { 
-                script = "$('#txt_curr_qty').val('')";
-            }
+            //if (btn== "暂存")
+            //{ 
+            //    script = "$('#txt_curr_qty').val('')";
+            //}
             //else
             //{
             //    script = "$('input[type =text]').val('');";
@@ -228,7 +228,7 @@ public partial class Off_Material : System.Web.UI.Page
             //}
 
            // bind_gv();
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + btn + "');" + script + "", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + btn + "完成');window.location.href='/Cjgl1.aspx?workshop=" + _workshop + "'", true);
         }
         else
         {

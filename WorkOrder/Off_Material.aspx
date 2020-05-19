@@ -71,13 +71,12 @@
       <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
       <script>
           $(document).ready(function () {
-              $("#txt_dh").attr("readonly", "readonly");
               page_show();
               sm_source();
               Bind_WorkOrder($("#txt_dh").val());
-
-
-          });
+             
+             
+          })
          
           function xmh_change() {
 
@@ -100,7 +99,7 @@
                       $(this).children('i').removeClass('icon-74').addClass('icon-35');
                       $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
 
-                      $(this).children('div').children('span').css("color", "#000000");//
+                      $(this).children('div').children('span').css("color", "#428BCA");//
                   }
               });
 
@@ -133,8 +132,8 @@
               var key_value = $("#txt_qty").val();//完工数量
               var off_qty = $("#txt_off_qty").val(); //已下料数量
               var curr_qty = key_value - off_qty;
-              $("#txt_curr_qty").attr("value", curr_qty);
-              $("#txt_qty").attr("value", key_value);
+              $("#txt_curr_qty").val(curr_qty);
+             
              
           }
 
@@ -158,12 +157,13 @@
                                 else
                                 {
                                     $("#txt_xmh").val(item.pgino).attr("disabled", "disabled");
-                                    $("#txt_pn").val(item.pn).attr("disabled", "disabled");
-                                    $("#txt_off_qty").val(item.off_qty);
+                                    $("#txt_pn").val(item.pn).attr("readonly", "readonly");
+                                    $("#txt_off_qty").val(item.off_qty).attr("readonly", "readonly");
                                     $("#txt_qty").val(item.pt_ord_mult);
-                                    $("#txt_curr_qty").val(item.curr_qty);
+                                    $("#txt_ztsl").val(item.pt_ord_mult);
+                                    $("#txt_curr_qty").val(item.curr_qty).attr("readonly", "readonly");
                                     $("select#txt_xmh option[value='" + item.pgino + "']").attr('selected', 'true');
-                                  
+                                    $("#txt_xmh").val(item.pgino).css("color","gray");
                                     xmh_change();
                                 }
                             })
@@ -207,8 +207,11 @@
             <ContentTemplate>
             <script type="text/javascript">
                 Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-
                     $("#txt_dh").attr("readonly", "readonly");
+                    $("#txt_curr_qty").attr("readonly", "readonly");
+                    $("#txt_off_qty").attr("readonly", "readonly");
+                    $("#txt_pn").attr("readonly", "readonly");
+                    //$("#txt_xmh").attr("disabled", "disabled");
                     page_show();
                     sm_source();
                 });
@@ -236,9 +239,7 @@
                     </div>
                 </div>
 
-                  <%--<div hidden="hidden">--%>
-                   
-               <%-- </div>--%>
+                 
 
 
 
@@ -258,7 +259,7 @@
 
                        <div class="weui-cell__bd">
                         
-                        <asp:TextBox ID="txt_dh" class="weui-input" style="color:gray"  runat="server" ></asp:TextBox> <%-- onchange="dh_change()"--%>
+                        <asp:TextBox ID="txt_dh" class="weui-input" runat="server" style="color:gray"  ></asp:TextBox>   <%-- onchange="dh_change()"--%>
                    
                     </div>
 
@@ -271,7 +272,7 @@
                     </div>
                     <div class="weui-cell__bd">
                          <span style="float:left; width:90%">
-                        <asp:TextBox ID="source_dh" class="weui-input" placeholder="请输入来源单号" runat="server" onchange="source_dh_change()"   ></asp:TextBox>
+                        <asp:TextBox ID="source_dh" class="weui-input" style="color:gray" placeholder="请输入来源单号" runat="server" onchange="source_dh_change()"   ></asp:TextBox>
                     </span>
                         <span style="float:left; width:10%">
                             <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
@@ -297,7 +298,7 @@
                         <label class="weui-label">零件号</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <asp:TextBox ID="txt_pn" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txt_pn" class="weui-input" Style="max-width: 100%; color:gray" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
@@ -306,7 +307,7 @@
                         <label class="weui-label f-red">下料数量</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <asp:TextBox ID="txt_qty" class="weui-input" Style="max-width: 100%" runat="server" placeholder="请输入完工数量"  onchange="qty_change()"></asp:TextBox>
+                        <asp:TextBox ID="txt_qty" class="weui-input" Style="max-width: 100%"  onchange="qty_change()" runat="server" placeholder="请输入完工数量"  ></asp:TextBox>    
                     </div>
                 </div>
 
@@ -489,18 +490,18 @@
               
               <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" style="display:none;" OnClick="btn_bind_data_Click"/>
                
-
+                 <div class="weui-cell">
+                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /> 
+                   <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       
+                   <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="下料" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
+                </div>
                
 
                    </ContentTemplate>
             </asp:UpdatePanel>
                 </div>
 
-                <div class="weui-cell">
-                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="部分完成" OnClick="btnzc_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /> 
-                   <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       
-                   <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="下线" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
-                </div>
+               
               
      
       
