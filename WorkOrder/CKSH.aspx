@@ -26,7 +26,8 @@
             $("#qty").attr("readonly", "readonly");
 
             if ("<%= _workorder_f %>" != "") {//不合格监视页面传递过来的
-                init();
+                $('#workorder').val("<%= _dh %>");
+                workorder_change();
             }
             if ("<%= _dh %>" != "") {//仓库接收 扫码进来
                 $('#workorder').val("<%= _dh %>");
@@ -38,7 +39,7 @@
             //sm_workorder();
         });
 
-        function init() {
+        <%--function init() {
             $.ajax({
                 type: "post",
                 url: "CKSH.aspx/workorder_f_change",
@@ -53,7 +54,7 @@
                 }
 
             });
-        }
+        }--%>
 
         //function sm_workorder() {
         //    $('#img_sm_workorder').click(function () {
