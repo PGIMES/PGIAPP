@@ -366,7 +366,7 @@
                                                             </div> 
                                                             <div class="weui-form-preview__item">
                                                                 <label class="weui-form-preview__label">接收意见</label>
-                                                                <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
+                                                                <span class="weui-form-preview__value"><%# Eval("comment") %></span>
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
@@ -566,7 +566,7 @@
                                                             </div> 
                                                             <div class="weui-form-preview__item">
                                                                 <label class="weui-form-preview__label">接收意见</label>
-                                                                <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
+                                                                <span class="weui-form-preview__value"><%# Eval("comment") %></span>
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
@@ -765,7 +765,7 @@
                                                             </div> 
                                                             <div class="weui-form-preview__item">
                                                                 <label class="weui-form-preview__label">接收意见</label>
-                                                                <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
+                                                                <span class="weui-form-preview__value"><%# Eval("comment") %></span>
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
