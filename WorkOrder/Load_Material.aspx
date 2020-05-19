@@ -201,7 +201,7 @@
                                                 <label class="weui-form-preview__label">要求送到时间</label>
                                                 <span class="weui-form-preview__value">
                                                     <%# Eval("need_date")%>
-                                                    <span style="color:red;"><%# Eval("need_date_dl_desc") %></span>
+                                                    <span style="color:blue;"><%# "|"+Eval("need_date_dl_desc") %></span>
                                                 </span>
                                             </div>  
                                         </ItemTemplate>
