@@ -34,6 +34,7 @@ public partial class Load_Material : System.Web.UI.Page
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             _emp = lu.WorkCode + lu.UserName;
+            emp_code_name.Text = lu.WorkCode;
 
             load_data();
         }
@@ -101,7 +102,7 @@ public partial class Load_Material : System.Web.UI.Page
 
         
         string sqlstr = @"select emp_code+emp_name,pgino,location,id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
-        sqlstr = string.Format(sqlstr, _emp.Substring(0, 5));
+        sqlstr = string.Format(sqlstr, emp_code_name.Text);
         var dt = SQLHelper.reDs(sqlstr).Tables[0];
         if (dt.Rows.Count <= 0)
         {
@@ -110,8 +111,8 @@ public partial class Load_Material : System.Web.UI.Page
             return;
         }
 
-        string sql = @"exec usp_app_load_material_V1 '{0}','{1}','{2}','{3}'";
-        sql = string.Format(sql, _emp.Substring(0, 5), _lotno, _needno, _para);
+        string sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}','{3}'";
+        sql = string.Format(sql, emp_code_name.Text, _lotno, _needno, _para);
         var value = SQLHelper.reDs(sql).Tables[0];
 
         if (value != null && value.Rows.Count > 0)

@@ -156,6 +156,8 @@
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
         <div class="weui-cells weui-cells_form">
+            
+            <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
             <div class="weui-form-preview">
                 <%--要料信息--%>
