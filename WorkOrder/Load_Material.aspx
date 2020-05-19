@@ -44,8 +44,6 @@
     <script>  
 
         $(document).ready(function () {
-            $("#txt_wlh").attr("readonly", "readonly");
-            $("#txt_qty").attr("readonly", "readonly");
             var lotno = '<%=_lotno%>';
             var needno = '<%=_needno%>';
             Bind_Lotno(lotno,needno);
@@ -94,9 +92,12 @@
                     if (data) {
                         $.each(eval(data.d), function (i, item) {
                             if (item.text == "Y") {
-                                alert(item.value);
-                                $("input[type='text']").val("");
-                                return;
+                                layer.alert(item.value);
+                                $("#txt_feed_person").text("");
+                                $("#txt_feed_time").text("");
+                                $("#txt_wlh").text("");
+                                $("#sku_desc").text("");
+                                $("#txt_qty").text("");
                             }
                             else {
                                 $("#txt_feed_person").text(item.feed_person);
