@@ -37,8 +37,6 @@
         .weui-btn + .weui-btn{
             margin-top:0px;
         }
-
-        .hidden { display:none;}
     </style>
     
 </head>
