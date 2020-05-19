@@ -11,7 +11,7 @@ using Maticsoft.DBUtility;
 public partial class Load_Material : System.Web.UI.Page
 {
     public string _workshop = "";
-    public string lotno = "";
+    public string _lotno = "";
     public string _needno = "";
     public string _para = "";
     public string _emp = "";
@@ -19,7 +19,7 @@ public partial class Load_Material : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
-        lotno= Request.QueryString["lotno"].ToString();
+        _lotno = Request.QueryString["lotno"].ToString();
         _needno= Request.QueryString["need_no"].ToString();
         _para = Request.QueryString["para"].ToString();
 
@@ -107,7 +107,7 @@ public partial class Load_Material : System.Web.UI.Page
         }
 
         string sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}','{3}'";
-        sql = string.Format(sql, _emp.Substring(0, 5), lotno,_needno, _para);
+        sql = string.Format(sql, _emp.Substring(0, 5), _lotno, _needno, _para);
         var value = SQLHelper.reDs(sql).Tables[0];
 
         if (value != null && value.Rows.Count > 0)

@@ -46,7 +46,7 @@
         $(document).ready(function () {
             $("#txt_wlh").attr("readonly", "readonly");
             $("#txt_qty").attr("readonly", "readonly");
-            var lotno = '<%=lotno%>';
+            var lotno = '<%=_lotno%>';
             var needno = '<%=_needno%>';
             Bind_Lotno(lotno,needno);
         });
@@ -60,7 +60,7 @@
                     $.ajax({
                         type: "post",
                         url: "Load_Material.aspx/Reject_Sku",
-                        data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= lotno %>" + "','reject_qty':'" + qty + "','source':'1'}",
+                        data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= _lotno %>" + "','reject_qty':'" + qty + "','source':'1'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -130,7 +130,7 @@
                  <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
                        
-                       <label class="weui-form-preview__">上料单号:<% ="<font class='tag'/>"+lotno %></label>
+                       <label class="weui-form-preview__">上料单号:<% ="<font class='tag'/>"+_lotno %></label>
                     </div>
                 </div>
 
