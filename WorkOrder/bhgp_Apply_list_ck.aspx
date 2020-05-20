@@ -57,10 +57,10 @@
         })
     </script>
     <script>
-        function deal(stepid, workorder, workorder_f, workshop) {
+        function deal(stepid, workorder, workorder_f, workshop, workorder_gl) {
             //alert(stepid);
             if (stepid == "9998") {//--待入库
-                window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&workshop=" + workshop;
+                window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=" + workshop;
             }
         }
     </script>
@@ -87,7 +87,7 @@
                         <div class="weui-cells" id="YLZ">     
                             <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
                                 <ItemTemplate>
-                                    <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workshop") %>')>
+                                    <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workshop") %>','<%# Eval("workorder_gl") %>')>
                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                         <div class="weui-cell__hd">
                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
