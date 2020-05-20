@@ -75,7 +75,8 @@
                 }
             });
 
-            sm_workorder();
+            //sm_workorder();
+            sm_ref_order();
             sm_pgino();
             saomiao_workorder_gl();
 
@@ -154,8 +155,24 @@
 
         });
 
-        function sm_workorder() {
-            $('#img_sm_workorder').click(function () {
+        //function sm_workorder() {
+        //    $('#img_sm_workorder').click(function () {
+        //        wx.ready(function () {
+        //            wx.scanQRCode({
+        //                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        //                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+        //                success: function (res) {
+        //                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+        //                    // code 在这里面写上扫描二维码之后需要做的内容  
+        //                    $('#workorder').val(result);
+        //                }
+        //            });
+        //        });
+        //    });
+        //}
+
+        function sm_ref_order() {
+            $('#img_sm_ref_order').click(function () {
                 wx.ready(function () {
                     wx.scanQRCode({
                         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -163,7 +180,7 @@
                         success: function (res) {
                             var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                             // code 在这里面写上扫描二维码之后需要做的内容  
-                            $('#workorder').val(result);
+                            $('#ref_order').val(result);
                         }
                     });
                 });
@@ -358,7 +375,14 @@
                         </div>
                         <div class="weui-cell" id="div_ref_order">
                             <div class="weui-cell__hd f-red "><label class="weui-label" id="lbl_ref_order"></label></div>
-                            <asp:TextBox ID="ref_order" class="weui-input"  runat="server"></asp:TextBox>
+                            <div class="weui-cell__bd">
+                                <span style="float:left; width:90%">
+                                    <asp:TextBox ID="ref_order" class="weui-input"  runat="server"></asp:TextBox>
+                                </span>
+                                <span style="float:left; width:10%">
+                                    <img id="img_sm_ref_order" src="../img/fdj2.png" />
+                                </span>
+                            </div>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">数量</label></div>
