@@ -86,40 +86,43 @@
         
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
-        <div class="weui-cell">
-            <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>
-            <asp:TextBox ID="dh" class="weui-input" placeholder="系统自动生成" style="color:gray" runat="server"></asp:TextBox>                
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div>
-            <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
-            <asp:TextBox ID="pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
-            <asp:TextBox ID="domain" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>                          
-            <asp:TextBox ID="pn" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">交付数量</label></div>
-            <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="" style="color:gray" runat="server"></asp:TextBox>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd f-red "><label class="weui-label">接收数量</label></div>
-            <asp:TextBox ID="act_qty" class="weui-input" type='number' placeholder="请输入接收数量" runat="server"></asp:TextBox>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
-            <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
-        </div>
-        <div class="weui-cell">
-            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
-                Text="打印" OnClick="btnsave_Click" OnClientClick="return valid();" />
-        </div>
-
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>
+                    <asp:TextBox ID="dh" class="weui-input" placeholder="系统自动生成" style="color:gray" runat="server"></asp:TextBox>                
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div>
+                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
+                    <asp:TextBox ID="pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="domain" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>                          
+                    <asp:TextBox ID="pn" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">交付数量</label></div>
+                    <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="" style="color:gray" runat="server"></asp:TextBox>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">接收数量</label></div>
+                    <asp:TextBox ID="act_qty" class="weui-input" type='number' placeholder="请输入接收数量" runat="server"></asp:TextBox>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                    <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
+                </div>
+                <div class="weui-cell">
+                    <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
+                        Text="打印" OnClick="btnsave_Click" OnClientClick="return valid();" />
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
     </form>
 </body>
