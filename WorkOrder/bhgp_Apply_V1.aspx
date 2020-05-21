@@ -26,13 +26,13 @@
     
     <script>
         $(document).ready(function () {
-            if ($("#workorder_qc").val() != "") {
-                if ($("#workorder_qc").val().substr(0,1).toUpperCase()=="W" || $("#workorder_qc").val().substr(0,1).toUpperCase()=="G") {
-                    $("#lbl_workorder_qc").text("生产完成单号");
-                } else {
-                    $("#lbl_workorder_qc").text("参考号");
-                }
-            }
+            //if ($("#workorder_qc").val() != "") {
+            //    if ($("#workorder_qc").val().substr(0,1).toUpperCase()=="W" || $("#workorder_qc").val().substr(0,1).toUpperCase()=="G") {
+            //        $("#lbl_workorder_qc").text("生产完成单号");
+            //    } else {
+            //        $("#lbl_workorder_qc").text("参考号");
+            //    }
+            //}
 
             $("#workorder").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
@@ -48,6 +48,11 @@
                 $("#rscode").attr("readonly", "readonly");
             }
 
+            init_app();
+            
+        });
+
+        function init_app(){
             if ($("#ref_order").val() == "") {
                 $("#div_ref_order").hide();
                 $("#lbl_ref_order").text("参考号/生产完成单号");
@@ -62,8 +67,7 @@
                     }
                 }
             }
-            
-        });
+        }
 
         $(function () {
             $('#t1').tab({
@@ -336,7 +340,9 @@
             <div class="weui-tab__panel">
                  <%--=======申请-----%>
                 <div id="tab1" class="weui-tab__content">
-
+                    
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
                     <div class="weui-cells weui-cells_form" style="display:<%= _tab_index==0?"block":"none"%>;">     
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
@@ -410,7 +416,9 @@
                                 Text="提交" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /><%--OnClientClick="return valid();"--%>
                         </div>
                     </div>
-                    
+                    </ContentTemplate>
+                    </asp:UpdatePanel>
+
                     <div class="weui-form-preview" style="display:<%= _tab_index==1?"block":"none"%>;">
                         <div class="weui-form-preview__hd">
                             <div class="weui-form-preview__item">
@@ -1291,6 +1299,11 @@
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
 
             init_data();
+
+            init_app();
+            sm_ref_order();
+            sm_pgino();
+
             saomiao_workorder_gl();
         });
 
