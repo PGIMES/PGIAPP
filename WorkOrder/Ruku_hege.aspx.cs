@@ -78,22 +78,29 @@ public partial class WorkOrder_Ruku_hege : System.Web.UI.Page
 
         if (flag == "N")
         {
+            string url = "";
             if (_dh != "")
             {
                 if (_ck == "N")//车间的
                 {
-                    Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
+                    //Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
+                    url = "/Cjgl1.aspx?workshop=" + _workshop;
                 }
                 if (_ck == "Y")//仓库的
                 {
-                    Response.Redirect("/ck.aspx");
+                    //Response.Redirect("/ck.aspx");
+                    url = "/ck.aspx";
                 }
             }
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
+               , "$.toptip('入库成功', 2000, 'success');var int = self.setTimeout(function(){ self.location='" + url + "'  }, 2000); "
+               , true);
             return;
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
+            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
             return;
         }
     }

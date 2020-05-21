@@ -66,6 +66,7 @@
 
         $(function () {
             sm_workorder();
+            sm_loc_hg();
         });
 
         function sm_workorder() {
@@ -79,6 +80,22 @@
                             // code 在这里面写上扫描二维码之后需要做的内容  
                             $('#workorder').val(result);
                             workorder_change();
+                        }
+                    });
+                });
+            });
+        }
+
+        function sm_loc_hg() {
+            $('#img_sm_loc_hg').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容  
+                            $('#loc_hg').val(result);
                         }
                     });
                 });
@@ -114,69 +131,84 @@
     <div class="weui-cells weui-cells_form">
         
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
-
-        <div class="weui-cell">
-            <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>
-            <asp:TextBox ID="dh" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div> 
-            <div class="weui-cell__bd">
-                <span style="float:left; width:90%">
-                    <asp:TextBox ID="workorder" class="weui-input" placeholder="请输入来源单号" runat="server" onkeyup="this.value=this.value.toUpperCase()" onchange="workorder_change()"></asp:TextBox>
-                    <span id="sp_workorder" style="display:none;"></span>
-                </span>
-                <span style="float:left; width:10%">
-                    <img id="img_sm_workorder" src="../img/fdj2.png"/>
-                </span>
-            </div>              
-        </div>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">物料号</label>
-                    <span class="weui-form-preview__value" id="sp_pgino"></span>
-                    <span class="weui-form-preview__value" id="sp_domain" style="display:none;"></span>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>
+                    <asp:TextBox ID="dh" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">零件号</label>
-                    <span class="weui-form-preview__value" id="sp_pn"></span>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div> 
+                    <div class="weui-cell__bd">
+                        <span style="float:left; width:90%">
+                            <asp:TextBox ID="workorder" class="weui-input" placeholder="请输入来源单号" runat="server" onkeyup="this.value=this.value.toUpperCase()" onchange="workorder_change()"></asp:TextBox>
+                            <span id="sp_workorder" style="display:none;"></span>
+                        </span>
+                        <span style="float:left; width:10%">
+                            <img id="img_sm_workorder" src="../img/fdj2.png"/>
+                        </span>
+                    </div>              
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">交付数量</label>
-                    <span class="weui-form-preview__value" id="sp_qty"></span>
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">物料号</label>
+                            <span class="weui-form-preview__value" id="sp_pgino"></span>
+                            <span class="weui-form-preview__value" id="sp_domain" style="display:none;"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">零件号</label>
+                            <span class="weui-form-preview__value" id="sp_pn"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">交付数量</label>
+                            <span class="weui-form-preview__value" id="sp_qty"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">接收数量</label>
+                            <span class="weui-form-preview__value" id="sp_act_qty"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">生成人</label>
+                            <span class="weui-form-preview__value" id="sp_phone"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">生成时间</label>
+                            <span class="weui-form-preview__value" id="sp_create_date"></span>
+                        </div>
+                    </div>
+                </div>        
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">库位</label></div> 
+                    <div class="weui-cell__bd">
+                        <span style="float:left; width:90%">
+                            <asp:TextBox ID="loc_hg" class="weui-input" placeholder="请输入库位" runat="server"></asp:TextBox>      
+                        </span>
+                        <span style="float:left; width:10%">
+                            <img id="img_sm_loc_hg" src="../img/fdj2.png"/>
+                        </span>
+                    </div>      
+                      
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">接收数量</label>
-                    <span class="weui-form-preview__value" id="sp_act_qty"></span>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                    <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">生成人</label>
-                    <span class="weui-form-preview__value" id="sp_phone"></span>
+                <div class="weui-cell">
+                    <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
+                        Text="入库" OnClick="btnsave_Click" OnClientClick="return valid();" />
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">生成时间</label>
-                    <span class="weui-form-preview__value" id="sp_create_date"></span>
-                </div>
-            </div>
-        </div>        
-        <div class="weui-cell">
-            <div class="weui-cell__hd f-red "><label class="weui-label">库位</label></div> 
-            <asp:TextBox ID="loc_hg" class="weui-input" placeholder="请输入库位" runat="server"></asp:TextBox>        
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
-            <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
-        </div>
-        <div class="weui-cell">
-            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" 
-                Text="入库" OnClick="btnsave_Click" OnClientClick="return valid();" />
-        </div>
-
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
     </form>
 </body>
     <script>
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+            sm_workorder();
+            sm_loc_hg();
+        });
+
         var datad = [];
         $.ajax({
             url: "/getwxconfig.aspx/GetScanQRCode",
