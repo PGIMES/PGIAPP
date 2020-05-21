@@ -343,7 +343,10 @@
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:Repeater> 
-                                                    
+                                                    <div class="weui-form-preview__item">
+                                                        <label class="weui-form-preview__label">处置结果</label>
+                                                        <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
+                                                    </div>            
                                                     <asp:Repeater runat="server" ID="Repeater_rk_one_dt">
                                                         <ItemTemplate>
                                                             <div class="weui-form-preview__item">
@@ -369,12 +372,7 @@
                                                                 <span class="weui-form-preview__value"><%# Eval("comment") %></span>
                                                             </div>
                                                         </ItemTemplate>
-                                                    </asp:Repeater>
-                                                     
-                                                    <div class="weui-form-preview__item">
-                                                        <label class="weui-form-preview__label">处置结果</label>
-                                                        <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
-                                                    </div>                                           
+                                                    </asp:Repeater>                               
                                                 </ItemTemplate>
                                             </asp:Repeater>   
                                         </div>
@@ -544,6 +542,10 @@
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:Repeater>  
+                                                    <div class="weui-form-preview__item">
+                                                        <label class="weui-form-preview__label">处置结果</label>
+                                                        <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
+                                                    </div>  
                                                     <asp:Repeater runat="server" ID="Repeater_rk_again_dt">
                                                         <ItemTemplate>
                                                             <div class="weui-form-preview__item">
@@ -570,10 +572,6 @@
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
-                                                    <div class="weui-form-preview__item">
-                                                        <label class="weui-form-preview__label">处置结果</label>
-                                                        <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
-                                                    </div>  
                                                 </div>
                                             </div>
                                         </div>    
@@ -742,7 +740,11 @@
                                                                 <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
                                                             </div>
                                                         </ItemTemplate>
-                                                    </asp:Repeater>  
+                                                    </asp:Repeater> 
+                                                    <div class="weui-form-preview__item">
+                                                        <label class="weui-form-preview__label">处置结果</label>
+                                                        <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
+                                                    </div>   
                                                     <asp:Repeater runat="server" ID="Repeater_rk_fx_again_dt">
                                                         <ItemTemplate>
                                                             <div class="weui-form-preview__item">
@@ -769,10 +771,6 @@
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
-                                                    <div class="weui-form-preview__item">
-                                                        <label class="weui-form-preview__label">处置结果</label>
-                                                        <span class="weui-form-preview__value"><%# "<font class='f-red'>"+Eval("status_desc")+"</font>" %></span>
-                                                    </div>  
                                                 </div>
                                             </div>
                                         </div>    
