@@ -108,14 +108,15 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
+                //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#workorder').val('');$('#comment').val('');$.toptip('" + msg + "', 'success');", true);
             }
             return;
         }
         else
         {
-            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
+            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
             return;
         }
     }
