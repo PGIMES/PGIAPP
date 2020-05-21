@@ -72,7 +72,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             cur_qty.Text = dt.Rows[0]["cur_qty"].ToString();
             ng_reason_main.Text = dt.Rows[0]["reason_code"].ToString();
             ng_reason_desc_main.Text = dt.Rows[0]["reason"].ToString();
-            workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString();
+            workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString(); ref_order.Text = dt.Rows[0]["workorder_qc"].ToString();
 
             if (cur_qty.Text == "0")//剩余数量为0
             {

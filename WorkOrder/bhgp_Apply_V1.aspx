@@ -27,7 +27,7 @@
     <script>
         $(document).ready(function () {
             if ($("#workorder_qc").val() != "") {
-                if ($("#workorder_qc").val().substr(0,1).toUpperCase()=="W") {
+                if ($("#workorder_qc").val().substr(0,1).toUpperCase()=="W" || $("#workorder_qc").val().substr(0,1).toUpperCase()=="G") {
                     $("#lbl_workorder_qc").text("生产完成单号");
                 } else {
                     $("#lbl_workorder_qc").text("参考号");
