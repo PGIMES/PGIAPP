@@ -86,8 +86,10 @@
                         layer.alert(obj[0].msg);
                         $('#lot_no').val("");
                         $('#act_qty').val("");
+                        $('#txt_sy_qty').val($('#cur_sy_qty').val());
                     } else {
                         $('#act_qty').val(obj[0].qty);
+                        $('#txt_sy_qty').val(parseFloat($('#cur_sy_qty').val() == "" ? "0" : $('#cur_sy_qty').val()) - parseFloat(obj[0].qty == "" ? "0" : obj[0].qty));
                     }
 
                     return;
@@ -193,7 +195,7 @@
                 <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
-                <asp:TextBox ID="sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="cur_sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -216,22 +218,6 @@
                                    <span style="font-weight:800"><%# "["+ Eval("sku_area")+"]" %></span>
                                 </span>
                             </div>
-                            <%--<div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">要料人时间</label>
-                                <span class="weui-form-preview__value"><%# Eval("req_date","{0:MM/dd HH:mm}")%></span>
-                            </div>                             
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">车间</label>
-                                <span class="weui-form-preview__value"><%# Eval("workshop") %> </span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">生产线</label>
-                                <span class="weui-form-preview__value"><%# Eval("line") %> </span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">岗位</label>
-                                <span class="weui-form-preview__value"><%# Eval("location") %></span>
-                            </div>--%>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">物料号</label>
                                 <span class="weui-form-preview__value"><%# Eval("pgino") %></span>
@@ -244,14 +230,6 @@
                                 <label class="weui-form-preview__label">要料数量</label>
                                 <span class="weui-form-preview__value"><%# Eval("need_qty") %></span>
                             </div>
-                            <%--<div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">已送数量</label>
-                                <span class="weui-form-preview__value"><%# Eval("act_qty") %></span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">还差数量</label>
-                                <span class="weui-form-preview__value"><span style="color:<%# Eval("type").ToString()=="部分"?"red":""%>;"><%# Eval("sy_qty") %></span></span>
-                            </div>--%>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要求送到时间</label>
                                 <span class="weui-form-preview__value">

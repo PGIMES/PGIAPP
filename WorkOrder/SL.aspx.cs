@@ -48,7 +48,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         pgino.Text = dt.Rows[0]["pgino"].ToString();
         pn.Text = dt.Rows[0]["pn"].ToString();
 
-        txt_sy_qty.Text= dt.Rows[0]["sy_qty"].ToString();
+        txt_sy_qty.Text= dt.Rows[0]["sy_qty"].ToString(); cur_sy_qty.Text = dt.Rows[0]["sy_qty"].ToString();
         txt_act_date.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
         listBx_lotno.DataSource = ds.Tables[1];
