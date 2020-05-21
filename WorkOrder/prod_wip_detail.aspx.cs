@@ -38,11 +38,15 @@ public partial class prod_wip_detail : System.Web.UI.Page
         string type = Request["type"].ToString();
         string dh = Request["dh"].ToString();
         string need_no= Request["need_no"].ToString();
-        string sql = string.Format(@"select * from Mes_App_WorkOrder_Wip where lot_no= '{0}' and need_no='{1}' ",dh,need_no);
+        string sql = string.Format(@"select t.*,hr.cellphone from Mes_App_WorkOrder_Wip t join  [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] hr  on  t.emp_code=hr.employeeid where lot_no= '{0}' and need_no='{1}' ", dh,need_no);
         DataTable dt  = SQLHelper.Query(sql).Tables[0];
         if (dt.Rows.Count<=0)
         {
-            sql = string.Format(@"select distinct sku,sku_descr,qty,qty as off_qty from Mes_App_WorkOrder_History where lot_no= '{0}' and need_no='{1}' ", dh, need_no);
+            sql = string.Format(@"select  distinct sku,sku_descr,qty,sum(off_qty) as off_qty,on_date,hr.cellphone ,feed.b_on_m_emp_name as emp_name 
+                                  from Mes_App_WorkOrder_History t
+                                     join Mes_App_FeedSku feed on t.need_no=feed.need_no and t.lot_no=feed.lot_no
+                                     join [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] hr  on  feed.b_on_m_emp_code=hr.employeeid  where t.lot_no= '{0}' and t.need_no='{1}' 
+                                  group by sku,sku_descr,qty,on_date,hr.cellphone ,feed.b_on_m_emp_name", dh, need_no);
             dt = SQLHelper.Query(sql).Tables[0];
         }    
          
@@ -57,7 +61,7 @@ public partial class prod_wip_detail : System.Web.UI.Page
                             (select   isnull(workorder,workorder_part)workorder, emp_code , emp_name,pgino,pn, sku,sku_Descr,off_qty as qty,off_date,par_qty,'下料' as opdesc  
                             from Mes_App_WorkOrder_History  where lot_no='{0}' and need_no='{1}'
                             union all
-                            select workorder, emp_code , emp_name,pgino,pn, sku,sku_Descr,qty,on_date,qty as par_qty,'不合格品' from Mes_App_WorkOrder_Ng_Detail a 
+                            select workorder, emp_code , emp_name,pgino,pn, sku,sku_Descr,qty,on_date,qty/ps_qty_per  as par_qty,'不合格品' from Mes_App_WorkOrder_Ng_Detail a 
                             where lot_no= '{0}' and need_no='{1}')t
                             join [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] hr  on  t.emp_code=hr.employeeid", dh,need_no);
         dt = SQLHelper.Query(sql).Tables[0];

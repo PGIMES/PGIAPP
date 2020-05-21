@@ -74,7 +74,7 @@
               page_show();
               sm_source();
               Bind_WorkOrder($("#txt_dh").val());
-             
+              xmh_change();
              
           })
          
@@ -156,7 +156,7 @@
                                 }
                                 else
                                 {
-                                    $("#txt_xmh").val(item.pgino).attr("disabled", "disabled");
+                                    
                                     $("#txt_pn").val(item.pn).attr("readonly", "readonly");
                                     $("#txt_off_qty").val(item.off_qty).attr("readonly", "readonly");
                                     $("#txt_qty").val(item.pt_ord_mult);
@@ -165,6 +165,7 @@
                                     $("select#txt_xmh option[value='" + item.pgino + "']").attr('selected', 'true');
                                     $("#txt_xmh").val(item.pgino).css("color","gray");
                                     xmh_change();
+                                   $("#txt_xmh").val(item.pgino).attr("disabled", "disabled");
                                 }
                             })
                            

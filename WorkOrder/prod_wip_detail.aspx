@@ -124,11 +124,19 @@
                                     <span class="weui-form-preview__value"><%# Eval("sku_descr") %> </span>
                                 </div>
                                 <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">上料时间</label>
+                                    <span class="weui-form-preview__value"><%# string.Format("{0:MM-dd HH:mm}",Eval("on_date")) %> </span>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">上料人</label>
+                                    <span class="weui-form-preview__value"><%#  Eval("cellphone") %><%#  Eval("emp_name") %> </span>
+                                </div>
+                                <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">上料数量</label>
                                     <span class="weui-form-preview__value"><%# Eval("qty") %> </span>
                                 </div>
                                 <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">完工数量</label>
+                                    <label class="weui-form-preview__label">下料数量</label>
                                     <span class="weui-form-preview__value"><%# Eval("off_qty") %> </span>
                                 </div>
                                 <div class="weui-form-preview__item">
@@ -142,8 +150,7 @@
                             </ItemTemplate>
                         </asp:Repeater>
                     </div>
-                    <div class="weui-form-preview__bd ">
-                    </div>
+                    
                 </div>
                 <div class="weui-form-preview">
                     <div class="weui-cells__title ">
@@ -169,7 +176,7 @@
                                         <%--<span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>--%>
                                         </span>
                                         <span class="span_space"><%# DataBinder.Eval(Container.DataItem, "workorder") %></span>
-                                        <span class="span_space">数量:<font class="f-blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font></span>
+                                        <span class="span_space">完工数量:<font class="f-blue padding5-r"><%# DataBinder.Eval(Container.DataItem, "par_qty") %></font> --> <font class="f-blue padding5-l"><%# DataBinder.Eval(Container.DataItem, "qty") %></font></span>
                                         <span><font class="f-blue"><%# DataBinder.Eval(Container.DataItem, "opdesc") %></font></span>
                                         <br />
                                         <span class="weui-agree__text span_space">

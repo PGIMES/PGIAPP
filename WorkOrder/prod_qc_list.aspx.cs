@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class prod_end_list : System.Web.UI.Page
+public partial class prod_qc_list : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -29,17 +29,20 @@ public partial class prod_end_list : System.Web.UI.Page
         DataTable dt_part_my = new DataTable();
         DataTable dt_complete_my = new DataTable();
 
-        string sql = string.Format(@"exec [usp_app_prod_end_list] '{0}','{1}'",Request["workshop"], WeiXin.GetCookie("workcode"));
-        dt_part = SQLHelper.Query(sql).Tables[0];
-        ViewState["dt_part"] = dt_part;
-        dt_complete = SQLHelper.Query(sql).Tables[1];
-        ViewState["dt_complete"] = dt_complete;
-        dt_part_my = SQLHelper.Query(sql).Tables[2];
-        ViewState["dt_part_my"] = dt_part_my;
-        dt_complete_my = SQLHelper.Query(sql).Tables[3];
+        string sql = string.Format(@"exec [usp_app_prod_qc_list] '{0}'", WeiXin.GetCookie("workcode"));
+        DataSet ds = SQLHelper.Query(sql);
+
+        dt_part = ds.Tables[0];
+        dt_complete = ds.Tables[1];
+        dt_part_my = ds.Tables[2];
+        dt_complete_my = ds.Tables[3];
+         
+        ViewState["dt_part"] = dt_part; 
+        ViewState["dt_complete"] = dt_complete; 
+        ViewState["dt_part_my"] = dt_part_my; 
         ViewState["dt_complete_my"] = dt_complete_my;
         //完成工单
-        var rowsline1 = dt_part.AsEnumerable().Select(r => ((string)r["line"]).ToString()).Distinct(); 
+        var rowsline1 = dt_part.AsEnumerable().Select(r => ((string)r["line"]).ToString()).Distinct();
 
         DataList1_line.DataSource = rowsline1;
         DataList1_line.DataBind();
@@ -70,8 +73,32 @@ public partial class prod_end_list : System.Web.UI.Page
         //DataList4.DataSource = dt_complete_my;
         //DataList4.DataBind();
         //Label4.Text = "(" + dt_complete_my.Rows.Count + ")";
-    }
 
+
+
+        //dt_part = ds.Tables[0];
+        //dt_complete = ds.Tables[1];
+
+        //dt_part_my = ds.Tables[2];
+        //dt_complete_my = ds.Tables[3];
+        ////生产完成工单
+        //DataList1.DataSource = dt_part;
+        //DataList1.DataBind();
+        //Label1.Text = "(" + dt_part.Rows.Count + ")";
+
+        //DataList2.DataSource = dt_complete;
+        //DataList2.DataBind();
+        //Label2.Text = "(" + dt_complete.Rows.Count + ")";
+
+        //// 我的工单
+        //DataList3.DataSource = dt_part_my;
+        //DataList3.DataBind();
+        //Label3.Text =  "(" + dt_part_my.Rows.Count + ")";
+
+        //DataList4.DataSource = dt_complete_my;
+        //DataList4.DataBind();
+        //Label4.Text = "(" + dt_complete_my.Rows.Count + ")";
+    }
     protected void BindInnerRepeat(RepeaterItemEventArgs e, string innerRepeatId, string viewstateDataTable)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -84,7 +111,7 @@ public partial class prod_end_list : System.Web.UI.Page
             DataTable dt_all = ViewState[viewstateDataTable] as DataTable;
 
             dt_all.DefaultView.RowFilter = "line='" + line + "'";
-            dt_all.DefaultView.Sort = " ordertime desc";
+
             detail.DataSource = dt_all;
             detail.DataBind();
 

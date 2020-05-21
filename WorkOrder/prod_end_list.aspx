@@ -8,7 +8,7 @@
     <title>生产完成监视</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
     <link rel="stylesheet" href="../css/weui.css" />
-    <link rel="stylesheet" href="../css/weuix.css" />
+    <link rel="stylesheet" href="../css/weuix.css?v=1.2" />
     <style>
         .weui-mark-lt {
             color: #fff;
@@ -30,6 +30,9 @@
             padding-top: 0px;
             border: 0px hidden white;
         }
+        .span_space{
+            padding-right:20px
+        }
     </style>
 
     <script src="../js/zepto.min.js"></script>
@@ -40,11 +43,12 @@
 
         $(function () {
 
+           // var _index = window.localStorage.getItem("_tabindex");
             $('#t2').tab({
-                defaultIndex: 0,
+                defaultIndex:0,// _index == null ? 0 : _index,
                 activeClass: 'tab-green',
                 onToggle: function (index) {
-                    console.log('index' + index);
+                    //console.log('index' + index);
                 }
             })
 
@@ -65,7 +69,9 @@
  
     </script>
 </head>
-<body ontouchstart>
+<body ontouchstart >
+   
+
     <div class="weui-pull-to-refresh__layer">
         <div class='weui-pull-to-refresh__arrow'></div>
         <div class='weui-pull-to-refresh__preloader'></div>
@@ -92,86 +98,87 @@
                             <%----部分完成-----%>
                              <div class="weui-form-preview">
                                 <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 部分完成<asp:Label ID="Label1" runat="server" Text=""></asp:Label></div>
-                                <div class="weui-cells" >                                     
-                                    <asp:Repeater ID="DataList1" runat="server">
+                                <div class="weui-cells" >
+                                    <asp:Repeater ID="DataList1_line" runat="server" OnItemDataBound="DataList1_line_ItemDataBound">
                                         <ItemTemplate>
-                                            <a class="weui-cell  ">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                     <table border="0">
-                                                        <tr>
-                                                            <td class="weui-agree__text">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
+                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%#((string)Container.DataItem) %></div>
+                                            <asp:Repeater ID="DataList1" runat="server">
+                                                <ItemTemplate>
+                                                    <a class="weui-cell  weui-cell_access" href="prod_end_detail.aspx?type=workorder_part&dh=<%#Eval("workorder_part") %>">
+                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"></span></div>
+                                                        <div class="weui-cell__hd">
+                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="weui-cell__bd f-black" style="font-size: smaller">
+                                                            <span class="span_space">
                                                                 <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
-                                                            </td>
-                                                            <td class="weui-agree__text">
+                                                            </span>
+                                                            <span>
                                                                 <%# DataBinder.Eval(Container.DataItem, "pn") %>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="weui-agree__text">
+                                                            </span>
+                                                            <br />
+                                                            <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>
+                                                            </span>
+                                                            <span>完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
+                                                            </span>
+                                                            <br />
+                                                            <span class="weui-agree__text span_space">
                                                                 <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                                <div class="weui-cell__ft">
-                                                </div>
-                                            </a>
+                                                            </span>
+                                                            <span class="weui-agree__text"><%# DataBinder.Eval(Container.DataItem, "endtime","{0:MM-dd HH:mm}") %> </span>
+                                                            <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
+                                                            </span>
+                                                        </div>
+                                                        <div class="weui-cell__ft">
+                                                        </div>
+                                                    </a>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
                             </div> 
                             <%----已完成-----%>
-                             <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 生产完成<asp:Label ID="Label2" runat="server" Text=""></asp:Label></div>
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 生产完成(24小时内)<asp:Label ID="Label2" runat="server" Text=""></asp:Label></div>
                                 <div class="weui-cells">
-
-                                    <asp:Repeater ID="DataList2"  runat="server"  >
+                                    <asp:Repeater ID="DataList2_line" runat="server" OnItemDataBound="DataList2_line_ItemDataBound">
                                         <ItemTemplate>
-                                            <a class="weui-cell  " href="javascript:void(0)">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                    <table border="0">
-                                                        <tr>
-                                                            <td class="weui-agree__text">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
-                                                            </td>
-                                                            <td class="weui-agree__text">
+                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%#((string)Container.DataItem) %></div>
+                                            <asp:Repeater ID="DataList2" runat="server">
+                                                <ItemTemplate>
+                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="prod_end_detail.aspx?type=workorder&dh=<%#Eval("workorder") %>">
+                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                        <div class="weui-cell__hd">
+                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="weui-cell__bd " style="font-size: smaller">
+
+                                                            <span class="span_space">
+                                                                <%# DataBinder.Eval(Container.DataItem, "pgino") %> 
+                                                            </span>
+                                                            <span>
                                                                 <%# DataBinder.Eval(Container.DataItem, "pn") %>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="weui-agree__text">
+                                                            </span>
+                                                            <br />
+                                                            <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
+                                                            </span>
+                                                            <span>完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
+                                                            </span>
+                                                            <br />
+                                                            <span class="weui-agree__text span_space">
                                                                 <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                                <div class="weui-cell__ft">                                                    
-                                                </div>
-                                             </a>
+                                                            </span>
+                                                            <span class="weui-agree__text"><%# DataBinder.Eval(Container.DataItem, "endtime","{0:MM-dd HH:mm}") %> </span>
+                                                            <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
+                                                            </span>
+
+                                                        </div>
+                                                        <div class="weui-cell__ft">
+                                                        </div>
+                                                    </a>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
@@ -183,88 +190,84 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 部分完成<asp:Label ID="Label3" runat="server" Text=""></asp:Label></div>
                                 <div class="weui-cells"  >
+                                    <asp:Repeater ID="DataList3_line" runat="server" OnItemDataBound="DataList3_line_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%#((string)Container.DataItem) %></div>
                                     <asp:Repeater ID="DataList3" runat="server">
                                         <ItemTemplate>
-                                            <a class="weui-cell   ">
+                                            <a class="weui-cell   weui-cell_access " href="prod_end_detail.aspx?type=workorder&dh=<%#Eval("workorder_part") %>">
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
-                                                <div class="weui-cell__bd">
-                                                     <table border="0">
-                                                        <tr>
-                                                            <td class="weui-agree__text">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
-                                                            </td>
-                                                            <td class="weui-agree__text">
-                                                                <%# DataBinder.Eval(Container.DataItem, "pn") %>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="weui-agree__text">
-                                                                <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                <div class="weui-cell__bd f-black" style="font-size: smaller">
+                                                    <span class="span_space">
+                                                        <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
+                                                    </span>
+                                                    <span>
+                                                        <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                                    </span>
+                                                    <br />
+                                                    <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>
+                                                    </span>
+                                                    <span>完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
+                                                    </span>
+                                                    <br />
+                                                    <span class="weui-agree__text span_space">
+                                                        <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
+                                                    </span>
+                                                    <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
+                                                    </span>
                                                 </div>
                                                 <div class="weui-cell__ft">                                                    
                                                 </div>
                                             </a>
                                         </ItemTemplate>
                                     </asp:Repeater>
-                                     
+                                    </ItemTemplate>
+                                    </asp:Repeater>  
                                 </div>
                             </div>
                             <%----已完成-----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 生产完成<asp:Label ID="Label4" runat="server" Text=""></asp:Label></div>
+                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 生产完成(24小时内)<asp:Label ID="Label4" runat="server" Text=""></asp:Label></div>
                                 <div class="weui-cells"  >
+                                    <asp:Repeater ID="DataList4_line" runat="server" OnItemDataBound="DataList4_line_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22  color-success"></i><%#((string)Container.DataItem) %></div>
                                     <asp:Repeater ID="DataList4"  runat="server"  >
                                         <ItemTemplate>
-                                            <a class="weui-cell    ">
+                                            <a class="weui-cell  weui-cell_access   " href="prod_end_detail.aspx?type=workorder&dh=<%#Eval("workorder") %>">
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                 </div>
-                                                <div class="weui-cell__bd">
-                                                    <table border="0">
-                                                        <tr>
-                                                            <td class="weui-agree__text">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
-                                                            </td>
-                                                            <td class="weui-agree__text">
-                                                                <%# DataBinder.Eval(Container.DataItem, "pn") %>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="weui-agree__text">
-                                                                <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
-                                                            </td>
-                                                            <td class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                <div class="weui-cell__bd " style="font-size: smaller">
+                                                    <span class="span_space">
+                                                         <%# DataBinder.Eval(Container.DataItem, "pgino") %>
+                                                    </span>
+                                                    <span>
+                                                        <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                                    </span>
+                                                    <br />
+                                                    <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
+                                                    </span>
+                                                    <span>完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
+                                                    </span>
+                                                    <br />
+                                                    <span class="weui-agree__text span_space">
+                                                        <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
+                                                    </span>
+                                                    <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
+                                                    </span>
                                                 </div>
                                                 <div class="weui-cell__ft">                                                    
                                                 </div>
                                             </a>
                                         </ItemTemplate>
                                     </asp:Repeater>
-
+                                            </ItemTemplate>
+                                    </asp:Repeater>
                                 </div>
                             </div>
                         </div>
@@ -272,6 +275,7 @@
                 </div>
             </div>
         </div>
+        
 
         <div class="weui-footer weui-footer_fixed-bottom">
             <p class="weui-footer__text"><%=WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %></p>
