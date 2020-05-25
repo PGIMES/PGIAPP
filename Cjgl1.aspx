@@ -105,6 +105,8 @@
                         // code 在这里面写上扫描二维码之后需要做的内容 
                         ck_dh_change(result);
 
+                    }, cancel: function () {
+                        window.location.href = "/workorder/CKSH.aspx?dh=&workshop=<%=_workshop %>" + "&ck=N";
                     }
                 });
             });
