@@ -60,10 +60,17 @@
             } else {
                 if ($("#op").val()!="") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
+                    //if (parseInt(_op) > 700) {
+                    //    $("#lbl_ref_order").text("参考号");
+                    //} else if (parseInt(_op) >= 600) {
+                    //    $("#lbl_ref_order").text("生产完成单号");
+                    //}
                     if (parseInt(_op) > 700) {
                         $("#lbl_ref_order").text("参考号");
-                    } else if (parseInt(_op) >= 600) {
-                        $("#lbl_ref_order").text("生产完成单号");
+                    }else if (parseInt(_op) >600) {
+                        $("#lbl_ref_order").text("终检完成单号");
+                    } else if (parseInt(_op) == 600) {
+                        $("#lbl_ref_order").text("完成单号");
                     }
                 }
             }
@@ -249,11 +256,21 @@
             } else {//b_use_routing=0当作没有检验序
                 if ($.trim($("#ref_order").val()) == "" && $("#b_use_routing").val() == "1") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
+                    //if (parseInt(_op) > 700) {
+                    //    layer.alert("请输入【参考号】.");
+                    //    return false;
+                    //}else if (parseInt(_op) >= 600) {
+                    //    layer.alert("请输入【生产完成单号】.");
+                    //    return false;
+                    //}
                     if (parseInt(_op) > 700) {
                         layer.alert("请输入【参考号】.");
                         return false;
-                    }else if (parseInt(_op) >= 600) {
-                        layer.alert("请输入【生产完成单号】.");
+                    }else if (parseInt(_op) > 600) {
+                        layer.alert("请输入【终检完成单号】.");
+                        return false;
+                    }else if (parseInt(_op) == 600) {
+                        layer.alert("请输入【完成单号】.");
                         return false;
                     }
                 }
@@ -1153,7 +1170,12 @@
                     $("#ref_order").val("");
                 } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
                     $("#div_ref_order").show();
-                    $("#lbl_ref_order").text("生产完成单号");
+                    //$("#lbl_ref_order").text("生产完成单号");
+                    if (parseInt(d.values) > 600) {
+                        $("#lbl_ref_order").text("终检完成单号");
+                    }else if (parseInt(d.values) == 600) {
+                        $("#lbl_ref_order").text("完成单号");
+                    }
                     $("#ref_order").val("");
                 } else if (true) {
                     $("#div_ref_order").show();
