@@ -68,6 +68,8 @@
                             window.location.href = "/workorder/Off_Material.aspx?dh=" + result + "&workshop=<%=_workshop %>";
                         }
 
+                    }, cancel: function () {
+                        window.location.href = "/workorder/Off_Material.aspx?dh=&workshop=<%=_workshop %>";
                     }
                 });
             });
@@ -90,6 +92,8 @@
                             window.location.href = "/workorder/Quantity_Checked.aspx?dh=" + result + "&workshop=<%=_workshop %>";
                         }
 
+                    }, cancel: function () {
+                        window.location.href = "/workorder/Quantity_Checked.aspx?dh=&workshop=<%=_workshop %>";
                     }
                 });
             });
@@ -105,8 +109,6 @@
                         // code 在这里面写上扫描二维码之后需要做的内容 
                         ck_dh_change(result);
 
-                    }, cancel: function () {
-                        window.location.href = "/workorder/CKSH.aspx?dh=&workshop=<%=_workshop %>" + "&ck=N";
                     }
                 });
             });
@@ -154,6 +156,8 @@
                         // code 在这里面写上扫描二维码之后需要做的内容 
                          workorder_change(result);
 
+                    }, cancel: function () {
+                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=&workorder_f=&workshop=<%=_workshop %>";
                     }
                 });
             });
