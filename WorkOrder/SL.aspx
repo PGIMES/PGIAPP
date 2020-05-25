@@ -99,89 +99,60 @@
         }
 
         $(function () {
-            $('#lbl_lotno').click(function () {
-                if ($('#div_lotno').css("display") == "none") {
-                    $('#div_lotno').css("display", "block");
+            sm_lotno();
 
-                    $.ajax({
-                        type: "post",
-                        url: "SL.aspx/lotno_one",
-                        data: "{'pgino':'" + $("#pgino").val()+ "'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                        success: function (data) {
-                            var obj = eval(data.d);
-                            var flag = obj[0].flag;
-                            if (flag == "Y") {
-                                $.toptip(obj[0].msg, 'warning');//layer.alert(obj[0].msg);
-                                $('#sp_ld_part').text("");
-                                $('#sp_ld_ref').text("");
-                                $('#sp_ld_loc').text("");
-                                $('#sp_ld_qty_oh').text("");
-                                $('#sp_loc_to').text("");
-                            } else {
-                                $('#sp_ld_part').text(obj[0].ld_part);
-                                $('#sp_ld_ref').text(obj[0].ld_ref);
-                                $('#sp_ld_loc').text(obj[0].ld_loc);
-                                $('#sp_ld_qty_oh').text(obj[0].ld_qty_oh);
-                                $('#sp_loc_to').text(obj[0].loc_to);
-                            }
-
-                            return;
-                        }
-
-                    });
-
-                } else {
-                    $('#div_lotno').css("display", "none");
-                }
-                
-            });
+            //$('#lbl_lotno').click(function () {
+            //    if ($('#div_lotno').css("display") == "none") {
+            //        $('#div_lotno').css("display", "block");
+            //        $.ajax({
+            //            type: "post",
+            //            url: "SL.aspx/lotno_one",
+            //            data: "{'pgino':'" + $("#pgino").val()+ "'}",
+            //            contentType: "application/json; charset=utf-8",
+            //            dataType: "json",
+            //            async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+            //            success: function (data) {
+            //                var obj = eval(data.d);
+            //                var flag = obj[0].flag;
+            //                if (flag == "Y") {
+            //                    $.toptip(obj[0].msg, 'warning');//layer.alert(obj[0].msg);
+            //                    $('#sp_ld_part').text("");
+            //                    $('#sp_ld_ref').text("");
+            //                    $('#sp_ld_loc').text("");
+            //                    $('#sp_ld_qty_oh').text("");
+            //                    $('#sp_loc_to').text("");
+            //                } else {
+            //                    $('#sp_ld_part').text(obj[0].ld_part);
+            //                    $('#sp_ld_ref').text(obj[0].ld_ref);
+            //                    $('#sp_ld_loc').text(obj[0].ld_loc);
+            //                    $('#sp_ld_qty_oh').text(obj[0].ld_qty_oh);
+            //                    $('#sp_loc_to').text(obj[0].loc_to);
+            //                }
+            //                return;
+            //            }
+            //        });
+            //    } else {
+            //        $('#div_lotno').css("display", "none");
+            //    }                
+            //});
         });
-    </script>
-    <script>
-        $.ajax({
-            url: "/getwxconfig.aspx/GetScanQRCode",
-            type: "Post",
-            data: "{ 'url': '" + location.href + "' }",
-            async: false,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                var datad = JSON.parse(data.d); //转为Json字符串
-                wx.config({
-                    debug: false, // 开启调试模式
-                    appId: datad.appid, // 必填，公众号的唯一标识
-                    timestamp: datad.timestamp, // 必填，生成签名的时间戳
-                    nonceStr: datad.noncestr, // 必填，生成签名的随机串
-                    signature: datad.signature,// 必填，签名，见附录1
-                    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
-                });
-                //wx.error(function (res) {
-                //    alert(res);
-                //});
+
+        function sm_lotno() {
+            $('#img_sm_lotno').click(function () {
                 wx.ready(function () {
-                    //扫描二维码
-                    document.querySelector('img[id*=img_sm]').onclick = function () {
-                        wx.scanQRCode({
-                            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                            success: function (res) {
-                                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                                // code 在这里面写上扫描二维码之后需要做的内容                       
-                                $('#lot_no').val(result);
-                                lotno_change();
-
-                            }
-                        });
-                    };//end_document_scanQRCode
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容  
+                            $('#lot_no').val(result);
+                            lotno_change();
+                        }
+                    });
                 });
-            },
-            error: function (error) {
-                alert(error)
-            }
-        });
+            });
+        }
     </script>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
@@ -196,6 +167,7 @@
                 <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="cur_sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="sku_area" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -243,12 +215,15 @@
                     </asp:Repeater>
                 </div>
 
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
                 <div class="weui-form-preview__hd" style="border-top:1px solid #e5e5e5">
                     <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label" id="lbl_lotno">送料信息</label>
+                        <%--<label class="weui-form-preview__label" id="lbl_lotno">送料信息</label>--%>
+                        <asp:LinkButton ID="lk_lotno_qad" class="weui-form-preview__label" runat="server" OnClick="lk_lotno_qad_Click">送料信息</asp:LinkButton>
                     </div>
                 </div>
-                <div class="weui-form-preview__bd" id="div_lotno" style="display:none;">
+                <%--<div class="weui-form-preview__bd" id="div_lotno" style="display:none;">
                     <div class="weui-form-preview__item"> 
                         <label class="weui-form-preview__label">物料号</label>
                         <span class="weui-form-preview__value" id="sp_ld_part"></span>
@@ -269,7 +244,40 @@
                         <label class="weui-form-preview__label">线边库位</label>
                         <span class="weui-form-preview__value" id="sp_loc_to"></span>
                     </div>
+                </div>--%>
+                <div class="weui-form-preview__bd">
+                    <asp:Repeater runat="server" ID="listBx_lotno_qad" Visible="false">
+                        <ItemTemplate>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">物料号</label>
+                                <span class="weui-form-preview__value"><%# Eval("ld_part") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">参考号</label>
+                                <span class="weui-form-preview__value"><%# Eval("ld_ref") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">库位</label>
+                                <span class="weui-form-preview__value"><%# Eval("ld_loc") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">数量</label>
+                                <span class="weui-form-preview__value"><%# Eval("ld_qty_oh") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">备料区</label>
+                                <span class="weui-form-preview__value"><%# Eval("sku_area") %></span>
+                            </div>
+                            <div class="weui-form-preview__item" style="border-bottom:1px solid #e5e5e5">
+                                <label class="weui-form-preview__label">线边库位</label>
+                                <span class="weui-form-preview__value"><%# Eval("loc_to") %></span>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </div>
+                </ContentTemplate>
+                </asp:UpdatePanel>
+
                 <div class="weui-form-preview__bd">
                     <asp:Repeater runat="server" ID="listBx_lotno">
                         <ItemTemplate>
@@ -302,7 +310,7 @@
                         <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" runat="server" onchange="lotno_change()"></asp:TextBox>
                     </span>
                         <span style="float:left; width:10%">
-                            <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
+                            <img id="img_sm_lotno" src="../img/fdj2.png" style="padding-top:10px;" />
                     </span>
                 </div>
             </div>
@@ -339,4 +347,29 @@
     
     </form>
 </body>
+    <script>
+        var datad = [];
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                datad = JSON.parse(data.d); //转为Json字符串
+            },
+            error: function (error) {
+                alert(error)
+            }
+        });
+        wx.config({
+            debug: false, // 开启调试模式
+            appId: datad.appid, // 必填，公众号的唯一标识
+            timestamp: datad.timestamp, // 必填，生成签名的时间戳
+            nonceStr: datad.noncestr, // 必填，生成签名的随机串
+            signature: datad.signature,// 必填，签名，见附录1
+            jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+        });
+    </script>
 </html>

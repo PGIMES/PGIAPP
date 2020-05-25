@@ -51,6 +51,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         txt_sy_qty.Text= dt.Rows[0]["sy_qty"].ToString(); cur_sy_qty.Text = dt.Rows[0]["sy_qty"].ToString();
         txt_act_date.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
+        sku_area.Text = dt.Rows[0]["sku_area"].ToString();
+
         listBx_lotno.DataSource = ds.Tables[1];
         listBx_lotno.DataBind();
     }
@@ -129,58 +131,126 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         return result;
 
     }
-    [WebMethod]
-    public static string lotno_one(string pgino)
+
+
+    //[WebMethod]
+    //public static string lotno_one(string pgino)
+    //{
+
+
+    //    //送料信息里，第一笔 绑定库存明细里的
+    //    string sqlStr = @"select top 1 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
+    //                    where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0
+    //                    order by ld_date,ld_ref 
+    //                    with (nolock)";
+    //    sqlStr = string.Format(sqlStr, pgino);
+    //    DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+    //    string flag = "";
+    //    string msg = "";
+
+    //    string ld_part = "", ld_ref = "", ld_loc = "", ld_qty_oh = "", loc_to = "";
+    //    if (ldt == null)
+    //    {
+    //        flag = "Y"; msg = "没有符合条件的Lot No";
+    //    }
+    //    else if (ldt.Rows.Count <= 0)
+    //    {
+    //        flag = "Y"; msg = "没有符合条件的Lot No";
+    //    }
+    //    else
+    //    {
+    //        flag = "N"; msg = "";
+    //        ld_part = ldt.Rows[0]["ld_part"].ToString();
+    //        ld_ref = ldt.Rows[0]["ld_ref"].ToString();
+    //        ld_loc = ldt.Rows[0]["ld_loc"].ToString();
+    //        ld_qty_oh =ldt.Rows[0]["ld_qty_oh"].ToString();
+    //    }
+
+    //    if (flag == "N")
+    //    {
+    //        string re_sql = @"exec [usp_app_SL_lot_change_loc] '{0}'";
+    //        re_sql = string.Format(re_sql, pgino);
+    //        DataSet ds = SQLHelper.Query(re_sql);
+
+    //        DataTable re_dt = ds.Tables[0];
+    //        flag = re_dt.Rows[0][0].ToString();
+    //        msg = re_dt.Rows[0][1].ToString();
+
+    //        DataTable dt = ds.Tables[1];
+    //        loc_to = dt.Rows[0][0].ToString(); ;
+    //    }
+
+    //    string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"ld_part\":\"" + ld_part 
+    //        + "\",\"ld_ref\":\"" + ld_ref + "\",\"ld_loc\":\"" + ld_loc + "\",\"ld_qty_oh\":\"" + ld_qty_oh 
+    //        + "\",\"loc_to\":\"" + loc_to + "\"}]";
+    //    return result;
+
+    //}
+
+
+    protected void lk_lotno_qad_Click(object sender, EventArgs e)
     {
-
-
-        //送料信息里，第一笔 绑定库存明细里的
-        string sqlStr = @"select top 1 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
-                        where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0
-                        order by ld_date,ld_ref 
-                        with (nolock)";
-        sqlStr = string.Format(sqlStr, pgino);
-        DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
-
-        string flag = "";
-        string msg = "";
-
-        string ld_part = "", ld_ref = "", ld_loc = "", ld_qty_oh = "", loc_to = "";
-        if (ldt == null)
+        if (listBx_lotno_qad.Visible == true)
         {
-            flag = "Y"; msg = "没有符合条件的Lot No";
-        }
-        else if (ldt.Rows.Count <= 0)
-        {
-            flag = "Y"; msg = "没有符合条件的Lot No";
+            listBx_lotno_qad.Visible = false;
+            return;
         }
         else
         {
-            flag = "N"; msg = "";
-            ld_part = ldt.Rows[0]["ld_part"].ToString();
-            ld_ref = ldt.Rows[0]["ld_ref"].ToString();
-            ld_loc = ldt.Rows[0]["ld_loc"].ToString();
-            ld_qty_oh =ldt.Rows[0]["ld_qty_oh"].ToString();
+            listBx_lotno_qad.Visible = true;
         }
 
-        if (flag == "N")
+        DataTable ldt = new DataTable();
+
+        //送料信息里，第一笔 绑定库存明细里的
+        string sqlStr = @"select top 2 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
+                            where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0
+                            order by ld_date,ld_ref 
+                            with (nolock)";
+        sqlStr = string.Format(sqlStr, pgino.Text);
+        ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+        string flag = "N";
+        string msg = "";
+
+        if (ldt.Rows.Count <= 0)
         {
-            string re_sql = @"exec [usp_app_SL_lot_change_loc] '{0}'";
-            re_sql = string.Format(re_sql, pgino);
-            DataSet ds = SQLHelper.Query(re_sql);
-
-            DataTable re_dt = ds.Tables[0];
-            flag = re_dt.Rows[0][0].ToString();
-            msg = re_dt.Rows[0][1].ToString();
-
-            DataTable dt = ds.Tables[1];
-            loc_to = dt.Rows[0][0].ToString(); ;
+            flag = "Y"; msg = "没有符合条件的Lot No";
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"ld_part\":\"" + ld_part 
-            + "\",\"ld_ref\":\"" + ld_ref + "\",\"ld_loc\":\"" + ld_loc + "\",\"ld_qty_oh\":\"" + ld_qty_oh 
-            + "\",\"loc_to\":\"" + loc_to + "\"}]";
-        return result;
+        if (flag == "Y")
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$.toptip('没有符合条件的Lot No', 'warning');", true);
+            return;
+        }
+
+        
+        string re_sql = @"exec [usp_app_SL_lot_change_loc] '{0}'";
+        re_sql = string.Format(re_sql, pgino.Text);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        if (flag == "Y")
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$.toptip('"+ msg + "', 'warning');", true);
+            return;
+        }
+
+        DataTable dt = ds.Tables[1];
+        string loc_to = dt.Rows[0][0].ToString();
+
+        ldt.Columns.Add("sku_area", typeof(string)); ldt.Columns.Add("loc_to", typeof(string));
+        foreach (DataRow row in ldt.Rows)
+        {
+            row["sku_area"] = sku_area.Text; row["loc_to"] = loc_to;
+        }
+
+        listBx_lotno_qad.DataSource = ldt;
+        listBx_lotno_qad.DataBind();
 
     }
 
