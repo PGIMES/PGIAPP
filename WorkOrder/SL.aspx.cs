@@ -68,11 +68,12 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string qty = "";
+        string qty = "", loc_from = "", loc_to = "";
         if (flag == "N")
         {
             DataTable dt = ds.Tables[1];
-            string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + dt.Rows[0][0].ToString() + "' with (nolock)";
+            loc_to = dt.Rows[0][0].ToString(); loc_from = loc_to;
+            string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
             DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
 
             if (ldt == null)
@@ -86,8 +87,6 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             else
             {
                 flag = "N"; msg = "";
-                //qty = ldt.Rows[0][0].ToString();
-                //qty = Convert.ToSingle(ldt.Rows[0][0].ToString()).ToString();
                 float qty_c = Convert.ToSingle(ldt.Rows[0][0].ToString());
 
                 string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}, '{3}'";
@@ -104,7 +103,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             }
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\",\"loc_from\":\"" + loc_from + "\",\"loc_to\":\"" + loc_to + "\"}]";
         return result;
 
     }
@@ -178,8 +177,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
     {
         btn_sl.Text = "送料中。。。。"; btn_sl.Enabled = false;
 
-        string re_sql = @"exec [usp_app_SL] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, need_no.Text,lot_no.Text,act_qty.Text, pgino.Text, pn.Text,comment.Value);
+        string re_sql = @"exec [usp_app_SL] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, need_no.Text,lot_no.Text,act_qty.Text, pgino.Text, pn.Text,comment.Value,loc_from.Text, loc_to.Text, sku_area.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();

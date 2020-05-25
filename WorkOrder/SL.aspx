@@ -52,6 +52,21 @@
                 layer.alert("【送料数量】不可大于【剩余数量】.");
                 return false;
             }
+            if ($("#sku_area").val() == "") {
+                layer.alert("请输入【备料区】.");
+                return false;
+            } else if (($("#sku_area").val()).indexOf(',')>=0) {
+                layer.alert("【备料区】不可多个，请联系IT处理.");
+                return false;
+            }
+            if ($("#loc_from").val() == "") {
+                layer.alert("请输入【loc_from】.");
+                return false;
+            }
+            if ($("#loc_to").val() == "") {
+                layer.alert("请输入【loc_to】.");
+                return false;
+            }
             return true;
          }
 
@@ -87,9 +102,13 @@
                         $('#lot_no').val("");
                         $('#act_qty').val("");
                         $('#txt_sy_qty').val($('#cur_sy_qty').val());
+                        $('#loc_from').val("");
+                        $('#loc_to').val("");
                     } else {
                         $('#act_qty').val(obj[0].qty);
                         $('#txt_sy_qty').val(parseFloat($('#cur_sy_qty').val() == "" ? "0" : $('#cur_sy_qty').val()) - parseFloat(obj[0].qty == "" ? "0" : obj[0].qty));
+                        $('#loc_from').val(obj[0].loc_from);
+                        $('#loc_to').val(obj[0].loc_to);
                     }
 
                     return;
@@ -260,6 +279,8 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">送料数量</label></div>
                 <asp:TextBox ID="act_qty" class="weui-input" placeholder="" style="color:gray" runat="server"></asp:TextBox>
+                <asp:TextBox ID="loc_from" class="weui-input" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="loc_to" class="weui-input" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
