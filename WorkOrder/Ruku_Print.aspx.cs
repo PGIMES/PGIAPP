@@ -89,8 +89,11 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
             //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess"
             //    , "$.toptip('打印成功,入库单号" + msg + "', 3000, 'success');var int = self.setTimeout(function(){ self.location='"+url+"'  }, 3000); "
             //    , true);
+            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
+            //    , "$.toptip('打印成功,入库单号" + msg + "', 3000, 'success');var int = self.setTimeout(function(){ self.location='" + url + "'  }, 3000); "
+            //    , true);
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
-                , "$.toptip('打印成功,入库单号" + msg + "', 3000, 'success');var int = self.setTimeout(function(){ self.location='" + url + "'  }, 3000); "
+                , "layer.alert('打印成功,入库单号" + msg + "', {}, function (index) {window.location.href='" + url + "'; }); "
                 , true);
             return;
         }
