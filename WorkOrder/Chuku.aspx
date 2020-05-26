@@ -156,8 +156,14 @@
                     //alert(d.values);
                 },
                 onClose: function (d) {
-                    //var obj = eval(d.data);
+                    var obj = eval(d.data);
                     //alert(obj.values);
+
+                    if (obj.values=="0") {
+                        $("#btnsave").hide();
+                    } else {
+                        $("#btnsave").show();
+                    }
 
                 },
                 onOpen: function () {
