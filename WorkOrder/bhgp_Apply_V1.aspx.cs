@@ -426,7 +426,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
+            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
             return;
         }
 

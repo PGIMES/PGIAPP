@@ -1124,75 +1124,81 @@
                 datalist_reason = obj[0].json_reason;
             }
         });
-        $("#pgino").select({
-            title: "物料号",
-            items: datalist_pgino,
-            onChange: function (d) {
-                //alert(d.values);
-                pgino_change(d.values);
-            },
-            onClose: function (d) {
-                //var obj = eval(d.data);
-                //alert(obj.values);
+
+        init_apply();
+        function init_apply(){
+
+            $("#pgino").select({
+                title: "物料号",
+                items: datalist_pgino,
+                onChange: function (d) {
+                    //alert(d.values);
+                    pgino_change(d.values);
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
                 
-            },
-            onOpen: function () {
-                //  console.log("open");
-            },
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
 
-        });
+            });
         
-        $("#reason").select({
-            title: "原因名称",
-            items: datalist_reason,
-            onChange: function (d) {
-                //alert(d.values);
-            },
-            onClose: function (d) {
-                //var obj = eval(d.data);
-                //alert(obj.values);
+            $("#reason").select({
+                title: "原因名称",
+                items: datalist_reason,
+                onChange: function (d) {
+                    //alert(d.values);
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
 
-            },
-            onOpen: function () {
-                //  console.log("open");
-            },
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
 
-        });
+            });
 
-        $("#op").select({
-            title: "工序",
-            items: [{title:'' ,value:''}],
-            onChange: function (d) {
-                //alert(d.values);
-                if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
-                    $("#div_ref_order").hide();
-                    $("#lbl_ref_order").text("参考号/生产完成单号");
-                    $("#ref_order").val("");
-                } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
-                    $("#div_ref_order").show();
-                    //$("#lbl_ref_order").text("生产完成单号");
-                    if (parseInt(d.values) > 600) {
-                        $("#lbl_ref_order").text("终检完成单号");
-                    }else if (parseInt(d.values) == 600) {
-                        $("#lbl_ref_order").text("完成单号");
+            $("#op").select({
+                title: "工序",
+                items: [{title:'' ,value:''}],
+                onChange: function (d) {
+                    //alert(d.values);
+                    if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
+                        $("#div_ref_order").hide();
+                        $("#lbl_ref_order").text("参考号/生产完成单号");
+                        $("#ref_order").val("");
+                    } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
+                        $("#div_ref_order").show();
+                        //$("#lbl_ref_order").text("生产完成单号");
+                        if (parseInt(d.values) > 600) {
+                            $("#lbl_ref_order").text("终检完成单号");
+                        }else if (parseInt(d.values) == 600) {
+                            $("#lbl_ref_order").text("完成单号");
+                        }
+                        $("#ref_order").val("");
+                    } else if (true) {
+                        $("#div_ref_order").show();
+                        $("#lbl_ref_order").text("参考号");
+                        $("#ref_order").val("");
                     }
-                    $("#ref_order").val("");
-                } else if (true) {
-                    $("#div_ref_order").show();
-                    $("#lbl_ref_order").text("参考号");
-                    $("#ref_order").val("");
-                }
-            },
-            onClose: function (d) {
-                //var obj = eval(d.data);
-                //alert(obj.values);
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
 
-            },
-            onOpen: function () {
-                //  console.log("open");
-            },
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
 
-        }); 
+            }); 
+        }
+
     </script>
     <script type="text/javascript">
         var datalist_reason_two;
@@ -1325,6 +1331,7 @@
             init_app();
             sm_ref_order();
             sm_pgino();
+            init_apply();
 
             saomiao_workorder_gl();
         });
