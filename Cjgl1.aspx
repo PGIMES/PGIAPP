@@ -343,7 +343,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>   
-                <a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
+                <%--<a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-list-alt margin10-r"></i>
                     </div>
@@ -360,7 +360,7 @@
                         <p>终检完成监视<span class="f12">（临时）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
-                </a>
+                </a>--%>
                 <%--<a class="weui-cell weui-cell_access" href="javascript:void(0);">
                     <div class="weui-cell__hd">
                         <i class="fa fa-bar-chart margin10-r"></i>
