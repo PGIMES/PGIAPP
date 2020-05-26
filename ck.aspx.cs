@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -37,5 +38,23 @@ public partial class ck : System.Web.UI.Page
         int count_bhg = dt_98.Rows.Count;
 
         Label2.Text = count_bhg.ToString();
+    }
+
+
+    [WebMethod]
+    public static string ckck_dh_change(string result)
+    {
+
+        string re_sql = @"exec [usp_app_ckck_dh_change] '{0}'";
+        re_sql = string.Format(re_sql, result);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        string res = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return res;
+
     }
 }

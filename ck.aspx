@@ -91,6 +91,44 @@
             });
             
         }
+        function sm_ckck_dh() {
+            wx.ready(function () {
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (res) {
+                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                        // code 在这里面写上扫描二维码之后需要做的内容 
+                        ckck_dh_change(result);
+
+                    }
+                });
+            });
+        }
+        function ckck_dh_change(result) {
+            $.ajax({
+                type: "post",
+                url: "ck.aspx/ckck_dh_change",
+                data: "{'result':'" + result + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    var flag = obj[0].flag;
+                    var msg = obj[0].msg;
+                    var workorder = obj[0].workorder;
+
+                    if (flag == "Y") {
+                        layer.alert(msg);
+                        return;
+                    }
+                    window.location.href = "/workorder/Chuku.aspx?dh=" + msg;
+                }
+
+            });
+
+        }
     </script>
 </head>
 <body>
@@ -111,12 +149,12 @@
                         <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> 
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ckck_dh()">
                     <div class="weui-cell__hd">
                         <i class="fa fa-shopping-basket margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>成品领用<span class="f12">（未开放）</span></p>
+                        <p>成品出库</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
