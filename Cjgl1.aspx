@@ -334,7 +334,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/prod_wip_list.aspx?workshop=<%=_workshop %>">
+                <a class="weui-cell weui-cell_access" href="/workorder/prod_wip_list_v2.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-gears margin10-r"></i>
                     </div>
