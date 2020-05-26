@@ -50,7 +50,7 @@
                     if (obj[0].flag == "Y") {
                         layer.alert(obj[0].msg);
                     }
-                    $("#sp_workorder").text(obj[0].workorder);
+                    $("#sp_workorder").text(obj[0].workorder); $("#workorder").val(obj[0].workorder);
                     $("#sp_domain").text(obj[0].domain);
                     $("#sp_pgino").text(obj[0].pgino);
                     $("#sp_pn").text(obj[0].pn);
