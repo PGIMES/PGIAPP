@@ -347,7 +347,7 @@
                                             <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%#((string)Container.DataItem) %></div>
                                             <asp:Repeater ID="DataList4" runat="server">
                                                 <ItemTemplate><%-- prod_end_detail.aspx?type=workorder&dh=<%#Eval("workorder") %>--%>
-                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="<%# (Eval("is_print").ToString()=="未打印"?("/workorder/Ruku_Print.aspx?dh="+ Eval("workorder")):("/workorder/Ruku_hege.aspx?dh="+ Eval("is_print")))+"&workshop="+_workshop %>" + "&ck=N">
+                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="<%# (Eval("is_print").ToString()=="未打印"?("/workorder/Ruku_Print.aspx?dh="+ Eval("workorder")):("/workorder/Ruku_hege.aspx?dh="+ Eval("is_print")))+"&workshop="+_workshop+ "&ck=N" %>" >
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
