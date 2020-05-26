@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">退料数量</label>
-                                        <span class="weui-form-preview__value"><%# Eval("qty") %> </span>
+                                        <span class="weui-form-preview__value"><%=dr["qty"] %> </span>
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">退料时间</label>

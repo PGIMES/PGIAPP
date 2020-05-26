@@ -360,7 +360,7 @@
                                                             <span>
                                                                 <%# DataBinder.Eval(Container.DataItem, "pn") %>
                                                             </span>
-                                                             
+                                                             <span class="weui-badge   margin20-l  <%# Eval("is_print").ToString()=="未打印"?"bg-blue":"hide"   %> " style=" font-size: x-small; "><%#Eval("is_print") %></span>
                                                             <br />
                                                             <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
                                                             </span>
@@ -372,7 +372,7 @@
                                                             </span>
                                                             <span class="weui-agree__text"><%# DataBinder.Eval(Container.DataItem, "off_date","{0:MM-dd HH:mm}") %> </span>
                                                             <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font></span>                                                            
-                                                            <span class="weui-badge <%# Eval("is_print").ToString()=="未打印"?"bg-blue":"hide"   %> " style=" font-size: x-small; "><%#Eval("is_print") %></span>
+                                                            
                                                         </div>
                                                         <div class="weui-cell__ft">
                                                         </div>
