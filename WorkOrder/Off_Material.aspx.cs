@@ -16,8 +16,8 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh =  Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -210,7 +210,7 @@ public partial class Off_Material : System.Web.UI.Page
         string sql = @"exec usp_app_down_material '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
         if(dh_record.Text.Contains(","))
         { dh_source = dh_record.Text.Substring(1, dh_record.Text.Length - 1); }
-        sql = string.Format(sql, txt_dh.Text, txt_emp.Text, txt_xmh.SelectedItem.Text, txt_pn.Text, txt_curr_qty.Text,btn, dh_source, ViewState["STEPVALUE"], txt_remark.Value);
+        sql = string.Format(sql, txt_dh.Text, txt_emp.Text, txt_xmh.SelectedItem.Text, txt_pn.Text, txt_curr_qty.Text,btn, dh_source, Request.Form["step"], txt_remark.Value);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
@@ -252,13 +252,7 @@ public partial class Off_Material : System.Web.UI.Page
             txt_xmh.SelectedValue = pgino;
             txt_xmh.Attributes.Add("disabled", "disabled");
         }
-        if(txt_xmh.SelectedValue!=pgino)
-        {
-            txt_xmh.Items.Clear();
-            txt_xmh.Items.Insert(0,pgino);
-        }
-        else
-        { ShowValue(txt_emp.Text); }
+        
 
         string sql = @"exec usp_app_off_material_Bind_xmh_ver '{0}','{1}'";
         sql = string.Format(sql, txt_xmh.SelectedValue, txt_emp.Text);
@@ -287,7 +281,7 @@ public partial class Off_Material : System.Web.UI.Page
             DataTable dt2 = SQLHelper.Query(strsql).Tables[0];
 
             txt_off_qty.Text = dt2.Rows[0]["off_qty"].ToString();
-           // txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+            txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
             ViewState["STEPVALUE"] = dt2.Rows[0]["step"].ToString();
             DataTable dt_record = SQLHelper.Query(strsql).Tables[1];
             if (dt_record.Rows.Count > 0)

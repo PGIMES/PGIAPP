@@ -187,7 +187,11 @@
                                     $("#txt_ztsl").val(item.pt_ord_mult);
                                     $("#txt_curr_qty").val(item.curr_qty).attr("readonly", "readonly");
                                     $("select#txt_xmh option[value='" + item.pgino + "']").attr('selected', 'true');
-                                    $("#txt_xmh").val(item.pgino).css("color","gray");
+                                    $("#txt_xmh").val(item.pgino).css("color", "gray");
+                                    $("#txt_step").val(item.step);
+                                    $("#g1").prop("checked", item.stepvalue == "终检" ? true : false);
+                                    $("#g2").prop("checked", item.stepvalue == "GP12" ? true : false);
+                                    $("#g3").prop("checked", item.stepvalue == "入库" ? true : false);
                                     xmh_change();
                                    $("#txt_xmh").val(item.pgino).attr("disabled", "disabled");
                                 }
@@ -260,7 +264,7 @@
                        <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
                         <asp:TextBox ID="txt_ztsl" class="weui-input"  placeholder="" Style="max-width: 100%; "  runat="server" ></asp:TextBox>
                            <asp:TextBox ID="dh_record" class="weui-input"  placeholder="" Style="max-width: 100%; "  runat="server" ></asp:TextBox>
-
+                          <asp:TextBox ID="txt_step" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
@@ -371,7 +375,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="maintain_type" disabled="disabled" id="g1" value="终检" type="radio" <%= ViewState["STEPVALUE"].ToString()=="终检"?"checked":"" %> />
+                                             <input class="weui-form-checkbox" name="maintain_type"  id="g1" value="终检" type="radio"  />  <%--<%= ViewState["STEPVALUE"].ToString()=="终检"?"checked":"" %>--%>
                                              <label for="g1">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -384,7 +388,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="maintain_type" disabled="disabled" id="g2" value="GP12" type="radio" <%= ViewState["STEPVALUE"].ToString()=="GP12"?"checked":"" %> />
+                                             <input class="weui-form-checkbox" name="maintain_type"  id="g2" value="GP12" type="radio"  /> <%-- <%= ViewState["STEPVALUE"].ToString()=="GP12"?"checked":"" %>--%>
                                              <label for="g2" class="middle">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -397,7 +401,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="maintain_type" disabled="disabled" id="g3" value="入库" type="radio" <%= ViewState["STEPVALUE"].ToString()=="入库"?"checked":"" %> />
+                                             <input class="weui-form-checkbox" name="maintain_type"  id="g3" value="入库" type="radio"  /> <%-- <%= ViewState["STEPVALUE"].ToString()=="入库"?"checked":"" %>--%>
                                              <label for="g3" class="middle">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
