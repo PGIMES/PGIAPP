@@ -492,9 +492,9 @@
               <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" style="display:none;" OnClick="btn_bind_data_Click"/>
                
                  <div class="weui-cell">
-                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /> 
+                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" UseSubmitBehavior="false" runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /> 
                    <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       
-                   <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="下料" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
+                   <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" UseSubmitBehavior="false" runat="server" Text="下料" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
                 </div>
                
 

@@ -16,8 +16,8 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh =  Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -238,7 +238,21 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Bind_reperter()
     {
+        string pgino = "";
         DataTable dt1 = new DataTable();
+        string sql_his = "select top 1 pgino   from [dbo].[Mes_App_WorkOrder_History] where workorder='{0}'";
+        sql_his = string.Format(sql_his, txt_dh.Text);
+        DataTable dt_his = SQLHelper.Query(sql_his).Tables[0];
+        if (dt_his.Rows.Count > 0)
+        {
+            pgino = dt_his.Rows[0]["pgino"].ToString();
+        }
+        if (txt_xmh.Items.Contains(new ListItem(pgino)))
+        {
+            txt_xmh.SelectedValue = pgino;
+            txt_xmh.Attributes.Add("disabled", "disabled");
+        }
+        
 
         string sql = @"exec usp_app_off_material_Bind_xmh_ver '{0}','{1}'";
         sql = string.Format(sql, txt_xmh.SelectedValue, txt_emp.Text);

@@ -125,6 +125,7 @@
                                                             <span>
                                                                 <%=dr["part_desc"] %>
                                                             </span> 
+                                                            <span class="weui-mark-rt- weui-badge bg-blue margin20-l" style=" font-size: x-small; ">部分</span>
                                                             <br />
                                                             <span class="span_space">完工单号:<%=dr["need_no"] %>
                                                             </span>
@@ -139,7 +140,7 @@
                                                             </span>
                                                         </div>
                                                         <div class="weui-cell__ft">
-                                                            <span class="weui-mark-rt- weui-badge bg-blue " style=" font-size: x-small; ">部分</span>
+                                                            
                                                         </div>
                                                     </a>
                                                 <% } else {%>                                                    
@@ -231,7 +232,8 @@
                                                             </span>
                                                             <span>
                                                                 <%=dr["pn"] %>
-                                                            </span>                                                                                                                        
+                                                            </span> 
+                                                            <span class="weui-badge bg-blue margin20-l" style=" font-size: x-small; ">部分</span>                                                                                                                      
                                                             <br />                                                            
                                                             <span class="span_space">检验单:<%=dr["qc_dh"] %>
                                                             </span> 
@@ -243,11 +245,11 @@
                                                                <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                             </span>
                                                             <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["on_date"]) %> </span>
-                                                            <%--<span class="weui-agree__text">时长:<font class="f-blue"> <%=dr["times"] %></font>
-                                                            </span>--%>
+                                                            <span class="weui-agree__text">时长:<font class="f-blue"> <%=dr["times"] %></font>
+                                                            </span>
                                                         </div>
                                                         <div class="weui-cell__ft">
-                                                            <span class="weui-mark-rt- weui-badge bg-blue " style=" font-size: x-small; ">部分</span>
+                                                           
                                                         </div>
                                                     </a>
                                     <% }} }%> 
@@ -317,7 +319,8 @@
                                                             </span>
                                                             <span>
                                                                 <%=dr["pn"] %>
-                                                            </span>                                                                                                                        
+                                                            </span> 
+                                                            <span class="weui-badge bg-blue  margin20-l" style=" font-size: x-small; ">部分</span>                                                                                                                      
                                                             <br />                                                           
                                                             <span class="span_space">检验单:<%=dr["qc_dh"] %>
                                                             </span> 
@@ -328,11 +331,11 @@
                                                                <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                             </span>
                                                             <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["on_date"]) %> </span>
-                                                            <%--<span class="weui-agree__text">时长:<font class="f-blue"> <%=dr["times"] %></font>
-                                                            </span>--%>
+                                                            <span class="weui-agree__text">时长:<font class="f-blue"> <%=dr["times"] %></font>
+                                                            </span>
                                                         </div>
                                                         <div class="weui-cell__ft">
-                                                            <span class="weui-mark-rt- weui-badge bg-blue " style=" font-size: x-small; ">部分</span>
+                                                            
                                                         </div>
                                                     </a>
                                     <% }} }%> 

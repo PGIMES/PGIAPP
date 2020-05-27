@@ -45,47 +45,39 @@
     </style>
     <script>
         function valid() {
+            if ($("#txt_dh").val() == "") {
+                alert("请输入生产完成单号.");
+                return false;
+            }
             if ($("#dh_record").val() == "") {
                 alert("请输入来源单号.");
                 return false;
             }
+           
 
+            if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
+
+                return confirm('零托,确认执行下一步吗？');
+            } else {
+                return true;
+            }
             //if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
             //    $.confirm('零托,确认执行下一步吗？', function () {  $('#btn_wc').click() }, function () {  })
             //}
 
-            // if ($("#txt_dh").val() == "") {
-            //     alert("请输入生产完成单号.");
-            //     return false;
-            // }
-            //// alert( parseInt( $("#txt_hqqty").val()));
-            // if (parseInt($("#txt_hqqty").val()) + parseInt($("#txt_ycqty").val()) > parseInt($("#txt_qty").val()))
-            // {
-
-            //     alert("合格数量大于下线数量.");
-            //     $("#txt_hqqty").focus();
-            //     return false;
-            // }
-            // else  if (parseInt($("#txt_hqqty").val()) + parseInt($("#txt_ycqty").val()) == parseInt($("#txt_qty").val()))
-            // {
-            //     if($("#txt_qc").val() == "")
-            //     {
-            //         alert("请选择检验完成按钮并输入终检完成单号.");
-            //         $("#txt_qc").focus();
-            //         return false;
-            //     }
-
-            // }
-
-
-            return true;
+            //return true;
         }
 
         function zcvalid() {
+            if ($("#txt_dh").val() == "") {
+                alert("请输入生产完成单号.");
+                return false;
+            }
             if ($("#dh_record").val() == "") {
                 alert("请输入来源单号.");
                 return false;
             }
+            
             return true;
         }
 
@@ -99,11 +91,11 @@
         $(document).ready(function () {
             //$("#txt_ycqty").attr("readonly", "readonly");
             //$("#txt_qty").attr("readonly", "readonly");
-
+            $("#txt_dh").attr("readonly", "readonly");
             sm_source();
             page_show();
            
-           // Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+          Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
            
         });
         //$(function () {
@@ -204,14 +196,16 @@
         function setvalue()  
         {
             var totalRow = 0; var is_tr_row = false;
+
             $('#divtable table  tr').each(function (i) {
                 if (i > 0) {
                     is_tr_row = true;
+                    
                     $(this).children('td').each(function (j) {
-                        if (j == 2) {
-                            //alert(totalRow);
+                        if (j >= 2) {
+                           // alert(totalRow);
                             totalRow += parseFloat($(this).text());
-                            //alert(totalRow);
+                          
                         }
                     });
                 }
@@ -219,9 +213,16 @@
             });
 
             if (is_tr_row) {
-                if (parseFloat(totalRow) < parseFloat($("#txt_qty").val())) {
+                //alert(totalRow);
+                if (parseFloat(totalRow) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_qty").val())) {
+
                     $("#txt_qty").val(totalRow + parseFloat($("#txt_off_qty").val()));
                     $("#txt_curr_qty").val(totalRow);
+                }
+                else
+                {
+                    $("#txt_qty").val($("#txt_ztsl").val());
+                    $("#txt_curr_qty").val(parseFloat($("#txt_ztsl").val()) - parseFloat($("#txt_off_qty").val()));
                 }
             }
         }
@@ -301,39 +302,20 @@
                     </div>
                 </div>
 
-                <%--  <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">终检完成单号</label>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <span style="float: left; width: 90%">
-                                    <asp:TextBox ID="txt_qc" class="weui-input" placeholder="请输入终检完成单号"  runat="server" onchange="qcdh_change()" ></asp:TextBox>
-                                </span>
-                                <span style="float: left; width: 10%">
-                                    <img id="img_qc" src="../img/fdj2.png" style="padding-top: 10px;" />
-                                </span>
-                            </div>
-                        </div>--%>
-
-
+              
                 <div class="weui-cell">
                     <div class="weui-cell__hd">
-                        <label class="weui-label">完成单号</label>
+                        <label class="weui-label f-red">完成单号</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <%-- <span style="float: left; width: 90%">
-                                    <asp:TextBox ID="txt_dh" class="weui-input" placeholder="请输入完成单号"  runat="server" onchange="dh_change()"></asp:TextBox>
-                                </span>
-                                <span style="float: left; width: 10%">
-                                    <img id="img_sm" src="../img/fdj2.png" style="padding-top: 10px;" />
-                                </span>--%>
+                     
                         <asp:TextBox ID="txt_dh" class="weui-input" runat="server" Style="color: gray"></asp:TextBox>
                     </div>
                 </div>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd">
-                        <label class="weui-label">来源单号</label>
+                        <label class="weui-label f-red">来源单号</label>
                     </div>
                     <div class="weui-cell__bd">
                         <span style="float: left; width: 90%">
@@ -368,19 +350,11 @@
                     </div>
                 </div>
 
-                <%-- <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">零件名称</label>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <asp:TextBox ID="txt_pnname" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
-                            </div>
-                        </div>--%>
-
+             
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd">
-                        <label class="weui-label">检验数量</label>
+                        <label class="weui-label f-red">检验数量</label>
                     </div>
                     <div class="weui-cell__bd">
                         <asp:TextBox ID="txt_qty" class="weui-input" Style="max-width: 100%" runat="server" placeholder="请输入检验数量" onchange="qty_change()"></asp:TextBox>
@@ -406,7 +380,27 @@
                     </div>
                 </div>
 
-                <div class="weui-form-preview">
+             
+
+         
+
+
+                </ContentTemplate></asp:UpdatePanel>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <script type="text/javascript">
+                            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+
+                                page_show();
+                                //sm_source();
+                                Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+                               setvalue();
+
+                            });
+                        </script>
+
+
+                         <div class="weui-cells weui-cells_form">
 
                     <ul class="collapse">
                         <li>
@@ -420,7 +414,6 @@
                                     <div class="weui-cell__bd">
                                         <div class="weui-form-li">
                                             <input class="weui-form-checkbox" name="step" id="g2" value="GP12" type="radio" disabled="disabled" />
-                                            <%-- <%= ViewState["STEPVALUE"].ToString()=="GP12"?"checked":"" %>--%>
                                             <label for="g2" class="middle">
                                                 <i class="weui-icon-radio"></i>
                                                 <div class="weui-form-text">
@@ -433,7 +426,7 @@
 
                                     <div class="weui-cell__bd">
                                         <div class="weui-form-li">
-                                            <input class="weui-form-checkbox" name="step" id="g3" value="入库" type="radio" disabled="disabled" <%= ViewState["STEPVALUE"].ToString()=="入库"?"checked":"" %> />
+                                            <input class="weui-form-checkbox" name="step" id="g3" value="入库" type="radio" disabled="disabled"/>
                                             <label for="g3" class="middle">
                                                 <i class="weui-icon-radio"></i>
                                                 <div class="weui-form-text">
@@ -451,109 +444,63 @@
                     </ul>
                 </div>
 
-         
+                        <div class="weui-cells weui-cells_form">
 
-                <%--<div hidden="hidden"> 
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">下线数量</label>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <asp:TextBox ID="txt_qty" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
-                            </div>
-                        </div>
-
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">已检验数量</label>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <asp:TextBox ID="txt_ycqty" class="weui-input" Style="max-width: 100%" runat="server"></asp:TextBox>
-                            </div>
-                        </div>
-                --%>
-
-
-                </ContentTemplate></asp:UpdatePanel>
-
-
-
-                <%--<div class="weui-cell">
-                    <asp:Button ID="btnsave" class="weui-btn weui-btn_primary"  runat="server" Text="部分完成" OnClick="btnsave_Click" OnClientClick="return valid();" />
-                    
-               
-                 <asp:Button ID="btn_ok" class="weui-btn weui-btn_primary" runat="server"  style="margin-left:10px;"  Text="检验完成" OnClick="btn_ok_Click" OnClientClick="return valid_qc();" />
-                 <asp:Button ID="btn_show" runat="server" Text="按钮显示" OnClick="btn_show_Click" style="display:none;"  />
-
-                </div>--%>
-                <%--      <asp:Button ID="btn_bind_xm" runat="server" Text="项目号关联数据" style="display:none;" OnClick="btn_bind_xm_Click" />--%>
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <script type="text/javascript">
-                            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-
-                                page_show();
-                                //sm_source();
-                                setvalue();
-
-                            });
-                        </script>
-                               <div class="weui-cells weui-cells_form">
-
-                    <ul class="collapse">
-                        <li>
-                            <div class="weui-flex js-category">
-                                <div class="weui-flex__item"><span>关联产品</span></div>
-                                <i class="icon icon-74"></i>
-                            </div>
-                            <div class="page-category js-categoryInner">
-
-                                <div class="weui-cells page-category-content">
-                                    <div class="weui-form-preview__bd" id="divtable">
-                                        <asp:Repeater runat="server" ID="Repeater_lotno">
-
-                                            <HeaderTemplate>
-                                                <table border="0" id="gltable">
-                                                    <tr>
-                                                        <td>来源单号</td>
-                                                        <td>物料号</td>
-                                                        <td>数量 </td>
-                                                    </tr>
-                                            </HeaderTemplate>
-
-                                            <ItemTemplate>
-                                                <tr>
-                                                    <td><%# Eval("workorder")%></td>
-                                                    <td><%#  Eval("pgino") %></td>
-                                                    <td><%# Eval("need_off_qty")%></td>
-                                                </tr>
-                                            </ItemTemplate>
-                                            <FooterTemplate>
-                                                </table>
-                                            </FooterTemplate>
-                                        </asp:Repeater>
+                            <ul class="collapse">
+                                <li>
+                                    <div class="weui-flex js-category">
+                                        <div class="weui-flex__item"><span>关联产品</span></div>
+                                        <i class="icon icon-74"></i>
                                     </div>
+                                    <div class="page-category js-categoryInner">
+
+                                        <div class="weui-cells page-category-content">
+                                            <div class="weui-form-preview__bd" id="divtable">
+                                                <asp:Repeater runat="server" ID="Repeater_lotno">
+
+                                                    <HeaderTemplate>
+                                                        <table border="0" id="gltable">
+                                                            <tr>
+                                                                <td>来源单号</td>
+                                                                <td>物料号</td>
+                                                                <td>数量 </td>
+                                                            </tr>
+                                                    </HeaderTemplate>
+
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td><%# Eval("workorder")%></td>
+                                                            <td><%#  Eval("pgino") %></td>
+                                                            <td><%# Eval("need_off_qty")%></td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                    <FooterTemplate>
+                                                        </table>
+                                                    </FooterTemplate>
+                                                </asp:Repeater>
+                                            </div>
 
 
-                                </div>
-                            </div>
-                        </li>
+                                        </div>
+                                    </div>
+                                </li>
 
-                    </ul>
-                </div>
+                            </ul>
+                        </div>
 
                         <div class="hidden">
-                            
-                                <asp:TextBox ID="txt_source_sum" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
-                        <asp:TextBox ID="dh_record" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
-                           
+
+                            <asp:TextBox ID="txt_source_sum" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="dh_record" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+
                         </div>
 
 
                         <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" Style="display: none;" OnClick="btn_bind_data_Click" />
                         <div class="weui-cell">
-                            <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="暂存" OnClick="btnzc_Click" OnClientClick="if(!zcvalid()){return false;}this.disabled=false;this.value='处理中…';" />
+                            <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="暂存"   UseSubmitBehavior="false"  OnClick ="btnzc_Click" OnClientClick="if(!zcvalid()){return false;}this.disabled=false;this.value='处理中…';" />
                             <asp:Button ID="btn_wc" runat="server" Text="未合托完成" OnClick="btn_wc_Click" Style="display: none" />
-                            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="下一步" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" Style="margin-left: 10px;" />
+                            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="下一步" UseSubmitBehavior="false" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" Style="margin-left: 10px;" />
                         </div>
 
                         </div>
@@ -562,7 +509,7 @@
 
 
 
-            </div>
+           
     </form>
 </body>
 <script>

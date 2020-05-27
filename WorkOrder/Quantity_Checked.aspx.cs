@@ -17,9 +17,9 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";
-        _dh = Request.QueryString["dh"].ToString();// "W0000456";
-        // lotno = "00351694";
+        _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";//
+        _dh =   Request.QueryString["dh"].ToString();// "W0000456";
+        // lotno = "G0000301";
         //_dh = "W0000450";
 
         dt_append = new DataTable();
@@ -54,12 +54,12 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
         string result = "";
         string re_sql = "";
         DataTable re_dt;
-        string dh = "";
-        if (sourceorder == "")
-        { dh = workorder; }
-        else { dh = sourceorder; }
-         re_sql = @"exec [usp_app_source] '{0}'";
-        re_sql = string.Format(re_sql, dh);
+        //string dh = "";
+        //if (sourceorder == "")
+        //{ dh = workorder; }
+        //else { dh = sourceorder; }
+         re_sql = @"exec [usp_app_source_ver] '{0}','{1}'";
+        re_sql = string.Format(re_sql, workorder,sourceorder);
          re_dt = SQLHelper.Query(re_sql).Tables[0];
         if(re_dt.Rows[0]["pgino"].ToString()!="")
         { 
@@ -126,6 +126,10 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
         string sql = "";
         string pgino = "";
         double ztsl = 0;
+        string sqlspend = @"select wip.pgino,wip.off_qty,isnull(wip.off_qty,0)-isnull(hege_qty,0)-isnull(ng.qty,0) as need_off_qty,wip.workorder,loading_type  from Mes_App_WorkOrder_QC_Wip wip 
+                               left join (SELECT  pgino,workorder_qc,SUM(QTY) qty from   Mes_App_WorkOrder_Ng group by workorder_qc,pgino) ng on wip.pgino=ng.pgino and wip.workorder=workorder_qc
+                                   where 1=1";
+
         string strsql = "select  pgino,pn,off_qty,hege_qty,off_qty-hege_qty as need_off_qty,workorder,loading_type from Mes_App_WorkOrder_QC_Wip where 1=1   ";
         if (dh_record.Text.Contains(","))
         {
@@ -152,10 +156,12 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
 
             }
 
-            strsql += " and workorder in  (select *  from dbo.StrToTable('" + dh + "'))";
-            dt = SQLHelper.Query(strsql).Tables[0];
-            string re_sql = @"exec [usp_app_source] '{0}'";
-            re_sql = string.Format(re_sql, dh);
+            sqlspend += "  and wip.workorder  in  (select *  from dbo.StrToTable('" + dh + "'))";
+            dt = SQLHelper.Query(sqlspend).Tables[0];
+            string re_sql = @"exec [usp_app_source_ver] '{0}','{1}'";
+            re_sql = string.Format(re_sql, txt_dh.Text, dh);
+            //string re_sql = @"exec [usp_app_source] '{0}'";
+            //re_sql = string.Format(re_sql, dh);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             if (re_dt.Rows.Count > 0)
             {
@@ -231,16 +237,16 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
     }
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
-        if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
-        {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认执行下一步吗？', function () { $('#btn_wc').click(); }, function () {});", true);
-        }
-        else
-        {
+        //txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+        //if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
+        //{
+        //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认执行下一步吗？', function () { $('#btn_wc').click(); }, function () {});", true);
+        //}
+        //else
+        //{
             save(1);
 
-        }
+        //}
 
 
     }
