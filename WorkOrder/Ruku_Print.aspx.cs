@@ -92,7 +92,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         string[] arr_xbq_con = _xbq_con.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
         if (arr_xbq_con.Length != 3)
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('小标签" + _xbq_con + "格式不正确',{},function(index){layer.close(index);	$('#img_sm_xbq').click();})", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('标签" + _xbq_con + "格式不正确',{},function(index){layer.close(index);	$('#img_sm_xbq').click();})", true);
             return;
         }
         string _pgino = arr_xbq_con[0].ToString();
@@ -120,7 +120,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
             drs = dt.Select("pgino='" + _pgino + "' and serialno='" + _serialno + "'");
             if (drs.Length != 0)
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('小标签" + _xbq_con + "已存在',{},function(index){layer.close(index);$('#img_sm_xbq').click();})", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('标签" + _xbq_con + "已存在',{},function(index){layer.close(index);$('#img_sm_xbq').click();})", true);
                 return;
             }
         }
@@ -131,7 +131,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         if (re_dt.Rows.Count > 0)
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('小标签" + _xbq_con + "已被入库单" + re_dt.Rows[0]["dh"].ToString() + "使用',{},function(index){layer.close(index);$('#img_sm_xbq').click();})", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('标签" + _xbq_con + "已被入库单" + re_dt.Rows[0]["dh"].ToString() + "使用',{},function(index){layer.close(index);$('#img_sm_xbq').click();})", true);
             return;
         }
 

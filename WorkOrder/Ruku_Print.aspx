@@ -76,7 +76,7 @@
 
         function xbq_change() {
             if ($("#xbq_con").val() == "") {
-                layer.alert('【小标签】不可为空');
+                layer.alert('【标签】不可为空');
                 return;
             }
             $("#<%=btn_bind_data.ClientID%>").click();
@@ -173,7 +173,7 @@
             <li id="li_cz_one">
                 <div class="weui-flex js-category">
                     <div class="weui-flex__item" >
-                        <label class="weui-form-preview__label">小标签</label>
+                        <label class="weui-form-preview__label">标签</label>
                     </div>
                     <label class="weui-form-preview__label">
                         <span id="sp_cz"></span>
