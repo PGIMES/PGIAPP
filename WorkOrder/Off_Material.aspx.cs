@@ -74,16 +74,16 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
-        if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
-        {   
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认下料吗？', function () { $('#btn_wc').click(); }, function () {});", true);
-        }
-        else
-        {
+        //txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+        //if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
+        //{   
+        //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认下料吗？', function () { $('#btn_wc').click(); }, function () {});", true);
+        //}
+        //else
+        //{
             save("下料");
            
-        }
+        //}
 
 
     }
@@ -171,11 +171,11 @@ public partial class Off_Material : System.Web.UI.Page
     {
         save(btnzc.Text);
     }
-    protected void btn_wc_Click(object sender, EventArgs e)
-    {
-        save("下料");
+    //protected void btn_wc_Click(object sender, EventArgs e)
+    //{
+    //    save("下料");
        
-    }
+    //}
 
 
 
@@ -252,7 +252,13 @@ public partial class Off_Material : System.Web.UI.Page
             txt_xmh.SelectedValue = pgino;
             txt_xmh.Attributes.Add("disabled", "disabled");
         }
-        
+        if(txt_xmh.SelectedValue!=pgino)
+        {
+            txt_xmh.Items.Clear();
+            txt_xmh.Items.Insert(0,pgino);
+        }
+        else
+        { ShowValue(txt_emp.Text); }
 
         string sql = @"exec usp_app_off_material_Bind_xmh_ver '{0}','{1}'";
         sql = string.Format(sql, txt_xmh.SelectedValue, txt_emp.Text);
@@ -281,7 +287,7 @@ public partial class Off_Material : System.Web.UI.Page
             DataTable dt2 = SQLHelper.Query(strsql).Tables[0];
 
             txt_off_qty.Text = dt2.Rows[0]["off_qty"].ToString();
-            txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+           // txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
             ViewState["STEPVALUE"] = dt2.Rows[0]["step"].ToString();
             DataTable dt_record = SQLHelper.Query(strsql).Tables[1];
             if (dt_record.Rows.Count > 0)

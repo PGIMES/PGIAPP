@@ -44,6 +44,25 @@
     
     <script>
 
+        function zcvalid() {
+            if ($("#txt_curr_qty").val() == "" || $("#txt_curr_qty").val() <= "0") {
+                alert("本次下料数量必须大于0.");
+                return false;
+            }
+
+            if ($("#txt_xmh").val() == "") {
+                alert("请选择物料号.");
+                return false;
+            }
+            if ($("#txt_dh").val() == "") {
+                alert("请输入生产完成单号.");
+                return false;
+            }
+
+           
+
+            return true;
+        }
 
         function valid() {
             if ($("#txt_curr_qty").val() == "" || $("#txt_curr_qty").val() <= "0") {
@@ -61,7 +80,12 @@
                 return false;
             }
 
-            
+            if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
+
+                return confirm('零托,确认执行下一步吗？');
+            } else {
+                return true;
+            }
 
             return true;
         }
@@ -492,8 +516,8 @@
               <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" style="display:none;" OnClick="btn_bind_data_Click"/>
                
                  <div class="weui-cell">
-                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" UseSubmitBehavior="false" runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /> 
-                   <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       
+                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" UseSubmitBehavior="false" runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="if(!zcvalid()){return false;}this.disabled=false;this.value='处理中…';" /> 
+                  <%-- <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       --%>
                    <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" UseSubmitBehavior="false" runat="server" Text="下料" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
                 </div>
                
