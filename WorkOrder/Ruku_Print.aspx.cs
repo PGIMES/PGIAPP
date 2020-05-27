@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -91,7 +92,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         string[] arr_xbq_con = _xbq_con.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
         if (arr_xbq_con.Length != 3)
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('小标签" + _xbq_con + "格式不正确')", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('小标签" + _xbq_con + "格式不正确',{},function(index){layer.close(index);	$('#img_sm_xbq').click();})", true);
             return;
         }
         string _pgino = arr_xbq_con[0].ToString();
@@ -100,7 +101,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
 
         if (_pgino != pgino.Text)
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('物料号" + _pgino + "不正确')", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('物料号" + _pgino + "不正确',{},function(index){layer.close(index);$('#img_sm_xbq').click();});", true);
             return;
         }
 
@@ -119,7 +120,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
             drs = dt.Select("pgino='" + _pgino + "' and serialno='" + _serialno + "'");
             if (drs.Length != 0)
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【小标签】已存在')", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('小标签" + _xbq_con + "已存在',{},function(index){layer.close(index);$('#img_sm_xbq').click();})", true);
                 return;
             }
         }
@@ -130,12 +131,12 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         if (re_dt.Rows.Count > 0)
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【小标签】已被入库单" + re_dt.Rows[0]["dh"].ToString() + "使用')", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('小标签" + _xbq_con + "已被入库单" + re_dt.Rows[0]["dh"].ToString() + "使用',{},function(index){layer.close(index);$('#img_sm_xbq').click();})", true);
             return;
         }
 
         DataRow dr = dt.NewRow();
-        dr["num"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["id"]) + 1;
+        dr["num"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["num"]) + 1;
         dr["pgino"] = _pgino;
         dr["serialno"] = _serialno;
         dr["qty"] = _qty;
@@ -144,15 +145,17 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         ViewState["xbq_data"] = dt;
 
         bind_gv();
+        ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#img_sm_xbq').click();", true);
     }
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('1212'); ", true);
-        return;
-        string re_sql = re_sql = @"exec usp_app_Ruku_Print '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        //string re_sql = re_sql = @"exec usp_app_Ruku_Print '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+        //re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
+        //DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        Ruku_Print_Class bdn = new Ruku_Print_Class();
+        DataTable re_dt = bdn.save_data((DataTable)ViewState["xbq_data"], emp_code_name.Text, workorder.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
+
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
@@ -163,18 +166,13 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
             {
                 if (_ck == "N")//车间的
                 {
-                    //Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
                     url = "/Cjgl1.aspx?workshop=" + _workshop;
                 }
                 if (_ck == "Y")//仓库的
                 {
-                    //Response.Redirect("/ck.aspx");
                     url = "/ck.aspx";
                 }
             }
-            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess"
-            //    , "$.toptip('打印成功,入库单号" + msg + "', 3000, 'success');var int = self.setTimeout(function(){ self.location='"+url+"'  }, 3000); "
-            //    , true);
             //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
             //    , "$.toptip('打印成功,入库单号" + msg + "', 3000, 'success');var int = self.setTimeout(function(){ self.location='" + url + "'  }, 3000); "
             //    , true);
@@ -185,10 +183,39 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         }
         else
         {
-            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
             return;
         }
     }
 
+}
+
+
+public class Ruku_Print_Class
+{
+    public Ruku_Print_Class()
+    {
+        //
+        // TODO: 在此处添加构造函数逻辑
+        //
+    }
+    SQLHelper SQLHelper = new SQLHelper();
+
+    public DataTable save_data(DataTable dt, string emp_code_name, string workorder, string domain, string pgino, string pn, string qty, string act_qty, string comment)
+    {
+        SqlParameter[] param = new SqlParameter[]
+      {
+            new SqlParameter("@dt",dt),
+            new SqlParameter("@emp",emp_code_name),
+            new SqlParameter("@workorder",workorder),
+            new SqlParameter("@domain",domain),
+            new SqlParameter("@pgino",pgino),
+            new SqlParameter("@pn",pn),
+            new SqlParameter("@qty",qty),
+            new SqlParameter("@act_qty",act_qty),
+            new SqlParameter("@comment",comment)
+      };
+        return SQLHelper.GetDataTable("usp_app_Ruku_Print_V1", param);
+
+    }
 }
