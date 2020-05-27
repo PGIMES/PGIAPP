@@ -34,7 +34,7 @@
             //    }
             //}
 
-            $("#workorder").attr("readonly", "readonly");
+            <%--$("#workorder").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
             $("#b_use_routing").attr("readonly", "readonly");
@@ -46,7 +46,7 @@
                 $("#op").attr("readonly", "readonly");
                 $("#reason").attr("readonly", "readonly");
                 $("#rscode").attr("readonly", "readonly");
-            }
+            }--%>
 
             init_app();
             
@@ -73,6 +73,20 @@
                         $("#lbl_ref_order").text("完成单号");
                     }
                 }
+            }
+
+            $("#workorder").attr("readonly", "readonly");
+            $("#pn").attr("readonly", "readonly");
+            $("#descr").attr("readonly", "readonly");
+            $("#b_use_routing").attr("readonly", "readonly");
+            $("#yb_qty").attr("readonly", "readonly");
+            $("#bc_qty").attr("readonly", "readonly");
+
+            if ("<%= _ismodify %>"=="Y1") {
+                $("#pgino").attr("readonly", "readonly");
+                $("#op").attr("readonly", "readonly");
+                $("#reason").attr("readonly", "readonly");
+                $("#rscode").attr("readonly", "readonly");
             }
         }
 
