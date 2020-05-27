@@ -406,6 +406,39 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         }
     }
 
+    [WebMethod]
+    public static string save2(string _emp_code_name,string _workorder, string _pgino, string _pn, string _descr, string _op
+        , string _qty, string _reason,string _comment, string _b_use_routing,string _ref_order)
+    {
+        string flag = "N", msg = "";
+        int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
+        string re_sql = "";
+        if (op_code < 600 || _b_use_routing == "0")
+        {
+            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+
+        }
+        else if (op_code >= 600 && op_code <= 700)
+        {
+            re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+        }
+        else
+        {
+            flag = "Y"; msg = "开发中.....";
+        }
+        
+        if (flag == "N")
+        {
+            re_sql = string.Format(re_sql, _emp_code_name, _workorder, _pgino, _pn, _descr, _op
+           , _qty, _reason, _comment, _b_use_routing, _ref_order);
+            DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+            flag = re_dt.Rows[0][0].ToString();
+            msg = re_dt.Rows[0][1].ToString();
+        }
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
 
     protected void btnsave_Click(object sender, EventArgs e)
     {

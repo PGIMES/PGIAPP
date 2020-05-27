@@ -34,7 +34,7 @@
             //    }
             //}
 
-            <%--$("#workorder").attr("readonly", "readonly");
+            $("#workorder").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
             $("#b_use_routing").attr("readonly", "readonly");
@@ -42,11 +42,11 @@
             $("#bc_qty").attr("readonly", "readonly");
 
             if ("<%= _ismodify %>"=="Y1") {
-                $("#pgino").attr("readonly", "readonly");
+                $("#pgino").attr("readonly", "readonly");$("#img_sm_pgino").hide();
                 $("#op").attr("readonly", "readonly");
                 $("#reason").attr("readonly", "readonly");
                 $("#rscode").attr("readonly", "readonly");
-            }--%>
+            }
 
             init_app();
             
@@ -73,20 +73,6 @@
                         $("#lbl_ref_order").text("完成单号");
                     }
                 }
-            }
-
-            $("#workorder").attr("readonly", "readonly");
-            $("#pn").attr("readonly", "readonly");
-            $("#descr").attr("readonly", "readonly");
-            $("#b_use_routing").attr("readonly", "readonly");
-            $("#yb_qty").attr("readonly", "readonly");
-            $("#bc_qty").attr("readonly", "readonly");
-
-            if ("<%= _ismodify %>"=="Y1") {
-                $("#pgino").attr("readonly", "readonly");
-                $("#op").attr("readonly", "readonly");
-                $("#reason").attr("readonly", "readonly");
-                $("#rscode").attr("readonly", "readonly");
             }
         }
 
@@ -178,6 +164,35 @@
                 $("#sp_cz").parent().parent().children('div').children().css("font-weight", "800");
             }
 
+            $("#btnsave2").click(function(){
+                $("#btnsave2").attr("disabled","disabled");
+                $("#btnsave2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $.ajax({
+                    type: "post",
+                    url: "bhgp_Apply_V1.aspx/save2",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
+                        + "','_workorder':'" + $('#workorder').val() + "','_pgino':'" + $('#pgino').val() + "','_pn':'" + $('#pn').val() 
+                        + "','_descr':'" + $('#descr').val() + "','_op':'" + $('#op').val() + "','_qty':'" + $('#qty').val() 
+                        + "','_reason':'" + $('#reason').val() + "','_comment':'" + $('#comment').val() + "','_b_use_routing':'" 
+                        + $('#b_use_routing').val() + "','_ref_order':'" + $('#ref_order').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag=="Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btnsave2").removeAttr("disabled");
+                            $("#btnsave2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+                        window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
+                    }
+
+                });
+            });
+
         });
 
         //function sm_workorder() {
@@ -232,7 +247,7 @@
         function pgino_change(pgino) {
             $.ajax({
                 type: "post",
-                url: "bhgp_Apply.aspx/pgino_change",
+                url: "bhgp_Apply_V1.aspx/pgino_change",
                 data: "{'pgino':'" + pgino + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -372,8 +387,8 @@
                  <%--=======申请-----%>
                 <div id="tab1" class="weui-tab__content">
                     
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
+                   <%-- <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>--%>
                     <div class="weui-cells weui-cells_form" style="display:<%= _tab_index==0?"block":"none"%>;">     
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
@@ -443,12 +458,14 @@
                             <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
                         </div>
                         <div class="weui-cell">
-                            <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"
-                                Text="提交" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" /><%--OnClientClick="return valid();"--%>
+                            <%--<asp:Button ID="btnsave" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"
+                                Text="提交" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" />--%><%--OnClientClick="return valid();"--%>
+
+                            <input id="btnsave2" type="button" value="提交" class="weui-btn weui-btn_primary" />
                         </div>
                     </div>
-                    </ContentTemplate>
-                    </asp:UpdatePanel>
+                    <%--</ContentTemplate>
+                    </asp:UpdatePanel>--%>
 
                     <div class="weui-form-preview" style="display:<%= _tab_index==1?"block":"none"%>;">
                         <div class="weui-form-preview__hd">
@@ -1124,24 +1141,22 @@
     </form>
 
     <script>
-        var datalist_pgino, datalist_reason;
-        $.ajax({
-            type: "post",
-            url: "bhgp_Apply.aspx/init_pgino",
-            data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "','emp': '" + $("#emp_code_name").val() + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-            success: function (data) {
-                var obj = eval(data.d);
-                datalist_pgino = obj[0].json;
-                datalist_reason = obj[0].json_reason;
-            }
-        });
-
-        init_apply();
-        function init_apply(){
-
+        if ("<%= _ismodify %>"!="Y1") {
+            var datalist_pgino, datalist_reason;
+            $.ajax({
+                type: "post",
+                url: "bhgp_Apply.aspx/init_pgino",
+                data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "','emp': '" + $("#emp_code_name").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    datalist_pgino = obj[0].json;
+                    datalist_reason = obj[0].json_reason;
+                }
+            });
+        
             $("#pgino").select({
                 title: "物料号",
                 items: datalist_pgino,
@@ -1345,7 +1360,6 @@
             init_app();
             sm_ref_order();
             sm_pgino();
-            init_apply();
 
             saomiao_workorder_gl();
         });
