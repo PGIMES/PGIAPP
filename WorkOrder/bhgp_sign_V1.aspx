@@ -108,20 +108,33 @@
 
         $(document).ready(function () {
             if ($("#workorder_qc").val() != "") {
-                if ($("#workorder_qc").val().substr(0, 1).toUpperCase() == "W") {
-                    $("#lbl_workorder_qc").text("生产完成单号");
-                } else {
-                    $("#lbl_workorder_qc").text("参考号");
+                //if ($("#workorder_qc").val().substr(0, 1).toUpperCase() == "W" || $("#workorder_qc").val().substr(0, 1).toUpperCase() == "G") {
+                //    $("#lbl_workorder_qc").text("完成单号");
+                //} else {
+                //    $("#lbl_workorder_qc").text("参考号");
+                //}
+                if ($("#op").val() != "") {
+                    var _op = $("#op").val();
+                    if (parseInt(_op) > 700) {
+                        $("#lbl_ref_order").text("参考号");
+                    } else if (parseInt(_op) > 600) {
+                        $("#lbl_ref_order").text("终检完成单号");
+                    } else if (parseInt(_op) == 600) {
+                        $("#lbl_ref_order").text("完成单号");
+                    }
                 }
             }
 
-            $("#btn_sign").hide();
-            $("#btn_cancel").hide();
+            //$("#btn_sign").hide();
+            //$("#btn_cancel").hide();
+            $("#btn_sign2").hide();
+            $("#btn_cancel2").hide();
+
             $("#div_com").hide();
 
             $.ajax({
                 type: "post",
-                url: "bhgp_sign.aspx/init_btn",
+                url: "bhgp_sign_V1.aspx/init_btn",
                 data: "{'stepid':'" + "<%= _stepid %>" + "','workshop':'" + "<%= _workshop %>" + "','pgino':'" + $("#pgino").val() + "','emp':'" + $("#emp_code_name").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -130,10 +143,12 @@
                     var obj = eval(data.d);
 
                     if (obj[0].btn_sure == "Y") {
-                        $("#btn_sign").show();
+                        //$("#btn_sign").show();
+                        $("#btn_sign2").show();
                     }
                     if (obj[0].btn_cancel == "Y") {
-                        $("#btn_cancel").show();
+                        //$("#btn_cancel").show();
+                        $("#btn_cancel2").show();
                     }
                     if (obj[0].btn_sure == "Y" || obj[0].btn_cancel == "Y") {
                         $("#div_com").show();
@@ -152,6 +167,103 @@
 
                 }
             });
+
+            $("#btn_sign2").click(function () {
+                $("#btn_sign2").attr("disabled", "disabled");
+                $("#btn_sign2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $("#btn_cancel2").attr("disabled", "disabled");
+                $("#btn_cancel2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if ($('#stepid').val()=="0001") {
+                    if ($.trim($('#fg_comment').val()) == "") {
+                        layer.alert('【返工说明】不可为空');
+                        $("#btn_sign2").removeAttr("disabled");
+                        $("#btn_sign2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                        $("#btn_cancel2").removeAttr("disabled");
+                        $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                        return;
+                    }
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "bhgp_sign_V1.aspx/sure2",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
+                        + "','_workorder':'" + $('#workorder').val() + "','_workorder_f':'" + $('#workorder_f').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_fg_comment':'" + $('#fg_comment').val() + "','_sign_comment':'" + $('#sign_comment').val() + "','_workorder_qc':'" + $('#workorder_qc').val()
+                        + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag=="Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign2").removeAttr("disabled");
+                            $("#btn_sign2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_cancel2").removeAttr("disabled");
+                            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+                        if ($('#stepid').val() == "0001")//需返工
+                        {
+                            window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
+                        }
+                        else {
+                            window.location.href = "/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>";
+                        }
+                        
+                    }
+
+                });
+             });
+
+            $("#btn_cancel2").click(function () {
+                $("#btn_sign2").attr("disabled", "disabled");
+                $("#btn_sign2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $("#btn_cancel2").attr("disabled", "disabled");
+                $("#btn_cancel2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if ($.trim($('#sign_comment').val()) == "") {
+                    layer.alert('【签核意见】不可为空');
+                    $("#btn_sign2").removeAttr("disabled");
+                    $("#btn_sign2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    $("#btn_cancel2").removeAttr("disabled");
+                    $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "bhgp_sign_V1.aspx/cancel2",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
+                        + "','_workorder':'" + $('#workorder').val() + "','_workorder_f':'" + $('#workorder_f').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_sign_comment':'" + $('#sign_comment').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag=="Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign2").removeAttr("disabled");
+                            $("#btn_sign2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_cancel2").removeAttr("disabled");
+                            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+                        window.location.href = "/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>";
+                        
+                    }
+
+                });
+             });
         });
       
     </script>
@@ -260,6 +372,7 @@
                             <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                             <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                             <asp:TextBox ID="workorder_qc" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="op" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
 
                         </div>
@@ -793,10 +906,12 @@
                                 runat="server" value=''></textarea>
                         </div>
                         <div class="weui-cell" ><%--style="display:<%= _stepid!="9999"?"flex":"none"%>;"--%>
-                            <asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"  
+                            <%--<asp:Button ID="btn_sign" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"  
                                 Text="确认" OnClientClick="this.disabled=false;this.value='处理中…';" OnClick="btn_sure_Click" />
                             <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false"  
-                                Text="退回" OnClientClick="this.disabled=false;this.value='处理中…';" OnClick="btn_cancel_Click" style="margin-left:10px;"/>
+                                Text="退回" OnClientClick="this.disabled=false;this.value='处理中…';" OnClick="btn_cancel_Click" style="margin-left:10px;"/>--%>
+                            <input id="btn_sign2" type="button" value="确认" class="weui-btn weui-btn_primary" />
+                            <input id="btn_cancel2" type="button" value="退回" class="weui-btn weui-btn_primary" style="margin-left:10px;" />
                         </div>
             
                     </div>

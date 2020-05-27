@@ -168,6 +168,12 @@
                 $("#btnsave2").attr("disabled","disabled");
                 $("#btnsave2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
+                if(!valid()){
+                    $("#btnsave2").removeAttr("disabled");
+                    $("#btnsave2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return false;
+                }
+
                 $.ajax({
                     type: "post",
                     url: "bhgp_Apply_V1.aspx/save2",

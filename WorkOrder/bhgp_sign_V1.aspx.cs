@@ -55,6 +55,7 @@ public partial class WorkOrder_bhgp_sign_V1 : System.Web.UI.Page
         lbl_fg.Text = dt.Rows[0]["cur_result"].ToString();
         pgino.Text = dt.Rows[0]["pgino"].ToString();
         workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString();
+        op.Text = dt.Rows[0]["op"].ToString();
 
         DataTable dt1 = ds.Tables[1];
         Repeater_cz_one.DataSource = dt1;
@@ -283,6 +284,38 @@ public partial class WorkOrder_bhgp_sign_V1 : System.Web.UI.Page
         }
     }
 
+    [WebMethod]
+    public static string sure2(string _emp_code_name, string _workorder, string _workorder_f, string _stepid, string _fg_comment, string _sign_comment
+        , string _workorder_qc)
+    {
+        string flag = "N", msg = "";
+
+        string re_sql = @"exec [usp_app_bhgp_sign_V1] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
+        re_sql = string.Format(re_sql, _emp_code_name, _workorder, _workorder_f, _stepid, _fg_comment, _sign_comment, _workorder_qc);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+    [WebMethod]
+    public static string cancel2(string _emp_code_name, string _workorder, string _workorder_f, string _stepid, string _sign_comment)
+    {
+        string flag = "N", msg = "";
+
+        string re_sql = @"exec [usp_app_bhgp_sign_cancel_V1] '{0}', '{1}','{2}','{3}','{4}'";
+        re_sql = string.Format(re_sql, _emp_code_name, _workorder, _workorder_f, _stepid, _sign_comment);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+    /*
     protected void btn_sure_Click(object sender, EventArgs e)
     {
         btn_sign.Text = "确认中。。。。"; btn_sign.Enabled = false;
@@ -359,7 +392,7 @@ public partial class WorkOrder_bhgp_sign_V1 : System.Web.UI.Page
         }
 
     }
-
+    */
 
 }
 

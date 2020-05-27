@@ -49,6 +49,7 @@
 
                     if (obj[0].flag == "Y") {
                         layer.alert(obj[0].msg);
+                        return;
                     }
                     $("#sp_workorder").text(obj[0].workorder); $("#workorder").val(obj[0].workorder);
                     $("#sp_domain").text(obj[0].domain);
