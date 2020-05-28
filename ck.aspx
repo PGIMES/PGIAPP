@@ -129,6 +129,39 @@
             });
 
         }
+        function sm_ruku_print() {
+            wx.ready(function () {
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (res) {
+                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                        // code 在这里面写上扫描二维码之后需要做的内容 
+                        ruku_print_change(result);
+
+                    }
+                });
+            });
+        }
+        function ruku_print_change(result) {
+            $.ajax({
+                type: "post",
+                url: "ck.aspx/ruku_print_change",
+                data: "{'result':'" + result + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    var flag = obj[0].flag;
+                    var msg = obj[0].msg;
+
+                    layer.alert(msg);
+                    return;
+                }
+
+            });
+        }
     </script>
 </head>
 <body>
@@ -178,6 +211,15 @@
                         <asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2 = Label2.Text; Response.Write("<span class='weui-badge  bg-" + (i2 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2 + "</span>"); %> 
                     </div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ruku_print();">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-print margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>入库标签补打</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
                 </a>
             </div>
         </div>

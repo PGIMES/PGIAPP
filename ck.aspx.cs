@@ -57,4 +57,21 @@ public partial class ck : System.Web.UI.Page
         return res;
 
     }
+
+    [WebMethod]
+    public static string ruku_print_change(string result)
+    {
+
+        string re_sql = @"exec [usp_app_Ruku_Print_again] '{0}'";
+        re_sql = string.Format(re_sql, result);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        string res = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return res;
+
+    }
 }
