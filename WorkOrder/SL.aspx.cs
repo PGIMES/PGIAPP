@@ -72,15 +72,16 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         if (flag == "N")
         {
             DataTable dt = ds.Tables[1];
-            loc_to = dt.Rows[0][0].ToString(); 
-            //loc_from = loc_to;
-            //string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
-            //DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            loc_to = dt.Rows[0][0].ToString();
 
-            DataTable ldt = new DataTable();
-            string sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{0}' with (nolock)";
-            sqlStr = string.Format(sqlStr, pgino, lotno);
-            ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            loc_from = loc_to;
+            string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
+            DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+            //DataTable ldt = new DataTable();
+            //string sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{0}' with (nolock)";
+            //sqlStr = string.Format(sqlStr, pgino, lotno);
+            //ldt = QadOdbcHelper.GetODBCRows(sqlStr);
 
             if (ldt == null)
             {
@@ -93,10 +94,10 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             else
             {
                 flag = "N"; msg = "";
-                //float qty_c = Convert.ToSingle(ldt.Rows[0][0].ToString());
+                float qty_c = Convert.ToSingle(ldt.Rows[0][0].ToString());
 
-                loc_from = ldt.Rows[0]["ld_loc"].ToString();
-                float qty_c = Convert.ToSingle(ldt.Rows[0]["ld_qty_oh"].ToString());
+                //loc_from = ldt.Rows[0]["ld_loc"].ToString();
+                //float qty_c = Convert.ToSingle(ldt.Rows[0]["ld_qty_oh"].ToString());
 
                 string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}, '{3}'";
                 sql_q = string.Format(sql_q, pgino, lotno, qty_c, need_no);
