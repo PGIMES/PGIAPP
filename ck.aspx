@@ -130,18 +130,26 @@
 
         }
         function sm_ruku_print() {
-            wx.ready(function () {
-                wx.scanQRCode({
-                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                    success: function (res) {
-                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                        // code 在这里面写上扫描二维码之后需要做的内容 
-                        ruku_print_change(result);
 
-                    }
+            $.confirm('确认要补打吗？', function () {
+                //点击确认后的回调函数
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容 
+                            ruku_print_change(result);
+
+                        }
+                    });
                 });
+            }, function () {
+                //点击取消后的回调函数
             });
+
+
         }
         function ruku_print_change(result) {
             $.ajax({
