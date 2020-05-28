@@ -18,6 +18,16 @@
         #UpdatePanel2 .weui-table td, .weui-table th, table td, table th{
             border:none;
         }
+        .icon{
+          font-size: 23px;
+          line-height: 40px;
+          margin: 5px 0;
+          color:#18b4ed;
+          -webkit-transition: font-size 0.25s ease-out 0s;
+          -moz-transition: font-size 0.25s ease-out 0s;
+          transition: font-size 0.25s ease-out 0s;
+
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -59,6 +69,14 @@
                 //var result = "P0577AA|300|003789";
                 //$('#xbq_con').val(result);
                 //xbq_change(result);
+            });
+        }
+
+        function del_xbq() {
+            $.confirm('确认要清空已扫标签吗？', function () {
+                $("#<%=btn_bind_data_c.ClientID%>").click(); 
+            }, function () {
+                //点击取消后的回调函数
             });
         }
 
@@ -162,6 +180,7 @@
                 <asp:Label ID="lbl_bq" class="weui-form-preview__label" runat="server" Text=""></asp:Label>
                 <asp:TextBox ID="xbq_con" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <img id="img_sm_xbq" src="../img/fdj2.png"/>
+                <span class="icon icon-26" onclick="del_xbq();"></span>
             </div>
         </div>
 
@@ -192,6 +211,7 @@
             </asp:GridView>
 
             <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_Click"/>
+            <asp:Button ID="btn_bind_data_c" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_c_Click"/>
         </ContentTemplate>
         </asp:UpdatePanel>
 

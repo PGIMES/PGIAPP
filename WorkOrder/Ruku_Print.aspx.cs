@@ -69,11 +69,13 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         GridView1.DataBind();
 
         string msg = "";
-        if (dt.Rows.Count > 0)
+        if (dt != null)
         {
-            msg = "已扫箱数:<font color=#10AEFF>" + dt.Rows.Count.ToString() + "</font>已扫数量:<font color=#10AEFF>" + dt.Compute("Sum(qty)", "true").ToString()+ "</font>";
+            if (dt.Rows.Count > 0)
+            {
+                msg = "已扫箱数:<font color=#10AEFF>" + dt.Rows.Count.ToString() + "</font>已扫数量:<font color=#10AEFF>" + dt.Compute("Sum(qty)", "true").ToString() + "</font>";
+            }
         }
-        
         if (para == "1")
         {
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#lbl_bq').html('" + msg + "');setTimeout(function(){ $('#img_sm_xbq').click(); }, 500);", true); 
@@ -155,6 +157,12 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         ViewState["xbq_data"] = dt;
 
         bind_gv("1");
+    }
+
+    protected void btn_bind_data_c_Click(object sender, EventArgs e)
+    {
+        ViewState["xbq_data"] = null;
+        bind_gv("2");
     }
 
     protected void btnsave_Click(object sender, EventArgs e)
