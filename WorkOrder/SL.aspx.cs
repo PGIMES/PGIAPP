@@ -79,7 +79,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
 
             //DataTable ldt = new DataTable();
-            //string sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{0}' with (nolock)";
+            //string sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{1}' with (nolock)";
             //sqlStr = string.Format(sqlStr, pgino, lotno);
             //ldt = QadOdbcHelper.GetODBCRows(sqlStr);
 
