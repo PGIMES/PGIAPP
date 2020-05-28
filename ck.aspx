@@ -155,7 +155,7 @@
             $.ajax({
                 type: "post",
                 url: "ck.aspx/ruku_print_change",
-                data: "{'result':'" + result + "'}",
+                data: "{'result':'" + result + "','emp':'" + $("#emp_code_name").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -175,6 +175,8 @@
 <body>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> 
     <form id="form1" runat="server">
+
+        <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <div class="page-bd">
             <div class="weui-cells">

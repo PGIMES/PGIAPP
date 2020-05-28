@@ -14,6 +14,12 @@ public partial class ck : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         bind_data();
+
+        if (!IsPostBack)
+        {
+            LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
+            emp_code_name.Text = lu.WorkCode + lu.UserName;
+        }
     }
 
     public void bind_data()
@@ -59,11 +65,11 @@ public partial class ck : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ruku_print_change(string result)
+    public static string ruku_print_change(string result, string emp)
     {
 
-        string re_sql = @"exec [usp_app_Ruku_Print_again] '{0}'";
-        re_sql = string.Format(re_sql, result);
+        string re_sql = @"exec [usp_app_Ruku_Print_again] '{0}','{1}'";
+        re_sql = string.Format(re_sql, result, emp);
         DataSet ds = SQLHelper.Query(re_sql);
 
         DataTable re_dt = ds.Tables[0];
