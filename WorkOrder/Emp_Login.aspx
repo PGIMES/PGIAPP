@@ -39,6 +39,14 @@
             $("#<%=btn_bind_data.ClientID%>").click();
         }
 
+        $(function(){
+            $("#e_code").keyup(function (e) {
+                if (($("#e_code").val()).length >= 5) {
+                    e_code_change();
+                }
+            });
+        });
+
     </script>
     <script>
         $.ajax({
@@ -124,7 +132,7 @@
                 <div class="weui-cell__hd f-red"><label class="weui-label">当前岗位</label></div>
                 <div class="weui-cell__bd">
                     <span style="float:left; width:90%">
-                        <asp:TextBox ID="e_code" class="weui-input" runat="server" placeholder="请输入当前设备" onkeyup="this.value=this.value.toUpperCase()" onchange="e_code_change()"></asp:TextBox> 
+                        <asp:TextBox ID="e_code" class="weui-input" runat="server" placeholder="请输入当前设备" onkeyup="this.value=this.value.toUpperCase()" ></asp:TextBox> <%--onchange="e_code_change()"--%>
                     </span>
                     <span style="float:left; width:10%">
                         <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
