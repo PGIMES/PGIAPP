@@ -62,28 +62,32 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         return result;
 
     }
-    public void bind_gv()
+    public void bind_gv(string para)
     {
         DataTable dt = (DataTable)ViewState["xbq_data"];
         GridView1.DataSource = dt;
         GridView1.DataBind();
+
+        string msg = "";
+        if (dt.Rows.Count > 0)
+        {
+            msg = "已扫箱数:<font color=#10AEFF>" + dt.Rows.Count.ToString() + "</font>已扫数量:<font color=#10AEFF>" + dt.Compute("Sum(qty)", "true").ToString()+ "</font>";
+        }
+        
+        if (para == "1")
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#lbl_bq').html('" + msg + "');setTimeout(function(){ $('#img_sm_xbq').click(); }, 500);", true); 
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#lbl_bq').html('" + msg + "');", true);
+        }
+        
     }
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         this.GridView1.PageIndex = e.NewPageIndex;
-        bind_gv();
-    }
-
-    protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        DataTable dt = (DataTable)ViewState["xbq_data"];
-        for (int i = dt.Rows.Count - 1; i >= 0; i--)
-        {
-            if (GridView1.DataKeys[e.RowIndex].Value.ToString() == dt.Rows[i]["num"].ToString()) { dt.Rows.RemoveAt(i); }
-        }
-
-        ViewState["xbq_data"] = dt;
-        bind_gv();
+        bind_gv("2");
     }
 
     protected void btn_bind_data_Click(object sender, EventArgs e)
@@ -92,7 +96,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         string[] arr_xbq_con = _xbq_con.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
         if (arr_xbq_con.Length != 3)
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('标签" + _xbq_con + "格式不正确',{},function(index){layer.close(index);	$('#img_sm_xbq').click();})", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('标签" + _xbq_con + "格式不正确',{},function(index){layer.close(index); $('#img_sm_xbq').click();});", true);
             return;
         }
         string _pgino = arr_xbq_con[0].ToString();
@@ -104,6 +108,12 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('物料号" + _pgino + "不正确',{},function(index){layer.close(index);$('#img_sm_xbq').click();});", true);
             return;
         }
+        int _serialno_tmp;
+        if (!int.TryParse(_serialno, out _serialno_tmp))
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('数量" + _serialno + "不是整数类型',{},function(index){layer.close(index);$('#img_sm_xbq').click();});", true);
+            return;
+        }
 
         DataTable dt = (DataTable)ViewState["xbq_data"];
         DataRow[] drs;
@@ -113,14 +123,14 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
             dt.Columns.Add("num", typeof(Int32));
             dt.Columns.Add("pgino", typeof(string));
             dt.Columns.Add("serialno", typeof(string));
-            dt.Columns.Add("qty", typeof(string));
+            dt.Columns.Add("qty", typeof(int));
         }
         else
         {
             drs = dt.Select("pgino='" + _pgino + "' and serialno='" + _serialno + "'");
             if (drs.Length != 0)
             {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('标签" + _xbq_con + "已存在',{},function(index){layer.close(index);$('#img_sm_xbq').click();})", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('标签" + _xbq_con + "已存在',{},function(index){layer.close(index);$('#img_sm_xbq').click();});", true);
                 return;
             }
         }
@@ -144,8 +154,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         dt.Rows.Add(dr);
         ViewState["xbq_data"] = dt;
 
-        bind_gv();
-        ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#img_sm_xbq').click();", true);
+        bind_gv("1");
     }
 
     protected void btnsave_Click(object sender, EventArgs e)

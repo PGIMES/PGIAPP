@@ -39,18 +39,6 @@
         });
 
         $(function () {
-            $('.collapse .js-category').click(function () {
-                $parent = $(this).parent('li');
-                if ($parent.hasClass('js-show')) {
-                    $parent.removeClass('js-show');
-                    $(this).children('i').removeClass('icon-35').addClass('icon-74');
-                } else {
-                    $parent.siblings().removeClass('js-show');
-                    $parent.addClass('js-show');
-                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
-                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
-                }
-            });
             sm_xbq();
         });
 
@@ -169,68 +157,46 @@
             </div>
         </div>
 
-        <ul class="collapse">
-            <li id="li_cz_one">
-                <div class="weui-flex js-category">
-                    <div class="weui-flex__item" >
-                        <label class="weui-form-preview__label">标签</label>
-                    </div>
-                    <label class="weui-form-preview__label">
-                        <span id="sp_cz"></span>
-                    </label>
-                    <i class="icon icon-74"></i>
-                </div>
-                <div class="page-category js-categoryInner">
-                    <div class="weui-cells page-category-content">
+        <div class="weui-form-preview__hd">
+            <div class="weui-form-preview__item">
+                <asp:Label ID="lbl_bq" class="weui-form-preview__label" runat="server" Text=""></asp:Label>
+                <asp:TextBox ID="xbq_con" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <img id="img_sm_xbq" src="../img/fdj2.png"/>
+            </div>
+        </div>
 
-                        <div class="weui-cells weui-cells_form">
-                            <div class="weui-cell">
-                                <div class="weui-cell__hd"><label class="weui-label">扫码</label></div>  
-                                <span style="float:left; width:90%">
-                                    <asp:TextBox ID="xbq_con" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>
-                                </span>
-                                <span style="float:left; width:10%;">
-                                    <img id="img_sm_xbq" src="../img/fdj2.png" style="padding-top:10px;"/>
-                                </span>                     
-                            </div>
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional" style="display:none;">
+        <ContentTemplate>
+            <asp:GridView ID="GridView1" 
+                    AllowMultiColumnSorting="True" AllowPaging="True"
+                    AllowSorting="True" AutoGenerateColumns="False"
+                    OnPageIndexChanging="GridView1_PageIndexChanging" DataKeyNames="num"
+                    runat="server" Font-Size="Small" Width="96%" style="margin-left:2%; margin-right:2%;" PageSize="5" BorderStyle="None"  BorderWidth="0"
+                    CellPadding="4" ForeColor="#999999" GridLines="Horizontal">
+                <FooterStyle BackColor="#CCCC99" ForeColor="#999999" />
+                <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
+                <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
+                <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#ffffff" Font-Bold="True" ForeColor="#999999" HorizontalAlign="Center" />
 
-                            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-                            <ContentTemplate>
-                                <asp:GridView ID="GridView1" 
-                                        AllowMultiColumnSorting="True" AllowPaging="True"
-                                        AllowSorting="True" AutoGenerateColumns="False"
-                                        OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="num"
-                                        runat="server" Font-Size="Small" Width="96%" style="margin-left:2%; margin-right:2%;" PageSize="5" BorderStyle="None"  BorderWidth="0"
-                                        CellPadding="4" ForeColor="#999999" GridLines="Horizontal">
-                                    <FooterStyle BackColor="#CCCC99" ForeColor="#999999" />
-                                    <PagerSettings FirstPageText="首页" LastPageText="尾页" NextPageText="下页" PreviousPageText="上页" />
-                                    <PagerStyle ForeColor="Black" BackColor="White" HorizontalAlign="Right" />
-                                    <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                                    <HeaderStyle BackColor="#ffffff" Font-Bold="True" ForeColor="#999999" HorizontalAlign="Center" />
+                <Columns>  
+                    <asp:BoundField DataField="num" HeaderText="行" ReadOnly="True"  ItemStyle-Width="25%"/>
+                    <asp:BoundField DataField="pgino" HeaderText="物料号" ReadOnly="True" ItemStyle-Width="25%" />
+                    <asp:BoundField DataField="serialno" HeaderText="Serial No" ReadOnly="True" ItemStyle-Width="25%" />
+                    <asp:BoundField DataField="qty" HeaderText="QTY" ReadOnly="True" ItemStyle-Width="25%" />
+                </Columns>
+                <SortedAscendingCellStyle BackColor="#F7F7F7" />
+                <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+                <SortedDescendingCellStyle BackColor="#E5E5E5" />
+                <SortedDescendingHeaderStyle BackColor="#242121" />
+            </asp:GridView>
 
-                                    <Columns>  
-                                        <asp:BoundField DataField="num" HeaderText="行" ReadOnly="True"  ItemStyle-Width="15%"/>
-                                        <asp:BoundField DataField="pgino" HeaderText="物料号" ReadOnly="True" ItemStyle-Width="25%" />
-                                        <asp:BoundField DataField="serialno" HeaderText="Serial No" ReadOnly="True" ItemStyle-Width="25%" />
-                                        <asp:BoundField DataField="qty" HeaderText="QTY" ReadOnly="True" ItemStyle-Width="20%" />
-                                        <asp:CommandField HeaderText="" ShowDeleteButton="True" ItemStyle-Width="15%" />
-                                    </Columns>
-                                    <SortedAscendingCellStyle BackColor="#F7F7F7" />
-                                    <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
-                                    <SortedDescendingCellStyle BackColor="#E5E5E5" />
-                                    <SortedDescendingHeaderStyle BackColor="#242121" />
-                                </asp:GridView>
+            <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_Click"/>
+        </ContentTemplate>
+        </asp:UpdatePanel>
 
-                                <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_Click"/>
-                            </ContentTemplate>
-                            </asp:UpdatePanel>
 
-                        </div>
-
-                    </div>
-                </div>                            
-            </li>
-        </ul>
+                   
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="weui-cell">
