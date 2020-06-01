@@ -68,12 +68,12 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string qty = "", loc_from = "", loc_to = "";
+        string qty = "", loc_from = "", loc_to = "", pgino_yn = "";
         if (flag == "N")
         {
             DataTable dt = ds.Tables[1];
             loc_to = dt.Rows[0][0].ToString();
-            string pgino_yn = ds.Tables[2].Rows[0][0].ToString();
+            pgino_yn = ds.Tables[2].Rows[0][0].ToString();
 
             DataTable ldt = new DataTable();
             string sqlStr = "";
@@ -120,7 +120,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             }
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\",\"loc_from\":\"" + loc_from + "\",\"loc_to\":\"" + loc_to + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\",\"loc_from\":\"" + loc_from + "\",\"loc_to\":\"" + loc_to + "\",\"pgino_yn\":\"" + pgino_yn + "\"}]";
         return result;
 
     }
@@ -190,6 +190,40 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string sure2(string _emp_code_name, string need_no, string lotno, string act_qty, string pgino, string pn
+        , string comment, string loc_from, string loc_to, string sku_area, string pgino_yn)
+    {
+        string flag = "N", msg = "";
+
+        string re_sql = @"exec [usp_app_SL] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+        re_sql = string.Format(re_sql, _emp_code_name, need_no, lotno, act_qty, pgino, pn, comment, loc_from, loc_to, sku_area);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+    [WebMethod]
+    public static string cancel2(string _emp_code_name, string need_no)
+    {
+        string flag = "N", msg = "";
+
+        string re_sql = @"exec [usp_app_SL_cancel] '{0}', '{1}'";
+        re_sql = string.Format(re_sql, _emp_code_name, need_no);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+
+
+    /*
     protected void btn_sl_Click(object sender, EventArgs e)
     {
         btn_sl.Text = "送料中。。。。"; btn_sl.Enabled = false;
@@ -234,5 +268,5 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
     }
-
+    */
 }

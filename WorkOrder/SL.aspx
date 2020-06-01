@@ -70,9 +70,9 @@
             return true;
          }
 
-         function valid_cancel() {
-             return confirm('确认要【取消要料】吗？');
-         }
+         //function valid_cancel() {
+         //    return confirm('确认要【取消要料】吗？');
+         //}
 
     </script>
 
@@ -104,11 +104,13 @@
                         $('#txt_sy_qty').val($('#cur_sy_qty').val());
                         $('#loc_from').val("");
                         $('#loc_to').val("");
+                        $('#pgino_yn').val("");
                     } else {
                         $('#act_qty').val(obj[0].qty);
                         $('#txt_sy_qty').val(parseFloat($('#cur_sy_qty').val() == "" ? "0" : $('#cur_sy_qty').val()) - parseFloat(obj[0].qty == "" ? "0" : obj[0].qty));
                         $('#loc_from').val(obj[0].loc_from);
                         $('#loc_to').val(obj[0].loc_to);
+                        $('#pgino_yn').val(obj[0].pgino_yn);
                     }
 
                     return;
@@ -119,6 +121,93 @@
 
         $(function () {
             sm_lotno();
+
+            $("#btn_sl2").click(function () {
+                $("#btn_sl2").attr("disabled", "disabled");
+                $("#btn_sl2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $("#btn_cancel2").attr("disabled", "disabled");
+                $("#btn_cancel2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if (!valid_sl()) {
+                    $("#btn_sl2").removeAttr("disabled");
+                    $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    $("#btn_cancel2").removeAttr("disabled");
+                    $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "SL.aspx/sure2",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
+                        + "','need_no':'" + "<%= _need_no %>" + "','lotno':'" + $("#lot_no").val() + "','act_qty':'" + $('#act_qty').val()
+                        + "','pgino':'" + $("#pgino").val() + "','pn':'" + $('#pn').val() + "','comment':'" + $('#comment').val()
+                        + "','loc_from':'" + $("#loc_from").val() + "','loc_to':'" + $("#loc_to").val() + "','sku_area':'" + $("#sku_area").val()
+                        + "','pgino_yn':'" + $("#pgino_yn").val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag=="Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sl2").removeAttr("disabled");
+                            $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_cancel2").removeAttr("disabled");
+                            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return;
+                        }
+                        window.location.href = "/workorder/YL_list_new.aspx?workshop=<%=_workshop %>";
+                        
+                    }
+
+                });
+             });
+
+            $("#btn_cancel2").click(function () {
+                $("#btn_sl2").attr("disabled", "disabled");
+                $("#btn_sl2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $("#btn_cancel2").attr("disabled", "disabled");
+                $("#btn_cancel2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $.confirm('确认要【取消要料】吗？', function () {
+                    $.ajax({
+                        type: "post",
+                        url: "SL.aspx/cancel2",
+                        data: "{'_emp_code_name':'" + $('#emp_code_name').val()+ "','need_no':'" + "<%= _need_no %>" + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                        success: function (data) {
+                            var obj = eval(data.d);
+                            if (obj[0].flag == "Y") {
+                                layer.alert(obj[0].msg);
+                                $("#btn_sl2").removeAttr("disabled");
+                                $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                                $("#btn_cancel2").removeAttr("disabled");
+                                $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                                return;
+                            }
+                            window.location.href = "/workorder/YL_list_new.aspx?workshop=<%=_workshop %>";
+
+                        }
+
+                    });
+                }, function () {
+                    //点击取消后的回调函数
+                    $("#btn_sl2").removeAttr("disabled");
+                    $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    $("#btn_cancel2").removeAttr("disabled");
+                    $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                });
+            });
+
         });
 
         function sm_lotno() {
@@ -281,6 +370,7 @@
                 <asp:TextBox ID="act_qty" class="weui-input" placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 <asp:TextBox ID="loc_from" class="weui-input" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="loc_to" class="weui-input" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="pgino_yn" class="weui-input" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
@@ -299,10 +389,12 @@
             </div>
 
             <div class="weui-cell">
-                <asp:Button ID="btn_sl" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false" 
-                    Text="送料" OnClick="btn_sl_Click" OnClientClick="if(!valid_sl()){return false;}this.disabled=false;this.value='处理中…';" /> <%--OnClientClick="return valid_sl();"--%>
-                    <asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" 
-                    Text="取消要料" OnClick="btn_cancel_Click" OnClientClick="return valid_cancel();" style="margin-left:10px;"/>
+                <%--<asp:Button ID="btn_sl" class="weui-btn weui-btn_primary" runat="server" UseSubmitBehavior="false" 
+                    Text="送料" OnClick="btn_sl_Click" OnClientClick="if(!valid_sl()){return false;}this.disabled=false;this.value='处理中…';" />--%> <%--OnClientClick="return valid_sl();"--%>
+                    <%--<asp:Button ID="btn_cancel" class="weui-btn weui-btn_primary" runat="server" 
+                    Text="取消要料" OnClick="btn_cancel_Click" OnClientClick="return valid_cancel();" style="margin-left:10px;"/>--%>
+                <input id="btn_sl2" type="button" value="送料" class="weui-btn weui-btn_primary" />
+                <input id="btn_cancel2" type="button" value="取消要料" class="weui-btn weui-btn_primary" style="margin-left:10px;" />
             </div>
 
         </div>
