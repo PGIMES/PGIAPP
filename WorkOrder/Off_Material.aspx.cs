@@ -16,8 +16,8 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh =  Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -39,7 +39,7 @@ public partial class Off_Material : System.Web.UI.Page
         {
             ViewState["STEPVALUE"] = "";
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text =  lu.WorkCode;
+            txt_emp.Text = lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -48,7 +48,7 @@ public partial class Off_Material : System.Web.UI.Page
 
     public void ShowValue(string WorkCode)
     {
- 
+        string pgino = "";
         string sql_str = @"exec usp_app_off_material_Sel_xmh '{0}','{1}','{2}'";
         sql_str = string.Format(sql_str, "", WorkCode, _workshop);
         DataTable dt = SQLHelper.Query(sql_str).Tables[0];
@@ -65,12 +65,28 @@ public partial class Off_Material : System.Web.UI.Page
            
         }
 
+        string sql_his = "select top 1 pgino   from [dbo].[Mes_App_WorkOrder_History] where workorder='{0}'";
+        sql_his = string.Format(sql_his, txt_dh.Text);
+        DataTable dt_his = SQLHelper.Query(sql_his).Tables[0];
+        if (dt_his.Rows.Count > 0)
+        {
+            pgino = dt_his.Rows[0]["pgino"].ToString();
+
+            if (!txt_xmh.Items.Contains(new ListItem(pgino)))
+            {
+                btnsave.Attributes.Add("disabled", "disabled");
+                btnzc.Attributes.Add("disabled", "disabled");
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('请上岗" + pgino + "岗位');", true);
+                return;
+            }
+        }
+
     }
 
 
-   
 
-   
+
+
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
@@ -184,7 +200,7 @@ public partial class Off_Material : System.Web.UI.Page
     {
 
         string result = "";
-        string re_sql = @"exec [usp_app_off_num] '{0}',''";
+        string re_sql = @"exec [usp_app_off_num_ver] '{0}',''";
         re_sql = string.Format(re_sql, workorder);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         result = Newtonsoft.Json.JsonConvert.SerializeObject(re_dt);
@@ -203,12 +219,17 @@ public partial class Off_Material : System.Web.UI.Page
         }
         string script = "";
         string dh_source = "";
+        string sql = "";
         txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
-      
-      
-
-        string sql = @"exec usp_app_down_material '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
-        if(dh_record.Text.Contains(","))
+        if (double.Parse(txt_curr_qty.Text) <= 0)
+        {
+            sql = @"exec usp_app_down_material_recover '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        }
+        else
+        { 
+         sql = @"exec usp_app_down_material_ver '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        }
+        if (dh_record.Text.Contains(","))
         { dh_source = dh_record.Text.Substring(1, dh_record.Text.Length - 1); }
         sql = string.Format(sql, txt_dh.Text, txt_emp.Text, txt_xmh.SelectedItem.Text, txt_pn.Text, txt_curr_qty.Text,btn, dh_source, Request.Form["step"], txt_remark.Value);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
@@ -217,17 +238,7 @@ public partial class Off_Material : System.Web.UI.Page
 
         if (flag == "N")
         {
-            //if (btn== "暂存")
-            //{ 
-            //    script = "$('#txt_curr_qty').val('')";
-            //}
-            //else
-            //{
-            //    script = "$('input[type =text]').val('');";
-              
-            //}
-
-           // bind_gv();
+           
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('" + btn + "完成');window.location.href='/Cjgl1.aspx?workshop=" + _workshop + "'", true);
         }
         else
@@ -276,13 +287,14 @@ public partial class Off_Material : System.Web.UI.Page
             DataTable dtnew = GetAll();
             Repeater_lotno.DataSource = dtnew;
             Repeater_lotno.DataBind();
-            string strsql = @"exec usp_app_off_num '{0}','{1}'";
+            string strsql = @"exec usp_app_off_num_ver '{0}','{1}'";
             strsql = string.Format(strsql, txt_dh.Text, txt_xmh.SelectedValue);
             DataTable dt2 = SQLHelper.Query(strsql).Tables[0];
 
             txt_off_qty.Text = dt2.Rows[0]["off_qty"].ToString();
             txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
             ViewState["STEPVALUE"] = dt2.Rows[0]["step"].ToString();
+            txt_step.Text= dt2.Rows[0]["step"].ToString();
             DataTable dt_record = SQLHelper.Query(strsql).Tables[1];
             if (dt_record.Rows.Count > 0)
             {
@@ -295,6 +307,7 @@ public partial class Off_Material : System.Web.UI.Page
     protected void btn_bind_xm_Click(object sender, EventArgs e)
     {
         Bind_reperter();
+      
 
     }
 

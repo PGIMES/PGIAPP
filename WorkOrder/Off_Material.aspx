@@ -59,16 +59,16 @@
                 return false;
             }
 
-           
-
-            return true;
+           // $("#btnzc").prop("disabled", "disabled").text("处理中…");
+            $("input[id*=btnzc]").addClass("disabled").text("处理中…");
+            //return true;
         }
 
         function valid() {
-            if ($("#txt_curr_qty").val() == "" || $("#txt_curr_qty").val() <= "0") {
-                alert("本次下料数量必须大于0.");
-                return false;
-            }
+            //if ($("#txt_curr_qty").val() == "" || $("#txt_curr_qty").val() <= "0") {
+            //    alert("本次下料数量必须大于0.");
+            //    return false;
+            //}
 
             if ($("#txt_xmh").val() == "")
             {
@@ -189,11 +189,11 @@
                                     $("select#txt_xmh option[value='" + item.pgino + "']").attr('selected', 'true');
                                     $("#txt_xmh").val(item.pgino).css("color", "gray");
                                     $("#txt_step").val(item.step);
-                                    $("#g1").prop("checked", item.stepvalue == "终检" ? true : false);
-                                    $("#g2").prop("checked", item.stepvalue == "GP12" ? true : false);
-                                    $("#g3").prop("checked", item.stepvalue == "入库" ? true : false);
+                                    $("#txt_cz").val(item.cz);
+                                   // alert(item.step);
                                     xmh_change();
-                                   $("#txt_xmh").val(item.pgino).attr("disabled", "disabled");
+                                    $("#txt_xmh").val(item.pgino).attr("disabled", "disabled");
+                                    setvalue();
                                 }
                             })
                            
@@ -203,6 +203,18 @@
                     
                 });
         }
+
+           function setvalue() {
+               debugger
+               $("#g1").prop("checked", $("#txt_step").val() == "终检" ? true : false);
+               $("#g2").prop("checked", $("#txt_step").val() == "GP12" ? true : false);
+               $("#g3").prop("checked", $("#txt_step").val() == "入库" ? true : false);
+               if ($("#txt_cz").val() == "Y") {
+                   $("#g1").prop("disabled", "disabled");
+                   $("#g2").prop("disabled", "disabled");
+                   $("#g3").prop("disabled", "disabled");
+               }
+           }
 
 
           function sm_source() {
@@ -243,6 +255,7 @@
                     //$("#txt_xmh").attr("disabled", "disabled");
                     page_show();
                     sm_source();
+                    setvalue();
                 });
             </script>
              <asp:TextBox ID="ps_part" class="weui-input" placeholder="" Style="max-width: 100%; display:none" runat="server" ></asp:TextBox>
@@ -264,7 +277,8 @@
                        <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox>
                         <asp:TextBox ID="txt_ztsl" class="weui-input"  placeholder="" Style="max-width: 100%; "  runat="server" ></asp:TextBox>
                            <asp:TextBox ID="dh_record" class="weui-input"  placeholder="" Style="max-width: 100%; "  runat="server" ></asp:TextBox>
-                          <asp:TextBox ID="txt_step" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                         <asp:TextBox ID="txt_cz" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                         <asp:TextBox ID="txt_step" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
@@ -375,7 +389,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="maintain_type"  id="g1" value="终检" type="radio"  />  <%--<%= ViewState["STEPVALUE"].ToString()=="终检"?"checked":"" %>--%>
+                                             <input class="weui-form-checkbox" name="step"  id="g1" value="终检" type="radio"  />   <%--<%= ViewState["STEPVALUE"].ToString()=="终检"?"checked":"" %>--%>
                                              <label for="g1">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -388,7 +402,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="maintain_type"  id="g2" value="GP12" type="radio"  /> <%-- <%= ViewState["STEPVALUE"].ToString()=="GP12"?"checked":"" %>--%>
+                                             <input class="weui-form-checkbox" name="step"  id="g2" value="GP12" type="radio" />   <%--<%= ViewState["STEPVALUE"].ToString()=="GP12"?"checked":"" %>--%>
                                              <label for="g2" class="middle">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -401,7 +415,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="maintain_type"  id="g3" value="入库" type="radio"  /> <%-- <%= ViewState["STEPVALUE"].ToString()=="入库"?"checked":"" %>--%>
+                                             <input class="weui-form-checkbox" name="step"  id="g3" value="入库" type="radio"  />  <%--<%= ViewState["STEPVALUE"].ToString()=="入库"?"checked":"" %>--%>
                                              <label for="g3" class="middle">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -520,9 +534,9 @@
               <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" style="display:none;" OnClick="btn_bind_data_Click"/>
                
                  <div class="weui-cell">
-                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" UseSubmitBehavior="false" runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="if(!zcvalid()){return false;}this.disabled=false;this.value='处理中…';" /> 
+                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="return  zcvalid();" /> 
                   <%-- <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       --%>
-                   <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" UseSubmitBehavior="false" runat="server" Text="下料" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
+                   <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="下料" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
                 </div>
                
 
