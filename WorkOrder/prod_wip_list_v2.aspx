@@ -63,10 +63,31 @@
                 }
             });
 
+            $("#search").keyup(function () {
+                so();
+            })
 
+           // showlinesCount();
         })
 
- 
+        function so() {
+            var val =  $("#search").val().toUpperCase();
+            if (val != "") {
+                $("a").addClass("hide");                
+                $("a").filter("[title*='" + val + "']").removeClass("hide");
+                $(".LH").filter().addClass("hide");
+            }
+            else {
+                $("a").removeClass("hide");
+            }
+        }
+
+        //function showlinesCount() {
+        //    $(".LH").each(function () {
+        //        alert($(this).attr("id"));
+        //    });
+        //}
+
     </script>
 </head>
 <body ontouchstart >
@@ -81,6 +102,7 @@
     </div>
     <form id="form1" runat="server">
         <div class="page">
+            
             <div class="page__bd" id="t2" style="height: 100%;">
                 <div class="weui-tab">
                     <%--<div class="weui-navbar hide">
@@ -91,29 +113,36 @@
                             我的生产
                         </div>
                     </div>--%>
-
+                    <div class="weui-search-bar">
+                        <input type="search" class="search-input" id="search" placeholder="关键字:项目号"/><button onclick="so();" class="weui-btn weui-btn_mini weui-btn_primary"><i class="icon icon-4"></i></button>
+                    </div>
                     <div class="weui-tab__panel" style="background-color: lightgray">
                         <%--==生产监视==--%>
                         <div id="tab1" class="weui-tab__content">
                             <%----生产中-----%>
                              <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 生 产 中<asp:Label ID="Label1" runat="server" Text=""></asp:Label></div>
+                                <%
+                                    System.Data.DataTable dt_line = ViewState["dt_data_1"] as System.Data.DataTable;
+                                    int rowscount = dt_line.Rows.Count;
+                                %>
+                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 生 产 中<span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span></div>
                                 <div class="weui-cells" >                                    
                                      <%
-                                         System.Data.DataTable dt_line = ViewState["dt_data_1"] as System.Data.DataTable;
                                          System.Data.DataView dataView = dt_line.DefaultView;
                                          System.Data.DataTable dtLineDistinct = dataView.ToTable(true,"line");
                                          foreach(System.Data.DataRow drLine in dtLineDistinct.Rows)
                                          {
                                             string line = drLine["line"].ToString();
-                                          %>
-                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%=line %></div>                                               
+
+                                      %>
+                                            <div class="weui-cells__title LH" id="1<%=line %>"><i class="icon nav-icon icon-22 color-success"></i><%=line %>
+                                                <span class="weui-badge  bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_1"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span></div>                                               
                                              <%                                                  
                                                  System.Data.DataTable dt = ViewState["dt_data_1"] as System.Data.DataTable;                                                
                                                  foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'")) {
                                                      if (dr["ispartof"].ToString() == "部分")
                                                      { %> 
-                                                    <a class="weui-cell  weui-cell_access" href="prod_end_detail.aspx?type=workorder_part&dh=<%=dr["need_no"] %>">
+                                                    <a class="weui-cell  weui-cell_access" prop-line="1<%=line %>" title="<%=dr["part"] %>" href="prod_end_detail.aspx?type=workorder_part&dh=<%=dr["need_no"] %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -139,12 +168,11 @@
                                                             <span class="weui-agree__text">时长:<font class="f-blue"> <%=dr[ "times"] %></font>
                                                             </span>
                                                         </div>
-                                                        <div class="weui-cell__ft">
-                                                            
+                                                        <div class="weui-cell__ft">                                                            
                                                         </div>
                                                     </a>
                                                 <% } else {%>                                                    
-                                                    <a class="weui-cell weui-cell_access"  href="prod_wip_detail.aspx?need_no=<%=dr["need_no"]%>&ngqty=<%=dr["ng_qty"]%>&wipqty=<%=dr["wip_qty"]%>&type=lot&dh=<%=dr["lot_no"] %>&workshop=<%=_workshop %>&para=Y">
+                                                    <a class="weui-cell weui-cell_access" line="<%=line %>"  title="<%=dr["part"] %>" href="prod_wip_detail.aspx?need_no=<%=dr["need_no"]%>&ngqty=<%=dr["ng_qty"]%>&wipqty=<%=dr["wip_qty"]%>&type=lot&dh=<%=dr["lot_no"] %>&workshop=<%=_workshop %>&para=Y">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -170,23 +198,27 @@
                             </div> 
                             <%----待终检-----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 待 终 检<asp:Label ID="Label2" runat="server" Text=""></asp:Label></div>
+                            <%
+                                dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
+                                rowscount = dt_line.Rows.Count;
+                                %>
+                                
+                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 待 终 检<span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span></div>
                                 <div class="weui-cells">
-                                    <%
-                                         dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
-                                         dataView = dt_line.DefaultView;
+                                   
+                                         <%dataView = dt_line.DefaultView;
                                          dtLineDistinct = dataView.ToTable(true,"line");
                                          foreach(System.Data.DataRow drLine in dtLineDistinct.Rows)
                                          {
                                             string line = drLine["line"].ToString();
                                           %>
-                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%=line %></div>
+                                            <div class="weui-cells__title  LH"><i class="icon nav-icon icon-22 color-success"></i><%=line %><span class="weui-badge  bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_2"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span></div>
                                             <%                                                  
                                                  System.Data.DataTable dt = ViewState["dt_data_2"] as System.Data.DataTable;                                                
                                                  foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'")) {
                                                      if (dr["ispartof"].ToString() != "部分")
                                                      { %> 
-                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="javacript:void(0)">
+                                                    <a class="weui-cell  weui-cell_access " title="<%=dr["pgino"] %>" style="color: black" href="prod_qcc_wait_detail.aspx?dh=<%=dr["workorder"] %>&type=0&ngqty=<%=dr["ng_qty"] %>&waitqty=<%=dr["wait_qty"] %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -221,7 +253,7 @@
                                                         </div>
                                                     </a>
                                                 <% } else {%> 
-                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="javacript:void(0)">
+                                                    <a class="weui-cell  weui-cell_access "  title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["qc_dh"] %>&type=0">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -257,23 +289,27 @@
                             </div> 
                             <%----待GP12-----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 待 GP12 <asp:Label ID="Label5" runat="server" Text=""></asp:Label></div>
+                                <%
+                                dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
+                                rowscount = dt_line.Rows.Count;
+                                %>
+                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 待 GP12<span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span></div>
                                 <div class="weui-cells">
                                     <%
-                                         dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
+                                          
                                          dataView = dt_line.DefaultView;
                                          dtLineDistinct = dataView.ToTable(true,"line");
                                          foreach(System.Data.DataRow drLine in dtLineDistinct.Rows)
                                          {
                                             string line = drLine["line"].ToString();
                                           %>
-                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%=line %></div>
+                                            <div class="weui-cells__title  LH"><i class="icon nav-icon icon-22 color-success"></i><%=line %><span class="weui-badge  bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_3"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span></div>
                                             <%                                                  
-                                                 System.Data.DataTable dt = ViewState["dt_data_2"] as System.Data.DataTable;                                                
+                                                 System.Data.DataTable dt = ViewState["dt_data_3"] as System.Data.DataTable;                                                
                                                  foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'")) {
                                                      if (dr["ispartof"].ToString() != "部分")
                                                      { %> 
-                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="javacript:void(0)">
+                                                    <a class="weui-cell  weui-cell_access "  title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_wait_detail.aspx?dh=<%=dr["workorder"] %>&type=9&ngqty=<%=dr["ng_qty"] %>&waitqty=<%=dr["wait_qty"] %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -308,7 +344,7 @@
                                                         </div>
                                                     </a>
                                                 <% } else {%> 
-                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="javacript:void(0)">
+                                                    <a class="weui-cell  weui-cell_access "  title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["qc_dh"] %>&type=9">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -343,14 +379,25 @@
                             </div>
                             <%----待入库-----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 待 入 库<asp:Label ID="Label6" runat="server" Text=""></asp:Label></div>
+                                 <%
+                                dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
+                                rowscount = dt_line.Rows.Count;
+                                %>
+                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 待 入 库<span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span></div>
                                 <div class="weui-cells">
-                                    <asp:Repeater ID="DataList4_line" runat="server" OnItemDataBound="DataList4_line_ItemDataBound">
-                                        <ItemTemplate>
-                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%#((string)Container.DataItem) %></div>
-                                            <asp:Repeater ID="DataList4" runat="server">
-                                                <ItemTemplate><%-- prod_end_detail.aspx?type=workorder&dh=<%#Eval("workorder") %>--%>
-                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="<%# (Eval("is_print").ToString()=="未打印"?("/workorder/Ruku_Print.aspx?dh="+ Eval("workorder")):("/workorder/Ruku_hege.aspx?dh="+ Eval("is_print")))+"&workshop="+_workshop+ "&ck=N" %>" >
+                                    <%                                          
+                                         dataView = dt_line.DefaultView;
+                                         dtLineDistinct = dataView.ToTable(true,"line");
+                                         foreach(System.Data.DataRow drLine in dtLineDistinct.Rows)
+                                         {
+                                            string line = drLine["line"].ToString();
+                                          %>
+                                            <div class="weui-cells__title LH"><i class="icon nav-icon icon-22 color-success "></i><%=line %><span class="weui-badge  bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_4"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span></div>
+                                            <%                                                  
+                                                System.Data.DataTable dt = ViewState["dt_data_4"] as System.Data.DataTable;
+                                                foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'"))
+                                                {%>
+                                                    <a class="weui-cell  weui-cell_access "  title="<%=dr["pgino"] %>"  style="color: black" href="<% =( dr["is_print"].ToString()=="未打印"?("/workorder/Ruku_Print.aspx?dh="+ dr["workorder"]):("/workorder/Ruku_hege.aspx?dh="+dr["is_print"]))+"&workshop="+_workshop+ "&ck=N" %>" >
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -358,170 +405,88 @@
                                                         <div class="weui-cell__bd " style="font-size: smaller">
 
                                                             <span class="span_space">
-                                                                <%# DataBinder.Eval(Container.DataItem, "pgino") %> 
+                                                                <%=dr["pgino"] %> 
                                                             </span>
                                                             <span>
-                                                                <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                                                <%=dr["pn"]%>
                                                             </span>
-                                                             <span class="weui-badge   margin20-l  <%# Eval("is_print").ToString()=="未打印"?"bg-blue":"hide"   %> " style=" font-size: x-small; "><%#Eval("is_print") %></span>
+                                                             <span class="weui-badge   margin20-l  <%=dr["is_print"].ToString()=="未打印"?"bg-blue":"hide"   %> " style=" font-size: x-small; "><%=dr["is_print"] %></span>
                                                             <br />
-                                                            <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
+                                                            <span class="span_space">完工单号:<%=dr["workorder"] %>
                                                             </span>
-                                                            <span>完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
+                                                            <span>完工数量:<font color="blue"><%=dr["qty"] %></font>
                                                             </span>
                                                             <br />
                                                             <span class="weui-agree__text span_space">
-                                                                <%#Eval("cellphone") %><%# DataBinder.Eval(Container.DataItem, "Emp_Name") %>
+                                                                <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                             </span>
-                                                            <span class="weui-agree__text"><%# DataBinder.Eval(Container.DataItem, "off_date","{0:MM-dd HH:mm}") %> </span>
-                                                            <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font></span>                                                            
+                                                            <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["off_date"]) %> </span>
+                                                            <span class="weui-agree__text">时长:<font class="f-blue"> <%=dr["times"] %></font></span>                                                            
                                                             
                                                         </div>
                                                         <div class="weui-cell__ft">
                                                         </div>
                                                     </a>
-                                                </ItemTemplate>
-                                            </asp:Repeater>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
+                                                <% } }%> 
                                 </div>
                             </div>
                             <%----入库完成(24小时)-----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 入库完成(24小时内)<asp:Label ID="Label7" runat="server" Text=""></asp:Label></div>
+                                <%
+                                dt_line = ViewState["dt_data_5"] as System.Data.DataTable;
+                                rowscount = dt_line.Rows.Count;
+                                %>
+                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 入库完成(24小时内)<span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span></div>
                                 <div class="weui-cells">
-                                    <asp:Repeater ID="DataList5_line" runat="server" OnItemDataBound="DataList5_line_ItemDataBound">
-                                        <ItemTemplate>
-                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%#((string)Container.DataItem) %></div>
-                                            <asp:Repeater ID="DataList5" runat="server">
-                                                <ItemTemplate>
-                                                    <a class="weui-cell  weui-cell_access " style="color: black" href="javacript:void(0)">
+                                    <%                                          
+                                         dataView = dt_line.DefaultView;
+                                         dtLineDistinct = dataView.ToTable(true,"line");
+                                         foreach(System.Data.DataRow drLine in dtLineDistinct.Rows)
+                                         {
+                                            string line = drLine["line"].ToString();
+                                          %>
+                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%=line %><span class="weui-badge  bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_5"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span></div>
+                                             <%                                                  
+                                                System.Data.DataTable dt = ViewState["dt_data_5"] as System.Data.DataTable;
+                                                foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'"))
+                                                {%>
+                                                    <a class="weui-cell  weui-cell_access "  title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_timeline_info.aspx?dh=<%=dr["dh"] %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="weui-cell__bd " style="font-size: smaller">
-
                                                             <span class="span_space">
-                                                                <%# DataBinder.Eval(Container.DataItem, "pgino") %> 
+                                                                <%=dr["pgino"] %> 
                                                             </span>
                                                             <span>
-                                                                <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                                                <%=dr["pn"] %>
                                                             </span>
-                                                            <span class="span_space">入库单号:<%# DataBinder.Eval(Container.DataItem, "dh") %>
+                                                            <span class="span_space">入库单号:<%=dr["dh"] %>
                                                             <br />
                                                             
-                                                            <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
+                                                            <span class="span_space">完工单号:<%=dr["workorder"] %>
                                                             </span>
-                                                            <span>入库数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "act_qty") %></font>
+                                                            <span>入库数量:<font color="blue"><%=dr["act_qty"] %></font>
                                                             </span>
                                                             <br />
                                                             <span class="weui-agree__text span_space">
-                                                                <%#Eval("cellphone") %><%# DataBinder.Eval(Container.DataItem, "Emp_Name") %>
+                                                                <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                             </span>
-                                                            <span class="weui-agree__text"><%# DataBinder.Eval(Container.DataItem, "ruku_date_hg","{0:MM-dd HH:mm}") %> </span>
-                                                            <%--<span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>--%>
+                                                            <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["ruku_date_hg"]) %> </span>
+                                                            <span class="weui-agree__text">时长:<font class="f-blue"> <%=dr["times"] %></font>
                                                             </span>
                                                         </div>
                                                         <div class="weui-cell__ft">
                                                         </div>
                                                     </a>
-                                                </ItemTemplate>
-                                            </asp:Repeater>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
+                                                 <% } }%> 
                                 </div>
                             </div>
                         </div>
 
 
-                        <%--==我的工单==--%>
-                        <div id="tab2" class="weui-tab__content">
-                            <%----部分完成-----%>
-                            <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 部分完成<asp:Label ID="Label3" runat="server" Text=""></asp:Label></div>
-                                <div class="weui-cells"  >
-                                    <asp:Repeater ID="DataList1_line_my" runat="server" OnItemDataBound="DataList1_line_my_ItemDataBound">
-                                        <ItemTemplate>
-                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22 color-success"></i><%#((string)Container.DataItem) %></div>
-                                    <asp:Repeater ID="DataList1_my" runat="server">
-                                        <ItemTemplate>
-                                            <a class="weui-cell   weui-cell_access " href="prod_end_detail.aspx?type=workorder&dh=<%#Eval("workorder_part") %>">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd f-black" style="font-size: smaller">
-                                                    <span class="span_space">
-                                                        <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
-                                                    </span>
-                                                    <span>
-                                                        <%# DataBinder.Eval(Container.DataItem, "pn") %>
-                                                    </span>
-                                                    <br />
-                                                    <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>
-                                                    </span>
-                                                    <span>完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
-                                                    </span>
-                                                    <br />
-                                                    <span class="weui-agree__text span_space">
-                                                        <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
-                                                    </span>
-                                                    <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
-                                                    </span>
-                                                </div>
-                                                <div class="weui-cell__ft">                                                    
-                                                </div>
-                                            </a>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                    </ItemTemplate>
-                                    </asp:Repeater>  
-                                </div>
-                            </div>
-                            <%----已完成-----%>
-                            <div class="weui-form-preview">
-                                <div class="weui-cells__title "><i class="icon nav-icon icon-49"></i> 生产完成(24小时内)<asp:Label ID="Label4" runat="server" Text=""></asp:Label></div>
-                                <div class="weui-cells"  >
-                                    <asp:Repeater ID="DataList2_line_my" runat="server" OnItemDataBound="DataList2_line_my_ItemDataBound">
-                                        <ItemTemplate>
-                                            <div class="weui-cells__title "><i class="icon nav-icon icon-22  color-success"></i><%#((string)Container.DataItem) %></div>
-                                    <asp:Repeater ID="DataList2_my"  runat="server"  >
-                                        <ItemTemplate>
-                                            <a class="weui-cell  weui-cell_access   " href="prod_end_detail.aspx?type=workorder&dh=<%#Eval("workorder") %>">
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd " style="font-size: smaller">
-                                                    <span class="span_space">
-                                                         <%# DataBinder.Eval(Container.DataItem, "pgino") %>
-                                                    </span>
-                                                    <span>
-                                                        <%# DataBinder.Eval(Container.DataItem, "pn") %>
-                                                    </span>
-                                                    <br />
-                                                    <span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder") %>
-                                                    </span>
-                                                    <span>完工数量:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font>
-                                                    </span>
-                                                    <br />
-                                                    <span class="weui-agree__text span_space">
-                                                        <%# DataBinder.Eval(Container.DataItem, "EmpName") %>
-                                                    </span>
-                                                    <span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>
-                                                    </span>
-                                                </div>
-                                                <div class="weui-cell__ft">                                                    
-                                                </div>
-                                            </a>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                            </ItemTemplate>
-                                    </asp:Repeater>
-                                </div>
-                            </div>
-                        </div>
+                         
                     </div>
                 </div>
             </div>

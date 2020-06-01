@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="prod_end_detail.aspx.cs" Inherits="prod_end_detail" %>
+﻿<%@ Page Language="C#" Title="部分明细" AutoEventWireup="true" CodeFile="prod_qcc_part_detail.aspx.cs" Inherits="prod_qcc_part_detail" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>生产完成明细</title>
+    <title>部分明细</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
     <link rel="stylesheet" href="../css/weui.css" />
     <link rel="stylesheet" href="../css/weuix.css" />
@@ -53,7 +53,7 @@
                 <div class="weui-form-preview">
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">完工单号</label>
+                            <label class="weui-form-preview__label">检验单号</label>
                             <label class="weui-form-preview__"><% ="<font class='tag'/>"+Request["dh"] %></label>
                         </div>
                     </div>
@@ -71,8 +71,8 @@
                                     <span class="weui-form-preview__value"><%# Eval("pn") %> </span>
                                 </div>
                                 <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">完工数量</label>
-                                    <span class="weui-form-preview__value"><%# Eval("par_qty") %> </span>
+                                    <label class="weui-form-preview__label">已检数量</label>
+                                    <span class="weui-form-preview__value"><%# Eval("qty") %> </span>
                                 </div>
                             </ItemTemplate>
                         </asp:Repeater>
@@ -83,7 +83,7 @@
                 <div class="weui-form-preview">
                     <div class="weui-cells__title ">
                        <%-- <i class="icon nav-icon icon-49"></i>--%>
-                        <asp:Label ID="Label1" runat="server" Text="用料明细"></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text="已检明细"></asp:Label>
                     </div>
                     <div class="weui-cells">
                         <asp:Repeater ID="DataList1" runat="server">
@@ -95,23 +95,19 @@
                                     </div>
                                     <div class="weui-cell__bd f-black" style="font-size: smaller">
                                         <span class="span_space">
-                                            <font color="blue"><%# DataBinder.Eval(Container.DataItem, "sku") %></font>
+                                            <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
                                         </span>
                                         <span>
-                                            <%# DataBinder.Eval(Container.DataItem, "sku_descr") %>
-                                        </span>
-                                        <br />
-                                        <%--<span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>--%>
-                                        </span>
-                                        <span>Lot:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "new_lot") %></font></span>
-                                        <span>上料数:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font></span>
-                                        <span>下料数:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "off_qty") %></font></span>
+                                            <%# DataBinder.Eval(Container.DataItem, "pn") %>
+                                        </span>                                                                                 
+                                        </span>                                         
+                                        <span class="margin20-l">已检数:<font class="f-blue"><%# DataBinder.Eval(Container.DataItem, "hege_qty") %></font></span>
                                         <br />
                                         <span class="weui-agree__text span_space">
                                             <%# DataBinder.Eval(Container.DataItem, "Emp_Name") %>
                                         </span>
-                                        <span class="weui-agree__text">上料时间：<%# DataBinder.Eval(Container.DataItem, "on_date","{0:MM-dd HH:mm}") %> </span>
-                                        <span class="weui-agree__text">下料时间：<%# DataBinder.Eval(Container.DataItem, "off_date","{0:MM-dd HH:mm}") %> </span>
+                                        <span class="weui-agree__text">检验时间：<%# DataBinder.Eval(Container.DataItem, "on_date","{0:MM-dd HH:mm}") %> </span>
+                                        
                                         <%--<span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>--%>
                                         </span>
                                     </div>

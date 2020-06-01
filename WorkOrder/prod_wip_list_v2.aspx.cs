@@ -74,11 +74,11 @@ public partial class prod_wip_list_v2 : System.Web.UI.Page
         DataSet ds = SQLHelper.Query(sql);
        // DataTable dt_line = ds.Tables[0];
         DataTable dt_data = ds.Tables[0];
-        ViewState["dt_data"] = dt_data;
-        var rowsline1 = dt_data.AsEnumerable().Select(r => ((string)r["line"]).ToString()).Distinct();
+        ViewState["dt_data_4"] = dt_data;
+        //var rowsline1 = dt_data.AsEnumerable().Select(r => ((string)r["line"]).ToString()).Distinct();
 
-        DataList4_line.DataSource = rowsline1;
-        DataList4_line.DataBind();
+        //DataList4_line.DataSource = rowsline1;
+        //DataList4_line.DataBind();
     }
     //入库完成
     private void BindData5()
@@ -87,11 +87,11 @@ public partial class prod_wip_list_v2 : System.Web.UI.Page
         DataSet ds = SQLHelper.Query(sql);
        // DataTable dt_line = ds.Tables[0];
         DataTable dt_data = ds.Tables[0];
-        ViewState["dt_data"] = dt_data;
-        var rowsline1 = dt_data.AsEnumerable().Select(r => ((string)r["line"]).ToString()).Distinct();
+        ViewState["dt_data_5"] = dt_data;
+        //var rowsline1 = dt_data.AsEnumerable().Select(r => ((string)r["line"]).ToString()).Distinct();
 
-        DataList5_line.DataSource = rowsline1;
-        DataList5_line.DataBind();
+        //DataList5_line.DataSource = rowsline1;
+        //DataList5_line.DataBind();
     }
    
     protected void BindInnerRepeat(RepeaterItemEventArgs e, string innerRepeatId, string viewstateDataTable)
@@ -112,61 +112,8 @@ public partial class prod_wip_list_v2 : System.Web.UI.Page
 
         }
     }
-    //protected void BindInnerContent(RepeaterItemEventArgs e, string innerRepeatId, string viewstateDataTable,string outtable)
-    //{
-    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-    //    {
-    //       //// Repeater detail = (Repeater)e.Item.FindControl(innerRepeatId);
-    //       // // DataRowView item = (DataRowView)e.Item.DataItem;
-    //       // // var line = item["line"].ToString();
+  
 
-    //       // var  line = e.Item.DataItem.ToString();
-    //       // line1 = line;
-    //       // DataTable dt_all = ViewState[viewstateDataTable] as DataTable;
-
-    //       // dt_all.DefaultView.RowFilter = "line='" + line + "'";
-    //       // //dt_all.DefaultView.Sort = " ordertime desc";
-    //       // // detail.DataSource = dt_all;
-    //       // // detail.DataBind();
-    //       // ViewState[outtable] = dt_all;
-    //    }
-    //}
 
      
-    protected void DataList1_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        
-    }
-
-    protected void DataList2_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        BindInnerRepeat(e, "DataList2", "dt_data");
-    }
-
-
-
-    protected void DataList3_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        BindInnerRepeat(e, "DataList3", "dt_data");
-    }
-
-    protected void DataList4_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        BindInnerRepeat(e, "DataList4", "dt_data");
-    }
-
-    protected void DataList5_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        BindInnerRepeat(e, "DataList5", "dt_data");
-    }
-
-    protected void DataList1_line_my_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        BindInnerRepeat(e, "DataList1_my", "dt_part");
-    }
-
-    protected void DataList2_line_my_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        BindInnerRepeat(e, "DataList2_my", "dt_complete");
-    }
 }
