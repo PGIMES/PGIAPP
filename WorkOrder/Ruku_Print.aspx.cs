@@ -14,6 +14,10 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
     public string _dh = "";//仓库接收 扫码进来
     public string _ck = "";//仓库接收 扫码进来  上级菜单是 仓库
 
+    public DataTable dtQC;
+    public DataTable dtGP12;
+    public DataTable dtProd;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["workshop"] != null) { _workshop = Request.QueryString["workshop"].ToString(); }
@@ -31,8 +35,18 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             //emp_code_name.Text = "02432何桂勤";
-
         }
+        GetData();
+    }
+
+    private void GetData()
+    {
+        string sql = string.Format("[usp_app_Ruku_Print_infor] '{0}'", _dh);
+        DataSet ds = SQLHelper.Query(sql);
+      
+        dtGP12 = ds.Tables[0];  //GP12完成       
+        dtQC = ds.Tables[1]; //终检完成        
+        dtProd = ds.Tables[2];//生产完成
     }
 
     [WebMethod]

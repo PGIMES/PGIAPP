@@ -18,7 +18,7 @@
         #UpdatePanel2 .weui-table td, .weui-table th, table td, table th{
             border:none;
         }
-        .icon{
+        #div_bq .icon{
           font-size: 23px;
           line-height: 40px;
           margin: 5px 0;
@@ -27,6 +27,10 @@
           -moz-transition: font-size 0.25s ease-out 0s;
           transition: font-size 0.25s ease-out 0s;
 
+        }
+        .collapse li.js-show .weui-flex {
+            opacity: 1;
+            color: rgb(66, 139, 202);
         }
     </style>
     <script>
@@ -50,6 +54,19 @@
 
         $(function () {
             sm_xbq();
+
+            $('.collapse .js-category').click(function () {
+                $parent = $(this).parent('li');
+                if ($parent.hasClass('js-show')) {
+                    $parent.removeClass('js-show');
+                    $(this).children('i').removeClass('icon-35').addClass('icon-74');
+                } else {
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+                }
+            });
         });
 
         function sm_xbq() {
@@ -175,7 +192,7 @@
             </div>
         </div>
 
-        <div class="weui-form-preview__hd">
+        <div class="weui-form-preview__hd" id="div_bq">
             <div class="weui-form-preview__item">
                 <asp:Label ID="lbl_bq" class="weui-form-preview__label" runat="server" Text=""></asp:Label>
                 <asp:TextBox ID="xbq_con" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
@@ -214,8 +231,6 @@
             <asp:Button ID="btn_bind_data_c" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_c_Click"/>
         </ContentTemplate>
         </asp:UpdatePanel>
-
-
                    
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -225,7 +240,182 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
+
     </div>
+
+        <%--==============  GP12========================================--%>
+        <%  int i = 0;
+            foreach (System.Data.DataRow dr in dtGP12.Rows)
+            {
+                if (i == 0)
+                {%>
+        <div class="weui-flex js-category">
+            <div class="weui-flex__item margin10-l"><%=dr["title"] %></div>
+            <div class="margin20-r">单号:<% =dr["qc_dh"] %></div>
+        </div>
+
+        <% }
+            i++; %>
+
+        <ul class="collapse">
+            <li class="">
+                <div class="weui-flex js-category">
+                    <div class="weui-flex__item margin10-l"><%=dr["workorder"] %></div>
+                    <i class="icon icon-35 padding10-l"></i>
+                </div>
+                <div class="page-category js-categoryInner" style="margin-left:20px">
+                    <div class="weui-cells page-category-content">
+                        <div class="weui-form-preview__bd ">
+                            <% if (dr["title"].ToString() == "GP12完成")
+                                { %>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">物料号</label>
+                                <span class="weui-form-preview__value"><%=dr["pgino"] %>  </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">零件号</label>
+                                <span class="weui-form-preview__value"><%=dr["pn"] %>  </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">数量</label>
+                                <span class="weui-form-preview__value"><%=dr["hege_qty"] %>  </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">完成时间</label>
+                                <span class="weui-form-preview__value"><%= string.Format("{0:MM-dd HH:mm}",dr["on_date"])%> 
+                                    <%--时长:<font class="<%=dr["shichang"].ToString().Contains("-")?"f-blue":"f-red"%>"> <%=dr["shichang"].ToString() %></font> --%> 
+                                    时长:<%=dr["shichang"].ToString() %>
+                                </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">检验人</label>
+                                <span class="weui-form-preview__value"><%--<%  =dr["cellphone"] %>--%><%  =dr["emp_name"] %> </span>
+                            </div>
+                            <% } %>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <% } %>
+
+        <%--=======终检完成========================================--%>
+        <%  i = 0;
+            foreach (System.Data.DataRow dr in dtQC.Rows)
+            {
+                if (i == 0)
+                {%>
+        <div class="weui-flex js-category">
+            <div class="weui-flex__item margin10-l"><%=dr["title"] %></div>
+            <div class="margin20-r">单号:<% =dr["qc_dh"] %></div>
+        </div>
+
+        <% }
+            i++; %>
+
+        <ul class="collapse">
+            <li class="">
+                <div class="weui-flex js-category">
+                    <div class="weui-flex__item margin10-l"><%=dr["workorder"] %></div>
+                    <i class="icon icon-35 padding10-l"></i>
+                </div>
+                <div class="page-category js-categoryInner" style="margin-left:20px">
+                    <div class="weui-cells page-category-content">
+                        <div class="weui-form-preview__bd ">
+                            <% if (dr["title"].ToString() == "终检完成")
+                                { %>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">物料号</label>
+                                <span class="weui-form-preview__value"><%=dr["pgino"] %>  </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">零件号</label>
+                                <span class="weui-form-preview__value"><%=dr["pn"] %>  </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">数量</label>
+                                <span class="weui-form-preview__value"><%=dr["hege_qty"] %>  </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">完成时间</label>
+                                <span class="weui-form-preview__value"><%= string.Format("{0:MM-dd HH:mm}",dr["on_date"])%> 
+                                    <%--时长:<font class="<%=dr["shichang"].ToString().Contains("-")?"f-blue":"f-red"%>"> <%=dr["shichang"].ToString() %></font> --%> 
+                                    时长:<%=dr["shichang"].ToString() %>
+                                </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">检验人</label>
+                                <span class="weui-form-preview__value"><%--<%  =dr["cellphone"] %>--%><%  =dr["emp_name"] %> </span>
+                            </div>
+                            <% } %>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <% } %>
+
+
+        <%--====下料完成======================================--%>
+        <%  i = 0;                   
+            System.Data.DataView dataView = dtProd.DefaultView;
+            System.Data.DataTable dtWorkorderDist = dataView.ToTable(true,"workorder");
+            foreach (System.Data.DataRow dr in dtWorkorderDist.Rows)
+            {
+                if (i == 0)
+                {%>
+        <div class="weui-flex js-category">
+            <div class="weui-flex__item margin10-l">生产完成</div>
+            <div class="margin20-r"></div>
+        </div>
+        <% }
+            i++; %>
+        <ul class="collapse">
+            <li class="">
+                <div class="weui-flex js-category">
+                    <div class="weui-flex__item margin10-l"><%=dr["workorder"] %></div>
+                    <i class="icon icon-35 padding10-l"></i>
+                </div>
+                    <% foreach (System.Data.DataRow dr_ in dtProd.Select("workorder='" + dr["workorder"].ToString() + "'"))
+                        {%>
+                <div class="page-category js-categoryInner " style="margin-left:40px">
+                    Lot:<%=dr_["lot_no"] %>
+                    <div class="weui-cells page-category-content">
+                        <div class="weui-form-preview__bd ">
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">物料号</label>
+                                <span class="weui-form-preview__value"><%=dr_["sku"] %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">零件号</label>
+                                <span class="weui-form-preview__value"><%=dr_["sku_descr"] %> </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">下料数量</label>
+                                <span class="weui-form-preview__value"><%=dr_["par_qty"] %> -->  <%=dr_["par_qty"] %> </span>
+                            </div>                            
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">下线时间</label>
+                                <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr_["off_date"]) %>   
+                                    <%--时长:<%=dr_["shichang"].ToString() %>--%>
+                                </span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">下料人</label>
+                                <span class="weui-form-preview__value"><%=dr_["emp_name"] %> </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <%} %>
+            </li>
+        </ul>
+
+        <% } %>
+
     </form>
 </body>
     <script>
