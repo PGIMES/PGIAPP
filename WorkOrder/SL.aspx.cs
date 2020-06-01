@@ -227,7 +227,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
                     }
                     else//提示出来，询问是否继续送料
                     {
-                        flag = "Y_S";
+                        flag = "Y_S"; msg = "QAD第一笔Lot No" + ldt.Rows[0]["ld_loc"].ToString() + ",当前:"+ lotno;
                     }
                 }
 

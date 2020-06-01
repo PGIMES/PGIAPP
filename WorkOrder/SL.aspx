@@ -168,7 +168,7 @@
                 }
 
                 if (flag == "Y_S") {
-                    $.confirm('确认要【取消要料】吗？', function () {
+                    $.confirm('是否继续送料？' + msg, function () {
                         sl2();                    
                     }, function () {
                         //点击取消后的回调函数
