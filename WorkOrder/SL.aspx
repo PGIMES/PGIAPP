@@ -138,6 +138,7 @@
                     return;
                 }
 
+                var flag = "N"; var msg = "";
                 $.ajax({
                     type: "post",
                     url: "SL.aspx/sure2",
@@ -151,20 +152,38 @@
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                     success: function (data) {
                         var obj = eval(data.d);
-                        if (obj[0].flag=="Y") {
-                            layer.alert(obj[0].msg);
-                            $("#btn_sl2").removeAttr("disabled");
-                            $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-
-                            $("#btn_cancel2").removeAttr("disabled");
-                            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-                            return;
-                        }
-                        window.location.href = "/workorder/YL_list_new.aspx?workshop=<%=_workshop %>";
-                        
+                        flag = obj[0].flag;
+                        msg = obj[0].msg;                        
                     }
-
                 });
+
+                if (flag == "Y") {
+                    layer.alert(obj[0].msg);
+                    $("#btn_sl2").removeAttr("disabled");
+                    $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    $("#btn_cancel2").removeAttr("disabled");
+                    $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return;
+                }
+
+                if (flag == "Y_S") {
+                    $.confirm('确认要【取消要料】吗？', function () {
+                        sl2();                    
+                    }, function () {
+                        //点击取消后的回调函数
+                        $("#btn_sl2").removeAttr("disabled");
+                        $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                        $("#btn_cancel2").removeAttr("disabled");
+                        $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    });
+                }
+
+                if (flag == "N") {
+                    sl2();
+                }
+
              });
 
             $("#btn_cancel2").click(function () {
@@ -224,6 +243,35 @@
                         }
                     });
                 });
+            });
+        }
+
+        function sl2() {
+             $.ajax({
+                type: "post",
+                url: "SL.aspx/sl2",
+                data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
+                    + "','need_no':'" + "<%= _need_no %>" + "','lotno':'" + $("#lot_no").val() + "','act_qty':'" + $('#act_qty').val()
+                    + "','pgino':'" + $("#pgino").val() + "','pn':'" + $('#pn').val() + "','comment':'" + $('#comment').val()
+                    + "','loc_from':'" + $("#loc_from").val() + "','loc_to':'" + $("#loc_to").val() + "','sku_area':'" + $("#sku_area").val()
+                    + "','pgino_yn':'" + $("#pgino_yn").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                                
+                        if (obj[0].flag == "Y") {
+                        layer.alert(obj[0].msg);
+                        $("#btn_sl2").removeAttr("disabled");
+                        $("#btn_sl2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                        $("#btn_cancel2").removeAttr("disabled");
+                        $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                        return;
+                    }
+                    window.location.href = "/workorder/YL_list_new.aspx?workshop=<%=_workshop %>";
+                }
             });
         }
     </script>
