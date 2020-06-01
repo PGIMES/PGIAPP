@@ -52,13 +52,13 @@
                 layer.alert("【送料数量】不可大于【剩余数量】.");
                 return false;
             }
-            if ($("#sku_area").val() == "") {
-                layer.alert("请输入【备料区】.");
-                return false;
-            } else if (($("#sku_area").val()).indexOf(',')>=0) {
-                layer.alert("【备料区】不可多个，请联系IT处理.");
-                return false;
-            }
+            //if ($("#sku_area").val() == "") {
+            //    layer.alert("请输入【备料区】.");
+            //    return false;
+            //} else if (($("#sku_area").val()).indexOf(',')>=0) {
+            //    layer.alert("【备料区】不可多个，请联系IT处理.");
+            //    return false;
+            //}
             if ($("#loc_from").val() == "") {
                 layer.alert("请输入【loc_from】.");
                 return false;

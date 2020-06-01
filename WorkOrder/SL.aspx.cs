@@ -60,7 +60,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
     [WebMethod]
     public static string lotno_change(string pgino, string lotno,string need_no)
     {
-        string re_sql = @"exec [usp_app_SL_lot_change_qad] '{0}', '{1}', '{2}'";
+        string re_sql = @"exec [usp_app_SL_lot_change_qad_V1] '{0}', '{1}', '{2}'";
         re_sql = string.Format(re_sql, pgino, lotno, need_no);
         DataSet ds = SQLHelper.Query(re_sql);
 
@@ -73,15 +73,23 @@ public partial class WorkOrder_SL : System.Web.UI.Page
         {
             DataTable dt = ds.Tables[1];
             loc_to = dt.Rows[0][0].ToString();
+            string pgino_yn = ds.Tables[2].Rows[0][0].ToString();
 
-            loc_from = loc_to;
-            string sqlStr = @"select ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
-            DataTable ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            DataTable ldt = new DataTable();
+            string sqlStr = "";
+            if (pgino_yn == "Y")
+            {
+                sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{1}' with (nolock)";
+                sqlStr = string.Format(sqlStr, pgino, lotno);
+                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            }
 
-            //DataTable ldt = new DataTable();
-            //string sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{1}' with (nolock)";
-            //sqlStr = string.Format(sqlStr, pgino, lotno);
-            //ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            //1，未获取到高架库位的参考号，需要继续获取线边库的 2，直接需要获取线边库的参考号
+            if (ldt.Rows.Count == 0)
+            {
+                sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
+                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            }
 
             if (ldt == null)
             {
@@ -94,10 +102,9 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             else
             {
                 flag = "N"; msg = "";
-                float qty_c = Convert.ToSingle(ldt.Rows[0][0].ToString());
 
-                //loc_from = ldt.Rows[0]["ld_loc"].ToString();
-                //float qty_c = Convert.ToSingle(ldt.Rows[0]["ld_qty_oh"].ToString());
+                loc_from = ldt.Rows[0]["ld_loc"].ToString();
+                float qty_c = Convert.ToSingle(ldt.Rows[0]["ld_qty_oh"].ToString());
 
                 string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}, '{3}'";
                 sql_q = string.Format(sql_q, pgino, lotno, qty_c, need_no);
