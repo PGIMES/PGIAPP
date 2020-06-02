@@ -283,7 +283,7 @@
                          <% foreach (System.Data.DataRow dr_ in dtGP12_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
                                + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))
                         {%>
-                        <div class="weui-form-preview__bd ">
+                        <%--<div class="weui-form-preview__bd ">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">物料号</label>
                                 <span class="weui-form-preview__value"><%=dr_["pgino"] %>  </span>
@@ -299,14 +299,25 @@
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">完成时间</label>
                                 <span class="weui-form-preview__value"><%= string.Format("{0:MM-dd HH:mm}",dr_["on_date"])%> 
-                                    <%--时长:<font class="<%=dr["shichang"].ToString().Contains("-")?"f-blue":"f-red"%>"> <%=dr["shichang"].ToString() %></font> --%> 
+                                    时长:<font class="<%=dr["shichang"].ToString().Contains("-")?"f-blue":"f-red"%>"> <%=dr["shichang"].ToString() %></font>  
                                     时长:<%=dr["shichang"].ToString() %>
                                 </span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">检验人</label>
-                                <span class="weui-form-preview__value"><%--<%  =dr["cellphone"] %>--%><%  =dr_["emp_name"] %> </span>
+                                <span class="weui-form-preview__value"><%  =dr["cellphone"] %><%  =dr_["emp_name"] %> </span>
                             </div>
+                        </div>--%>
+                        <div class="weui-cell__bd" style="padding-left:15px;">
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                            </span>
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= dr_["pgino"] + "," + dr_["pn"] %>
+                            </span>
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" + dr_["shichang"] %>
+                            </span>
                         </div>
                         <%} %>
                     </div>
@@ -358,7 +369,7 @@
                         <% foreach (System.Data.DataRow dr_ in dtQC_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
                                + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))
                         {%>
-                        <div class="weui-form-preview__bd ">
+                       <%--<div class="weui-form-preview__bd ">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">物料号</label>
                                 <span class="weui-form-preview__value"><%=dr_["pgino"] %>  </span>
@@ -374,14 +385,25 @@
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">完成时间</label>
                                 <span class="weui-form-preview__value"><%= string.Format("{0:MM-dd HH:mm}",dr_["on_date"])%> 
-                                    <%--时长:<font class="<%=dr["shichang"].ToString().Contains("-")?"f-blue":"f-red"%>"> <%=dr["shichang"].ToString() %></font> --%> 
-                                    时长:<%=dr_["shichang"].ToString() %>
+                                    时长:<font class="<%=dr["shichang"].ToString().Contains("-")?"f-blue":"f-red"%>"> <%=dr["shichang"].ToString() %></font>  
+                                    时长:<%=dr["shichang"].ToString() %>
                                 </span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">检验人</label>
-                                <span class="weui-form-preview__value"><%--<%  =dr["cellphone"] %>--%><%  =dr_["emp_name"] %> </span>
+                                <span class="weui-form-preview__value"><%  =dr["cellphone"] %><%  =dr_["emp_name"] %> </span>
                             </div>
+                        </div>--%>
+                        <div class="weui-cell__bd" style="padding-left:15px; border-bottom:1px solid #e5e5e5;">
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                            </span>
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= dr_["pgino"] + "," + dr_["pn"] %>
+                            </span>
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" + dr_["shichang"] %>
+                            </span>
                         </div>
                         <%} %>
                     </div>
@@ -429,10 +451,10 @@
                 </div>                    
                 <div class="page-category js-categoryInner " style="margin-left:40px">
                     <div class="weui-cells page-category-content">
-                        <% foreach (System.Data.DataRow dr_ in dtProd_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
+                        <% foreach (System.Data.DataRow dr_ in dtProd_dtl.Select("workorder='" + dr["workorder"].ToString() + "' and emp_name='" 
                                + dr_m_["emp_name"].ToString() + "' and off_date_str='" + dr_m_["off_date_str"].ToString() + "'"))
                         {%>
-                        <div class="weui-form-preview__bd ">
+                        <%--<div class="weui-form-preview__bd ">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">Lot</label>
                                 <span class="weui-form-preview__value"><%=dr_["lot_no"] %></span>
@@ -452,13 +474,23 @@
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">下线时间</label>
                                 <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr_["off_date"]) %>   
-                                    <%--时长:<%=dr_["shichang"].ToString() %>--%>
                                 </span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">下料人</label>
                                 <span class="weui-form-preview__value"><%=dr_["emp_name"] %> </span>
                             </div>
+                        </div>--%>
+                        <div class="weui-cell__bd" style="padding-left:15px; border-bottom:1px solid #e5e5e5;">
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= "Lot:"+dr_["lot_no"] + ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
+                            </span>
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= dr_["sku"] + "," + dr_["sku_descr"] %>
+                            </span>
+                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" + dr_["shichang"] %>
+                            </span>
                         </div>
                         <%} %>
                     </div>
