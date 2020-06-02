@@ -30,7 +30,7 @@
     <form id="form1" runat="server">
         <div class="page-bd">
             <div class="weui-cells">
-                <a class="weui-cell weui-cell_access" href="#">
+                <%--<a class="weui-cell weui-cell_access" href="#">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cog margin10-r"></i>
                     </div>
@@ -38,7 +38,7 @@
                         <p>一车间<span class="f12">（未开放）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
-                </a>
+                </a>--%>
                 <a class="weui-cell weui-cell_access" href="/Cjgl1.aspx?workshop=二车间">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cog margin10-r"></i>
@@ -72,6 +72,15 @@
                     </div>
                     <div class="weui-cell__bd">
                         <p>仓库</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-bar-chart margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>单据查询<span class="f12">（未开放）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
