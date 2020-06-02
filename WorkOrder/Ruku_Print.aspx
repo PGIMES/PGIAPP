@@ -316,7 +316,8 @@
                                 <%= dr_["pgino"] + "," + dr_["pn"] %>
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" + dr_["shichang"] %>
+                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" %> <%--+ dr_["shichang"]--%>
+                                 <span class="f-blue"> <%=dr_["shichang"].ToString() %></span> 
                             </span>
                         </div>
                         <%} %>
@@ -402,7 +403,8 @@
                                 <%= dr_["pgino"] + "," + dr_["pn"] %>
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" + dr_["shichang"] %>
+                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" %><%-- + dr_["shichang"]--%>
+                                <span class="f-blue"> <%=dr_["shichang"].ToString() %></span>  
                             </span>
                         </div>
                         <%} %>
@@ -489,7 +491,8 @@
                                 <%= dr_["sku"] + "," + dr_["sku_descr"] %>
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" + dr_["shichang"] %>
+                                <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" %> <%--+ dr_["shichang"]--%>
+                                <span class="f-blue"> <%=dr_["shichang"].ToString() %></span>  
                             </span>
                         </div>
                         <%} %>
