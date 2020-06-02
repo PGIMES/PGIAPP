@@ -77,7 +77,7 @@
                 </a>
                 <a class="weui-cell weui-cell_access" href="javascript:void(0);">
                     <div class="weui-cell__hd">
-                        <i class="fa fa-bar-chart margin10-r"></i>
+                        <i class="fa fa-search margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
                         <p>单据查询<span class="f12">（未开放）</span></p>
