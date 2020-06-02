@@ -48,12 +48,12 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="#">
+                <a class="weui-cell weui-cell_access" href="/Cjgl_three.aspx?workshop=三车间">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cog margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>三车间<span class="f12">（未开放）</span></p>
+                        <p>三车间</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
