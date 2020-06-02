@@ -270,16 +270,19 @@
 
         <% //}
             i++; %>
-        <% foreach (System.Data.DataRow dr_ in dtGP12_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "'"))
+        <% foreach (System.Data.DataRow dr_m_ in dtGP12_m.Select("qc_dh='" + dr["qc_dh"].ToString() + "'"))
         {%>
         <ul class="collapse">
             <li class="">
                 <div class="weui-flex js-category">
-                    <div class="weui-flex__item margin10-l"><%=dr_["workorder"] %></div>
+                    <div class="weui-flex__item margin10-l"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>
                 <div class="page-category js-categoryInner" style="margin-left:20px">
                     <div class="weui-cells page-category-content">
+                         <% foreach (System.Data.DataRow dr_ in dtGP12_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
+                               + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))
+                        {%>
                         <div class="weui-form-preview__bd ">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">物料号</label>
@@ -305,7 +308,7 @@
                                 <span class="weui-form-preview__value"><%--<%  =dr["cellphone"] %>--%><%  =dr_["emp_name"] %> </span>
                             </div>
                         </div>
-
+                        <%} %>
                     </div>
                 </div>
             </li>
@@ -315,9 +318,6 @@
 
         <%--=======终检完成========================================--%>
         <%  i = 0;
-            //System.Data.DataView dataViewQC = dtQC.DefaultView;
-            //System.Data.DataTable dtWorkorderDistQC = dataViewQC.ToTable(true,"qc_dh");
-            //foreach (System.Data.DataRow dr in dtWorkorderDistQC.Rows)
             foreach (System.Data.DataRow dr in dtQC.Rows)
             {
                 //if (i == 0)
@@ -344,17 +344,20 @@
 
         <% //}
             i++; %>
-        <% foreach (System.Data.DataRow dr_ in dtQC_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "'"))
+        <% foreach (System.Data.DataRow dr_m_ in dtQC_m.Select("qc_dh='" + dr["qc_dh"].ToString() + "'"))
         {%>
         <ul class="collapse">
             <li class="">
                
                 <div class="weui-flex js-category">
-                    <div class="weui-flex__item margin10-l"><%=dr_["workorder"] %></div>
+                    <div class="weui-flex__item margin10-l"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>
                 <div class="page-category js-categoryInner" style="margin-left:20px">
                     <div class="weui-cells page-category-content">
+                        <% foreach (System.Data.DataRow dr_ in dtQC_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
+                               + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))
+                        {%>
                         <div class="weui-form-preview__bd ">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">物料号</label>
@@ -380,7 +383,7 @@
                                 <span class="weui-form-preview__value"><%--<%  =dr["cellphone"] %>--%><%  =dr_["emp_name"] %> </span>
                             </div>
                         </div>
-
+                        <%} %>
                     </div>
                 </div>
                 
@@ -392,9 +395,6 @@
 
         <%--====下料完成======================================--%>
         <%  i = 0;
-            //System.Data.DataView dataView = dtProd.DefaultView;
-            //System.Data.DataTable dtWorkorderDist = dataView.ToTable(true,"workorder");
-            //foreach (System.Data.DataRow dr in dtWorkorderDist.Rows)
             foreach (System.Data.DataRow dr in dtProd.Rows)
             {
                 //if (i == 0)
@@ -419,17 +419,24 @@
             </div>
         <% //}
             i++; %>
-        <% foreach (System.Data.DataRow dr_ in dtProd_dtl.Select("workorder='" + dr["workorder"].ToString() + "'"))
+        <% foreach (System.Data.DataRow dr_m_ in dtProd_m.Select("workorder='" + dr["workorder"].ToString() + "'"))
             {%>
         <ul class="collapse">
             <li class="">                
                 <div class="weui-flex js-category">
-                    <div class="weui-flex__item margin10-l"> Lot:<%=dr_["lot_no"] %></div>
+                    <div class="weui-flex__item margin10-l"><%=dr_m_["emp_name"] +" "+ dr_m_["off_date_str"] +" 下料数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>                    
                 <div class="page-category js-categoryInner " style="margin-left:40px">
                     <div class="weui-cells page-category-content">
+                        <% foreach (System.Data.DataRow dr_ in dtProd_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
+                               + dr_m_["emp_name"].ToString() + "' and off_date_str='" + dr_m_["off_date_str"].ToString() + "'"))
+                        {%>
                         <div class="weui-form-preview__bd ">
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">Lot</label>
+                                <span class="weui-form-preview__value"><%=dr_["lot_no"] %></span>
+                            </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">物料号</label>
                                 <span class="weui-form-preview__value"><%=dr_["sku"] %></span>
@@ -452,8 +459,8 @@
                                 <label class="weui-form-preview__label">下料人</label>
                                 <span class="weui-form-preview__value"><%=dr_["emp_name"] %> </span>
                             </div>
-
                         </div>
+                        <%} %>
                     </div>
                 </div>               
             </li>
