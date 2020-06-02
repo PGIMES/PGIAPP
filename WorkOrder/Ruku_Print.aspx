@@ -315,11 +315,11 @@
 
         <% //}
             i++; %>
-
+        <% foreach (System.Data.DataRow dr_ in dtQC.Select("qc_dh='" + dr["qc_dh"].ToString() + "'"))
+        {%>
         <ul class="collapse">
             <li class="">
-                <% foreach (System.Data.DataRow dr_ in dtQC.Select("qc_dh='" + dr["qc_dh"].ToString() + "'"))
-                        {%>
+               
                 <div class="weui-flex js-category">
                     <div class="weui-flex__item margin10-l"><%=dr_["workorder"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
@@ -357,9 +357,10 @@
 
                     </div>
                 </div>
-                <%} %>
+                
             </li>
         </ul>
+        <%} %>
         <% } %>
 
 
@@ -377,15 +378,14 @@
         </div>
         <% //}
             i++; %>
+        <% foreach (System.Data.DataRow dr_ in dtProd.Select("workorder='" + dr["workorder"].ToString() + "'"))
+            {%>
         <ul class="collapse">
-            <li class="">
-                <% foreach (System.Data.DataRow dr_ in dtProd.Select("workorder='" + dr["workorder"].ToString() + "'"))
-                        {%>
+            <li class="">                
                 <div class="weui-flex js-category">
                     <div class="weui-flex__item margin10-l"> Lot:<%=dr_["lot_no"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
-                </div>
-                    
+                </div>                    
                 <div class="page-category js-categoryInner " style="margin-left:40px">
                     <div class="weui-cells page-category-content">
                         <div class="weui-form-preview__bd ">
@@ -414,10 +414,10 @@
 
                         </div>
                     </div>
-                </div>
-                <%} %>
+                </div>               
             </li>
-        </ul>
+        </ul> 
+        <%} %>
 
         <% } %>
 
