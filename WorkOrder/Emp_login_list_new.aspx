@@ -91,13 +91,21 @@
                                             <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
                                                 <ItemTemplate>
                                                     <a class="weui-cell weui-cell_access">
-                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="weui-cell__bd">
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
                                                                 <%# Eval("location") + "," + Eval("phone") + "," +Eval("emp_name")  %>
+                                                            
+                                                                <span class="weui-mark-rt- weui-badge" 
+                                                                    style="background-color: <%# Eval("dp").ToString()=="质"?"orange":"#10AEFF"%>;
+                                                                        font-size: x-small; color: white; 
+                                                                        display:<%# (Eval("dp").ToString()=="质")?"inline-block":"none"%>; ">
+                                                                    <%#Eval("dp") %>
+                                                                </span>
+
                                                             </span>
                                                              <span class="weui-agree__text" style="font-size: smaller">
                                                                  <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
