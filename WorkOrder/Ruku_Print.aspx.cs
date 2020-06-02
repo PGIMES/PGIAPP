@@ -15,8 +15,11 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
     public string _ck = "";//仓库接收 扫码进来  上级菜单是 仓库
 
     public DataTable dtQC;
+    public DataTable dtQC_dtl;
     public DataTable dtGP12;
+    public DataTable dtGP12_dtl;
     public DataTable dtProd;
+    public DataTable dtProd_dtl;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -41,12 +44,15 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
 
     private void GetData()
     {
-        string sql = string.Format("[usp_app_Ruku_Print_infor] '{0}'", _dh);
+        string sql = string.Format("[usp_app_Ruku_Print_infor_V1] '{0}'", _dh);
         DataSet ds = SQLHelper.Query(sql);
       
-        dtGP12 = ds.Tables[0];  //GP12完成       
-        dtQC = ds.Tables[1]; //终检完成        
-        dtProd = ds.Tables[2];//生产完成
+        dtGP12 = ds.Tables[0];  //GP12完成  
+        dtGP12_dtl = ds.Tables[1];  //GP12完成       
+        dtQC = ds.Tables[2]; //终检完成            
+        dtQC_dtl = ds.Tables[3]; //终检完成       
+        dtProd = ds.Tables[4];//生产完成    
+        dtProd_dtl = ds.Tables[5];//生产完成
     }
 
     [WebMethod]
