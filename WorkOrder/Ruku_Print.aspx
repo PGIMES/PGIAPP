@@ -278,7 +278,7 @@
                     <div class="weui-flex__item margin10-l"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>
-                <div class="page-category js-categoryInner" style="margin-left:20px">
+                <div class="page-category js-categoryInner"><%-- style="margin-left:20px"--%>
                     <div class="weui-cells page-category-content">
                          <% foreach (System.Data.DataRow dr_ in dtGP12_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
                                + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))
@@ -308,7 +308,7 @@
                                 <span class="weui-form-preview__value"><%  =dr["cellphone"] %><%  =dr_["emp_name"] %> </span>
                             </div>
                         </div>--%>
-                        <div class="weui-cell__bd" style="padding-left:15px;">
+                        <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;">
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                 <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                             </span>
@@ -365,7 +365,7 @@
                     <div class="weui-flex__item margin10-l"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>
-                <div class="page-category js-categoryInner" style="margin-left:20px">
+                <div class="page-category js-categoryInner"> <%--style="margin-left:20px"--%>
                     <div class="weui-cells page-category-content">
                         <% foreach (System.Data.DataRow dr_ in dtQC_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
                                + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))
@@ -395,7 +395,7 @@
                                 <span class="weui-form-preview__value"><%  =dr["cellphone"] %><%  =dr_["emp_name"] %> </span>
                             </div>
                         </div>--%>
-                        <div class="weui-cell__bd" style="padding-left:15px; border-bottom:1px solid #e5e5e5;">
+                        <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                 <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                             </span>
@@ -451,7 +451,7 @@
                     <div class="weui-flex__item margin10-l"><%=dr_m_["emp_name"] +" "+ dr_m_["off_date_str"] +" 下料数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>                    
-                <div class="page-category js-categoryInner " style="margin-left:40px">
+                <div class="page-category js-categoryInner "> <%--style="margin-left:40px"--%>
                     <div class="weui-cells page-category-content">
                         <% foreach (System.Data.DataRow dr_ in dtProd_dtl.Select("workorder='" + dr["workorder"].ToString() + "' and emp_name='" 
                                + dr_m_["emp_name"].ToString() + "' and off_date_str='" + dr_m_["off_date_str"].ToString() + "'"))
@@ -483,7 +483,7 @@
                                 <span class="weui-form-preview__value"><%=dr_["emp_name"] %> </span>
                             </div>
                         </div>--%>
-                        <div class="weui-cell__bd" style="padding-left:15px; border-bottom:1px solid #e5e5e5;">
+                        <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                 <%= "Lot:"+dr_["lot_no"] + ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
                             </span>

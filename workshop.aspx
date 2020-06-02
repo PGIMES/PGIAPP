@@ -75,15 +75,25 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell weui-cell_access">
                     <div class="weui-cell__hd">
                         <i class="fa fa-search margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>单据查询<span class="f12">（未开放）</span></p>
+                        <%--<p>单据查询<span class="f12">（未开放）</span></p>--%>
+                        <span style="float:left; width:55%">
+                            <asp:TextBox ID="dj" class="weui-input" style="border-bottom:1px solid #e5e5e5; "  placeholder="请输入单据" runat="server"></asp:TextBox>
+                        </span>
+                        <span style="float:left; width:10%">
+                            <img id="img_sm" src="../img/fdj2.png" style="padding-top:10px;" />
+                        </span>
+                        <span style="float:left; width:35%; text-align:right;">
+                            <asp:LinkButton ID="LinkButton1" runat="server">查询</asp:LinkButton>
+                            <span class="f11" style="font-size:6px;">(未开放)</span>
+                        </span>
                     </div>
                     <div class="weui-cell__ft"></div>
-                </a>
+                </div>
             </div>
         </div>
         <div id="errmsg"class="f14"></div>  
