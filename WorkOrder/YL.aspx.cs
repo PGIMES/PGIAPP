@@ -71,8 +71,8 @@ public partial class YL : System.Web.UI.Page
         }
         else
         {
-
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
+            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$('#btnsave').hide();$.toptip('员工未上岗,请先上岗', 3000, 'warning');", true);
             return;
         }
 

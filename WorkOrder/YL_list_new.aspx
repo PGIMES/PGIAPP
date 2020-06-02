@@ -100,7 +100,7 @@
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
                                                     href="SL.aspx?need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -155,7 +155,7 @@
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
                                                     href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=S">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -206,7 +206,7 @@
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
                                                     href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-danger"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -302,7 +302,7 @@
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
                                                     href="SL.aspx?need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -357,7 +357,7 @@
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
                                                     href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=S">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -408,7 +408,7 @@
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access" 
                                                     href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-danger"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
