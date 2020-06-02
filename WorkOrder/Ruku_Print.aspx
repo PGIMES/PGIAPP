@@ -437,7 +437,7 @@
                     <span class="weui-form-preview__value"><%=dr["pn"] %> </span>
                 </div>
                 <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">已检数量</label>
+                    <label class="weui-form-preview__label">完工数量</label>
                     <span class="weui-form-preview__value"><%=dr["qty"] %></span>
                 </div>  
             </div>
