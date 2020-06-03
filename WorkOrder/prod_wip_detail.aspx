@@ -172,8 +172,7 @@
                                         <span>
                                             <%# DataBinder.Eval(Container.DataItem, "pn") %>
                                         </span>
-                                        <br />
-                                        <%--<span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>--%>
+                                        <br />                                        
                                         </span>
                                         <span class="span_space"><%# DataBinder.Eval(Container.DataItem, "workorder") %></span>
                                         <span class="span_space">完工数量:<font class="f-blue padding5-r"><%# DataBinder.Eval(Container.DataItem, "par_qty") %></font> --> <font class="f-blue padding5-l"><%# DataBinder.Eval(Container.DataItem, "qty") %></font></span>

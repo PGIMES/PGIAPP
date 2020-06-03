@@ -61,9 +61,11 @@ public partial class prod_wip_detail : System.Web.UI.Page
                             (select   isnull(workorder,workorder_part)workorder, emp_code , emp_name,pgino,pn, sku,sku_Descr,off_qty as qty,off_date,par_qty,'下料' as opdesc  
                             from Mes_App_WorkOrder_History  where lot_no='{0}' and need_no='{1}'
                             union all
-                            select workorder, emp_code , emp_name,pgino,pn, sku,sku_Descr,qty,on_date,qty/ps_qty_per  as par_qty,'不合格品' from Mes_App_WorkOrder_Ng_Detail a 
-                            where lot_no= '{0}' and need_no='{1}')t
-                            join [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] hr  on  t.emp_code=hr.employeeid", dh,need_no);
+                            select
+								a.workorder, a.emp_code , a.emp_name,a.pgino,a.pn, a.sku,a.sku_Descr,a.qty ,a.on_date ,isnull(b.ps_qty/b.ps_qty_per,a.qty/a.ps_qty_per)  as par_qty,isnull(b.result+'/'+b.reason,'不合格/待处置')
+							from Mes_App_WorkOrder_Ng_Detail a  left join  Mes_App_WorkOrder_Ng_Result b on a.lot_no=b.lot_no  and a.need_no=b.need_no and a.workorder=b.workorder
+                            where a.lot_no= '{0}'  and a.need_no='{1}')t
+                            join [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] hr  on  t.emp_code=hr.employeeid ", dh,need_no);
         dt = SQLHelper.Query(sql).Tables[0];
 
         DataList1.DataSource = dt ;
