@@ -9,10 +9,6 @@ using System.Web.UI.WebControls;
 
 public partial class prod_qcc_timeline_info_v3 : System.Web.UI.Page
 {
-    public string _workshop = "";
-    public string _emp = "";//当前登入
-    public string _para = "";
-
     public DataTable dtQC;
     public DataTable dtQC_m;
     public DataTable dtQC_dtl;
@@ -26,18 +22,11 @@ public partial class prod_qcc_timeline_info_v3 : System.Web.UI.Page
     public DataTable dtProd_dtl;
     protected void Page_Load(object sender, EventArgs e)
     {
-        //_workshop = Request.QueryString["workshop"].ToString();
-       // _para = Request.QueryString["para"].ToString();
-
         if (WeiXin.GetCookie("workcode") == null)
         {
             Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
-
-      //  LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-       // _emp = lu.WorkCode + lu.UserName;
-        //_emp = "02432何桂勤";
 
         GetData();
        
