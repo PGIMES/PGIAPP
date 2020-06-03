@@ -387,7 +387,10 @@
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")
                                                                     +" "+Eval("need_date")+ " " 
-                                                             %>   
+                                                             %>     
+                                                            <span style="color:#10AEFF">
+                                                                 时长:<%# Eval("times") %>
+                                                             </span>
                                                         </span>
 
                                                     </div>
@@ -434,7 +437,10 @@
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("reject_date")+ " " 
-                                                             %>   
+                                                             %>     
+                                                            <span style="color:#10AEFF">
+                                                                 时长:<%# Eval("times") %>
+                                                             </span>
                                                         </span>
 
                                                     </div>
