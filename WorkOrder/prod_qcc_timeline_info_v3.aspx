@@ -292,9 +292,9 @@
         </div>
 
 
-        <div class="weui-footer weui-footer_fixed-bottom">
+        <%--<div class="weui-footer weui-footer_fixed-bottom">
             <p class="weui-footer__text"><%=WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %></p>
-        </div>
+        </div>--%>
 
     </form>
 </body>
