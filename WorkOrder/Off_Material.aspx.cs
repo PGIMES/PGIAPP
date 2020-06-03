@@ -16,8 +16,8 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh =    Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -39,7 +39,7 @@ public partial class Off_Material : System.Web.UI.Page
         {
             ViewState["STEPVALUE"] = "";
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = lu.WorkCode;
+            txt_emp.Text =  lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -72,7 +72,7 @@ public partial class Off_Material : System.Web.UI.Page
         {
             pgino = dt_his.Rows[0]["pgino"].ToString();
 
-            if (!txt_xmh.Items.Contains(new ListItem(pgino)))
+            if (!txt_xmh.Items.Contains(new ListItem(pgino))  && dt.Rows.Count>0)
             {
                 btnsave.Attributes.Add("disabled", "disabled");
                 btnzc.Attributes.Add("disabled", "disabled");
