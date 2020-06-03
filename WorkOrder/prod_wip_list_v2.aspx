@@ -484,7 +484,7 @@
                                                 System.Data.DataTable dt = ViewState["dt_data_5"] as System.Data.DataTable;
                                                 foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'"))
                                                 {%>
-                                                    <a class="weui-cell  weui-cell_access " propline="<%=line %>LH5" title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_timeline_info_v2.aspx?dh=<%=dr["dh"] %>">
+                                                    <a class="weui-cell  weui-cell_access " propline="<%=line %>LH5" title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_timeline_info_v3.aspx?dh=<%=dr["dh"] %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
