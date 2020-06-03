@@ -344,7 +344,10 @@
                     <div class="weui-cell__bd">
                         <p>生产监视</p>
                     </div>
-                    <div class="weui-cell__ft"></div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label4" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i4 = Label4.Text; Response.Write("<span class='weui-badge  bg-" + (i4 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i4 + "</span>"); %>  
+                    </div>
                 </a>   
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
