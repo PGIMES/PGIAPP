@@ -12,10 +12,18 @@ public partial class prod_qcc_timeline_info_v3 : System.Web.UI.Page
     public string _workshop = "";
     public string _emp = "";//当前登入
     public string _para = "";
-    public DataTable dtDetail;
+
     public DataTable dtQC;
+    public DataTable dtQC_m;
+    public DataTable dtQC_dtl;
+
     public DataTable dtGP12;
-    public DataTable dtProd; 
+    public DataTable dtGP12_m;
+    public DataTable dtGP12_dtl;
+
+    public DataTable dtProd;
+    public DataTable dtProd_m;
+    public DataTable dtProd_dtl;
     protected void Page_Load(object sender, EventArgs e)
     {
         //_workshop = Request.QueryString["workshop"].ToString();
@@ -37,33 +45,23 @@ public partial class prod_qcc_timeline_info_v3 : System.Web.UI.Page
 
     private void GetData()
     {           
-        string dh= Request["dh"].ToString();
-        string sql = string.Format("[usp_app_prod_timeLine] '{0}'", dh);
+        string sql = string.Format("[usp_app_prod_timeLine_V3] '{0}'", Request["dh"].ToString());
         DataSet ds = SQLHelper.Query(sql);
-        DataTable dt  = ds.Tables[0];   // 入库 
-        dtDetail = new DataTable();//SQLHelper.Query(sql).Tables[1];  
                  
-        dtMain.DataSource = dt ;
+        dtMain.DataSource = ds.Tables[0];// 入库 
         dtMain.DataBind();
-        //GP12完成
-        dtGP12= ds.Tables[1];
 
-        //终检完成
-        dtQC = ds.Tables[2];
-       
-        //生产完成
-        dtProd = ds.Tables[3];
+        dtGP12 = ds.Tables[1];  //GP12完成  
+        dtGP12_m = ds.Tables[2];  //GP12完成   
+        dtGP12_dtl = ds.Tables[3];  //GP12完成      
 
-        if (dtGP12.Rows.Count > 0)
-        {
-            dtQC.Rows.Clear();
-            dtProd.Rows.Clear();
-        }
-        if (dtQC.Rows.Count > 0)
-        {           
-            dtProd.Rows.Clear();
-        }
+        dtQC = ds.Tables[4]; //终检完成  
+        dtQC_m = ds.Tables[5]; //终检完成           
+        dtQC_dtl = ds.Tables[6]; //终检完成       
 
+        dtProd = ds.Tables[7];//生产完成    
+        dtProd_m = ds.Tables[8];//生产完成
+        dtProd_dtl = ds.Tables[9];//生产完成
     }
  
 }
