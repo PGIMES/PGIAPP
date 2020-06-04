@@ -26,7 +26,7 @@ public partial class prod_end_detail : System.Web.UI.Page
          
         string type = Request["type"].ToString();
         string dh = Request["dh"].ToString();
-        string sql = string.Format(@"select a.*,iif(b.lot_no is null,'',b.lot_no+'/')+a.lot_no as new_lot from Mes_App_WorkOrder_History a left join Mes_App_WorkOrder_Ng_Result b on  workorder_gl=a.lot_no  where  {0}='{1}' order by off_date", type,dh);
+        string sql = string.Format(@"select a.*,iif(b.lot_no is null,'',b.lot_no+'/')+a.lot_no as new_lot from Mes_App_WorkOrder_History a left join Mes_App_WorkOrder_Ng_Result b on  workorder_gl=a.lot_no  where  a.{0}='{1}' order by off_date", type,dh);
         DataTable dt_hist = SQLHelper.Query(sql).Tables[0];     
          
         DataList1.DataSource = dt_hist;
