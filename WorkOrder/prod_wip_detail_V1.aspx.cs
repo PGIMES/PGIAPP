@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 
 public partial class prod_wip_detail_V1 : System.Web.UI.Page
 {
+    public string _workshop = "";
     public string _lotno = "";
     public string _para = "";
     public string _emp = "";//当前登入
@@ -17,6 +18,7 @@ public partial class prod_wip_detail_V1 : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Request.QueryString["workshop"] != null) { _workshop = Request.QueryString["workshop"].ToString(); }
         _lotno = Request.QueryString["lotno"].ToString();
         _para = Request.QueryString["para"].ToString();
 

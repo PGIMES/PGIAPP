@@ -488,7 +488,7 @@
 
                                 <%--<%= "Lot:"+dr_["lot_no"] + ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>--%>
 
-                               Lot:<a href="prod_wip_detail_V1.aspx?lotno=<%=dr_["lot_no"] %>"><%= dr_["lot_no"] %></a>
+                               Lot:<a href="prod_wip_detail_V1.aspx?lotno=<%=dr_["lot_no"] %>&para=N"><%= dr_["lot_no"] %></a>
                                 <%= ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
 
                             </span>
