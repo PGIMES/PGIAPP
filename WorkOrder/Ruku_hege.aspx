@@ -145,7 +145,7 @@
                 return false;
             }
             if ($.trim($("#status_hg").val()) != "已确认") {
-                layer.alert("【来源单号】状态不是已确认，不可打印.");
+                layer.alert("【来源单号】状态不是已确认，不可入库.");
                 return false;
             }
             if ($.trim($("#loc_hg").val()) == "") {
