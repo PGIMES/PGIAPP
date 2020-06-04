@@ -19,6 +19,7 @@
         $(document).ready(function () {
             $("#dh").attr("readonly", "readonly");
             $("#workorder").attr("readonly", "readonly");
+            $("#ruku_dh").attr("readonly", "readonly");
             $("#domain").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
@@ -26,8 +27,9 @@
             $("#emp").attr("readonly", "readonly");
             $("#time").attr("readonly", "readonly");
 
-            if ("<%= _dh %>" != "") {
-                $('#workorder').val("<%= _dh %>");
+            if ("<%= _workorder %>" != "") {
+                $('#workorder').val("<%= _workorder %>");
+                $('#ruku_dh').val("<%= _ruku_dh %>");
                 workorder_change();
             }
             
@@ -100,7 +102,8 @@
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div>
-                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
+                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>   
+                    <asp:TextBox ID="ruku_dh" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>               
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              

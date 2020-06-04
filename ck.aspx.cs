@@ -55,11 +55,19 @@ public partial class ck : System.Web.UI.Page
         re_sql = string.Format(re_sql, result);
         DataSet ds = SQLHelper.Query(re_sql);
 
+        string workorder = "", ruku_dh = "";
+
         DataTable re_dt = ds.Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string res = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        if (flag == "N")
+        {
+            workorder = re_dt.Rows[0][2].ToString();
+            ruku_dh = re_dt.Rows[0][3].ToString();
+        }
+
+        string res = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"workorder\":\"" + workorder + "\",\"ruku_dh\":\"" + ruku_dh + "\"}]";
         return res;
 
     }

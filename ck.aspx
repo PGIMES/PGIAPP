@@ -118,12 +118,13 @@
                     var flag = obj[0].flag;
                     var msg = obj[0].msg;
                     var workorder = obj[0].workorder;
+                    var ruku_dh = obj[0].ruku_dh;
 
                     if (flag == "Y") {
                         layer.alert(msg);
                         return;
                     }
-                    window.location.href = "/workorder/Chuku.aspx?dh=" + msg;
+                    window.location.href = "/workorder/Chuku.aspx?workorder=" + workorder + "&ruku_dh" + ruku_dh;
                 }
 
             });

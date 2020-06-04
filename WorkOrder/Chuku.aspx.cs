@@ -9,11 +9,13 @@ using System.Web.UI.WebControls;
 
 public partial class WorkOrder_Chuku : System.Web.UI.Page
 {
-    public string _dh = "";//仓库接收 扫码进来
+    public string _workorder = "";
+    public string _ruku_dh = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["dh"] != null) { _dh = Request.QueryString["dh"].ToString(); }
+        _workorder = Request.QueryString["workorder"].ToString();
+        _ruku_dh = Request.QueryString["ruku_dh"].ToString();
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -62,8 +64,8 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        string re_sql = re_sql = @"exec usp_app_Chuku '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value, reason.Text);
+        string re_sql = re_sql = @"exec usp_app_Chuku '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, ruku_dh.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value, reason.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
