@@ -88,7 +88,7 @@
                             <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
                                 <ItemTemplate>
                                     <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workshop") %>','<%# Eval("workorder_gl") %>')>
-                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                         <div class="weui-cell__hd">
                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                         </div>

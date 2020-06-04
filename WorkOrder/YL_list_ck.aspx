@@ -83,7 +83,7 @@
                                 <ItemTemplate>
                                     <a class="weui-cell weui-cell_access" 
                                         href="SL.aspx?need_no=<%#Eval("need_no") %>&workshop=<%#Eval("workshop") %>">
-                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                         <div class="weui-cell__hd">
                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                         </div>
