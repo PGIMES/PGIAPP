@@ -135,11 +135,7 @@
                                 </div>
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">上料时间</label>
-                                    <span class="weui-form-preview__value"><%# string.Format("{0:MM-dd HH:mm}",Eval("begin_date")) %> </span>
-                                </div>
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">下料时间</label>
-                                    <span class="weui-form-preview__value"><%# string.Format("{0:MM-dd HH:mm}",Eval("end_date"))+"，时长" %> 
+                                    <span class="weui-form-preview__value"><%# string.Format("{0:MM-dd HH:mm}",Eval("begin_date"))+"，时长" %> 
                                         <span class="f-blue"><%# Eval("shichang") %></span>
                                     </span>
                                 </div>
