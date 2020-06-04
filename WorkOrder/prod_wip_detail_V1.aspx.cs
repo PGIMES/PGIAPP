@@ -10,15 +10,16 @@ using System.Web.UI.WebControls;
 public partial class prod_wip_detail_V1 : System.Web.UI.Page
 {
     public string _workshop = "";
-    public string _emp = "";//当前登入
+    public string _lotno = "";
     public string _para = "";
+    public string _emp = "";//当前登入
 
-    public DataTable dt_m;
     public DataTable dt_dtl;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
+        _lotno = Request.QueryString["lotno"].ToString();
         _para = Request.QueryString["para"].ToString();
 
         if (WeiXin.GetCookie("workcode") == null)
@@ -31,24 +32,19 @@ public partial class prod_wip_detail_V1 : System.Web.UI.Page
         _emp = lu.WorkCode + lu.UserName;
         //_emp = "02432何桂勤";
 
-        GetData();
+        GetData(_lotno);
        
     }
 
-    private void GetData()
+    private void GetData(string _lotno)
     {
-         
-        string type = Request["type"].ToString();
-        string dh = Request["dh"].ToString();
-        string need_no= Request["need_no"].ToString();
-        string sql = string.Format(@"exec [usp_app_prod_wip_detail_V1] '{0}'", dh);
+        string sql = string.Format(@"exec [usp_app_prod_wip_detail_V1] '{0}'", _lotno);
         DataSet ds  = SQLHelper.Query(sql);
 
         dtMain.DataSource = ds.Tables[0];
         dtMain.DataBind();
 
-        dt_m = ds.Tables[1];
-        dt_dtl = ds.Tables[2]; 
+        dt_dtl = ds.Tables[1]; 
     }
 
     [WebMethod]

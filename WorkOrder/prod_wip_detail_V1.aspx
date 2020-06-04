@@ -28,15 +28,12 @@
             width: 3.375em;
             padding: 0.125em;
         }
-
-        table td {
-            padding-bottom: 0px;
-            padding-top: 0px;
-            border: 0px hidden white;
+        .collapse .weui-flex{
+            padding:0px 10px;
         }
-
-        .span_space {
-            padding-right: 20px;
+        .collapse li.js-show .weui-flex {
+            opacity: 1;
+            color: rgb(66, 139, 202);
         }
     </style>
     <script src="../js/zepto.min.js"></script>
@@ -45,6 +42,19 @@
     <script>
 
         $(function () {
+            $('.collapse .js-category').click(function () {
+                $parent = $(this).parent('li');
+                if ($parent.hasClass('js-show')) {
+                    $parent.removeClass('js-show');
+                    $(this).children('i').removeClass('icon-35').addClass('icon-74');
+                } else {
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+                }
+            });
+
             $('#btn_cancel').click(function () {
                 var qty = "<%= Request["wipqty"] %>";
 
@@ -107,7 +117,7 @@
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">Lot No</label>
-                            <label class="weui-form-preview__"><% ="<font class='tag'/>"+Request["dh"] %></label>
+                            <label class="weui-form-preview__"><% ="<font class='tag'/>"+_lotno %></label>
                         </div>
                     </div>
                     <div class="weui-form-preview__bd">
@@ -128,8 +138,10 @@
                                     <span class="weui-form-preview__value"><%# string.Format("{0:MM-dd HH:mm}",Eval("begin_date")) %> </span>
                                 </div>
                                 <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">上料时间</label>
-                                    <span class="weui-form-preview__value"><%# string.Format("{0:MM-dd HH:mm}",Eval("end_date"))+"，时长" %> </span>
+                                    <label class="weui-form-preview__label">下料时间</label>
+                                    <span class="weui-form-preview__value"><%# string.Format("{0:MM-dd HH:mm}",Eval("end_date"))+"，时长" %> 
+                                        <span class="f-blue"><%# Eval("shichang") %></span>
+                                    </span>
                                 </div>
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">上料数量</label>
@@ -161,9 +173,31 @@
                        <%-- <i class="icon nav-icon icon-49"></i>--%>
                         <asp:Label ID="Label1" runat="server" Text='操作明细'></asp:Label>
                     </div>
-                    <div class="weui-cells">
-                        
-                    </div>
+                   
+                    <% foreach (System.Data.DataRow dr_ in dt_dtl.Rows)
+                    {%>
+                        <ul class="collapse">
+                            <li class="">                
+                                <div class="weui-flex js-category">
+                                    <div class="weui-flex__item" style="font-size:14px;"><%=dr_["emp_name"] +" "+ dr_["deal_time_str"] +" "+dr_["title"]+":"+ dr_["deal_qty"] %></div>
+                                    <i class="icon icon-35 padding10-l" style="display :<%= dr_["workorder"].ToString()!=""?"block":"none"%>;"></i>
+                                </div>                    
+                                <div class="page-category js-categoryInner "> 
+                                    <div class="weui-cells page-category-content">
+                                        <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;display :<%= dr_["workorder"].ToString()!=""?"block":"none"%>;">
+                                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2;">
+                                                <%= dr_["pgino"] + "," + dr_["pn"] %>
+                                            </span>
+                                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2;">
+                                                <%= "Lot:"+dr_["workorder"]+ ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>               
+                            </li>
+                        </ul> 
+                    <%} %>
+                    
                 </div>
 
                 <div class="weui-cell" style="display:<%= _para=="Y"?"flex":"none"%>;">
