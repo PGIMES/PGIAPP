@@ -176,7 +176,7 @@
                                                  foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'")) {
                                                      if (dr["ispartof"].ToString() == "部分")
                                                      { %> 
-                                                    <a class="weui-cell  weui-cell_access" propline="<%=line %>LH1" title="<%=dr["part"] %>" href="prod_end_detail.aspx?type=workorder_part&dh=<%=dr["need_no"] %>">
+                                                    <a class="weui-cell  weui-cell_access" propline="<%=line %>LH1" title="<%=dr["part"] %>" href="prod_end_detail_v2.aspx?type=workorder_part&dh=<%=dr["need_no"] %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -206,7 +206,7 @@
                                                         </div>
                                                     </a>
                                                 <% } else {%>                                                    
-                                                    <a class="weui-cell weui-cell_access" propline="<%=line %>LH1"  title="<%=dr["part"] %>" href="prod_wip_detail.aspx?need_no=<%=dr["need_no"]%>&ngqty=<%=dr["ng_qty"]%>&wipqty=<%=dr["wip_qty"]%>&type=lot&dh=<%=dr["lot_no"] %>&workshop=<%=_workshop %>&para=Y">
+                                                    <a class="weui-cell weui-cell_access" propline="<%=line %>LH1"  title="<%=dr["part"] %>" href="prod_wip_detail_V1.aspx?lotno=<%=dr["lot_no"] %>&workshop=<%=_workshop %>&para=Y">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>

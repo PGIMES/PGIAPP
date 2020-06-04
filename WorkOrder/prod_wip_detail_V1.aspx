@@ -173,7 +173,7 @@
                     <% foreach (System.Data.DataRow dr_ in dt_dtl.Rows)
                     {%>
                         <ul class="collapse">
-                            <li class="">                
+                            <li class="js-show">                
                                 <div class="weui-flex js-category">
                                     <div class="weui-flex__item" style="font-size:14px;"><%=dr_["emp_name"] +" "+ dr_["deal_time_str"] +" "+dr_["title"]+":"+ dr_["deal_qty"] %></div>
                                     <i class="icon icon-35 padding10-l" style="display :<%= dr_["workorder"].ToString()!=""?"block":"none"%>;"></i>
