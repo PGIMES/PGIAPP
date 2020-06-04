@@ -189,7 +189,7 @@
                                                 <%= dr_["pgino"] + "," + dr_["pn"] %>
                                             </span>
                                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2;">
-                                                <%= "Lot:"+dr_["workorder"]+ ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
+                                                <%= ""+dr_["workorder"]+ ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
                                             </span>
                                         </div>
                                     </div>

@@ -485,7 +485,12 @@
                         </div>--%>
                         <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "Lot:"+dr_["lot_no"] + ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
+
+                                <%--<%= "Lot:"+dr_["lot_no"] + ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>--%>
+
+                               Lot:<a href="prod_wip_detail_V1.aspx?lotno=<%=dr_["lot_no"] %>"><%= dr_["lot_no"] %></a>
+                                <%= ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
+
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                 <%= dr_["sku"] + "," + dr_["sku_descr"] %>
