@@ -18,6 +18,8 @@
     <script>
         $(document).ready(function () {
             $("#dh").attr("readonly", "readonly");
+            $("#status_hg").attr("readonly", "readonly");
+            $("#status_date_hg").attr("readonly", "readonly");
             $("#domain").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
@@ -59,6 +61,8 @@
                     $('#sp_act_qty').text(obj[0].qty);
                     $('#sp_phone').text(obj[0].phone);
                     $('#sp_create_date').text(obj[0].create_date);
+                    $('#status_hg').val(obj[0].status_hg);
+                    $('#status_date_hg').val(obj[0].status_date_hg);
                 }
 
             });
@@ -107,13 +111,41 @@
             if ($.trim($("#workorder").val()) != "") {
                 if ($.trim($("#workorder").val()) != $("#sp_workorder").text()) {
                     layer.alert("【来源单号】不正确.");
+                    return;
                 }
+
+                //更新状态为 已确认
+                $.ajax({
+                    type: "post",
+                    url: "Ruku_hege.aspx/dh_status",
+                    data: "{'dh':'" + $('#dh').val() + "','workorder':'" + $('#workorder').val() + "','emp_code_name':'" + $('#emp_code_name').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            return;
+                        }
+                        $('#status_hg').val(obj[0].status_hg);
+                        $('#status_date_hg').val(obj[0].status_date_hg);
+                    }
+
+                });
+
+
             }
         }
 
         function valid() {
             if ($.trim($("#workorder").val()) == "") {
                 layer.alert("请输入【来源单号】.");
+                return false;
+            }
+            if ($.trim($("#status_hg").val()) != "已确认") {
+                layer.alert("【来源单号】状态不是已确认，不可打印.");
                 return false;
             }
             if ($.trim($("#loc_hg").val()) == "") {
@@ -149,6 +181,18 @@
                             <img id="img_sm_workorder" src="../img/fdj2.png"/>
                         </span>
                     </div>              
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">状态</label></div>
+                    <div class="weui-cell__bd">
+                        <span style="float:left; width:30%">
+                            <asp:TextBox ID="status_hg" class="weui-input" style="color:gray" runat="server"></asp:TextBox>        
+                        </span>
+                        <span style="float:left; width:70%">
+                            <asp:TextBox ID="status_date_hg" class="weui-input" style="color:gray" runat="server"></asp:TextBox>        
+                        </span>
+                    </div>
+                            
                 </div>
                 <div class="weui-form-preview">
                     <div class="weui-form-preview__bd">

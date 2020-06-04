@@ -45,7 +45,7 @@ public partial class WorkOrder_Ruku_hege : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string workorder = "", domain = "", pgino = "", pn = "", qty = "", act_qty = "", phone = "", create_date = "";
+        string workorder = "", domain = "", pgino = "", pn = "", qty = "", act_qty = "", phone = "", create_date = "", status_hg = "", status_date_hg = "";
 
         if (flag == "N")
         {
@@ -58,12 +58,41 @@ public partial class WorkOrder_Ruku_hege : System.Web.UI.Page
             act_qty = re_dt_2.Rows[0]["act_qty"].ToString();
             phone = re_dt_2.Rows[0]["phone"].ToString();
             create_date = re_dt_2.Rows[0]["create_date"].ToString();
+            status_hg = re_dt_2.Rows[0]["status_hg"].ToString();
+            status_date_hg = re_dt_2.Rows[0]["status_date_hg"].ToString();
         }
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg 
             + "\",\"workorder\":\"" + workorder + "\",\"domain\":\"" + domain 
             + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\",\"act_qty\":\"" 
-            + act_qty + "\",\"phone\":\"" + phone + "\",\"create_date\":\"" + create_date + "\"}]";
+            + act_qty + "\",\"phone\":\"" + phone + "\",\"create_date\":\"" + create_date 
+            + "\",\"status_hg\":\"" + status_hg + "\",\"status_date_hg\":\"" + status_date_hg + "\"}]";
+        return result;
+
+    }
+
+    [WebMethod]
+    public static string dh_status(string dh, string workorder, string emp_code_name)
+    {
+
+        string re_sql = @"exec [usp_app_Ruku_hege_status] '{0}','{1}','{2}'";
+        re_sql = string.Format(re_sql, dh, workorder, emp_code_name);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        string status_hg = "", status_date_hg = "";
+
+        if (flag == "N")
+        {
+            status_hg = re_dt.Rows[0][2].ToString();
+            status_date_hg = re_dt.Rows[0][3].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg
+            + "\",\"status_hg\":\"" + status_hg + "\",\"status_date_hg\":\"" + status_date_hg + "\"}]";
         return result;
 
     }
