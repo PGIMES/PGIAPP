@@ -232,7 +232,7 @@
                 <span class="icon icon-26" onclick="del_xbq();"></span>
             </div>
         </div>
-        <div class="weui-cells weui-cells_form" id="div_bq_last">   
+        <%--<div class="weui-cells weui-cells_form" id="div_bq_last">   
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">标签物料号</label></div>                          
                 <asp:TextBox ID="xbq_pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
@@ -245,6 +245,25 @@
                 <div class="weui-cell__hd f-red "><label class="weui-label">QTY</label></div>            
                 <div class="weui-cell__bd">
                     <span style="float:left; width:90%">
+                        <asp:TextBox ID="xbq_qty" class="weui-input" runat="server" type='number'></asp:TextBox>
+                        <asp:TextBox ID="xbq_qty_ori" class="weui-input" runat="server" type='number' style="color:gray;display:none;"></asp:TextBox>
+                    </span>
+                    <span style="float:left; width:10%">
+                        <span class="icon icon-66" onclick="modify_xbq();"></span>
+                    </span>
+                </div>
+            </div>
+        </div>--%>
+        <div class="weui-cells weui-cells_form" id="div_bq_last">  
+            <div class="weui-cell">       
+                <div class="weui-cell__bd">
+                    <span style="float:left; width:30%">
+                        <asp:TextBox ID="xbq_serialno" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                    </span>
+                    <span style="float:left; width:30%">
+                        <asp:TextBox ID="xbq_pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                    </span>
+                    <span style="float:left; width:30%">
                         <asp:TextBox ID="xbq_qty" class="weui-input" runat="server" type='number'></asp:TextBox>
                         <asp:TextBox ID="xbq_qty_ori" class="weui-input" runat="server" type='number' style="color:gray;display:none;"></asp:TextBox>
                     </span>
