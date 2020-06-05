@@ -109,6 +109,12 @@
                         // code 在这里面写上扫描二维码之后需要做的内容 
                         ck_dh_change(result);
 
+                    }, cancel: function () {
+                        $.modal({
+                            title: "",
+                            text: $("#div_2").html(),
+                            buttons: []
+                        });
                     }
                 });
             });
@@ -386,6 +392,33 @@
         </div>
 
     </form>
+
+    <div id="div_2" style="display:none;">
+        <div class="weui-cells">
+          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_Print.aspx?dh=&workshop=<%=_workshop %>&ck=N">
+            <div class="weui-cell__bd">
+              <p>生成入库单</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_hege.aspx?dh=&workshop=<%=_workshop %>&ck=N">
+            <div class="weui-cell__bd">
+              <p>合格品入库</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+          <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?dh=&workshop=<%=_workshop %>&ck=N">
+            <div class="weui-cell__bd">
+              <p>废品接收</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+        </div>
+    </div>
+
 </body>
     <script>
         var datad = [];
