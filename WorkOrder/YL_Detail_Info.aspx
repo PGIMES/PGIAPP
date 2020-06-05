@@ -128,7 +128,7 @@
                     <li class="js-show">
                         <div class="weui-flex js-category">
                             <div class="weui-flex__item"><% =dr["title"] %></div>
-                            Lot: <%=dr["lot_no"] %>
+                             <%= dr["lot_no"] ==""?"":"Lot:"+dr["lot_no"] %>
                             <i class="icon icon-35 padding10-l"></i>
                         </div>
                         <div class="page-category js-categoryInner">
@@ -178,7 +178,22 @@
                                         <label class="weui-form-preview__label">退料时间</label>
                                         <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %>  </span>
                                     </div>
-                                    <% } %>
+                                    <% }
+                                        else if (dr["title"].ToString() == "取消要料")
+                                        {  %>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">取消人</label>
+                                        <span class="weui-form-preview__value"><%=dr["cellphone"] %><%=dr["emp_name"] %> </span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">取消数量</label>
+                                        <span class="weui-form-preview__value"><%=dr["qty"] %> </span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">取消时间</label>
+                                        <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %>  </span>
+                                    </div>
+                                    <% } %>  
                                 </div>
 
                             </div>

@@ -108,7 +108,7 @@
                                 {%>
                                 <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;">
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                                        <%= "来自<a href='prod_qcc_part_detail.aspx?dh="+dr_["workorder"]+"'>"+dr_["workorder"] + "</a>,生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= dr_["pgino"] + "," + dr_["pn"] %>
@@ -170,7 +170,7 @@
                                 {%>
                                 <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                                        <%= "来自<a href='prod_qcc_part_detail.aspx?dh="+dr_["workorder"]+"'>"+dr_["workorder"] + "</a>,生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= dr_["pgino"] + "," + dr_["pn"] %>
@@ -231,7 +231,7 @@
                                 {%>
                                 <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "Lot:"+dr_["lot_no"] + ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
+                                        <%= "Lot:<a href='prod_wip_detail_V1.aspx?lotno="+dr_["lot_no"]+"&para=N'>"+dr_["lot_no"] + "</a>,上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= dr_["sku"] + "," + dr_["sku_descr"] %>
