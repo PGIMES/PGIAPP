@@ -125,7 +125,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         else if (para == "4")//修改数据的绑定
         {
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
-                , "$('#lbl_bq').html('" + msg + "'); $('#xbq_pgino').val('" + pgino + "');$('#xbq_serialno').val('" + serialno + "'); $('#xbq_qty').val('" + qty + "');"
+                , "$.toptip('修改成功', 'success');$('#lbl_bq').html('" + msg + "'); $('#xbq_pgino').val('" + pgino + "');$('#xbq_serialno').val('" + serialno + "'); $('#xbq_qty').val('" + qty + "');"
                 , true);
         }
 
@@ -224,12 +224,12 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         }
         if (_serialno != xbq_serialno.Text)
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('Serial No " + _serialno + " 与 页面Serial No " + xbq_serialno.Text + "不一致');", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('Serial No:" + _serialno + " 与 页面Serial No:" + xbq_serialno.Text + "不一致');", true);
             return;
         }
         if (Convert.ToInt32(xbq_qty.Text) > Convert.ToInt32(xbq_qty_ori.Text))
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('QTY" + xbq_qty.Text + " 不可大于原QTY" + xbq_qty_ori.Text + "');", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('QTY:" + xbq_qty.Text + " 不可大于原QTY:" + xbq_qty_ori.Text + "');", true);
             return;
         }
 
