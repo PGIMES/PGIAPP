@@ -30,6 +30,10 @@
             padding:10px 20px;  
         }
         i{ color:#03a9f4}
+
+        /*.weui-cells_radio .weui-check:checked+.weui-icon-checked:before{
+            color:#09bb07;
+        }*/
     </style>
         
     <script type="text/javascript">
@@ -55,6 +59,12 @@
                         // code 在这里面写上扫描二维码之后需要做的内容 
                         ck_dh_change(result);
 
+                    }, cancel: function () {
+                        $.modal({
+                            title: "",
+                            text: $("#div_2").html(),
+                            buttons: [ ]
+                        });
                     }
                 });
             });
@@ -242,6 +252,66 @@
         </div>
 
     </form>
+
+    <%--<div id="div_1">
+    <div class="weui-cells weui-cells_radio" >
+      <label class="weui-cell weui-check__label" for="x11">
+        <div class="weui-cell__bd">
+          <p>生成入库单</p>
+        </div>
+        <div class="weui-cell__ft">
+          <input type="radio" class="weui-check" name="radio1" id="x11">
+          <span class="weui-icon-checked"></span>
+        </div>
+      </label>
+      <label class="weui-cell weui-check__label" for="x12">
+        <div class="weui-cell__bd">
+          <p>合格品入库</p>
+        </div>
+        <div class="weui-cell__ft">
+          <input type="radio" class="weui-check" name="radio1" id="x12" checked="checked">
+          <span class="weui-icon-checked"></span>
+        </div>
+      </label>
+      <label class="weui-cell weui-check__label" for="x13">
+        <div class="weui-cell__bd">
+          <p>废品接收</p>
+        </div>
+        <div class="weui-cell__ft">
+          <input type="radio" class="weui-check" name="radio1" id="x13" checked="checked">
+          <span class="weui-icon-checked"></span>
+        </div>
+      </label>
+     
+    </div>
+    </div>--%>
+
+    <div id="div_2" style="display:none;">
+        <div class="weui-cells">
+          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_Print.aspx?dh=&ck=Y">
+            <div class="weui-cell__bd">
+              <p>生成入库单</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_hege.aspx?dh=&ck=Y">
+            <div class="weui-cell__bd">
+              <p>合格品入库</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+          <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?dh=&ck=Y">
+            <div class="weui-cell__bd">
+              <p>废品接收</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+        </div>
+    </div>
+
 </body>
     <script>
         var datad = [];

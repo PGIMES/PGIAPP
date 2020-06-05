@@ -86,13 +86,12 @@
                 return false;
             }
 
-            if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
+            //if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
 
-                $.confirm('零托,确认执行下一步吗？')
-                //return confirm('零托,确认执行下一步吗？');
-            } else {
-                return true;
-            }
+            //    //return confirm('零托,确认执行下一步吗？');
+            //} else {
+            //    return true;
+            //}
 
             return true;
         }
@@ -107,37 +106,55 @@
               Bind_WorkOrder($("#txt_dh").val());
               xmh_change();
 
-              $("#btnsave2 ,#btnsave3").each(function () {
-                
-                  $(this).on('click', function () {
-                      debugger
-                      $(":button").attr("disabled");
-                      $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
-                     // $(this).attr("disabled", "disabled");
-                     // $(this).removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
-                      if ($(this).val() == "暂存") { 
-                          if (!zcvalid()) {
-                              $(this).removeAttr("disabled");
-                              $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-                              return false;
-                              //}
-                          }
 
-                      }
-                      else { 
-                          if (!valid()) {
-                              $(this).removeAttr("disabled");
-                              $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-                              return false;
-                          }
-                      }
 
-                      $.ajax({
+          });
+
+
+          $(function () {
+              $("#btnsave2").click(function () {
+               
+                  $(":button").attr("disabled", "disabled");
+                  $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+                 
+                      if (!zcvalid()) {
+                          $(this).removeAttr("disabled");
+                          $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                          return false;
+                          //}
+                      }
+                      btnclick($("#btnsave2").val());
+              });
+
+              $("#btnsave3").click(function () {
+                  $(":button").attr("disabled","disabled");
+                  $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                  if (!valid()) {
+                      $(this).removeAttr("disabled");
+                      $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                      return false;
+                      //}
+                  }
+                  if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val()))
+                  {
+                      $.confirm('零托,确认执行下一步吗？', function () { btnclick($("#btnsave3").val()); },
+                          function () {
+                          $(":button").removeAttr("disabled");
+                          $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                      });
+                  }
+                  
+              });
+            });
+
+          function btnclick(btnevent){
+               $.ajax({
                       type: "post",
                       url: "Off_Material.aspx/save2",
                       data: "{'_dh':'" + $('#txt_dh').val()
                           + "','_emp':'" + $('#txt_emp').val() + "','_pgino':'" + $('#txt_xmh').val() + "','_pn':'" + $('#txt_pn').val()
-                          + "','_curr_qty':'" + $('#txt_curr_qty').val() + "','_btnms':'" + $(this).val()+ "','_dh_record':'" + $('#dh_record').val()
+                          + "','_curr_qty':'" + $('#txt_curr_qty').val() + "','_btnms':'" + btnevent + "','_dh_record':'" + $('#dh_record').val()
                           + "','_stepvalue':'" + $("input[name='step']:checked").val() + "','_remark':'" + $('#txt_remark').val() + "'}",
                       contentType: "application/json; charset=utf-8",
                       dataType: "json",
@@ -146,9 +163,9 @@
                           var obj = eval(data.d);
                           if (obj[0].flag == "Y") {
                               alert(obj[0].msg);
-                              if (obj[0].msg.indexOf('上岗')>0)
+                              if (obj[0].msg.indexOf('上岗') > 0)
                               { window.location.href = "Emp_Login.aspx?workshop=<%=_workshop %>"; }
-                             
+
                               $(":button").removeAttr("disabled");
                               $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                               return false;
@@ -157,12 +174,7 @@
                       }
 
                   });
-
-
-                  })
-              })
- 
-          })
+          }
          
           function xmh_change() {
 
