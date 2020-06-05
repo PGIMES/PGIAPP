@@ -28,6 +28,16 @@
           transition: font-size 0.25s ease-out 0s;
 
         }
+        #div_bq_last .icon{
+          font-size: 23px;
+          line-height: 40px;
+          margin: 5px 0;
+          color:#18b4ed;
+          -webkit-transition: font-size 0.25s ease-out 0s;
+          -moz-transition: font-size 0.25s ease-out 0s;
+          transition: font-size 0.25s ease-out 0s;
+
+        }
         .collapse li.js-show .weui-flex {
             opacity: 1;
             color: rgb(66, 139, 202);
@@ -43,6 +53,9 @@
             $("#qty").attr("readonly", "readonly");
 
             $("#xbq_con").attr("readonly", "readonly");
+            $("#xbq_pgino").attr("readonly", "readonly");
+            $("#xbq_serialno").attr("readonly", "readonly");
+            $("#div_bq_last").hide();
             
 
             if ("<%= _dh %>" != "") {//仓库接收 扫码进来
@@ -71,6 +84,7 @@
 
         function sm_xbq() {
             $('#img_sm_xbq').click(function () {
+                $("#div_bq_last").hide();
                 wx.ready(function () {
                     wx.scanQRCode({
                         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -80,6 +94,10 @@
                             // code 在这里面写上扫描二维码之后需要做的内容  
                             $('#xbq_con').val(result);
                             xbq_change(result);
+                        }, cancel: function () {
+                            if ($("#xbq_con").val() != "") {
+                                $("#div_bq_last").show();
+                            }
                         }
                     });
                 });
@@ -91,10 +109,24 @@
 
         function del_xbq() {
             $.confirm('确认要清空已扫标签吗？', function () {
+                $("#div_bq_last").hide();
                 $("#<%=btn_bind_data_c.ClientID%>").click(); 
             }, function () {
                 //点击取消后的回调函数
             });
+        }
+
+        function modify_xbq() {
+            if ($.trim($("#xbq_qty").val()) == "") {
+                layer.alert("请输入【QTY】.");
+                return false;
+            }
+            if (parseInt($("#xbq_qty").val()) <=0) {
+                layer.alert("【QTY】不可小于等于0.");
+                return false;
+            }
+
+            $("#<%=btn_bind_data_e.ClientID%>").click();
         }
 
         function xbq_change() {
@@ -200,6 +232,28 @@
                 <span class="icon icon-26" onclick="del_xbq();"></span>
             </div>
         </div>
+        <div class="weui-cells weui-cells_form" id="div_bq_last">   
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">标签物料号</label></div>                          
+                <asp:TextBox ID="xbq_pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">Serial No</label></div>                          
+                <asp:TextBox ID="xbq_serialno" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red "><label class="weui-label">QTY</label></div>            
+                <div class="weui-cell__bd">
+                    <span style="float:left; width:90%">
+                        <asp:TextBox ID="xbq_qty" class="weui-input" runat="server" type='number'></asp:TextBox>
+                        <asp:TextBox ID="xbq_qty_ori" class="weui-input" runat="server" type='number' style="color:gray;display:none;"></asp:TextBox>
+                    </span>
+                    <span style="float:left; width:10%">
+                        <span class="icon icon-66" onclick="modify_xbq();"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
 
         <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional" style="display:none;">
         <ContentTemplate>
@@ -228,7 +282,8 @@
             </asp:GridView>
 
             <asp:Button ID="btn_bind_data" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_Click"/>
-            <asp:Button ID="btn_bind_data_c" runat="server" Text="绑定grid数据" style="display:none;" OnClick="btn_bind_data_c_Click"/>
+            <asp:Button ID="btn_bind_data_c" runat="server" Text="清空grid数据" style="display:none;" OnClick="btn_bind_data_c_Click"/>
+            <asp:Button ID="btn_bind_data_e" runat="server" Text="修改grid最后一次数据" style="display:none;" OnClick="btn_bind_data_e_Click"/>
         </ContentTemplate>
         </asp:UpdatePanel>
                    

@@ -45,12 +45,13 @@
     <script>
 
         function zcvalid() {
-            if ($("#txt_curr_qty").val() == "" || $("#txt_curr_qty").val() <= "0") {
-                alert("本次下料数量必须大于0.");
-                return false;
-            }
-
-            if ($("#txt_xmh").val() == "") {
+            //if ($("#txt_curr_qty").val() == "" || $("#txt_curr_qty").val() <= "0") {
+            //    alert("本次下料数量必须大于0.");
+            //    return false;
+            //}
+            
+            if ($("#txt_xmh").val() == "" ) {
+               
                 alert("请选择物料号.");
                 return false;
             }
@@ -58,10 +59,15 @@
                 alert("请输入生产完成单号.");
                 return false;
             }
+            if ($("#txt_xmh").val() == null)
+            {
+                alert("未上岗或无下线数据.");
+                return false;
+            }
 
            // $("#btnzc").prop("disabled", "disabled").text("处理中…");
-            $("input[id*=btnzc]").addClass("disabled").text("处理中…");
-            //return true;
+           // $("input[id*=btnzc]").addClass("disabled").text("处理中…");
+            return true;
         }
 
         function valid() {
@@ -82,7 +88,8 @@
 
             if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
 
-                return confirm('零托,确认执行下一步吗？');
+                $.confirm('零托,确认执行下一步吗？')
+                //return confirm('零托,确认执行下一步吗？');
             } else {
                 return true;
             }
@@ -99,7 +106,62 @@
               sm_source();
               Bind_WorkOrder($("#txt_dh").val());
               xmh_change();
-             
+
+              $("#btnsave2 ,#btnsave3").each(function () {
+                
+                  $(this).on('click', function () {
+                      debugger
+                      $(":button").attr("disabled");
+                      $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+                     // $(this).attr("disabled", "disabled");
+                     // $(this).removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+                      if ($(this).val() == "暂存") { 
+                          if (!zcvalid()) {
+                              $(this).removeAttr("disabled");
+                              $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                              return false;
+                              //}
+                          }
+
+                      }
+                      else { 
+                          if (!valid()) {
+                              $(this).removeAttr("disabled");
+                              $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                              return false;
+                          }
+                      }
+
+                      $.ajax({
+                      type: "post",
+                      url: "Off_Material.aspx/save2",
+                      data: "{'_dh':'" + $('#txt_dh').val()
+                          + "','_emp':'" + $('#txt_emp').val() + "','_pgino':'" + $('#txt_xmh').val() + "','_pn':'" + $('#txt_pn').val()
+                          + "','_curr_qty':'" + $('#txt_curr_qty').val() + "','_btnms':'" + $(this).val()+ "','_dh_record':'" + $('#dh_record').val()
+                          + "','_stepvalue':'" + $("input[name='step']:checked").val() + "','_remark':'" + $('#txt_remark').val() + "'}",
+                      contentType: "application/json; charset=utf-8",
+                      dataType: "json",
+                      async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                      success: function (data) {
+                          var obj = eval(data.d);
+                          if (obj[0].flag == "Y") {
+                              alert(obj[0].msg);
+                              if (obj[0].msg.indexOf('上岗')>0)
+                              { window.location.href = "Emp_Login.aspx?workshop=<%=_workshop %>"; }
+                             
+                              $(":button").removeAttr("disabled");
+                              $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                              return false;
+                          }
+                          window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
+                      }
+
+                  });
+
+
+                  })
+              })
+ 
           })
          
           function xmh_change() {
@@ -233,7 +295,8 @@
                   });
               });
           }
-
+        
+         
 
     </script>
     <form id="form1" runat="server">
@@ -534,16 +597,22 @@
               <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" style="display:none;" OnClick="btn_bind_data_Click"/>
                
                  <div class="weui-cell">
-                   <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="return  zcvalid();" /> 
-                  <%-- <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       --%>
+                     
+                  <%-- <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca"  runat="server" Text="暂存" OnClick="btnzc_Click"  OnClientClick="return  zcvalid();" /> 
+                   <asp:Button ID="btn_wc" runat="server" Text="未合托完成" onclick="btn_wc_Click"   style=" display:none"  />       
                    <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="下料" OnClick="btnsave_Click"  OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';"  style="margin-left:10px;" />
-                </div>
+                --%>
+                      </div>
                
 
                    </ContentTemplate>
             </asp:UpdatePanel>
                 </div>
+              <div class="weui-cell">
 
+                   <input id="btnsave2" type="button" value="暂存" class="weui-btn weui-btn_primary" />
+                  <input id="btnsave3" type="button" value="下料" class="weui-btn weui-btn_primary" style="margin-left:10px;" />
+              </div>
                
               
      

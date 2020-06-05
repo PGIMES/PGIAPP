@@ -92,7 +92,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         return result;
 
     }
-    public void bind_gv(string para)
+    public void bind_gv(string para, string pgino, string serialno, string qty)
     {
         DataTable dt = (DataTable)ViewState["xbq_data"];
         GridView1.DataSource = dt;
@@ -106,20 +106,34 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
                 msg = "已扫箱数:<font color=#10AEFF>" + dt.Rows.Count.ToString() + "</font>已扫数量:<font color=#10AEFF>" + dt.Compute("Sum(qty)", "true").ToString() + "</font>";
             }
         }
-        if (para == "1")
+        if (para == "1")//扫描成功之后的绑定数据
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#lbl_bq').html('" + msg + "');setTimeout(function(){ $('#img_sm_xbq').click(); }, 500);", true); 
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
+                , "$('#lbl_bq').html('" + msg + "'); $('#xbq_pgino').val('" + pgino + "'); $('#xbq_serialno').val('" + serialno + "'); $('#xbq_qty').val('" + qty + "');$('#xbq_qty_ori').val('" + qty + "');setTimeout(function(){ $('#img_sm_xbq').click(); }, 500);"
+                , true); 
         }
-        else
+        else if(para == "2")//翻页
         {
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "$('#lbl_bq').html('" + msg + "');", true);
         }
-        
+        else if (para == "3")//清空数据绑定
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
+                , "$('#lbl_bq').html('" + msg + "'); $('#xbq_pgino').val('" + pgino + "');$('#xbq_serialno').val('" + serialno + "'); $('#xbq_qty').val('" + qty + "');$('#xbq_qty_ori').val('" + qty + "');"
+                , true);
+        }
+        else if (para == "4")//修改数据的绑定
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
+                , "$('#lbl_bq').html('" + msg + "'); $('#xbq_pgino').val('" + pgino + "');$('#xbq_serialno').val('" + serialno + "'); $('#xbq_qty').val('" + qty + "');"
+                , true);
+        }
+
     }
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         this.GridView1.PageIndex = e.NewPageIndex;
-        bind_gv("2");
+        bind_gv("2", "", "", "");
     }
 
     protected void btn_bind_data_Click(object sender, EventArgs e)
@@ -186,13 +200,44 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         dt.Rows.Add(dr);
         ViewState["xbq_data"] = dt;
 
-        bind_gv("1");
+        bind_gv("1", _pgino, _serialno, _qty);
     }
 
     protected void btn_bind_data_c_Click(object sender, EventArgs e)
     {
         ViewState["xbq_data"] = null;
-        bind_gv("2");
+        bind_gv("3", "", "", "");
+    }
+
+    protected void btn_bind_data_e_Click(object sender, EventArgs e)
+    {
+        DataTable dt = (DataTable)ViewState["xbq_data"];
+        int max_row = dt.Rows.Count - 1;
+
+        string _pgino = dt.Rows[max_row]["pgino"].ToString();
+        string _serialno = dt.Rows[max_row]["serialno"].ToString();
+
+        if (_pgino != xbq_pgino.Text)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('物料号" + _pgino + " 与 页面物料号" + xbq_pgino.Text + "不一致');", true);
+            return;
+        }
+        if (_serialno != xbq_serialno.Text)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('Serial No " + _serialno + " 与 页面Serial No " + xbq_serialno.Text + "不一致');", true);
+            return;
+        }
+        if (Convert.ToInt32(xbq_qty.Text) > Convert.ToInt32(xbq_qty_ori.Text))
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('QTY" + xbq_qty.Text + " 不可大于原QTY" + xbq_qty_ori.Text + "');", true);
+            return;
+        }
+
+        dt.Rows[max_row]["qty"] = xbq_qty.Text;
+        dt.AcceptChanges();
+        ViewState["xbq_data"] = dt;
+
+        bind_gv("4", xbq_pgino.Text, xbq_serialno.Text, xbq_qty.Text);
     }
 
     protected void btnsave_Click(object sender, EventArgs e)

@@ -39,7 +39,7 @@ public partial class Off_Material : System.Web.UI.Page
         {
             ViewState["STEPVALUE"] = "";
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text =  lu.WorkCode;
+            txt_emp.Text =   lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -72,13 +72,14 @@ public partial class Off_Material : System.Web.UI.Page
         {
             pgino = dt_his.Rows[0]["pgino"].ToString();
 
-            if (!txt_xmh.Items.Contains(new ListItem(pgino))  && dt.Rows.Count>0)
+            if (!txt_xmh.Items.Contains(new ListItem(pgino)) && dt.Rows.Count > 0)
             {
-                btnsave.Attributes.Add("disabled", "disabled");
-                btnzc.Attributes.Add("disabled", "disabled");
+                // btnsave.Attributes.Add("disabled", "disabled");
+                // btnzc.Attributes.Add("disabled", "disabled");
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('请上岗" + pgino + "岗位');", true);
                 return;
             }
+           
         }
 
     }
@@ -88,21 +89,21 @@ public partial class Off_Material : System.Web.UI.Page
 
 
 
-    protected void btnsave_Click(object sender, EventArgs e)
-    {
-        //txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
-        //if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
-        //{   
-        //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认下料吗？', function () { $('#btn_wc').click(); }, function () {});", true);
-        //}
-        //else
-        //{
-            save("下料");
+    //protected void btnsave_Click(object sender, EventArgs e)
+    //{
+    //    //txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+    //    //if ((double.Parse(txt_curr_qty.Text) + double.Parse(txt_off_qty.Text)) < double.Parse(txt_ztsl.Text))
+    //    //{   
+    //    //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$.confirm('零托,确认下料吗？', function () { $('#btn_wc').click(); }, function () {});", true);
+    //    //}
+    //    //else
+    //    //{
+    //        save("下料");
            
-        //}
+    //    //}
 
 
-    }
+    //}
 
 
 
@@ -183,10 +184,10 @@ public partial class Off_Material : System.Web.UI.Page
 
     }
 
-    protected void btnzc_Click(object sender, EventArgs e)
-    {
-        save(btnzc.Text);
-    }
+    //protected void btnzc_Click(object sender, EventArgs e)
+    //{
+    //    save(btnzc.Text);
+    //}
     //protected void btn_wc_Click(object sender, EventArgs e)
     //{
     //    save("下料");
@@ -227,7 +228,7 @@ public partial class Off_Material : System.Web.UI.Page
         }
         else
         { 
-         sql = @"exec usp_app_down_material_ver '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+         sql = @"exec usp_app_down_material '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
         }
         if (dh_record.Text.Contains(","))
         { dh_source = dh_record.Text.Substring(1, dh_record.Text.Length - 1); }
@@ -257,12 +258,13 @@ public partial class Off_Material : System.Web.UI.Page
         if (dt_his.Rows.Count > 0)
         {
             pgino = dt_his.Rows[0]["pgino"].ToString();
-        }
-        if (txt_xmh.Items.Contains(new ListItem(pgino)))
-        {
             txt_xmh.SelectedValue = pgino;
             txt_xmh.Attributes.Add("disabled", "disabled");
         }
+        //if (txt_xmh.Items.Contains(new ListItem(pgino)))
+        //{
+           
+        //}
         
 
         string sql = @"exec usp_app_off_material_Bind_xmh_ver '{0}','{1}'";
@@ -311,5 +313,33 @@ public partial class Off_Material : System.Web.UI.Page
 
     }
 
-    
+    [WebMethod]
+    public static string save2(string _dh, string _emp, string _pgino, string _pn, float _curr_qty, string _btnms
+       , string _dh_record, string _stepvalue, string _remark)
+    {
+        string flag = "N", msg = "",re_sql = "", _dh_source = "";
+       
+        if (_dh_record.Contains(","))
+        { _dh_source = _dh_record.Substring(1, _dh_record.Length - 1); }
+        if (_curr_qty <= 0)
+        {
+            re_sql = @"exec usp_app_down_material_recover '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        }
+        else
+        {
+            re_sql = @"exec usp_app_down_material_ver '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        }
+        
+
+        if (flag == "N")
+        {
+            re_sql = string.Format(re_sql, _dh, _emp, _pgino, _pn, _curr_qty, _btnms, _dh_source, _stepvalue, _remark);
+            DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+            flag = re_dt.Rows[0][0].ToString();
+            msg = re_dt.Rows[0][1].ToString();
+        }
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
 }
