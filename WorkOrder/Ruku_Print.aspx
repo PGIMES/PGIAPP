@@ -20,7 +20,7 @@
         }
         #div_bq .icon{
           font-size: 23px;
-          line-height: 40px;
+          /*line-height: 40px;*/
           margin: 5px 0;
           color:#18b4ed;
           -webkit-transition: font-size 0.25s ease-out 0s;
@@ -29,8 +29,8 @@
 
         }
         #div_bq_last .icon{
-          font-size: 23px;
-          line-height: 40px;
+          font-size: 17px;
+          /*line-height: 40px;*/
           margin: 5px 0;
           color:#18b4ed;
           -webkit-transition: font-size 0.25s ease-out 0s;
@@ -228,7 +228,8 @@
             <div class="weui-form-preview__item">
                 <asp:Label ID="lbl_bq" class="weui-form-preview__label" runat="server" Text=""></asp:Label>
                 <asp:TextBox ID="xbq_con" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
-                <img id="img_sm_xbq" src="../img/fdj2.png"/>
+                <%--<img id="img_sm_xbq" src="../img/fdj2.png"/>--%>
+                <span class="icon icon-86" id="img_sm_xbq" ></span>
                 <span class="icon icon-26" onclick="del_xbq();"></span>
             </div>
         </div>
