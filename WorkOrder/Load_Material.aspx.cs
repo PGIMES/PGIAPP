@@ -15,6 +15,7 @@ public partial class Load_Material : System.Web.UI.Page
     public string _needno = "";
     public string _para = "";
     public string _emp = "";
+    public DataTable dt_infor;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -42,7 +43,7 @@ public partial class Load_Material : System.Web.UI.Page
 
     void load_data()
     {
-        string re_sql = @"exec [usp_app_load_material_load_data] '{0}','{1}','{2}'";
+        string re_sql = @"exec [usp_app_load_material_load_data_V1] '{0}','{1}','{2}'";
         re_sql = string.Format(re_sql, _lotno, _needno, _para);
         DataSet ds = SQLHelper.Query(re_sql);
 
@@ -50,20 +51,7 @@ public partial class Load_Material : System.Web.UI.Page
         listBxInfo_YL.DataSource = dt0;
         listBxInfo_YL.DataBind();
 
-        DataTable dt1 = ds.Tables[1];
-        listBxInfo_SL.DataSource = dt1;
-        listBxInfo_SL.DataBind();
-
-        DataTable dt2 = ds.Tables[2];
-        listBxInfo_LL.DataSource = dt2;
-        listBxInfo_LL.DataBind();
-
-        DataTable dt3 = ds.Tables[3];
-        listBxInfo_TL.DataSource = dt3;
-        listBxInfo_TL.DataBind();
-
-        ViewState["dt2"] = dt2.Rows.Count.ToString();
-        ViewState["dt3"] = dt3.Rows.Count.ToString();
+        dt_infor = ds.Tables[1];
     }
 
 
@@ -97,36 +85,35 @@ public partial class Load_Material : System.Web.UI.Page
 
     }
 
-    protected void btnsave_Click(object sender, EventArgs e)
+    [WebMethod]
+    public static string Save_Sku(string emp, string needno, string lotno, string para)
     {
+        string result = "";
+        string flag = "", msg = "";
 
-        
         string sqlstr = @"select emp_code+emp_name,pgino,location,id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
-        sqlstr = string.Format(sqlstr, emp_code_name.Text);
+        sqlstr = string.Format(sqlstr, emp);
         var dt = SQLHelper.reDs(sqlstr).Tables[0];
         if (dt.Rows.Count <= 0)
         {
-
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
-            return;
+            flag = "Y1";
+            msg = "员工未上岗,请跳转至上岗页面";
+            result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+            return result;
         }
 
-        string sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}','{3}'";
-        sql = string.Format(sql, emp_code_name.Text, _lotno, _needno, _para);
-        var value = SQLHelper.reDs(sql).Tables[0];
-
-        if (value != null && value.Rows.Count > 0)
+        string re_sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}','{3}'";
+        re_sql = string.Format(re_sql, emp, needno, lotno, para);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        if (re_dt.Rows.Count == 1)
         {
-            if (value.Rows[0][0].ToString() == "Y")
-            {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"上料完成.\");window.location.href = 'YL_List_new.aspx?workshop=" + _workshop + "'", true);
-
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"失败，请重新提交.\")", true);
-            }
+            flag = re_dt.Rows[0][0].ToString();
+            msg = re_dt.Rows[0][1].ToString();
         }
+
+        result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
     }
 
 }

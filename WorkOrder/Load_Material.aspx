@@ -67,7 +67,6 @@
 
         $(function () {
             $('.collapse .js-category').find('label').css("color", "#e0e0e0");
-            $('#div_sl').find('label').css("color", "#428BCA");
 
             $('.collapse .js-category').click(function () {
                 $parent = $(this).parent('li');
@@ -86,7 +85,82 @@
                 }
             });
 
+            $("ul li .js-category").find("label").each(function () {
+                if ($(this).text().indexOf("<%= _lotno %>")>=0) {
+                    $(this).parent().parent().siblings().removeClass('js-show');
+                    $(this).parent().parent().addClass('js-show');
+                    $(this).parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
+                    $(this).parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+                    //单号红色
+                    $(this).css("color", "#428BCA");
+
+                    //处置信息
+                    $(this).parent().children('div').children().css("color", "#428BCA");
+
+                } 
+            });
+            
+            $('#btn_save').click(function () {
+                $("#btn_save").attr("disabled", "disabled");
+                $("#btn_save").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $("#btn_cancel").attr("disabled", "disabled");
+                $("#btn_cancel").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if ($("#txt_qty").text() == "") {
+                    layer.alert('【上料数量】不可为空');
+
+                    $("#btn_save").removeAttr("disabled");
+                    $("#btn_save").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    $("#btn_cancel").removeAttr("disabled");
+                    $("#btn_cancel").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "Load_Material.aspx/Save_Sku",
+                    data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= _lotno %>" + "','para':'" + "<%= _para %>" + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        var flag = obj[0].flag;
+                        if (flag == "N") {
+                            $("#btn_save").removeAttr("disabled");
+                            $("#btn_save").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_cancel").removeAttr("disabled");
+                            $("#btn_cancel").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            layer.alert(obj[0].msg);
+                        } else  if (flag == "Y") {
+                            layer.alert(obj[0].msg, {}, function (index) {
+                                layer.close(index);
+                                window.location.href = "/workorder/YL_List_new.aspx?workshop=<%=_workshop %>";
+                            });
+                        } else if (flag == "Y1") {
+                            layer.alert(obj[0].msg, {}, function (index) {
+                                layer.close(index);
+                                window.location.href = "/workorder/Emp_Login.aspx?workshop=<%=_workshop %>";
+                            });
+                        }
+
+                    }
+                });
+
+            });
+
             $('#btn_cancel').click(function () {
+                $("#btn_save").attr("disabled", "disabled");
+                $("#btn_save").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $("#btn_cancel").attr("disabled", "disabled");
+                $("#btn_cancel").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
                 var qty = $("#txt_qty").text();
 
                 $.confirm('确认要【退回】【数量' + qty + '】吗？', function () {
@@ -102,6 +176,12 @@
                             var obj = eval(data.d);
                             var flag = obj[0].flag;
                             if (flag == "Y") {
+                                $("#btn_save").removeAttr("disabled");
+                                $("#btn_save").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                                $("#btn_cancel").removeAttr("disabled");
+                                $("#btn_cancel").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
                                 layer.alert(obj[0].msg);
                             } else {
                                 window.location.href = "/workorder/YL_List_new.aspx?workshop=<%=_workshop %>";
@@ -111,6 +191,12 @@
                     });
                 }, function () {
                     //点击取消后的回调函数
+                    $("#btn_save").removeAttr("disabled");
+                    $("#btn_save").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    $("#btn_cancel").removeAttr("disabled");
+                    $("#btn_cancel").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return;
                 });
             });
         });
@@ -135,6 +221,12 @@
                                 $("#txt_location").text("");
                                 $("#txt_load_person").text("");
                                 $("#txt_load_time").text("");
+
+                                $("#btn_save").attr("disabled", "disabled");
+                                $("#btn_save").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                                $("#btn_cancel").attr("disabled", "disabled");
+                                $("#btn_cancel").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
                             }
                             else {
                                 $("#txt_wlh").text(item.sku);
@@ -143,6 +235,12 @@
                                 $("#txt_location").text(item.location);
                                 $("#txt_load_person").text(item.person);
                                 $("#txt_load_time").text(item.times);
+
+                                $("#btn_save").removeAttr("disabled");
+                                $("#btn_save").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                                $("#btn_cancel").removeAttr("disabled");
+                                $("#btn_cancel").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                             }
                         });
                     }
@@ -214,116 +312,66 @@
                     </li>
                 </ul>
 
-                <%--送料信息--%>
+
+                <% foreach (System.Data.DataRow dr_ in dt_infor.Rows)
+                {%>
                 <ul class="collapse">
-                    <li class="js-show">
-                        <div class="weui-flex js-category"  id="div_sl">
-                            <div class="weui-flex__item" >
-                                <label class="weui-form-preview__label">送料信息</label>
-                            </div>
-                            <label class="weui-form-preview__label">Lot No:<%= _lotno%></label>
-                            <i class="icon icon-35"></i>
-                        </div>
-                        <div class="page-category js-categoryInner">
-                            <div class="weui-cells page-category-content">
-                                <div class="weui-form-preview__bd">
-                                    <asp:Repeater runat="server" ID="listBxInfo_SL">
-                                        <ItemTemplate>                        
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">送料人</label>
-                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
-                                            </div>   
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">送料数量</label>
-                                                <span class="weui-form-preview__value"><%# Eval("act_qty")+","+ Eval("lot_no") %></span>
-                                            </div>  
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">送料时间</label>
-                                                <span class="weui-form-preview__value">
-                                                    <%# Eval("act_date","{0:MM-dd HH:mm}") +""%>
-                                                    <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
-                                                        <%# Eval("times_type") %><%# Eval("times") %>
-                                                    </span>
-                                                </span>
-                                            </div>  
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
-                <%--上料信息--%>
-                <ul class="collapse" style="display:<%= ViewState["dt2"].ToString()!="0"?"block":"none"%>;">
-                    <li>
-                        <div class="weui-flex js-category" >
-                            <div class="weui-flex__item" >
-                                <label class="weui-form-preview__label">上料信息</label>
-                            </div>
-                            <label class="weui-form-preview__label">上料单号:<%= _lotno%></label>
-                            <i class="icon icon-74"></i>
-                        </div>
-                        <div class="page-category js-categoryInner">
-                            <div class="weui-cells page-category-content">
-                                <div class="weui-form-preview__bd">
-                                    <asp:Repeater runat="server" ID="listBxInfo_LL">
-                                        <ItemTemplate>                        
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">上料人</label>
-                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
-                                            </div>   
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">上料数量</label>
-                                                <span class="weui-form-preview__value"><%# Eval("act_qty")+","+ Eval("lot_no") %></span>
-                                            </div>  
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">上料时间</label>
-                                                <span class="weui-form-preview__value"><%# Eval("b_on_m_date","{0:MM-dd HH:mm}") +"" %></span>
-                                            </div>  
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
-                <%--退料信息--%>
-                <ul class="collapse" style="display:<%= ViewState["dt3"].ToString()!="0"?"block":"none"%>;">
-                    <li>
+                    <li class="">
                         <div class="weui-flex js-category">
                             <div class="weui-flex__item" >
-                                <label class="weui-form-preview__label">退料信息</label>
+                                <label class="weui-form-preview__label"><%=dr_["title"] %></label>
                             </div>
-                            <label class="weui-form-preview__label">退料单号:<%= _lotno%></label>
+                            <label class="weui-form-preview__label"><%=dr_["title_desc"] %></label>
                             <i class="icon icon-74"></i>
                         </div>
                         <div class="page-category js-categoryInner">
                             <div class="weui-cells page-category-content">
-                                <div class="weui-form-preview__bd">
-                                    <asp:Repeater runat="server" ID="listBxInfo_TL">
-                                        <ItemTemplate>                        
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">退料人</label>
-                                                <span class="weui-form-preview__value"><%# Eval("phone")+""+ Eval("emp_name") %></span>
-                                            </div>   
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">退料数量</label>
-                                                <span class="weui-form-preview__value"><%# Eval("reject_qty")+","+ Eval("lot_no") %></span>
-                                            </div>  
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">退料时间</label>
-                                                <span class="weui-form-preview__value"><%# Eval("reject_date","{0:MM-dd HH:mm}")  +"" %></span>
-                                            </div>  
-                                        </ItemTemplate>
-                                    </asp:Repeater>
+                                <div class="weui-form-preview__bd ">
+                                 <%if (dr_["title"].ToString() == "送料信息")
+                                { %>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">送料人</label>
+                                        <span class="weui-form-preview__value"><%= dr_["phone"]+""+ dr_["emp_name"] %></span>
+                                    </div>   
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">送料数量</label>
+                                        <span class="weui-form-preview__value"><%= dr_["deal_qty"] %></span>
+                                    </div>  
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">送料时间</label>
+                                        <span class="weui-form-preview__value">
+                                            <%= string.Format("{0:MM-dd HH:mm}",dr_["deal_time"])%>
+                                            <span style="color:<%= dr_["times_type"].ToString()=="还差"?"#10AEFF":(dr_["times_type"].ToString()=="超时"?"red":"#999999") %>;">
+                                                <%= dr_["times_type"] +""+ dr_["times"] %>
+                                            </span>
+                                        </span>
+                                    </div>  
+                                <%} %>
+
+                                 <%if (dr_["title"].ToString() == "上料信息" || dr_["title"].ToString() == "退料信息" || dr_["title"].ToString() == "取消要料")
+                                { %>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label"><%= dr_["keys"] %>人</label>
+                                        <span class="weui-form-preview__value"><%= dr_["phone"]+""+ dr_["emp_name"] %></span>
+                                    </div>   
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label"><%= dr_["keys"] %>数量</label>
+                                        <span class="weui-form-preview__value"><%= dr_["deal_qty"] %></span>
+                                    </div>  
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label"><%= dr_["keys"] %>时间</label>
+                                        <span class="weui-form-preview__value"> <%= string.Format("{0:MM-dd HH:mm}",dr_["deal_time"])%></span>
+                                    </div>  
+                                
+                                <%} %>
+                                    
                                 </div>
                             </div>
                         </div>
                     </li>
                 </ul>
 
+                <%}%>
             </div>
 
             <div class="weui-form-preview">
@@ -370,7 +418,8 @@
             </div>
 
             <div class="weui-cell">
-                <asp:Button ID="btnsave" class="weui-btn weui-btn_primary"  runat="server" Text="上线" OnClick="btnsave_Click" />
+                <%--<asp:Button ID="btnsave" class="weui-btn weui-btn_primary"  runat="server" Text="上线" OnClick="btnsave_Click" />--%>
+                <input id="btn_save" type="button" class="weui-btn weui-btn_primary" value="上线" />
                 <input id="btn_cancel" type="button" class="weui-btn weui-btn_primary" value="退料" style="margin-left:10px;" />
             </div>
 
