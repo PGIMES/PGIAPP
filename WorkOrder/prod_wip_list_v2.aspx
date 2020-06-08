@@ -358,7 +358,9 @@
                                                             <span>
                                                                 <%=dr["pn"] %>
                                                             </span>
-                                                            <span class="span_space">完工单：<%=dr["workorder"] %>
+                                                            <span class="span_space">
+                                                                <%=dr["laiyuan"].ToString()=="终检完待GP12"?"检验单":"完工单" %>
+                                                                ：<%=dr["workorder"] %>
                                                             </span>
                                                             <br />                                                            
                                                             <span>下线数：<font  class="f-blue"><%=dr["off_qty"] %></font>
