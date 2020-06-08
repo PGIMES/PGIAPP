@@ -103,7 +103,7 @@ public partial class Load_Material : System.Web.UI.Page
         }
 
         string re_sql = @"exec usp_app_load_material_Insert_tz '{0}','{1}','{2}','{3}'";
-        re_sql = string.Format(re_sql, emp, needno, lotno, para);
+        re_sql = string.Format(re_sql, emp, lotno, needno, para);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         if (re_dt.Rows.Count == 1)
         {
