@@ -185,7 +185,17 @@
                                                 <%= dr_["pgino"] + "," + dr_["pn"] %>
                                             </span>
                                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2;">
-                                                <%= ""+dr_["workorder"]+ ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
+                                                <%--<%= ""+dr_["workorder"]+ ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>--%>
+
+                                                <% if (dr_["title"].ToString() == "下料")
+                                                    { %>
+                                                    <a href="prod_qcc_part_detail.aspx?dh=<%=dr_["workorder"] %>&type=0"><%= dr_["workorder"] %></a>
+                                                <%}
+                                                else if (dr_["workorder_f"].ToString() != "") { %>
+                                                    <a href="bhgp_Apply_V1.aspx?workorder=<%=dr_["workorder"] %>&workorder_f=<%=dr_["workorder_f"] %>&workshop=<%=_workshop %>"><%= dr_["workorder"] %></a>
+                                                <%} %>
+
+                                                <%= ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
                                             </span>
                                         </div>
                                     </div>
