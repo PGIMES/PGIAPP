@@ -18,7 +18,7 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";//
-        _dh =   Request.QueryString["dh"].ToString();// "W0000456";
+        _dh =  Request.QueryString["dh"].ToString();// "W0000456";
         // lotno = "G0000301";
         //_dh = "W0000450";
 
@@ -34,8 +34,14 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
             Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
-       
-
+        string strsql = "select pgino,emp_name,hege_qty,create_date,qc_dh from Mes_App_WorkOrder_QC_History where qc_dh = '{0}'";
+        strsql = string.Format(strsql, _dh);
+        DataTable re_dt = SQLHelper.Query(strsql).Tables[0];
+        if (re_dt.Rows.Count > 0)
+        {
+            Repeater_record.DataSource = re_dt;
+            Repeater_record.DataBind();
+        }
 
         if (!IsPostBack)
         {
@@ -230,11 +236,11 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
     {
         save(0);
     }
-    protected void btn_wc_Click(object sender, EventArgs e)
-    {
-        save(1);
+    //protected void btn_wc_Click(object sender, EventArgs e)
+    //{
+    //    save(1);
 
-    }
+    //}
     protected void btnsave_Click(object sender, EventArgs e)
     {
         //txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();

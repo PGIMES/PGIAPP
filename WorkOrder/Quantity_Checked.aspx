@@ -488,6 +488,50 @@
                             </ul>
                         </div>
 
+                         <div class="weui-cells weui-cells_form">
+                    <ul class="collapse">
+
+                        <li>
+                            <div class="weui-flex js-category">
+                                <div class="weui-flex__item"><span>完成记录</span></div>
+                                <i class="icon icon-74"></i>
+                            </div>
+                            <div class="page-category js-categoryInner">
+
+                                <div class="weui-cells page-category-content">
+                                     <div class="weui-form-preview__bd"  >
+                                    <asp:Repeater runat="server" ID="Repeater_record">
+
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <td>物料号</td>
+                                                    <td>数量</td>
+                                                    <td>检验人 </td>
+                                                    <td>检验时间 </td>
+                                                </tr>
+                                        </HeaderTemplate>
+
+                                        <ItemTemplate>
+                                            <tr>
+                                                <td><%#  Eval("pgino") %></td>
+                                                <td><%# Eval("hege_qty")%></td>
+                                                <td><%# Eval("emp_name")%></td>
+                                                <td><%# Eval("create_date","{0:MM/dd HH:mm}")%></td>
+                                            </tr>
+
+                                        </ItemTemplate>
+                                         <FooterTemplate>
+                                      </table>
+                                        </FooterTemplate>
+                                    </asp:Repeater>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
                         <div class="hidden">
 
                             <asp:TextBox ID="txt_source_sum" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
@@ -499,7 +543,7 @@
                         <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" Style="display: none;" OnClick="btn_bind_data_Click" />
                         <div class="weui-cell">
                             <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="暂存"   UseSubmitBehavior="false"  OnClick ="btnzc_Click" OnClientClick="if(!zcvalid()){return false;}this.disabled=false;this.value='处理中…';" />
-                            <asp:Button ID="btn_wc" runat="server" Text="未合托完成" OnClick="btn_wc_Click" Style="display: none" />
+                           <%-- <asp:Button ID="btn_wc" runat="server" Text="未合托完成" OnClick="btn_wc_Click" Style="display: none" />--%>
                             <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="下一步" UseSubmitBehavior="false" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" Style="margin-left: 10px;" />
                         </div>
 

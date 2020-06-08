@@ -31,7 +31,7 @@ public partial class Off_Material : System.Web.UI.Page
 
         if (WeiXin.GetCookie("workcode") == null)
         {
-            Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
+           Response.Write("<script>alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
             return;
         }
 

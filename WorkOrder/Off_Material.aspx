@@ -112,14 +112,13 @@
 
 
           $(function () {
-              $("#btnsave2").click(function () {
-               
+              $("#btnsave2").click(function () { 
                   $(":button").attr("disabled", "disabled");
                   $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
                  
                       if (!zcvalid()) {
-                          $(this).removeAttr("disabled");
-                          $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                          $(":button").removeAttr("disabled");
+                          $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                           return false;
                           //}
                       }
@@ -127,12 +126,13 @@
               });
 
               $("#btnsave3").click(function () {
+                  debugger
                   $(":button").attr("disabled","disabled");
                   $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
                   if (!valid()) {
-                      $(this).removeAttr("disabled");
-                      $(this).removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                      $(":button").removeAttr("disabled");
+                      $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                       return false;
                       //}
                   }
@@ -143,6 +143,10 @@
                           $(":button").removeAttr("disabled");
                           $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                       });
+                  }
+                  else
+                  {
+                      btnclick($("#btnsave3").val());
                   }
                   
               });
@@ -170,6 +174,7 @@
                               $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                               return false;
                           }
+                          alert(btnevent + '完成');
                           window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
                       }
 
