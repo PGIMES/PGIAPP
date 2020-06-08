@@ -206,7 +206,8 @@
                                                         </div>
                                                     </a>
                                                 <% } else {%>                                                    
-                                                    <a class="weui-cell weui-cell_access" propline="<%=line %>LH1"  title="<%=dr["part"] %>" href="prod_wip_detail_V1.aspx?lotno=<%=dr["lot_no"] %>&workshop=<%=_workshop %>&para=Y">
+                                                    <a class="weui-cell weui-cell_access" propline="<%=line %>LH1"  title="<%=dr["part"] %>" 
+                                                        href="prod_wip_detail_V1.aspx?lotno=<%=dr["workorder_wip"].ToString()==""?dr["lot_no"]:dr["workorder_wip"] %>&workshop=<%=_workshop %>&para=Y">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -214,7 +215,9 @@
                                                         <div class="weui-cell__bd">
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
                                                                 <span class="padding10-r"><%=dr["part"]%></span>  <%=dr["part_desc"] %><br />
-                                                                <span class="padding5-r"><%= "Lot：" + dr["lot_no"].ToString()%></span>
+                                                                <span class="padding5-r">Lot：<%= dr["workorder_wip"].ToString()==""?"":dr["workorder_wip"]+"/" %>
+                                                                    <%= dr["lot_no"]%>
+                                                                </span>
                                                                 上料:<font class="f-blue padding5-r"><%=dr["qty"]%></font>
                                                                 下料:<font class="f-blue padding5-r"><%=dr["off_qty"]%></font>
                                                                 NG:<font class="f-blue padding5-r"><%=dr["ng_qty"]%></font>
