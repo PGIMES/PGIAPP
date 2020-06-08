@@ -359,7 +359,7 @@
                                                                 <%=dr["pn"] %>
                                                             </span>
                                                             <span class="span_space">
-                                                                <%=dr["laiyuan"].ToString()=="终检完待GP12"?"检验单":"完工单" %>
+                                                                <%=dr["laiyuan"].ToString()=="终检完待GP12"?"终验单":"完工单" %>
                                                                 ：<%=dr["workorder"] %>
                                                             </span>
                                                             <br />                                                            
