@@ -122,7 +122,7 @@
                 $.ajax({
                     type: "post",
                     url: "Load_Material.aspx/Save_Sku",
-                    data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= _lotno %>" + "','para':'" + "<%= _para %>" + "'}",
+                    data: "{'emp':'" + $("#emp_code_name").val() + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= _lotno %>" + "','para':'" + "<%= _para %>" + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
