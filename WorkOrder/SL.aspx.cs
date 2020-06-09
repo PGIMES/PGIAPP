@@ -76,33 +76,64 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             pgino_yn = ds.Tables[2].Rows[0][0].ToString();
 
             DataTable ldt = new DataTable();
-            string sqlStr = "";
+            string sqlStr = ""; string ldt_source = "";
             if (pgino_yn == "Y")
             {
                 sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{1}' with (nolock)";
                 sqlStr = string.Format(sqlStr, pgino, lotno);
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+                ldt_source = "1";
             }
 
             //1，未获取到高架库位的参考号，需要继续获取线边库的 2，直接需要获取线边库的参考号
             if (ldt.Rows.Count == 0)
             {
-                sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
+                //sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
+                sqlStr = @"select ld_loc,ld_qty_oh,ld_part,ld_status from pub.ld_det where ld_ref='" + lotno + "' with (nolock)";
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+                ldt_source = "2";
             }
 
             if (ldt == null)
             {
-                flag = "Y"; msg = "Lot No不正确";
+                flag = "Y"; msg = "Lot No:" + lotno + "不存在";
             }
             else if (ldt.Rows.Count <= 0)
             {
-                flag = "Y"; msg = "Lot No不正确";
+                flag = "Y"; msg = "Lot No:" + lotno + "不存在";
             }
             else
             {
-                flag = "N"; msg = "";
+                if (ldt_source == "1")
+                {
+                    flag = "N"; msg = "";                    
+                }
+                else if (ldt_source == "2")
+                {
+                    if (ldt.Rows[0]["ld_part"].ToString() != pgino)
+                    {
+                        flag = "Y"; msg = "物料号不一致.QAD物料号:" + ldt.Rows[0]["ld_part"].ToString() + " 当前物料号:" + pgino;
+                    }
+                    else if (ldt.Rows[0]["ld_loc"].ToString() != loc_to)
+                    {
+                        flag = "Y"; msg = "库位不一致.QAD库位:" + ldt.Rows[0]["ld_loc"].ToString() + " 当前库位:" + loc_to;
+                    }
+                    else if (ldt.Rows[0]["ld_status"].ToString().ToUpper() != "WIP")
+                    {
+                        flag = "Y"; msg = "QAD状态不是WIP.当前QAD状态:" + ldt.Rows[0]["ld_status"].ToString();
+                    }
+                    else
+                    {
+                        flag = "N"; msg = "";
+                    }
+                }
+            }
 
+
+            if (flag == "N")
+            {
                 loc_from = ldt.Rows[0]["ld_loc"].ToString();
                 float qty_c = Convert.ToSingle(ldt.Rows[0]["ld_qty_oh"].ToString());
 
