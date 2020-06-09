@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" Title="部分明细" AutoEventWireup="true" CodeFile="prod_qcc_part_detail.aspx.cs" Inherits="prod_qcc_part_detail" %>
+﻿<%@ Page Language="C#" Title="操作明细" AutoEventWireup="true" CodeFile="prod_qcc_part_detail.aspx.cs" Inherits="prod_qcc_part_detail" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>部分明细</title>
+    <title>操作明细</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
     <link rel="stylesheet" href="../css/weui.css" />
     <link rel="stylesheet" href="../css/weuix.css" />
