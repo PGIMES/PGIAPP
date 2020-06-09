@@ -255,7 +255,7 @@
                                                  foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'")) {
                                                      if (dr["ispartof"].ToString() != "部分")
                                                      { %> 
-                                                    <a class="weui-cell  weui-cell_access " propline="<%=line %>LH2" title="<%=dr["pgino"] %>" style="color: black" href="prod_qcc_wait_detail.aspx?dh=<%=dr["workorder"] %>&type=0&ngqty=<%=dr["ng_qty"] %>&waitqty=<%=dr["wait_qty"] %>">
+                                                    <a class="weui-cell  weui-cell_access " propline="<%=line %>LH2" title="<%=dr["pgino"] %>" style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["workorder"] %>&type=0&laiyuan=完工单号 %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -346,7 +346,7 @@
                                                  foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'")) {
                                                      if (dr["ispartof"].ToString() != "部分")
                                                      { %> 
-                                                    <a class="weui-cell  weui-cell_access "  propline="<%=line %>LH3" title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_wait_detail.aspx?dh=<%=dr["workorder"] %>&type=9&ngqty=<%=dr["ng_qty"] %>&waitqty=<%=dr["wait_qty"] %>">
+                                                    <a class="weui-cell  weui-cell_access "  propline="<%=line %>LH3" title="<%=dr["pgino"] %>"  style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["workorder"] %>&type=9&laiyuan=<%=dr["laiyuan"].ToString()=="终检完待GP12"?"终检单号":"完工单号" %>">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -359,7 +359,7 @@
                                                                 <%=dr["pn"] %>
                                                             </span>
                                                             <span class="span_space">
-                                                                <%=dr["laiyuan"].ToString()=="终检完待GP12"?"终验单":"完工单" %>
+                                                                <%=dr["laiyuan"].ToString()=="终检完待GP12"?"终检单":"完工单" %>
                                                                 ：<%=dr["workorder"] %>
                                                             </span>
                                                             <br />                                                            

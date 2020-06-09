@@ -385,13 +385,13 @@
                         </div>--%>
                         <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;">
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                                <%= "来自<a href='prod_qcc_part_detail.aspx?dh="+dr_["workorder"]+"'>"+dr_["workorder"] + "</a>,"+dr_["wk_ly"]+"完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                 <%= dr_["pgino"] + "," + dr_["pn"] %>
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" %> <%--+ dr_["shichang"]--%>
+                                <%= dr_["wk_ly"]+"完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" %> <%--+ dr_["shichang"]--%>
                                  <span class="f-blue"> <%=dr_["shichang"].ToString() %></span> 
                             </span>
                         </div>
@@ -472,13 +472,13 @@
                         </div>--%>
                         <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "来自"+dr_["workorder"] + ",生产完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                                <%= "来自<a href='prod_qcc_part_detail.aspx?dh="+dr_["workorder"]+"'>"+dr_["workorder"] + "</a>,"+dr_["wk_ly"]+"完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                 <%= dr_["pgino"] + "," + dr_["pn"] %>
                             </span>
                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                <%= "生产完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" %><%-- + dr_["shichang"]--%>
+                                <%= dr_["wk_ly"]+"完成时间"+string.Format("{0:MM-dd HH:mm}",dr_["begin_date"]) + ",时长" %><%-- + dr_["shichang"]--%>
                                 <span class="f-blue"> <%=dr_["shichang"].ToString() %></span>  
                             </span>
                         </div>
