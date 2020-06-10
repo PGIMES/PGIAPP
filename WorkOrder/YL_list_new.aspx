@@ -146,10 +146,6 @@
                         <div id="tab1" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt1 = ViewState["dt_go"] as System.Data.DataTable;
-                                    int count1 = dt1.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中<%--<asp:Label ID="Label1" runat="server" Text=""></asp:Label>--%> 
                                     <span class="weui-badge  bg-<% =(count1==0?"gray":"blue") %>"><% =count1 %></span>
                                 </div>
@@ -207,10 +203,6 @@
 
                             <%-----已送料----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt2 = ViewState["dt_wc"] as System.Data.DataTable;
-                                    int count2 = dt2.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<%--<asp:Label ID="Label2" runat="server" Text=""></asp:Label>--%> 
                                     <span class="weui-badge  bg-<% =(count2==0?"gray":"blue") %>"><% =count2 %></span>
                                 </div>
@@ -267,10 +259,6 @@
 
                             <%-----已退料----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt3 = ViewState["dt_rj"] as System.Data.DataTable;
-                                    int count3 = dt3.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<%--<asp:Label ID="Label3" runat="server" Text=""></asp:Label> --%>
                                     <span class="weui-badge  bg-<% =(count3==0?"gray":"blue") %>"><% =count3 %></span>
                                 </div>
@@ -323,10 +311,6 @@
 
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt4 = ViewState["dt_end"] as System.Data.DataTable;
-                                    int count4 = dt4.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<%--<asp:Label ID="Label4" runat="server" Text=""></asp:Label> --%>
                                     <span class="weui-badge  bg-<% =(count4==0?"gray":"blue") %>"><% =count4 %></span>
                                 </div>
@@ -378,10 +362,6 @@
                         <div id="tab2" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt5 = ViewState["dt_go_my"] as System.Data.DataTable;
-                                    int count5 = dt5.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 <%--<asp:Label ID="Label5" runat="server" Text=""></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count5==0?"gray":"blue") %>"><% =count5 %></span>
                                 </div>
@@ -439,10 +419,6 @@
 
                             <%-----已送料----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt6 = ViewState["dt_wc_my"] as System.Data.DataTable;
-                                    int count6 = dt6.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<%--<asp:Label ID="Label6" runat="server" Text=""></asp:Label>--%> 
                                     <span class="weui-badge  bg-<% =(count6==0?"gray":"blue") %>"><% =count6 %></span>
                                 </div>
@@ -499,10 +475,6 @@
 
                             <%-----已退料----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt7 = ViewState["dt_rj_my"] as System.Data.DataTable;
-                                    int count7 = dt7.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<%--<asp:Label ID="Label7" runat="server" Text=""></asp:Label>--%> 
                                     <span class="weui-badge  bg-<% =(count7==0?"gray":"blue") %>"><% =count7 %></span>
                                 </div>
@@ -555,10 +527,6 @@
 
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
-                                <%
-                                    System.Data.DataTable dt8 = ViewState["dt_end_my"] as System.Data.DataTable;
-                                    int count8 = dt8.Rows.Count;
-                                %>
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<%--<asp:Label ID="Label8" runat="server" Text=""></asp:Label>--%> 
                                     <span class="weui-badge  bg-<% =(count8==0?"gray":"blue") %>"><% =count8 %></span>
                                 </div>
