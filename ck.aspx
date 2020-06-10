@@ -111,6 +111,8 @@
                         // code 在这里面写上扫描二维码之后需要做的内容 
                         ckck_dh_change(result);
 
+                    }, cancel: function () {
+                        window.location.href = "/workorder/Chuku.aspx?workorder=&ruku_dh=";
                     }
                 });
             });
