@@ -200,12 +200,22 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string rs_data(string domain, string rscode)
+    public static string rs_data(string domain, string rscode, string workshop)
     {
         string result = "";
-        string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+        string sql = @"";
+        if (workshop == "一车间" || workshop == "二车间" || workshop == "四车间")
+        {
+            sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
+                    where left(rsn_code,1) in('3','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
+        }
+        //else if (workshop == "三车间")
+        //{
+        //    sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+        //            from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
+        //            where left(rsn_code,1) in('1','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
+        //}
         sql = string.Format(sql, domain, rscode);
         DataTable dt_reason = SQLHelper.Query(sql).Tables[0];
 

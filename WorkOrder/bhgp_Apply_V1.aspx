@@ -101,8 +101,8 @@
             $("#rscode").change(function () {
                 $.ajax({
                     type: "post",
-                    url: "bhgp_Apply.aspx/rs_data",
-                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $("#rscode").val() + "'}",
+                    url: "bhgp_Apply_V1.aspx/rs_data",
+                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $("#rscode").val() + "','workshop':'" + "<%= _workshop %>" + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -1151,7 +1151,7 @@
             var datalist_pgino, datalist_reason;
             $.ajax({
                 type: "post",
-                url: "bhgp_Apply.aspx/init_pgino",
+                url: "bhgp_Apply_V1.aspx/init_pgino",
                 data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "','emp': '" + $("#emp_code_name").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -1343,8 +1343,8 @@
                 var title = "";
                 $.ajax({
                     type: "post",
-                    url: "bhgp_Apply.aspx/rs_data",
-                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $(this).val() + "'}",
+                    url: "bhgp_Apply_V1.aspx/rs_data",
+                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $(this).val() + "','workshop':'" + "<%= _workshop %>" + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
