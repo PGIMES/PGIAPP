@@ -53,8 +53,51 @@
                 }
             });
 
+            $('#searchInput').bind('input propertychange', function () {
 
-        })
+                var text = $("#searchInput").val();
+                $('.weui-cell').each(function () {
+                    var $self = $(this);
+                    var flag = $self.text().search(text)
+                    if (flag > -1) {
+                        $self.removeClass("hide"); //$self.siblings('.weui-cells__title').addClass("hide");
+                    } else {
+                        $self.addClass("hide"); //$self.siblings('.weui-cells__title').addClass("hide");
+
+                    }
+                });
+
+                showBlockCount();
+            });
+        });
+        //显示数量
+        function showBlockCount() {
+            $(".weui-form-preview>.weui-cells").each(function (i, item) {
+                var rowcount = $(this).find("a:not(.hide)").length;
+                // debugger;
+                var obj = $(item).prev().children().last();
+                $(obj).text(rowcount);
+                if (rowcount == 0) {
+                    $(obj).addClass("bg-gray").removeClass("bg-blue")
+                }
+                else {
+                    $(obj).addClass("bg-blue").removeClass("bg-gray")
+                }
+            });
+        }
+
+        function cancel() {
+            $('.weui-cell').removeClass("hide");
+            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            showBlockCount();
+        }
+
+        function clear() {
+            $('#searchInput').val('');
+            $('.weui-cell').removeClass("hide");
+            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            showBlockCount();
+        }
     </script>
     <script>
         function deal(stepid, workorder, workorder_f, workorder_gl) {
@@ -78,6 +121,22 @@
         <div class="up">释放刷新</div>
         <div class="refresh">正在刷新</div>
     </div>
+
+    <div class="weui-search-bar" id="searchBar">
+        <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+                        required="">
+                <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
+            </div>
+            <label class="weui-search-bar__label" id="searchText">
+                <i class="weui-icon-search"></i>
+                <span>请输入查看的关键字</span>
+            </label>
+        </form>
+        <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
+    </div>
      
     <form id="form1" runat="server">
         <div class="page">
@@ -99,7 +158,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>检验处置
-                                    <asp:Label ID="Label_02" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_02" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_02==0?"gray":"blue") %>"><% =count_02 %></span>
                                 </div>
                                 <div class="weui-cells" id="_02">
                                     <asp:Repeater runat="server" ID="list_02" EnableTheming="False">
@@ -160,7 +220,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量工程师
-                                    <asp:Label ID="Label_03" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_03" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_03==0?"gray":"blue") %>"><% =count_03 %></span>
                                 </div>
                                 <div class="weui-cells" id="_03">
                                     <asp:Repeater runat="server" ID="list_03" EnableTheming="False">
@@ -221,7 +282,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量经理
-                                    <asp:Label ID="Label_04" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_04" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_04==0?"gray":"blue") %>"><% =count_04 %></span>
                                 </div>
                                 <div class="weui-cells" id="_04">
                                     <asp:Repeater runat="server" ID="list_04" EnableTheming="False">
@@ -282,7 +344,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>总经理
-                                    <asp:Label ID="Label_05" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_05" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_05==0?"gray":"blue") %>"><% =count_05 %></span>
                                 </div>
                                 <div class="weui-cells" id="_05">
                                     <asp:Repeater runat="server" ID="list_05" EnableTheming="False">
@@ -343,7 +406,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>需返工/挑选
-                                    <asp:Label ID="Label_01" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_01" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_01==0?"gray":"blue") %>"><% =count_01 %></span>
                                 </div>
                                 <div class="weui-cells" id="_01">
                                     <asp:Repeater runat="server" ID="list_01" EnableTheming="False">
@@ -404,7 +468,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>待入库
-                                    <asp:Label ID="Label_98" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_98" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_98==0?"gray":"blue") %>"><% =count_98 %></span>
                                 </div>
                                 <div class="weui-cells" id="_98">
                                     <asp:Repeater runat="server" ID="list_98" EnableTheming="False">
@@ -465,7 +530,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>已入库(24h内)
-                                    <asp:Label ID="Label_99" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_99" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_01==99?"gray":"blue") %>"><% =count_99 %></span>
                                 </div>
                                 <div class="weui-cells" id="_99">
                                     <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
@@ -530,7 +596,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>检验处置
-                                    <asp:Label ID="Label_02_my" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_02_my" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_02_my==0?"gray":"blue") %>"><% =count_02_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_02_my">
                                     <asp:Repeater runat="server" ID="list_02_my" EnableTheming="False">
@@ -591,7 +658,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量工程师
-                                    <asp:Label ID="Label_03_my" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_03_my" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_03_my==0?"gray":"blue") %>"><% =count_03_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_03_my">
                                     <asp:Repeater runat="server" ID="list_03_my" EnableTheming="False">
@@ -652,7 +720,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量经理
-                                    <asp:Label ID="Label_04_my" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_04_my" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_04_my==0?"gray":"blue") %>"><% =count_04_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_04_my">
                                     <asp:Repeater runat="server" ID="list_04_my" EnableTheming="False">
@@ -713,7 +782,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>总经理
-                                    <asp:Label ID="Label_05_my" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_05_my" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_05_my==0?"gray":"blue") %>"><% =count_05_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_05_my">
                                     <asp:Repeater runat="server" ID="list_05_my" EnableTheming="False">
@@ -774,7 +844,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>需返工/挑选
-                                    <asp:Label ID="Label_01_my" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_01_my" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_01_my==0?"gray":"blue") %>"><% =count_01_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_01_my">
                                     <asp:Repeater runat="server" ID="list_01_my" EnableTheming="False">
@@ -835,7 +906,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>待入库
-                                    <asp:Label ID="Label_98_my" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_98_my" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_98_my==0?"gray":"blue") %>"><% =count_98_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_98_my">
                                     <asp:Repeater runat="server" ID="list_98_my" EnableTheming="False">
@@ -896,7 +968,8 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>已入库(24h内)
-                                    <asp:Label ID="Label_99_my" runat="server" Text="Label"></asp:Label>
+                                    <%--<asp:Label ID="Label_99_my" runat="server" Text="Label"></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count_99_my==0?"gray":"blue") %>"><% =count_99_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_99_my">
                                     <asp:Repeater runat="server" ID="list_99_my" EnableTheming="False">
