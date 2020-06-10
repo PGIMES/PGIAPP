@@ -89,7 +89,7 @@
         function Reject_Sku(reject_where, qty) {
             $.ajax({
                 type: "post",
-                url: "prod_wip_detail.aspx/Reject_Sku",
+                url: "prod_wip_detail_V1.aspx/Reject_Sku",
                 data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= _lotno %>" + "','reject_qty':'" + qty
                     + "','source':'2','reject_where':'" + reject_where + "'}",
                 contentType: "application/json; charset=utf-8",
