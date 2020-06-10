@@ -61,49 +61,49 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         DataTable rowsline_go = dt_go.DefaultView.ToTable(true, "line");
         list_go.DataSource = rowsline_go;
         list_go.DataBind();
-        Label1.Text = "(" + dt_go.Rows.Count + ")";
+        //Label1.Text = "(" + dt_go.Rows.Count + ")";
 
         //list_wc.DataSource = dt_wc;
         DataTable rowsline_wc = dt_wc.DefaultView.ToTable(true, "line");
         list_wc.DataSource = rowsline_wc;
         list_wc.DataBind();
-        Label2.Text = "(" + dt_wc.Rows.Count + ")";
+        //Label2.Text = "(" + dt_wc.Rows.Count + ")";
 
         //list_rj.DataSource = dt_rj;
         DataTable rowsline_rj = dt_rj.DefaultView.ToTable(true, "line");
         list_rj.DataSource = rowsline_rj;
         list_rj.DataBind();
-        Label3.Text = "(" + dt_rj.Rows.Count + ")";
+        //Label3.Text = "(" + dt_rj.Rows.Count + ")";
 
         //list_end.DataSource = dt_end;
         DataTable rowsline_end = dt_end.DefaultView.ToTable(true, "line");
         list_end.DataSource = rowsline_end;
         list_end.DataBind();
-        Label4.Text = "(" + dt_end.Rows.Count + ")";
+        //Label4.Text = "(" + dt_end.Rows.Count + ")";
 
         //list_go_my.DataSource = dt_go_my;
         DataTable rowsline_go_my = dt_go_my.DefaultView.ToTable(true, "line");
         list_go_my.DataSource = rowsline_go_my;
         list_go_my.DataBind();
-        Label5.Text = "(" + dt_go_my.Rows.Count + ")";
+        //Label5.Text = "(" + dt_go_my.Rows.Count + ")";
 
         //list_wc_my.DataSource = dt_wc_my;
         DataTable rowsline_wc_my = dt_wc_my.DefaultView.ToTable(true, "line");
         list_wc_my.DataSource = rowsline_wc_my;
         list_wc_my.DataBind();
-        Label6.Text = "(" + dt_wc_my.Rows.Count + ")";
+        //Label6.Text = "(" + dt_wc_my.Rows.Count + ")";
 
         //list_rj_my.DataSource = dt_rj_my;
         DataTable rowsline_rj_my = dt_rj_my.DefaultView.ToTable(true, "line");
         list_rj_my.DataSource = rowsline_rj_my;
         list_rj_my.DataBind();
-        Label7.Text = "(" + dt_rj_my.Rows.Count + ")";
+        //Label7.Text = "(" + dt_rj_my.Rows.Count + ")";
 
         //list_end_my.DataSource = dt_end_my;
         DataTable rowsline_end_my = dt_end_my.DefaultView.ToTable(true, "line");
         list_end_my.DataSource = rowsline_end_my;
         list_end_my.DataBind();
-        Label8.Text = "(" + dt_end_my.Rows.Count + ")";
+        //Label8.Text = "(" + dt_end_my.Rows.Count + ")";
 
     }
 

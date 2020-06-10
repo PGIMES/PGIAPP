@@ -53,8 +53,53 @@
                 }
             });
 
+            $('#searchInput').bind('input propertychange', function () {
 
-        })
+                var text = $("#searchInput").val();
+                $('.weui-cell').each(function () {
+                    var $self = $(this);
+                    var flag = $self.text().search(text)
+                    if (flag > -1) {
+                        $self.removeClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
+                    } else {
+                        $self.addClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
+
+                    }
+                });
+
+                showBlockCount();
+            });
+
+        });
+
+        //显示数量
+        function showBlockCount() {
+            $(".weui-form-preview>.weui-cells").each(function (i, item) {
+                var rowcount = $(this).find("a:not(.hide)").length;
+                // debugger;
+                var obj = $(item).prev().children().last();
+                $(obj).text(rowcount);
+                if (rowcount == 0) {
+                    $(obj).addClass("bg-gray").removeClass("bg-blue")
+                }
+                else {
+                    $(obj).addClass("bg-blue").removeClass("bg-gray")
+                }
+            });
+        }
+
+        function cancel() {
+            $('.weui-cell').removeClass("hide");
+            $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            showBlockCount();
+        }
+
+        function clear() {
+            $('#searchInput').val('');
+            $('.weui-cell').removeClass("hide");
+            $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            showBlockCount();
+        }
     </script>
 
 </head>
@@ -66,7 +111,22 @@
         <div class="up">释放刷新</div>
         <div class="refresh">正在刷新</div>
     </div>
-     
+
+    <div class="weui-search-bar" id="searchBar">
+        <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+                        required="">
+                <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
+            </div>
+            <label class="weui-search-bar__label" id="searchText">
+                <i class="weui-icon-search"></i>
+                <span>请输入查看的关键字</span>
+            </label>
+        </form>
+        <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
+    </div>
 
     <form id="form1" runat="server">
         <div class="page">
@@ -86,9 +146,12 @@
                         <div id="tab1" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中<asp:Label ID="Label1" runat="server" Text=""></asp:Label> 
-                                   <%-- <asp:Label ID="Label1" runat="server" Text=""  style="display:none;"></asp:Label>
-                                   <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %>   --%>
+                                <%
+                                    System.Data.DataTable dt1 = ViewState["dt_go"] as System.Data.DataTable;
+                                    int count1 = dt1.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中<%--<asp:Label ID="Label1" runat="server" Text=""></asp:Label>--%> 
+                                    <span class="weui-badge  bg-<% =(count1==0?"gray":"blue") %>"><% =count1 %></span>
                                 </div>
                                 <div class="weui-cells" id="YLZ">
                                     <asp:Repeater runat="server" ID="list_go" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
@@ -144,7 +207,13 @@
 
                             <%-----已送料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<asp:Label ID="Label2" runat="server" Text=""></asp:Label> </div>
+                                <%
+                                    System.Data.DataTable dt2 = ViewState["dt_wc"] as System.Data.DataTable;
+                                    int count2 = dt2.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<%--<asp:Label ID="Label2" runat="server" Text=""></asp:Label>--%> 
+                                    <span class="weui-badge  bg-<% =(count2==0?"gray":"blue") %>"><% =count2 %></span>
+                                </div>
                                 <div class="weui-cells" id="YL_WC">
                                     <asp:Repeater runat="server" ID="list_wc" EnableTheming="False" OnItemDataBound="list_wc_ItemDataBound">
                                         <ItemTemplate>
@@ -198,7 +267,13 @@
 
                             <%-----已退料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<asp:Label ID="Label3" runat="server" Text=""></asp:Label> </div>
+                                <%
+                                    System.Data.DataTable dt3 = ViewState["dt_rj"] as System.Data.DataTable;
+                                    int count3 = dt3.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<%--<asp:Label ID="Label3" runat="server" Text=""></asp:Label> --%>
+                                    <span class="weui-badge  bg-<% =(count3==0?"gray":"blue") %>"><% =count3 %></span>
+                                </div>
                                 <div class="weui-cells" id="YL_RJ">
                                     <asp:Repeater runat="server" ID="list_rj" EnableTheming="False" OnItemDataBound="list_rj_ItemDataBound">
                                         <ItemTemplate>
@@ -248,7 +323,13 @@
 
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<asp:Label ID="Label4" runat="server" Text=""></asp:Label> </div>
+                                <%
+                                    System.Data.DataTable dt4 = ViewState["dt_end"] as System.Data.DataTable;
+                                    int count4 = dt4.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<%--<asp:Label ID="Label4" runat="server" Text=""></asp:Label> --%>
+                                    <span class="weui-badge  bg-<% =(count4==0?"gray":"blue") %>"><% =count4 %></span>
+                                </div>
                                 <div class="weui-cells" id="YL_END">
                                     <asp:Repeater runat="server" ID="list_end" EnableTheming="False" OnItemDataBound="list_end_ItemDataBound">
                                         <ItemTemplate>
@@ -297,7 +378,13 @@
                         <div id="tab2" class="weui-tab__content">
                             <%-----要料中----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 <asp:Label ID="Label5" runat="server" Text=""></asp:Label></div>
+                                <%
+                                    System.Data.DataTable dt5 = ViewState["dt_go_my"] as System.Data.DataTable;
+                                    int count5 = dt5.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料中 <%--<asp:Label ID="Label5" runat="server" Text=""></asp:Label>--%>
+                                    <span class="weui-badge  bg-<% =(count5==0?"gray":"blue") %>"><% =count5 %></span>
+                                </div>
                                 <div class="weui-cells" id="YLZ_my">
                                     <asp:Repeater runat="server" ID="list_go_my" EnableTheming="False" OnItemDataBound="list_go_my_ItemDataBound">
                                         <ItemTemplate>
@@ -352,7 +439,13 @@
 
                             <%-----已送料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<asp:Label ID="Label6" runat="server" Text=""></asp:Label> </div>
+                                <%
+                                    System.Data.DataTable dt6 = ViewState["dt_wc_my"] as System.Data.DataTable;
+                                    int count6 = dt6.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已送料<%--<asp:Label ID="Label6" runat="server" Text=""></asp:Label>--%> 
+                                    <span class="weui-badge  bg-<% =(count6==0?"gray":"blue") %>"><% =count6 %></span>
+                                </div>
                                 <div class="weui-cells" id="YL_WC_my">
                                     <asp:Repeater runat="server" ID="list_wc_my" EnableTheming="False" OnItemDataBound="list_wc_my_ItemDataBound">
                                         <ItemTemplate>
@@ -406,7 +499,13 @@
 
                             <%-----已退料----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<asp:Label ID="Label7" runat="server" Text=""></asp:Label> </div>
+                                <%
+                                    System.Data.DataTable dt7 = ViewState["dt_rj_my"] as System.Data.DataTable;
+                                    int count7 = dt7.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 已退料<%--<asp:Label ID="Label7" runat="server" Text=""></asp:Label>--%> 
+                                    <span class="weui-badge  bg-<% =(count7==0?"gray":"blue") %>"><% =count7 %></span>
+                                </div>
                                 <div class="weui-cells" id="YL_RJ_my">
                                     <asp:Repeater runat="server" ID="list_rj_my" EnableTheming="False" OnItemDataBound="list_rj_my_ItemDataBound">
                                         <ItemTemplate>
@@ -456,7 +555,13 @@
 
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<asp:Label ID="Label8" runat="server" Text=""></asp:Label> </div>
+                                <%
+                                    System.Data.DataTable dt8 = ViewState["dt_end_my"] as System.Data.DataTable;
+                                    int count8 = dt8.Rows.Count;
+                                %>
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要料完成(24h内)<%--<asp:Label ID="Label8" runat="server" Text=""></asp:Label>--%> 
+                                    <span class="weui-badge  bg-<% =(count8==0?"gray":"blue") %>"><% =count8 %></span>
+                                </div>
                                 <div class="weui-cells" id="YL_END_my">
                                     <asp:Repeater runat="server" ID="list_end_my" EnableTheming="False" OnItemDataBound="list_end_my_ItemDataBound">
                                         <ItemTemplate>
