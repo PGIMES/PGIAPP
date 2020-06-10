@@ -455,15 +455,25 @@
                                                                 <%--完工单号--%>
                                                                 <% if (dr["b_type"].ToString() == "0")
                                                                  {%>
-                                                                        <span>完工单号</span>
+                                                                        <span>完工单号:</span>
                                                                  <%}else if (dr["b_type"].ToString() == "1") {%>
-                                                                        <span>终检单号</span>
+                                                                        <span>终检单号:</span>
                                                                     <%}else if (dr["b_type"].ToString() == "2") {%>
-                                                                        <span>GP12单号</span>
+                                                                        <span>GP12单号:</span>
                                                                 <%}%>
-                                                                :<%=dr["workorder"] %>
+                                                                <%=dr["workorder"] %>
                                                             </span>
-                                                            <span>完工数量:<font class="f-blue"><%=dr["qty"] %></font>
+                                                            <span>
+                                                                <%--完工--%>
+                                                                 <% if (dr["b_type"].ToString() == "0")
+                                                                 {%>
+                                                                        <span>完工数量:</span>
+                                                                 <%}else if (dr["b_type"].ToString() == "1") {%>
+                                                                        <span>终检数量:</span>
+                                                                    <%}else if (dr["b_type"].ToString() == "2") {%>
+                                                                        <span>GP12数量:</span>
+                                                                <%}%>
+                                                                <font class="f-blue"><%=dr["qty"] %></font>
                                                             </span>
                                                             <br />
                                                             <span class="weui-agree__text span_space">
@@ -518,13 +528,13 @@
                                                                 <%--完工单号--%>
                                                                 <% if (dr["b_type"].ToString() == "0")
                                                                  {%>
-                                                                        <span>完工单号</span>
+                                                                        <span>完工单号:</span>
                                                                  <%}else if (dr["b_type"].ToString() == "1") {%>
-                                                                        <span>终检单号</span>
+                                                                        <span>终检单号:</span>
                                                                     <%}else if (dr["b_type"].ToString() == "2") {%>
-                                                                        <span>GP12单号</span>
+                                                                        <span>GP12单号:</span>
                                                                 <%}%>
-                                                                :<%=dr["workorder"] %>
+                                                                <%=dr["workorder"] %>
                                                             </span>
                                                             <span>入库数量:<font class="f-blue"><%=dr["act_qty"] %></font>
                                                             </span>
