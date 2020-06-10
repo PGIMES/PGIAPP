@@ -207,7 +207,7 @@
                                                     </a>
                                                 <% } else {%>                                                    
                                                     <a class="weui-cell weui-cell_access" propline="<%=line %>LH1"  title="<%=dr["part"] %>" 
-                                                        href="prod_wip_detail_V1.aspx?lotno=<%=dr["workorder_wip"].ToString()==""?dr["lot_no"]:dr["workorder_wip"] %>&workshop=<%=_workshop %>&para=Y">
+                                                        href="prod_wip_detail_V1.aspx?lotno=<%=dr["workorder_wip"].ToString()==""?dr["lot_no"]:dr["workorder_wip"] %>&needno=<%=dr["need_no"] %>&workshop=<%=_workshop %>&para=Y">
                                                         <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                         <div class="weui-cell__hd">
                                                             <i class="fa fa-thermometer-full" aria-hidden="true"></i>

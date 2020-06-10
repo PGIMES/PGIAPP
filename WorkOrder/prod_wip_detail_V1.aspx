@@ -56,7 +56,8 @@
             });
 
             $('#btn_cancel').click(function () {
-                var qty = "<%= Request["wipqty"] %>";
+                //var qty = "<%= Request["wipqty"] %>";
+                var qty = $("#wip_qty").val();
 
                 $.confirm('确认要【退回】【数量' + qty + '】吗？', function () {
                     //点击确认后的回调函数
@@ -89,7 +90,7 @@
             $.ajax({
                 type: "post",
                 url: "prod_wip_detail.aspx/Reject_Sku",
-                data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= Request["need_no"] %>" + "','lotno':'" + "<%= Request["dh"] %>" + "','reject_qty':'" + qty
+                data: "{'emp':'" + "<%= _emp %>" + "','needno':'" + "<%= _needno %>" + "','lotno':'" + "<%= _lotno %>" + "','reject_qty':'" + qty
                     + "','source':'2','reject_where':'" + reject_where + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -113,7 +114,9 @@
             <div class="page__bd" id="t2" style="height: 100%;">
                 <div class="weui-tab">
                 </div>
-                <div class="weui-form-preview">
+                <div class="weui-form-preview">                    
+                    <asp:TextBox ID="wip_qty" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">Lot No</label>
