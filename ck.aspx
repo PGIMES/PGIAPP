@@ -134,7 +134,7 @@
                         layer.alert(msg);
                         return;
                     }
-                    window.location.href = "/workorder/Chuku.aspx?workorder=" + workorder + "&ruku_dh" + ruku_dh;
+                    window.location.href = "/workorder/Chuku.aspx?workorder=" + workorder + "&ruku_dh=" + ruku_dh;
                 }
 
             });
