@@ -71,25 +71,42 @@
                 }
             });
 
-            $("#search").keyup(function () {
-                so();
-            })
+            //$("#search").keyup(function () {
+            //    so();
+            //})
+
+            $('#searchInput').bind('input propertychange', function () {
+
+                var text = $("#searchInput").val();
+                $('.weui-cell').each(function () {
+                    var $self = $(this);
+                    var flag = $self.text().search(text)
+                    if (flag > -1) {
+                        $self.removeClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
+                    } else {
+                        $self.addClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
+
+                    }
+                });
+
+                showBlockCount();
+            });
            
         })
         //搜索
-        function so() {
-            var val =  $("#search").val().toUpperCase();
-            if (val != "") {
-                $("a").addClass("hide");                
-                $("a").filter("[title*='" + val + "']").removeClass("hide");
-                $(".LH").addClass("hide");
-            }
-            else {
-                $("a").removeClass("hide");
-                $(".LH").removeClass("hide");
-            }            
-            showBlockCount()
-        }
+        //function so() {
+        //    var val =  $("#search").val().toUpperCase();
+        //    if (val != "") {
+        //        $("a").addClass("hide");                
+        //        $("a").filter("[title*='" + val + "']").removeClass("hide");
+        //        $(".LH").addClass("hide");
+        //    }
+        //    else {
+        //        $("a").removeClass("hide");
+        //        $(".LH").removeClass("hide");
+        //    }            
+        //    showBlockCount()
+        //}
         //显示数量
         function showBlockCount() {
             $(".weui-form-preview>.weui-cells").each(function (i, item) {
@@ -104,6 +121,18 @@
                     $(obj).addClass("bg-blue").removeClass("bg-gray")
                 }
             });
+        }
+        function cancel() {
+            $('.weui-cell').removeClass("hide");
+            $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            showBlockCount();
+        }
+
+        function clear() {
+            $('#searchInput').val('');
+            $('.weui-cell').removeClass("hide");
+            $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            showBlockCount();
         }
 
         ////暂不用
@@ -134,6 +163,23 @@
         <div class="up">释放刷新</div>
         <div class="refresh">正在刷新</div>
     </div>
+
+    <div class="weui-search-bar" id="searchBar">
+        <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+                        required="">
+                <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
+            </div>
+            <label class="weui-search-bar__label" id="searchText">
+                <i class="weui-icon-search"></i>
+                <span>请输入查看的关键字</span>
+            </label>
+        </form>
+        <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
+    </div>
+
     <form id="form1" runat="server">
         <div class="page">
             
@@ -147,9 +193,9 @@
                             我的生产
                         </div>
                     </div>--%>
-                    <div class="weui-search-bar">
+                    <%--<div class="weui-search-bar">
                         <input type="search" class="search-input" id="search" placeholder="关键字:项目号"/><button onclick="so();" class="weui-btn weui-btn_mini weui-btn_primary"><i class="icon icon-4"></i></button>
-                    </div>
+                    </div>--%>
                     <div class="weui-tab__panel" style="background-color: lightgray">
                         <%--==生产监视==--%>
                         <div id="tab1" class="weui-tab__content">
