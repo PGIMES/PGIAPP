@@ -514,7 +514,17 @@
                                                             <span class="span_space">入库单号:<%=dr["dh"] %>
                                                             <br />
                                                             
-                                                            <span class="span_space">完工单号:<%=dr["workorder"] %>
+                                                            <span class="span_space">
+                                                                <%--完工单号--%>
+                                                                <% if (dr["b_type"].ToString() == "0")
+                                                                 {%>
+                                                                        <span>完工单号</span>
+                                                                 <%}else if (dr["b_type"].ToString() == "1") {%>
+                                                                        <span>终检单号</span>
+                                                                    <%}else if (dr["b_type"].ToString() == "2") {%>
+                                                                        <span>GP12单号</span>
+                                                                <%}%>
+                                                                :<%=dr["workorder"] %>
                                                             </span>
                                                             <span>入库数量:<font class="f-blue"><%=dr["act_qty"] %></font>
                                                             </span>
