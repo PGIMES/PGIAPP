@@ -72,7 +72,7 @@ public partial class YL : System.Web.UI.Page
         else
         {
             //ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "layer.alert(\"员工未上岗,请跳转至上岗页面\");window.location.href = 'Emp_Login.aspx?workshop=" + _workshop + "'", true);
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$('#btnsave').hide();$.toptip('员工未上岗,请先上岗', 3000, 'warning');", true);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "$('#btn_save2').hide();$.toptip('员工未上岗,请先上岗', 3000, 'warning');", true);
             return;
         }
 
@@ -130,6 +130,35 @@ public partial class YL : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string save2(string _emp_code_name, string pgino, string domain, string pn, string descr, string need_qty, string need_date, string need_date_dl)
+    {
+        string flag = "N", msg = "";
+
+        DateTime date = DateTime.MinValue;
+        bool bf = DateTime.TryParse(need_date, out date);
+
+        if (!bf)
+        {
+            flag = "Y"; msg = "【送到时间】日期格式不正确";
+        }
+
+
+        if (flag == "N")
+        {
+            string re_sql = @"exec [usp_app_YL] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+            re_sql = string.Format(re_sql, _emp_code_name, pgino, domain, pn, descr, need_qty, need_date, need_date_dl);
+            DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+            flag = re_dt.Rows[0][0].ToString();
+            msg = re_dt.Rows[0][1].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+
+    /*
     protected void btnsave_Click(object sender, EventArgs e)
     {
         DateTime date = DateTime.MinValue;
@@ -168,5 +197,7 @@ public partial class YL : System.Web.UI.Page
             ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
 
-    }
+    }*/
+
+
 }
