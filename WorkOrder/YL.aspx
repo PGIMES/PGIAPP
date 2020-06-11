@@ -68,8 +68,8 @@
 
             $("#btn_save2").click(function () {
 
-                alert($("#need_date_dl").val());
-                return;
+                //alert($("#need_date_dl").val());
+                //return;
                 $("#btn_save2").attr("disabled", "disabled");
                 $("#btn_save2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
