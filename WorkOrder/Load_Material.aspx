@@ -218,7 +218,7 @@
                                 $("#txt_wlh").text("");
                                 $("#sku_desc").text("");
                                 $("#txt_qty").text("");
-                                $("#txt_location").text("");
+                                $("#txt_location").html("");
                                 $("#txt_load_person").text("");
                                 $("#txt_load_time").text("");
 
@@ -232,7 +232,7 @@
                                 $("#txt_wlh").text(item.sku);
                                 $("#sku_desc").text(item.sku_desc);
                                 $("#txt_qty").text(item.qty);
-                                $("#txt_location").text(item.location);
+                                $("#txt_location").html(item.location);
                                 $("#txt_load_person").text(item.person);
                                 $("#txt_load_time").text(item.times);
 

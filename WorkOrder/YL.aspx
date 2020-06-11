@@ -20,42 +20,6 @@
             padding:4px 15px;
         }*/   
     </style>
-    <script>
-        function valid() {
-            if ($("#pgino").val() == "") {
-                layer.alert("请输入【物料号】.");
-                return false;
-            }
-            if ($("#pn").val() == "") {
-                layer.alert("【零件号】不可为空.");
-                return false;
-            }
-            if ($("#descr").val() == "") {
-                layer.alert("【物料名称】不可为空.");
-                return false;
-            }
-            if ($.trim($("#need_qty").val()) == "" || $.trim($("#need_qty").val()) == "0") {
-                layer.alert("请输入【要料数量】.");
-                return false;
-            } else if (parseInt($("#need_qty").val()) <= 0) {
-                layer.alert("【要料数量】必须大于0.");
-                return false;
-            }
-            if ($("#need_date_dl").val() == "") {
-                layer.alert("请输入【送到时间】.");
-                return false;
-            }
-            if ($("#need_date").val() == "") {
-                layer.alert("请选择【送到时间】.");
-                return false;
-            }
-            return true;
-        }
-    </script>
-</head>
-<body>    
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <%--步骤二：通过config接口注入权限验证配置--%>
     <script>     
         $(document).ready(function () {
             $("#pn").attr("readonly", "readonly");
@@ -68,8 +32,6 @@
 
             $("#btn_save2").click(function () {
 
-                //alert($("#need_date_dl").val());
-                //return;
                 $("#btn_save2").attr("disabled", "disabled");
                 $("#btn_save2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
@@ -152,6 +114,43 @@
         }
         
     </script>
+    <script>
+        function valid() {
+            if ($("#pgino").val() == "") {
+                layer.alert("请输入【物料号】.");
+                return false;
+            }
+            if ($("#pn").val() == "") {
+                layer.alert("【零件号】不可为空.");
+                return false;
+            }
+            if ($("#descr").val() == "") {
+                layer.alert("【物料名称】不可为空.");
+                return false;
+            }
+            if ($.trim($("#need_qty").val()) == "" || $.trim($("#need_qty").val()) == "0") {
+                layer.alert("请输入【要料数量】.");
+                return false;
+            } else if (parseInt($("#need_qty").val()) <= 0) {
+                layer.alert("【要料数量】必须大于0.");
+                return false;
+            }
+            if ($("#need_date_dl").val() == "") {
+                layer.alert("请输入【送到时间】.");
+                return false;
+            }
+            if ($("#need_date").val() == "") {
+                layer.alert("请选择【送到时间】.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>    
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <%--步骤二：通过config接口注入权限验证配置--%>
+    
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
@@ -160,8 +159,8 @@
             <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>--%>
                    
-                <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
-                <asp:TextBox ID="domain" class="form-control" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server" Visible="false"></asp:TextBox>
+                <asp:TextBox ID="emp_code_name" class="form-control" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="domain" class="form-control" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">要料人</label></div>
