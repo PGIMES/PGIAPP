@@ -37,13 +37,13 @@
             $("#workorder").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
-            $("#b_use_routing").attr("readonly", "readonly");
+            $("#b_use_routing").attr("readonly", "readonly");$("#b_op_one").attr("readonly", "readonly");
             $("#yb_qty").attr("readonly", "readonly");
             $("#bc_qty").attr("readonly", "readonly");
 
             if ("<%= _ismodify %>"=="Y1") {
                 $("#pgino").attr("readonly", "readonly");$("#img_sm_pgino").hide();
-                $("#op").attr("readonly", "readonly");
+                $("#op").attr("readonly", "readonly");$("#lot_no").attr("readonly", "readonly");
                 $("#reason").attr("readonly", "readonly");
                 $("#rscode").attr("readonly", "readonly");
             }
@@ -71,8 +71,23 @@
                         $("#lbl_ref_order").text("终检完成单号");
                     } else if (parseInt(_op) == 600) {
                         $("#lbl_ref_order").text("完成单号");
+                    }else {
+                        
                     }
                 }
+            }
+            //lot no 
+            if ($("#op").val()!="") {
+                var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
+                if (parseInt(_op) < 600) {
+                    if (_op==$("#b_op_one").val()) {
+                        $("#div_lot_no_fixed").show();
+                    }else {
+                        $("#div_lot_no_fixed").hide();
+                    }
+                }
+            }else {
+                $("#div_lot_no_fixed").hide();
             }
         }
 
@@ -88,6 +103,7 @@
 
             //sm_workorder();
             sm_ref_order();
+            sm_lot_no_fixed();
             sm_pgino();
             saomiao_workorder_gl();
 
@@ -181,7 +197,8 @@
                         + "','_workorder':'" + $('#workorder').val() + "','_pgino':'" + $('#pgino').val() + "','_pn':'" + $('#pn').val() 
                         + "','_descr':'" + $('#descr').val() + "','_op':'" + $('#op').val() + "','_qty':'" + $('#qty').val() 
                         + "','_reason':'" + $('#reason').val() + "','_comment':'" + $('#comment').val() + "','_b_use_routing':'" 
-                        + $('#b_use_routing').val() + "','_ref_order':'" + $('#ref_order').val() + "'}",
+                        + $('#b_use_routing').val() + "','_ref_order':'" + $('#ref_order').val() + "','_b_op_one':'" + $('#b_op_one').val() 
+                        + "','_lot_no_fixed':'" + $('#lot_no_fixed').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -232,6 +249,21 @@
                 });
             });
         }
+        function sm_lot_no_fixed() {
+            $('#img_sm_lotno_fixed').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容  
+                            $('#lot_no_fixed').val(result);
+                        }
+                    });
+                });
+            });
+        }
 
         function sm_pgino() {
             $('#img_sm_pgino').click(function () {
@@ -263,6 +295,7 @@
                     $('#pn').val(obj[0].pn);
                     $('#descr').val(obj[0].descr);
                     $('#b_use_routing').val(obj[0].b_use_routing);
+                    $('#b_op_one').val(obj[0].b_op_one);
 
                     var json_op = obj[0].json_op;
                     $("#op").select("update", { items: json_op });
@@ -430,6 +463,7 @@
                             <div class="weui-cell__hd f-red "><label class="weui-label">工序</label></div>
                             <asp:TextBox ID="op" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
                             <asp:TextBox ID="b_use_routing" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+                            <asp:TextBox ID="b_op_one" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
                         </div>
                         <div class="weui-cell" id="div_ref_order">
                             <div class="weui-cell__hd f-red "><label class="weui-label" id="lbl_ref_order"></label></div>
@@ -439,6 +473,17 @@
                                 </span>
                                 <span style="float:left; width:10%">
                                     <img id="img_sm_ref_order" src="../img/fdj2.png" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="weui-cell" id="div_lot_no_fixed">
+                            <div class="weui-cell__hd f-red "><label class="weui-label">Lot No</label></div>
+                            <div class="weui-cell__bd">
+                                <span style="float:left; width:90%">
+                                    <asp:TextBox ID="lot_no_fixed" class="weui-input"  runat="server"></asp:TextBox>
+                                </span>
+                                <span style="float:left; width:10%">
+                                    <img id="img_sm_lotno_fixed" src="../img/fdj2.png" />
                                 </span>
                             </div>
                         </div>
@@ -508,6 +553,10 @@
                                         <label class="weui-form-preview__label" id="lbl_workorder_qc"></label>
                                         <span class="weui-form-preview__value"><%# Eval("workorder_qc") %></span>
                                     </div>
+                                    <div class="weui-form-preview__item" style="display:<%# (Eval("b_op_one").ToString()==Eval("op").ToString() && Convert.ToInt32(Eval("b_op_one").ToString())<600)?"block":"none"%>; ">
+                                        <label class="weui-form-preview__label">Lot No</label>
+                                        <span class="weui-form-preview__value"><%# Eval("lot_no_fixed") %></span>
+                                    </div>                                 
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">申请数量</label>
                                         <span class="weui-form-preview__value"><%# Eval("qty") %></span>
@@ -1207,6 +1256,15 @@
                         $("#div_ref_order").hide();
                         $("#lbl_ref_order").text("参考号/生产完成单号");
                         $("#ref_order").val("");
+
+                        if (d.values==$("#b_op_one").val()) {
+                            $("#div_lot_no_fixed").show();
+                        }else {
+                            $("#div_lot_no_fixed").hide();
+                        }
+                        $("#lot_no_fixed").val("");
+
+
                     } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
                         $("#div_ref_order").show();
                         //$("#lbl_ref_order").text("生产完成单号");
@@ -1365,6 +1423,7 @@
 
             init_app();
             sm_ref_order();
+            sm_lot_no_fixed();
             sm_pgino();
 
             saomiao_workorder_gl();

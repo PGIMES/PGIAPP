@@ -61,6 +61,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             descr.Text = dt.Rows[0]["descr"].ToString();
             op.Text = dt.Rows[0]["op"].ToString() + "-" + dt.Rows[0]["op_descr"].ToString();
             b_use_routing.Text = dt.Rows[0]["b_use_routing"].ToString();
+            b_op_one.Text = dt.Rows[0]["b_op_one"].ToString();
+            lot_no_fixed.Text = dt.Rows[0]["lot_no_fixed"].ToString();
             //qty.Text = dt.Rows[0]["qty"].ToString();
             yb_qty.Text = dt.Rows[0]["qty"].ToString();
             reason.Text = dt.Rows[0]["reason_code"].ToString() + "-" + dt.Rows[0]["reason"].ToString();
@@ -157,16 +159,17 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         re_sql = string.Format(re_sql, pgino);
         DataSet ds = SQLHelper.Query(re_sql);
 
-        string pn = "", descr = "", b_use_routing = "";
+        string pn = "", descr = "", b_use_routing = "", b_op_one = "";
         DataTable re_dt = ds.Tables[0];
-        pn = re_dt.Rows[0][0].ToString();
-        descr = re_dt.Rows[0][1].ToString();
-        b_use_routing = re_dt.Rows[0][2].ToString();
+        pn = re_dt.Rows[0]["pn"].ToString();
+        descr = re_dt.Rows[0]["descr"].ToString();
+        b_use_routing = re_dt.Rows[0]["b_use_routing"].ToString();
+        b_op_one = re_dt.Rows[0]["b_op_one"].ToString();
 
         DataTable dt_op = ds.Tables[1];
         string json_op = JsonConvert.SerializeObject(dt_op);
 
-        string result = "[{\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"b_use_routing\":\"" + b_use_routing + "\",\"json_op\":" + json_op + "}]";
+        string result = "[{\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"b_use_routing\":\"" + b_use_routing + "\",\"b_op_one\":\"" + b_op_one + "\",\"json_op\":" + json_op + "}]";
         return result;
 
     }
@@ -418,14 +421,14 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
     [WebMethod]
     public static string save2(string _emp_code_name,string _workorder, string _pgino, string _pn, string _descr, string _op
-        , string _qty, string _reason,string _comment, string _b_use_routing,string _ref_order)
+        , string _qty, string _reason,string _comment, string _b_use_routing, string _ref_order, string _b_op_one, string _lot_no_fixed)
     {
         string flag = "N", msg = "";
         int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
         string re_sql = "";
         if (op_code < 600 || _b_use_routing == "0")
         {
-            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
 
         }
         else if (op_code >= 600 && op_code <= 700)
@@ -440,7 +443,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         if (flag == "N")
         {
             re_sql = string.Format(re_sql, _emp_code_name, _workorder, _pgino, _pn, _descr, _op
-           , _qty, _reason, _comment, _b_use_routing, _ref_order);
+           , _qty, _reason, _comment, _b_use_routing, _ref_order, _b_op_one, _lot_no_fixed);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();
