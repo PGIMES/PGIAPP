@@ -101,10 +101,27 @@ public partial class YL : System.Web.UI.Page
             qty = dt.Rows[0]["pt_ord_mult"].ToString();
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"qty\":\"" + qty + "\"}]";
+        string ld_ref = "", ld_qty_oh = "";
+        DataTable ldt = new DataTable();
+        //送料信息里，第一笔 绑定库存明细里的
+        string sqlStr = @"select top 1 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
+                            where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0
+                            order by ld_date,ld_ref 
+                            with (nolock)";
+        sqlStr = string.Format(sqlStr, pgino);
+        ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+        if (ldt.Rows.Count > 0)
+        {
+            ld_ref = ldt.Rows[0]["ld_ref"].ToString();
+            ld_qty_oh = ldt.Rows[0]["ld_qty_oh"].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"qty\":\"" + qty 
+            + "\",\"ld_ref\":\"" + ld_ref + "\",\"ld_qty_oh\":\"" + ld_qty_oh + "\"}]";
         return result;
 
     }
+
 
     [WebMethod]
     public static string nd_change(string nd_jg)

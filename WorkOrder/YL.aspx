@@ -22,6 +22,7 @@
     </style>
     <script>     
         $(document).ready(function () {
+            $("#div_lot").hide();
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
             $("#need_date").attr("readonly", "readonly");
@@ -101,10 +102,16 @@
                         $('#pn').val("");
                         $('#descr').val("");
                         $('#need_qty').val("");
+                        $('#ld_ref').val("");
+                        $('#ld_qty_oh').val("");
+                        $("#div_lot").hide();
                     } else {
                         $('#pn').val(obj[0].pn);
                         $('#descr').val(obj[0].descr);
                         $('#need_qty').val(obj[0].qty);
+                        $('#ld_ref').val(obj[0].ld_ref);
+                        $('#ld_qty_oh').val(obj[0].ld_qty_oh);
+                        $("#div_lot").show();
                     }
 
                     return;
@@ -193,7 +200,15 @@
                     <div class="weui-cell__hd"><label class="weui-label">物料名称</label></div>                          
                     <asp:TextBox ID="descr" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
                 </div>
-
+            
+                <div class="weui-cell" style="font-size:12px;color:gray;" id="div_lot">
+                    <div class="weui-flex__item">推荐Lot No
+                        <asp:TextBox ID="ld_ref" class="weui-input" runat="server" style="color:gray;width:50%; border-bottom:1px solid #e5e5e5; text-align:center;" ></asp:TextBox>
+                    </div>
+                    <div class="weui-flex__item">推荐数量
+                        <asp:TextBox ID="ld_qty_oh" class="weui-input" runat="server" style="color:gray;width:20%; border-bottom:1px solid #e5e5e5; text-align:center;" ></asp:TextBox>
+                    </div>
+                </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">要料数量</label></div> 
                     <asp:TextBox ID="need_qty" class="weui-input" type='number' placeholder="请输入要料数量" runat="server"></asp:TextBox>
