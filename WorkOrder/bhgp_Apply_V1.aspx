@@ -1330,14 +1330,14 @@
                 title: "判断为",
                 items: [{ title: '合格', value: '合格' }, { title: '不合格', value: '不合格' }
                     , { title: '让步合格', value: '让步合格' }, { title: '返工', value: '返工' }
-                    , { title: '分选', value: '分选' }],
+                    , { title: '分选', value: '分选' }, { title: '无法判定', value: '无法判定' }],
                 onChange: function (d) {
                     //alert(d.values);
-                    //if (d.values == "不合格") {
-                    //    this.parent().next().hide();
-                    //} else {
-
-                    //}
+                    if (d.values == "无法判定") {
+                        $("#Button1").hide();
+                    } else {
+                        $("#Button1").show();
+                    }
                 },
                 onClose: function (d) {
                     //var obj = eval(d.data);

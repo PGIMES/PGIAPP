@@ -523,45 +523,50 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             TextBox txt_workorder_gl = (TextBox)item.FindControl("workorder_gl");
             System.Web.UI.HtmlControls.HtmlTextArea txt_comment = (System.Web.UI.HtmlControls.HtmlTextArea)item.FindControl("comment");
 
-            if (txt_cz_qty.Text.Trim() == "")
+            if (txt_result.Text.Trim() != "无法判定")
             {
-                msg_row += "第" + (i + 1).ToString() + "组【处置数量】不可为空 <br />";
-            }
-            else if (Convert.ToInt32(txt_cz_qty.Text.Trim()) <= 0)
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【处置数量】必须大于0 <br />";
-            }
-            if (txt_sy_qty.Text.Trim() == "")
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】不可为空 <br />";
-            }
-            else if (Convert.ToInt32(txt_sy_qty.Text.Trim()) < 0)
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【剩余数量】必须大于等于0 <br />";
-            }
-            if (txt_result.Text.Trim() == "")
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【判断为】不可为空 <br />";
-            }
-            else if (txt_result.Text.Trim() == "不合格")
-            {
-                if (txt_reason.Text.Trim() == "")
+                if (txt_cz_qty.Text.Trim() == "")
                 {
-                    msg_row += "第" + (i + 1).ToString() + "组【废品原因】不可为空 <br />";
+                    msg_row += "第" + (i + 1).ToString() + "组【处置数量】不可为空 <br />";
                 }
-                else
+                else if (Convert.ToInt32(txt_cz_qty.Text.Trim()) <= 0)
                 {
-                    if (txt_rscode.Text.Trim() != "") {
-                        var _reason = txt_reason.Text.Trim().Substring(0, txt_reason.Text.Trim().IndexOf('-'));
-                        if (_reason != txt_rscode.Text.Trim()) {
-                            msg_row += "第" + (i + 1).ToString() + "组【原因名称】与【代码】不匹配 <br />";
+                    msg_row += "第" + (i + 1).ToString() + "组【处置数量】必须大于0 <br />";
+                }
+                if (txt_sy_qty.Text.Trim() == "")
+                {
+                    msg_row += "第" + (i + 1).ToString() + "组【剩余数量】不可为空 <br />";
+                }
+                else if (Convert.ToInt32(txt_sy_qty.Text.Trim()) < 0)
+                {
+                    msg_row += "第" + (i + 1).ToString() + "组【剩余数量】必须大于等于0 <br />";
+                }
+                if (txt_result.Text.Trim() == "")
+                {
+                    msg_row += "第" + (i + 1).ToString() + "组【判断为】不可为空 <br />";
+                }
+                else if (txt_result.Text.Trim() == "不合格")
+                {
+                    if (txt_reason.Text.Trim() == "")
+                    {
+                        msg_row += "第" + (i + 1).ToString() + "组【废品原因】不可为空 <br />";
+                    }
+                    else
+                    {
+                        if (txt_rscode.Text.Trim() != "")
+                        {
+                            var _reason = txt_reason.Text.Trim().Substring(0, txt_reason.Text.Trim().IndexOf('-'));
+                            if (_reason != txt_rscode.Text.Trim())
+                            {
+                                msg_row += "第" + (i + 1).ToString() + "组【原因名称】与【代码】不匹配 <br />";
+                            }
                         }
                     }
                 }
-            }
-            if (txt_workorder_gl.Text.Trim() == "")
-            {
-                msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
+                if (txt_workorder_gl.Text.Trim() == "")
+                {
+                    msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
+                }
             }
 
             if (msg_row == "")//此行正确，添加到datatable
@@ -625,11 +630,25 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         //=================================处理数据
         try
         {
-            bhgp_Apply_V1_Class bdn = new bhgp_Apply_V1_Class();
-            DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text, workorder_qc.Text);
+            string flag = "", msg_f = "";
+            //无法判定
+            if (dt.Rows.Count == 1 && dt.Rows[0]["result"].ToString() == "无法判定")
+            {
+                string re_sql = @"exec usp_app_bhgp_deal_rs_V1 '{0}','{1}','{2}'";
+                re_sql = string.Format(re_sql, workorder.Text, dt.Rows[0]["result"].ToString(), emp_code_name.Text);
+                DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+                flag = re_dt.Rows[0][0].ToString();
+                msg = re_dt.Rows[0][1].ToString();
+            }
+            else
+            {
+                bhgp_Apply_V1_Class bdn = new bhgp_Apply_V1_Class();
+                DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text, workorder_qc.Text);
 
-            string flag = re_dt.Rows[0][0].ToString();
-            string msg_f = re_dt.Rows[0][1].ToString();
+                flag = re_dt.Rows[0][0].ToString();
+                msg_f = re_dt.Rows[0][1].ToString();
+            }
+            
             if (flag == "N")
             {
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
