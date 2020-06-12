@@ -523,6 +523,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             TextBox txt_workorder_gl = (TextBox)item.FindControl("workorder_gl");
             System.Web.UI.HtmlControls.HtmlTextArea txt_comment = (System.Web.UI.HtmlControls.HtmlTextArea)item.FindControl("comment");
 
+
             if (txt_result.Text.Trim() != "无法判定")
             {
                 if (txt_cz_qty.Text.Trim() == "")
@@ -566,6 +567,13 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 if (txt_workorder_gl.Text.Trim() == "")
                 {
                     msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
+                }
+            }
+            else
+            {
+                if (i != 0)
+                {
+                    msg_row += "第" + (i + 1).ToString() + "组【判断为】不可为【无法判定】 <br />";
                 }
             }
 
