@@ -289,13 +289,13 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">转运包</label></div>
                 <div class="weui-cell__hd">
-                    <asp:TextBox ID="zyb" class="weui-input" placeholder="请输入转运包" runat="server" onchange="zyb_change()"></asp:TextBox>
+                    <asp:TextBox ID="zyb" class="weui-input" placeholder="请输入转运包" runat="server"></asp:TextBox>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">Lot No</label></div>
                 <div class="weui-cell__hd">
-                    <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" runat="server" onchange="lotno_change()"></asp:TextBox>
+                    <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" runat="server"></asp:TextBox>
                 </div>
             </div>
 
@@ -318,6 +318,37 @@
 
     
     </form>
+    <script>
+        var datalist_zyb;
+        $.ajax({
+            type: "post",
+            url: "ST.aspx/init_zyb",
+            data: "{'workshop':'" + "<%= _workshop %>" + "','emp': '" + $("#emp_code_name").val() + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+            success: function (data) {
+                var obj = eval(data.d);
+                datalist_zyb = obj[0].json_zyb;
+            }
+        });
+
+        $("#zyb").select({
+            title: "转运包",
+            items: datalist_zyb,
+            onChange: function (d) {
+                //    console.log(this, d);
+            },
+            onClose: function (d) {
+                var obj = eval(d.data);
+                //alert(obj.values);
+            },
+            onOpen: function () {
+                //  console.log("open");
+            }
+
+        });
+    </script>
 </body>
     <script>
         var datad = [];

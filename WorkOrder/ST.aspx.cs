@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -47,6 +48,21 @@ public partial class WorkOrder_ST : System.Web.UI.Page
 
         domain.Text = dt.Rows[0]["domain"].ToString();
         sku_area.Text = dt.Rows[0]["sku_area"].ToString();
+    }
+
+    [WebMethod]
+    public static string init_zyb(string workshop, string emp)
+    {
+        string result = "";
+        string sql = @" exec [usp_app_ST_zyb] '" + workshop + "','" + emp + "'";
+        DataSet ds = SQLHelper.Query(sql);
+
+        DataTable dt_zyb = ds.Tables[0];
+        string json_zyb = JsonConvert.SerializeObject(dt_zyb);
+        result = "[{\"json_zyb\":" + json_zyb + "}]";
+
+        return result;
+
     }
 
     [WebMethod]
