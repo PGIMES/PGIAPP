@@ -40,6 +40,25 @@
     </style>
 
      <script>
+         function zyb_change(zyb) {
+             $.ajax({
+                 type: "post",
+                 url: "ST.aspx/zyb_change",
+                 data: "{'zyb':'" + zyb + "'}",
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                 success: function (data) {
+                     var obj = eval(data.d);
+
+                     var json_lotno = obj[0].json_lotno;
+                     $("#lot_no").select("update", { items: json_lotno });
+                     $('#lot_no').val('');
+                 }
+
+             });
+         }
+
          function valid_sl() {
             if ($("#lot_no").val() == "") {
                 layer.alert("请输入【Lot No】.");
@@ -337,7 +356,7 @@
             title: "转运包",
             items: datalist_zyb,
             onChange: function (d) {
-                //    console.log(this, d);
+                zyb_change(d.values);
             },
             onClose: function (d) {
                 var obj = eval(d.data);
@@ -348,6 +367,22 @@
             }
 
         });
+        $("#lot_no").select({
+            title: "工序",
+            items: [{title:'' ,value:''}],
+            onChange: function (d) {
+                alert(d.values);
+            },
+            onClose: function (d) {
+                //var obj = eval(d.data);
+                //alert(obj.values);
+
+            },
+            onOpen: function () {
+                //  console.log("open");
+            },
+
+        }); 
     </script>
 </body>
     <script>

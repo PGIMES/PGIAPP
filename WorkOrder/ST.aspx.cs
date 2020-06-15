@@ -66,6 +66,21 @@ public partial class WorkOrder_ST : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string zyb_change(string zyb)
+    {
+        string re_sql = @"exec [usp_app_ST_zyb_change] '{0}'";
+        re_sql = string.Format(re_sql, zyb);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable dt_op = ds.Tables[0];
+        string json_op = JsonConvert.SerializeObject(dt_op);
+
+        string result = "[{\"json_op\":" + json_op + "}]";
+        return result;
+
+    }
+
+    [WebMethod]
     public static string lotno_change(string pgino, string lotno,string need_no, string domain)
     {
         string re_sql = @"exec [usp_app_SL_lot_change_qad_V1] '{0}', '{1}', '{2}'";
