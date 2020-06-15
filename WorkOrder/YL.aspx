@@ -89,7 +89,7 @@
             $.ajax({
                 type: "post",
                 url: "YL.aspx/pgino_change",
-                data: "{'pgino':'" + $("#pgino").val() + "'}",
+                data: "{'pgino':'" + $("#pgino").val() + "','domain':'" + $("#domain").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
