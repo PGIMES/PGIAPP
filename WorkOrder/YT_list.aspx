@@ -201,7 +201,7 @@
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_end_dt" EnableTheming="False">
                                             <ItemTemplate>
-                                                <a class="weui-cell weui-cell_access"><%--href="YT_Detail_Info.aspx?need_t_no=<%# Eval("need_t_no")%>"--%>  
+                                                <a class="weui-cell weui-cell_access" href="YT_Detail_Info.aspx?need_t_no=<%# Eval("need_t_no")%>">
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -231,8 +231,8 @@
                                                         </span>
 
                                                     </div>
-                                                    <%--<div class="weui-cell__ft">
-                                                    </div>--%>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
                                                 </a>
                                             </ItemTemplate>
                                             </asp:Repeater>
@@ -301,7 +301,7 @@
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_end_my_dt" EnableTheming="False">
                                             <ItemTemplate>
-                                                <a class="weui-cell weui-cell_access" ><%--href="YT_Detail_Info.aspx?need_t_no=<%# Eval("need_t_no")%>"--%>                                                    
+                                                <a class="weui-cell weui-cell_access" href="YT_Detail_Info.aspx?need_t_no=<%# Eval("need_t_no")%>">                                                 
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -331,8 +331,8 @@
                                                         </span>
 
                                                     </div>
-                                                    <%--<div class="weui-cell__ft">
-                                                    </div>--%>
+                                                    <div class="weui-cell__ft">
+                                                    </div>
                                                 </a>
                                             </ItemTemplate>
                                             </asp:Repeater>
