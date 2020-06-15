@@ -34,6 +34,16 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
+            //登入岗位的域
+            if (lu.Domain == "100")
+            {
+                string strsql_d = "select * from [Mes_App_EmployeeLogin] where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
+                var value_login = SQLHelper.reDs(strsql_d).Tables[0];
+                if (value_login != null && value_login.Rows.Count > 0)
+                {
+                    domain.Text = value_login.Rows[0]["domain"].ToString();
+                }
+            }
 
             //emp_code_name.Text = "02432何桂勤";
             //domain.Text = "200";
