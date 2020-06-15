@@ -41,9 +41,16 @@
 
         $(function(){
             $("#e_code").keyup(function (e) {
-                if (($("#e_code").val()).length >= 5) {
-                    e_code_change();
+                if ("<%=_workshop %>"=="三车间") {
+                    if (($("#e_code").val()).length >= 3) {
+                        e_code_change();
+                    }
+                } else {
+                    if (($("#e_code").val()).length >= 5) {
+                        e_code_change();
+                    }
                 }
+               
             });
         });
 
