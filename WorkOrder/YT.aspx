@@ -57,7 +57,7 @@
                             $("#btn_save2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                             return;
                         }
-                        window.location.href = "/workorder/YT_list_new.aspx?workshop=<%=_workshop %>";
+                        window.location.href = "/workorder/YT_list.aspx?workshop=<%=_workshop %>";
                     }
                 });
 
