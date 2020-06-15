@@ -90,21 +90,21 @@
                     <div class="weui-cell__ft"> 
                     </div>
                 </a>   
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="/workorder/YT.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-tint margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要汤<span class="f12">（开发中）</span></p>
+                        <p>要汤<span class="f12">（测试中）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="/workorder/YT_list.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-hourglass-half margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要汤监视<span class="f12">（开发中）</span></p>
+                        <p>要汤监视<span class="f12">（测试中）</span></p>
                     </div>
                     <div class="weui-cell__ft"> 
                     </div>
