@@ -47,6 +47,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
 
         pgino.Text = dt.Rows[0]["pgino"].ToString();
         pn.Text = dt.Rows[0]["pn"].ToString();
+        domain.Text = dt.Rows[0]["domain"].ToString();
 
         txt_sy_qty.Text= dt.Rows[0]["sy_qty"].ToString(); cur_sy_qty.Text = dt.Rows[0]["sy_qty"].ToString();
         txt_act_date.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
@@ -58,7 +59,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string lotno_change(string pgino, string lotno,string need_no)
+    public static string lotno_change(string pgino, string lotno,string need_no, string domain)
     {
         string re_sql = @"exec [usp_app_SL_lot_change_qad_V1] '{0}', '{1}', '{2}'";
         re_sql = string.Format(re_sql, pgino, lotno, need_no);
@@ -137,8 +138,8 @@ public partial class WorkOrder_SL : System.Web.UI.Page
                 loc_from = ldt.Rows[0]["ld_loc"].ToString();
                 float qty_c = Convert.ToSingle(ldt.Rows[0]["ld_qty_oh"].ToString());
 
-                string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}, '{3}'";
-                sql_q = string.Format(sql_q, pgino, lotno, qty_c, need_no);
+                string sql_q = @"exec [usp_app_SL_lot_change_qad_qty] '{0}', '{1}', {2}, '{3}', '{4}'";
+                sql_q = string.Format(sql_q, pgino, lotno, qty_c, need_no, domain);
                 DataTable re_dt_q = SQLHelper.Query(sql_q).Tables[0];
 
                 flag = re_dt_q.Rows[0][0].ToString();

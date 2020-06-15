@@ -90,7 +90,7 @@
             $.ajax({
                 type: "post",
                 url: "SL.aspx/lotno_change",
-                data: "{'pgino':'" + $("#pgino").val() + "','lotno':'" + $("#lot_no").val() + "','need_no':'" + "<%= _need_no %>" + "'}",
+                data: "{'pgino':'" + $("#pgino").val() + "','lotno':'" + $("#lot_no").val() + "','need_no':'" + "<%= _need_no %>" + "','domain':'" + $("#domain").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -287,6 +287,7 @@
                 <asp:TextBox ID="need_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="pn" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="cur_sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="sku_area" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
