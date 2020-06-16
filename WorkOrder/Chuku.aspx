@@ -60,9 +60,6 @@
             });
         }
         function reason_change() {
-            $("#domain").val('');
-            $("#pgino").val('');
-            $("#pn").val('');
             $('#qty').val('');
             $('#act_qty').val('');
 
