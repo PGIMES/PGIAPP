@@ -1252,10 +1252,14 @@
                 items: [{title:'' ,value:''}],
                 onChange: function (d) {
                     //alert(d.values);
+
+                    $("#div_lot_no_fixed").hide();
+                    
+                    $("#div_ref_order").hide();
+                    $("#lbl_ref_order").text("参考号/生产完成单号");
+                    $("#ref_order").val("");
+
                     if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
-                        $("#div_ref_order").hide();
-                        $("#lbl_ref_order").text("参考号/生产完成单号");
-                        $("#ref_order").val("");
 
                         if (d.values==$("#b_op_one").val()) {
                             $("#div_lot_no_fixed").show();
