@@ -38,8 +38,35 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
     public static string workorder_change(string workorder)
     {
 
-        string re_sql = @"exec [usp_app_Chuku_workorder_change] '{0}'";
+        string re_sql = @"exec [usp_app_Chuku_workorder_change_V1] '{0}'";
         re_sql = string.Format(re_sql, workorder);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        string domain = "", pgino = "", pn = "";
+
+        if (flag == "N")
+        {
+            DataTable re_dt_2 = ds.Tables[1];
+            domain = re_dt_2.Rows[0]["domain"].ToString();
+            pgino = re_dt_2.Rows[0]["pgino"].ToString();
+            pn = re_dt_2.Rows[0]["pn"].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"domain\":\"" + domain + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\"}]";
+        return result;
+
+    }
+
+    [WebMethod]
+    public static string reason_change(string workorder, string ruku_dh, string reason)
+    {
+
+        string re_sql = @"exec [usp_app_Chuku_reason_change] '{0}','{1}','{2}'";
+        re_sql = string.Format(re_sql, workorder, ruku_dh, reason);
         DataSet ds = SQLHelper.Query(re_sql);
 
         DataTable re_dt = ds.Tables[0];

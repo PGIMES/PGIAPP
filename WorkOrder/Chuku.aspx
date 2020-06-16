@@ -34,8 +34,32 @@
             }
             
         });
-
         function workorder_change() {
+            $("#domain").val('');
+            $("#pgino").val('');
+            $("#pn").val('');
+
+            $.ajax({
+                type: "post",
+                url: "Chuku.aspx/workorder_change",
+                data: "{'workorder':'" + $('#workorder').val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+
+                    if (obj[0].flag == "Y") {
+                        layer.alert(obj[0].msg);
+                    }
+                    $("#domain").val(obj[0].domain);
+                    $("#pgino").val(obj[0].pgino);
+                    $("#pn").val(obj[0].pn);
+                }
+
+            });
+        }
+        function reason_change() {
             $("#domain").val('');
             $("#pgino").val('');
             $("#pn").val('');
@@ -44,8 +68,8 @@
 
             $.ajax({
                 type: "post",
-                url: "Chuku.aspx/workorder_change",
-                data: "{'workorder':'" + $('#workorder').val() + "'}",
+                url: "Chuku.aspx/reason_change",
+                data: "{'workorder':'" + $('#workorder').val() + "','ruku_dh':'" + $('#ruku_dh').val() + "','reason':'" + $("#reason").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -67,6 +91,9 @@
         function valid() {
             if ($.trim($("#reason").val()) == "") {
                 layer.alert("请输入【出库原因】.");
+                return false;
+            } else if ($.trim($("#reason").val()) == "零箱返线" && $('#ruku_dh').val() == "") {
+                layer.alert("零箱返线需要入库才可以申请.");
                 return false;
             }
             if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
@@ -115,12 +142,12 @@
                     <asp:TextBox ID="pn" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
                 </div>
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">完成数量</label></div>
-                    <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="" style="color:gray" runat="server"></asp:TextBox>
-                </div>
-                <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">出库原因</label></div>
                     <asp:TextBox ID="reason" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>                            
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">完成数量</label></div>
+                    <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">出库数量</label></div>
@@ -151,7 +178,13 @@
         init_data();
 
         function init_data() {
-            var datalist_reason = [{ title: '发货', value: '0' }, { title: '成品领用', value: '1' }, { title: '零箱返线', value: '2' }]
+            var datalist_reason;
+            if ("<%= _ruku_dh %>" == "") {
+                datalist_reason = [{ title: '发货', value: '0' }, { title: '成品领用', value: '1' }];
+            } else {
+                datalist_reason = [{ title: '发货', value: '0' }, { title: '成品领用', value: '1' }, { title: '零箱返线', value: '2' }]
+            }
+
             $("#reason").select({
                 title: "出库原因",
                 items: datalist_reason,
@@ -167,7 +200,7 @@
                     } else {
                         $("#btnsave").show();
                     }
-
+                    reason_change();
                 },
                 onOpen: function () {
                     //  console.log("open");
