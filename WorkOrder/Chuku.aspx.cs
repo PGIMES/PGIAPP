@@ -73,18 +73,15 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string domain = "", pgino = "", pn = "", qty = "";
+        string qty = "";
 
         if (flag == "N")
         {
             DataTable re_dt_2 = ds.Tables[1];
-            domain = re_dt_2.Rows[0]["domain"].ToString();
-            pgino = re_dt_2.Rows[0]["pgino"].ToString();
-            pn = re_dt_2.Rows[0]["pn"].ToString();
             qty = re_dt_2.Rows[0]["qty"].ToString();
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"domain\":\"" + domain + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
         return result;
 
     }

@@ -79,9 +79,6 @@
                     if (obj[0].flag == "Y") {
                         layer.alert(obj[0].msg);
                     }
-                    $("#domain").val(obj[0].domain);
-                    $("#pgino").val(obj[0].pgino);
-                    $("#pn").val(obj[0].pn);
                     $('#qty').val(obj[0].qty);
                     $('#act_qty').val(obj[0].qty);
                 }
@@ -129,8 +126,11 @@
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div>
-                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>   
-                    <asp:TextBox ID="ruku_dh" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>               
+                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>              
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>  
+                    <asp:TextBox ID="ruku_dh" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>               
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
