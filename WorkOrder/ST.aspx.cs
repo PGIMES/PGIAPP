@@ -72,28 +72,28 @@ public partial class WorkOrder_ST : System.Web.UI.Page
         re_sql = string.Format(re_sql, zyb);
         DataSet ds = SQLHelper.Query(re_sql);
 
-        DataTable dt_op = ds.Tables[0];
-        string json_op = JsonConvert.SerializeObject(dt_op);
+        DataTable dt_lotno = ds.Tables[0];
+        string json_lotno = JsonConvert.SerializeObject(dt_lotno);
 
-        string result = "[{\"json_op\":" + json_op + "}]";
+        string result = "[{\"json_lotno\":" + json_lotno + "}]";
         return result;
 
     }
 
     [WebMethod]
-    public static string lotno_change(string pgino, string lotno,string need_no, string domain)
+    public static string lotno_change(string lotno)
     {
-        string re_sql = @"exec [usp_app_SL_lot_change_qad_V1] '{0}', '{1}', '{2}'";
-        re_sql = string.Format(re_sql, pgino, lotno, need_no);
+        string re_sql = @"exec [usp_app_ST_lotno_change] '{0}'";
+        re_sql = string.Format(re_sql, lotno);
         DataSet ds = SQLHelper.Query(re_sql);
 
         DataTable re_dt = ds.Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string qty = "", loc_from = "", loc_to = "", pgino_yn = "";
+        string qty = "";
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\",\"loc_from\":\"" + loc_from + "\",\"loc_to\":\"" + loc_to + "\",\"pgino_yn\":\"" + pgino_yn + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
         return result;
 
     }

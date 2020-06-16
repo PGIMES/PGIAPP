@@ -40,95 +40,11 @@
     </style>
 
      <script>
-         function zyb_change(zyb) {
-             $.ajax({
-                 type: "post",
-                 url: "ST.aspx/zyb_change",
-                 data: "{'zyb':'" + zyb + "'}",
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                 success: function (data) {
-                     var obj = eval(data.d);
-
-                     var json_lotno = obj[0].json_lotno;
-                     $("#lot_no").select("update", { items: json_lotno });
-                     $('#lot_no').val('');
-                 }
-
-             });
-         }
-
-         function valid_sl() {
-            if ($("#lot_no").val() == "") {
-                layer.alert("请输入【Lot No】.");
-                return false;
-            }
-            if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
-                layer.alert("请输入【送料数量】.");
-                return false;
-            } else if (parseInt($("#act_qty").val()) > parseInt($("#sy_qty").val())) {
-                layer.alert("【送料数量】不可大于【剩余数量】.");
-                return false;
-            }
-            if ($("#loc_from").val() == "") {
-                layer.alert("请输入【loc_from】.");
-                return false;
-            }
-            if ($("#loc_to").val() == "") {
-                layer.alert("请输入【loc_to】.");
-                return false;
-            }
-            return true;
-         }
-
-    </script>
-
-</head>
-<body>
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <%--步骤二：通过config接口注入权限验证配置--%>
-    <script>    
-
-        $(document).ready(function () {
+         $(document).ready(function () {
             $("#act_qty").attr("readonly", "readonly");
         });
 
-        function lotno_change() {
-            $.ajax({
-                type: "post",
-                url: "ST.aspx/lotno_change",
-                data: "{'pgino':'" + $("#pgino").val() + "','lotno':'" + $("#lot_no").val() + "','need_no':'" + "<%= _need_t_no %>" + "','domain':'" + $("#domain").val() + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                success: function (data) {
-                    var obj = eval(data.d);
-                    var flag = obj[0].flag;
-                    if (flag == "Y") {
-                        layer.alert(obj[0].msg);
-                        $('#lot_no').val("");
-                        $('#act_qty').val("");
-                        $('#txt_sy_qty').val($('#cur_sy_qty').val());
-                        $('#loc_from').val("");
-                        $('#loc_to').val("");
-                        $('#pgino_yn').val("");
-                    } else {
-                        $('#act_qty').val(obj[0].qty);
-                        $('#txt_sy_qty').val(parseFloat($('#cur_sy_qty').val() == "" ? "0" : $('#cur_sy_qty').val()) - parseFloat(obj[0].qty == "" ? "0" : obj[0].qty));
-                        $('#loc_from').val(obj[0].loc_from);
-                        $('#loc_to').val(obj[0].loc_to);
-                        $('#pgino_yn').val(obj[0].pgino_yn);
-                    }
-
-                    return;
-                }
-
-            });
-        }
-
         $(function () {
-            sm_lotno();
 
             $("#btn_sl2").click(function () {
                 $("#btn_sl2").attr("disabled", "disabled");
@@ -226,24 +142,79 @@
             });
 
         });
+         function zyb_change(zyb) {
+             $.ajax({
+                 type: "post",
+                 url: "ST.aspx/zyb_change",
+                 data: "{'zyb':'" + zyb + "'}",
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                 success: function (data) {
+                     var obj = eval(data.d);
 
-        function sm_lotno() {
-            $('#img_sm_lotno').click(function () {
-                wx.ready(function () {
-                    wx.scanQRCode({
-                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                        success: function (res) {
-                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                            // code 在这里面写上扫描二维码之后需要做的内容  
-                            $('#lot_no').val(result);
-                            lotno_change();
-                        }
-                    });
-                });
+                     var json_lotno = obj[0].json_lotno;
+                     $("#lot_no").select("update", { items: json_lotno });
+                     $('#lot_no').val('');
+                 }
+
+             });
+         }
+         
+
+        function lotno_change() {
+            $.ajax({
+                type: "post",
+                url: "ST.aspx/lotno_change",
+                data: "{'lotno':'" + $("#lot_no").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    var flag = obj[0].flag;
+                    if (flag == "Y") {
+                        layer.alert(obj[0].msg);
+                        $('#lot_no').val("");
+                        $('#act_qty').val("");
+                    } else {
+                        $('#act_qty').val(obj[0].qty);
+                    }
+                    return;
+                }
+
             });
         }
+
+         function valid_sl() {
+            if ($("#lot_no").val() == "") {
+                layer.alert("请输入【Lot No】.");
+                return false;
+            }
+            if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
+                layer.alert("请输入【送料数量】.");
+                return false;
+            } else if (parseInt($("#act_qty").val()) > parseInt($("#sy_qty").val())) {
+                layer.alert("【送料数量】不可大于【剩余数量】.");
+                return false;
+            }
+            if ($("#loc_from").val() == "") {
+                layer.alert("请输入【loc_from】.");
+                return false;
+            }
+            if ($("#loc_to").val() == "") {
+                layer.alert("请输入【loc_to】.");
+                return false;
+            }
+            return true;
+         }
+
     </script>
+
+</head>
+<body>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <%--步骤二：通过config接口注入权限验证配置--%>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
@@ -368,10 +339,10 @@
 
         });
         $("#lot_no").select({
-            title: "工序",
+            title: "转运包序列号",
             items: [{title:'' ,value:''}],
             onChange: function (d) {
-                alert(d.values);
+                lotno_change(d.values);
             },
             onClose: function (d) {
                 //var obj = eval(d.data);
@@ -386,28 +357,28 @@
     </script>
 </body>
     <script>
-        var datad = [];
-        $.ajax({
-            url: "/getwxconfig.aspx/GetScanQRCode",
-            type: "Post",
-            data: "{ 'url': '" + location.href + "' }",
-            async: false,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                datad = JSON.parse(data.d); //转为Json字符串
-            },
-            error: function (error) {
-                alert(error)
-            }
-        });
-        wx.config({
-            debug: false, // 开启调试模式
-            appId: datad.appid, // 必填，公众号的唯一标识
-            timestamp: datad.timestamp, // 必填，生成签名的时间戳
-            nonceStr: datad.noncestr, // 必填，生成签名的随机串
-            signature: datad.signature,// 必填，签名，见附录1
-            jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
-        });
+        //var datad = [];
+        //$.ajax({
+        //    url: "/getwxconfig.aspx/GetScanQRCode",
+        //    type: "Post",
+        //    data: "{ 'url': '" + location.href + "' }",
+        //    async: false,
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+        //    success: function (data) {
+        //        datad = JSON.parse(data.d); //转为Json字符串
+        //    },
+        //    error: function (error) {
+        //        alert(error)
+        //    }
+        //});
+        //wx.config({
+        //    debug: false, // 开启调试模式
+        //    appId: datad.appid, // 必填，公众号的唯一标识
+        //    timestamp: datad.timestamp, // 必填，生成签名的时间戳
+        //    nonceStr: datad.noncestr, // 必填，生成签名的随机串
+        //    signature: datad.signature,// 必填，签名，见附录1
+        //    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+        //});
     </script>
 </html>

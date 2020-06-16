@@ -162,11 +162,11 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string pgino_change(string pgino)
+    public static string pgino_change(string pgino, string domain)
     {
 
-        string re_sql = @"exec [usp_app_bhgp_Apply_pgino_change_V1] '{0}'";
-        re_sql = string.Format(re_sql, pgino);
+        string re_sql = @"exec [usp_app_bhgp_Apply_pgino_change_V1] '{0}','{1}'";
+        re_sql = string.Format(re_sql, pgino, domain);
         DataSet ds = SQLHelper.Query(re_sql);
 
         string pn = "", descr = "", b_use_routing = "", b_op_one = "";
