@@ -117,7 +117,7 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('参考号" + ld_ref + ",QAD不存在');", true);
                 return;
             }
-            loc = ldt.Rows[0]["ld_qty_oh"].ToString();
+            loc = ldt.Rows[0]["ld_loc"].ToString();
         }
 
         string re_sql = re_sql = @"exec usp_app_Chuku '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
