@@ -71,48 +71,39 @@
                         </div>
                         <div class="page-category js-categoryInner">
                             <div class="weui-cells page-category-content">
-
                                 <div class="weui-form-preview__bd ">
                                     <asp:Repeater runat="server" ID="dtMain">
                                         <ItemTemplate>                                           
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">要料人</label>
-                                                <span class="weui-form-preview__value"><%#  Eval("cellphone") %><%#  Eval("emp_name") %> </span>
+                                            <div class="weui-mark-vip">
+                                                <span class="weui-mark-lt <%# Eval("status").ToString()=="1"?"bg-gray":"bg-yellow"%>"></span>
+                                            </div>
+                            
+                                           <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">压铸机</label>
+                                                <span class="weui-form-preview__value"><%# Eval("yzj_no_desc") %></span>
                                             </div>
                                             <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">要料时间</label>
-                                                <span class="weui-form-preview__value"><%# DataBinder.Eval(Container.DataItem, "req_date","{0:MM-dd HH:mm}") %> </span>
-                                            </div>
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">岗位</label>
-                                                <span class="weui-form-preview__value"><%# Eval("worklocation") %></span>
-                                            </div>
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">物料号</label>
-                                                <span class="weui-form-preview__value"><%# Eval("pgino") %></span>
-                                            </div>
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">零件号</label>
-                                                <span class="weui-form-preview__value"><%# Eval("pn") %> </span>
-                                            </div>
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">零件名称</label>
-                                                <span class="weui-form-preview__value"><%# Eval("descr") %> </span>
-                                            </div>
-                                            <div class="weui-form-preview__item">
-                                                <label class="weui-form-preview__label">要料数量</label>
-                                                <span class="weui-form-preview__value"><%# Eval("need_qty") %> </span>
+                                                <label class="weui-form-preview__label">材料</label>
+                                                <span class="weui-form-preview__value"><%# Eval("cl") %></span>
                                             </div>
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">要求送到时间</label>
-                                                <span class="weui-form-preview__value"><%# DataBinder.Eval(Container.DataItem, "need_date","{0:MM-dd HH:mm}") %>  | <font class="f-blue"><%# Eval("d") %> </font></span>
-                                            </div>
+                                                <span class="weui-form-preview__value">
+                                                    <%# Eval("need_date_dl")%>
+                                                    <%# Eval("need_date","{0:yyyy-MM-dd HH:mm}")%>
+                                                </span>
+                                            </div>  
+                                            <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">要汤人</label>
+                                                <span class="weui-form-preview__value">
+                                                    <%# Eval("phone")+""+ Eval("emp_name") %>
+                                                    <%# Eval("times_type") %> <font class="f-blue"><%# Eval("times") %></font>
+                                                </span>
+                                
+                                            </div>               
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </li>
@@ -122,76 +113,47 @@
 
                 <% foreach (System.Data.DataRow dr in dtDetail.Rows)
                     { %>
-               <%-- <i class="icon icon-2 f20"></i>--%>
 
                 <ul class="collapse">
                     <li class="js-show">
                         <div class="weui-flex js-category">
                             <div class="weui-flex__item"><% =dr["title"] %></div>
-                             <%= dr["lot_no"] ==""?"":"Lot:"+dr["lot_no"] %>
+                             <%= dr["lot_no"].ToString() ==""?"":"Lot:"+dr["lot_no"] %>
                             <i class="icon icon-35 padding10-l"></i>
                         </div>
                         <div class="page-category js-categoryInner">
                             <div class="weui-cells page-category-content">
                                 <div class="weui-form-preview__bd ">
-                                    <% if (dr["title"].ToString() == "送料信息")
+                                    <% if (dr["title"].ToString() == "送汤信息")
                                         { %>
                                     <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">送料人</label>
-                                        <span class="weui-form-preview__value"><%  =dr["cellphone"] %><%  =dr["emp_name"] %> </span>
+                                        <label class="weui-form-preview__label">送汤人</label>
+                                        <span class="weui-form-preview__value"><%  =dr["phone"] %><%  =dr["emp_name"] %> </span>
                                     </div>
                                     <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">送料数量</label>
-                                        <span class="weui-form-preview__value"><%=dr["qty"] %>  </span>
+                                        <label class="weui-form-preview__label">转运包</label>
+                                        <span class="weui-form-preview__value"><%=dr["zyb"] %></span>
                                     </div>
                                     <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">送料时间</label>
-                                        <span class="weui-form-preview__value"><%= string.Format("{0:MM-dd HH:mm}",dr["date"])%> 时长:<font class="<%=dr["shichang"].ToString().Contains("-")?"f-blue":"f-red"%>"> <%=dr["shichang"].ToString() %></font>  </span>
+                                        <label class="weui-form-preview__label">送汤量</label>
+                                        <span class="weui-form-preview__value"><%=dr["qty"] %> KG </span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">送汤时间</label>
+                                        <span class="weui-form-preview__value">
+                                            <%= string.Format("{0:MM-dd HH:mm}",dr["date"])%> 时长<font class="f-blue"> <%=dr["shichang"].ToString() %></font>
+                                        </span>
                                     </div>
                                     <% }
-                                    else if (dr["title"].ToString() == "上料信息")
-                                    {  %>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">上料人</label>
-                                        <span class="weui-form-preview__value"><%=dr["cellphone"] %><%=dr["emp_name"] %> </span>
-                                    </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">上料数量</label>
-                                        <span class="weui-form-preview__value"><% =dr["qty"] %> </span>
-                                    </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">上料时间</label>
-                                        <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %>  </span>
-                                    </div>
-                                    <% }
-                                    else if (dr["title"].ToString() == "退料信息")
-                                    {  %>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">退料人</label>
-                                        <span class="weui-form-preview__value"><%=dr["cellphone"] %><%=dr["emp_name"] %> </span>
-                                    </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">退料数量</label>
-                                        <span class="weui-form-preview__value"><%=dr["qty"] %> </span>
-                                    </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">退料时间</label>
-                                        <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %>  </span>
-                                    </div>
-                                    <% }
-                                        else if (dr["title"].ToString() == "取消要料")
+                                        else if (dr["title"].ToString() == "取消要汤")
                                         {  %>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">取消人</label>
-                                        <span class="weui-form-preview__value"><%=dr["cellphone"] %><%=dr["emp_name"] %> </span>
-                                    </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">取消数量</label>
-                                        <span class="weui-form-preview__value"><%=dr["qty"] %> </span>
+                                        <span class="weui-form-preview__value"><%=dr["phone"] %><%=dr["emp_name"] %> </span>
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">取消时间</label>
-                                        <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %>  </span>
+                                        <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %> 时长<font class="f-blue"> <%=dr["shichang"].ToString() %> </span>
                                     </div>
                                     <% } %>  
                                 </div>

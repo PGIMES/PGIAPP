@@ -224,7 +224,7 @@
                                                             <%#   Eval("zyb")+","+Eval("lot_no")+","+Eval("act_qty")+"kg" %>
                                                         </span>
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date")+ " " %>   
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date","{0:yyyy-MM-dd HH:mm}")+ " " %>   
                                                             <span style="color:#999999;">
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>

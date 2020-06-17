@@ -27,23 +27,13 @@ public partial class YT_Detail_Info : System.Web.UI.Page
 
     private void GetData()
     {
-                 
-        string sql = string.Format(@"select t.*,hr.cellphone ,workshop+'/'+line+'/'+location as worklocation
-                                    ,case when datediff(mi, req_date, need_date) <10 then '立即'
-	                                        when datediff(mi, req_date, need_date) >20 and datediff(mi, req_date, need_date) <=30 then '半小时内'
-	                                        when datediff(mi, req_date, need_date) >30 and datediff(mi, req_date, need_date) <=60 then '1小时内'
-	                                        when datediff(mi, req_date, need_date) >60 and datediff(mi, req_date, need_date) <=120 then '2小时内'
-	                                        when datediff(mi, req_date, need_date) >120 and datediff(mi, req_date, need_date) <=240 then '4小时内'
-	                                        when datediff(mi, req_date, need_date) >240 and datediff(mi, req_date, need_date) <=480 then '8小时内'
-                                        end d
-                                    ,cast(cast(datediff(ss, req_date, need_date)/3600 as int) as varchar)+':'+right('00' + cast(cast(datediff(ss, req_date, need_date) %3600/60 as int) as varchar), 2) as times
-                                    from Mes_App_NeedSku t left join  [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] hr  on  t.emp_code=hr.employeeid where  need_no='{0}' ", _need_t_no);
-        DataTable dt  = SQLHelper.Query(sql).Tables[0];     
-         
-        dtMain.DataSource = dt ;
+
+        string sql = string.Format("usp_app_YT_Detail_Info '{0}'", _need_t_no);
+        DataSet ds = SQLHelper.Query(sql);
+
+        dtMain.DataSource = ds.Tables[0];
         dtMain.DataBind();
 
-        sql = string.Format("usp_app_YL_detail_timeLine '{0}'", _need_t_no);
-        dtDetail = SQLHelper.Query(sql).Tables[0];
+        dtDetail = ds.Tables[1];
     }
 }
