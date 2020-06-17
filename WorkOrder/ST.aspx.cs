@@ -81,10 +81,10 @@ public partial class WorkOrder_ST : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string lotno_change(string lotno)
+    public static string lotno_change(string zyb, string lotno)
     {
-        string re_sql = @"exec [usp_app_ST_lotno_change] '{0}'";
-        re_sql = string.Format(re_sql, lotno);
+        string re_sql = @"exec [usp_app_ST_lotno_change] '{0}','{1}'";
+        re_sql = string.Format(re_sql, zyb, lotno);
         DataSet ds = SQLHelper.Query(re_sql);
 
         DataTable re_dt = ds.Tables[0];
@@ -92,6 +92,11 @@ public partial class WorkOrder_ST : System.Web.UI.Page
         string msg = re_dt.Rows[0][1].ToString();
 
         string qty = "";
+        if (flag == "N")
+        {
+            DataTable ldt = ds.Tables[1];
+            qty = ldt.Rows[0]["qty"].ToString();
+        }
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
         return result;
@@ -99,13 +104,12 @@ public partial class WorkOrder_ST : System.Web.UI.Page
     }
    
     [WebMethod]
-    public static string sl2(string _emp_code_name, string need_no, string lotno, string act_qty, string pgino, string pn
-        , string comment, string loc_from, string loc_to, string sku_area, string pgino_yn)
+    public static string sl2(string _emp_code_name, string need_t_no, string zyb, string lotno, string act_qty, string comment, string sku_area)
     {
         string flag = "N", msg = "";
 
-        string re_sql = @"exec [usp_app_ST] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
-        re_sql = string.Format(re_sql, _emp_code_name, need_no, lotno, act_qty, pgino, pn, comment, loc_from, loc_to, sku_area);
+        string re_sql = @"exec [usp_app_ST] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
+        re_sql = string.Format(re_sql, _emp_code_name, need_t_no, zyb, lotno, act_qty, comment, sku_area);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();
@@ -115,12 +119,12 @@ public partial class WorkOrder_ST : System.Web.UI.Page
 
     }
     [WebMethod]
-    public static string cancel2(string _emp_code_name, string need_no)
+    public static string cancel2(string _emp_code_name, string need_t_no)
     {
         string flag = "N", msg = "";
 
         string re_sql = @"exec [usp_app_ST_cancel] '{0}', '{1}'";
-        re_sql = string.Format(re_sql, _emp_code_name, need_no);
+        re_sql = string.Format(re_sql, _emp_code_name, need_t_no);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();

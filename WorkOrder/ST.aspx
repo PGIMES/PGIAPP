@@ -41,7 +41,6 @@
 
      <script>
          $(document).ready(function () {
-            $("#act_qty").attr("readonly", "readonly");
         });
 
         $(function () {
@@ -62,15 +61,14 @@
                     return;
                 }
 
-                $.confirm('确认【送汤】吗？' + msg, function () {
+                $.confirm('确认【送汤】吗？', function () {
                     $.ajax({
                         type: "post",
                         url: "ST.aspx/sl2",
                         data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
-                            + "','need_t_no':'" + "<%= _need_t_no %>" + "','lotno':'" + $("#lot_no").val() + "','act_qty':'" + $('#act_qty').val()
-                            + "','pgino':'" + $("#pgino").val() + "','pn':'" + $('#pn').val() + "','comment':'" + $('#comment').val()
-                            + "','loc_from':'" + $("#loc_from").val() + "','loc_to':'" + $("#loc_to").val() + "','sku_area':'" + $("#sku_area").val()
-                            + "','pgino_yn':'" + $("#pgino_yn").val() + "'}",
+                            + "','need_t_no':'" + "<%= _need_t_no %>" + "','zyb':'" + $("#zyb").val() + "','lotno':'" + $("#lot_no").val()
+                            + "','act_qty':'" + $('#act_qty').val()+ "','comment':'" + $('#comment').val()+ "','sku_area':'" + $("#sku_area").val()
+                            + "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -142,11 +140,11 @@
             });
 
         });
-         function zyb_change(zyb) {
+         function zyb_change() {
              $.ajax({
                  type: "post",
                  url: "ST.aspx/zyb_change",
-                 data: "{'zyb':'" + zyb + "'}",
+                 data: "{'zyb':'" + $("#zyb").val() + "'}",
                  contentType: "application/json; charset=utf-8",
                  dataType: "json",
                  async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -166,7 +164,7 @@
             $.ajax({
                 type: "post",
                 url: "ST.aspx/lotno_change",
-                data: "{'lotno':'" + $("#lot_no").val() + "'}",
+                data: "{'zyb':'" + $("#zyb").val() + "','lotno':'" + $("#lot_no").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -186,24 +184,21 @@
             });
         }
 
-         function valid_sl() {
+        function valid_sl() {
+            if ($("#zyb").val() == "") {
+                layer.alert("请输入【转运包】.");
+                return false;
+            }
             if ($("#lot_no").val() == "") {
                 layer.alert("请输入【Lot No】.");
                 return false;
             }
-            if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
-                layer.alert("请输入【送料数量】.");
-                return false;
-            } else if (parseInt($("#act_qty").val()) > parseInt($("#sy_qty").val())) {
-                layer.alert("【送料数量】不可大于【剩余数量】.");
+            if ($.trim($("#act_qty").val()) == "") {
+                layer.alert("请输入【送汤量】.");
                 return false;
             }
-            if ($("#loc_from").val() == "") {
-                layer.alert("请输入【loc_from】.");
-                return false;
-            }
-            if ($("#loc_to").val() == "") {
-                layer.alert("请输入【loc_to】.");
+            else if (parseInt($("#act_qty").val()) <= 0) {
+                layer.alert("【送汤量】必须大于0.");
                 return false;
             }
             return true;
@@ -279,23 +274,23 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">转运包</label></div>
                 <div class="weui-cell__hd">
-                    <asp:TextBox ID="zyb" class="weui-input" placeholder="请输入转运包" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="zyb" class="weui-input" placeholder="请输入转运包" style="color:gray" runat="server"></asp:TextBox>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">Lot No</label></div>
                 <div class="weui-cell__hd">
-                    <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" style="color:gray" runat="server"></asp:TextBox>
                 </div>
             </div>
 
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">送汤量</label></div>
-                <asp:TextBox ID="act_qty" class="weui-input" placeholder="" style="color:gray" runat="server"></asp:TextBox>
+                <asp:TextBox ID="act_qty" class="weui-input" placeholder="" runat="server" type="number"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">送料说明</label></div>
+                <div class="weui-cell__hd"><label class="weui-label">送汤说明</label></div>
                 <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
             </div>
 
@@ -327,7 +322,7 @@
             title: "转运包",
             items: datalist_zyb,
             onChange: function (d) {
-                zyb_change(d.values);
+                zyb_change();
             },
             onClose: function (d) {
                 var obj = eval(d.data);
@@ -342,7 +337,7 @@
             title: "转运包序列号",
             items: [{title:'' ,value:''}],
             onChange: function (d) {
-                lotno_change(d.values);
+                lotno_change();
             },
             onClose: function (d) {
                 //var obj = eval(d.data);
