@@ -66,8 +66,8 @@
                     <li class="js-show">
                         <div class="weui-flex js-category">
                             <div class="weui-mark-vip"><span class="weui-mark-lt  bg-gray "></span></div>
-                            <div class="weui-flex__item"> 要料信息</div>
-                            要料单号:<% ="<font class='tag'/>"+Request["need_t_no"] %><i class="icon icon-35 padding10-l"></i>
+                            <div class="weui-flex__item"> 要汤单号</div>
+                            <% ="<font class='tag'/>"+Request["need_t_no"] %><i class="icon icon-35 padding10-l"></i>
                         </div>
                         <div class="page-category js-categoryInner">
                             <div class="weui-cells page-category-content">
