@@ -88,8 +88,40 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        string re_sql = re_sql = @"exec usp_app_Chuku '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, ruku_dh.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value, reason.Text);
+        string form_dh = "", loc = "";
+        if (reason.Text == "成品领用")//form_dh
+        {
+            if (ruku_dh.Text == "") { form_dh = workorder.Text; }
+            else { form_dh = ruku_dh.Text; }
+        }
+
+        //qad 库位
+        if (reason.Text == "成品领用" || reason.Text == "零箱返线")
+        {
+            string ld_ref = "";
+            if (reason.Text == "成品领用") { ld_ref = form_dh; }
+            else if (reason.Text == "零箱返线") { ld_ref = ruku_dh.Text; }
+
+            DataTable ldt = new DataTable();
+            string sqlStr = @"select ld_loc from pub.ld_det where ld_ref='{0}' with (nolock)";
+            sqlStr = string.Format(sqlStr, ld_ref);
+            ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+            if (ldt == null)
+            {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('参考号" + ld_ref + ",QAD不存在');", true);
+                return;
+            }
+            if (ldt.Rows.Count <= 0)
+            {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('参考号" + ld_ref + ",QAD不存在');", true);
+                return;
+            }
+            loc = ldt.Rows[0]["ld_qty_oh"].ToString();
+        }
+
+        string re_sql = re_sql = @"exec usp_app_Chuku '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, ruku_dh.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value, reason.Text, form_dh, loc);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
