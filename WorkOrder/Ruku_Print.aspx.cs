@@ -242,6 +242,29 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
+        //check qad 库存
+        DataTable ldt = new DataTable();
+        string sqlStr = @"select sum(cast(cast(ld_qty_oh as numeric(18,4)) as float)) ld_qty_oh from pub.ld_det where ld_ref='{0}' with (nolock)";
+        sqlStr = string.Format(sqlStr, workorder.Text);
+        ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+        if (ldt == null)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('来源单号"+ workorder.Text + ",QAD库存不存在');", true);
+            return;
+        }
+        if (ldt.Rows.Count<=0)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('来源单号" + workorder.Text + ",QAD库存不存在');", true);
+            return;
+        }
+        if (ldt.Rows[0]["ld_qty_oh"].ToString() != act_qty.Text)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType()
+                , "showsuccess", "layer.alert('来源单号" + workorder.Text + ",库存不一致.QAD库存" + ldt.Rows[0]["ld_qty_oh"].ToString() + "当前待入库" + act_qty.Text + "');"
+                , true);
+            return;
+        }
+
         //string re_sql = re_sql = @"exec usp_app_Ruku_Print '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
         //re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value);
         //DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
