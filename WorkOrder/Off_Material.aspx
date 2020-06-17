@@ -64,6 +64,52 @@
                 alert("未上岗或无下线数据.");
                 return false;
             }
+            var totalRow = 0; var is_tr_row = false;
+            var qty = 0;var qty_per=0
+            $('#divtable table  tr').each(function (i) {
+                if (i > 0) {
+                    is_tr_row = true;
+                    qty=$(this).children('td:eq(2)').text();
+                    qty_per=$(this).children('td:eq(3)').text();
+                    totalRow += parseFloat(qty/qty_per);
+                    
+                   
+                }
+
+            });
+            if (is_tr_row) {
+                if (totalRow < parseFloat($("#txt_curr_qty").val())) {
+                    alert("可下料数量小于当前需下料数.");
+                    return false;
+                }
+            }
+
+
+
+            //$('#divtable table  tr').each(function (i) {
+            //    if (i > 0) {
+            //        is_tr_row = true;
+
+            //        $(this).children('td').each(function (j) {
+            //            if (j >= 2) {
+
+            //                totalRow += parseFloat($(this).text());
+            //                // alert(totalRow);
+            //            }
+            //        });
+            //    }
+
+            //});
+            //if (is_tr_row) {
+            //    if (totalRow < parseFloat($("#txt_curr_qty").val())) {
+            //        alert("可下料数量小于当前需下料数.");
+            //        return false;
+            //    }
+            //}
+
+
+
+
 
            // $("#btnzc").prop("disabled", "disabled").text("处理中…");
            // $("input[id*=btnzc]").addClass("disabled").text("处理中…");
@@ -85,6 +131,53 @@
                 alert("请输入生产完成单号.");
                 return false;
             }
+
+            if ($("#txt_xmh").val() == null) {
+                alert("未上岗或无下线数据.");
+                return false;
+            }
+            var totalRow = 0; var is_tr_row = false;
+            var qty = 0; var qty_per = 0
+            $('#divtable table  tr').each(function (i) {
+                if (i > 0) {
+                    is_tr_row = true;
+                    qty = $(this).children('td:eq(2)').text();
+                    qty_per = $(this).children('td:eq(3)').text();
+                    totalRow += parseFloat(qty / qty_per);
+
+
+                }
+
+            });
+            if (is_tr_row) {
+                if (totalRow < parseFloat($("#txt_curr_qty").val())) {
+                    alert("可下料数量小于当前需下料数.");
+                    return false;
+                }
+            }
+
+            //var totalRow = 0; var is_tr_row = false;
+
+            //$('#divtable table  tr').each(function (i) {
+            //    if (i > 0) {
+            //        is_tr_row = true;
+
+            //        $(this).children('td').each(function (j) {
+            //            if (j >= 2) {
+            //              //  alert(totalRow);
+            //                totalRow += parseFloat($(this).text());
+
+            //            }
+            //        });
+            //    }
+
+            //});
+            //if (is_tr_row) {
+            //    if (totalRow < parseFloat($("#txt_curr_qty").val())) {
+            //        alert("可下料数量小于当前需下料数.");
+            //        return false;
+            //    }
+            //}
 
             //if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
 
@@ -112,6 +205,10 @@
 
 
           $(function () {
+
+           
+
+
               $("#btnsave2").click(function () { 
                   $(":button").attr("disabled", "disabled");
                   $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
@@ -122,7 +219,20 @@
                           return false;
                           //}
                       }
-                      btnclick($("#btnsave2").val());
+
+                      if (parseFloat($("#txt_curr_qty").val()) < 0) {
+                          $.confirm('本次检验数量小于0,确认倒冲吗？', function () { btnclick($("#btnsave2").val()); },
+                             function () {
+                                 $(":button").removeAttr("disabled");
+                                 $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                             });
+                      }
+                      else {
+                          btnclick($("#btnsave2").val());
+                      }
+
+
+                     
               });
 
               $("#btnsave3").click(function () {
@@ -136,18 +246,26 @@
                       return false;
                       //}
                   }
-                  if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val()))
-                  {
-                      $.confirm('零托,确认执行下一步吗？', function () { btnclick($("#btnsave3").val()); },
-                          function () {
-                          $(":button").removeAttr("disabled");
-                          $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-                      });
+                  if (parseFloat($("#txt_curr_qty").val()) < 0) {
+                      $.confirm('本次检验数量小于0,确认倒冲吗？', function () { btnclick($("#btnsave3").val()); },
+                         function () {
+                             $(":button").removeAttr("disabled");
+                             $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                         });
                   }
-                  else
-                  {
-                      btnclick($("#btnsave3").val());
+                  else {
+                      if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
+                          $.confirm('零托,确认执行下一步吗？', function () { btnclick($("#btnsave3").val()); },
+                              function () {
+                                  $(":button").removeAttr("disabled");
+                                  $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                              });
+                      }
+                      else {
+                          btnclick($("#btnsave3").val());
+                      }
                   }
+
                   
               });
             });
@@ -205,6 +323,34 @@
                       $(this).children('div').children('span').css("color", "#428BCA");//
                   }
               });
+
+          }
+
+          function step_change()
+          {
+              if ($("input[name='step']:checked").val() == "GP12") {
+
+                  $.ajax({
+                      type: "post",
+                      url: "Off_Material.aspx/Check_GP",
+                      data: "{'pgino':'" + $('#txt_xmh').val() + "'}",
+                      contentType: "application/json; charset=utf-8",
+                      dataType: "json",
+                      async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                      success: function (data) {
+                           var obj = eval(data.d);
+                          if (obj[0].flag == "N") {
+                              alert("工艺路线没有GP12,不可选择");
+                              setvalue();
+                              return false;
+                          }
+  
+
+                      }
+
+                  });
+              }
+
 
           }
 
@@ -273,6 +419,7 @@
                                     xmh_change();
                                     $("#txt_xmh").val(item.pgino).attr("disabled", "disabled");
                                     setvalue();
+                                    
                                 }
                             })
                            
@@ -469,7 +616,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="step"  id="g1" value="终检" type="radio"  />   <%--<%= ViewState["STEPVALUE"].ToString()=="终检"?"checked":"" %>--%>
+                                             <input class="weui-form-checkbox" name="step"  id="g1" value="终检" type="radio"   onchange="step_change()" />   <%--<%= ViewState["STEPVALUE"].ToString()=="终检"?"checked":"" %>--%>
                                              <label for="g1">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -482,7 +629,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="step"  id="g2" value="GP12" type="radio" />   <%--<%= ViewState["STEPVALUE"].ToString()=="GP12"?"checked":"" %>--%>
+                                             <input class="weui-form-checkbox" name="step"  id="g2" value="GP12" type="radio" onchange="step_change()" />   <%--<%= ViewState["STEPVALUE"].ToString()=="GP12"?"checked":"" %>--%>
                                              <label for="g2" class="middle">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -495,7 +642,7 @@
 
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
-                                             <input class="weui-form-checkbox" name="step"  id="g3" value="入库" type="radio"  />  <%--<%= ViewState["STEPVALUE"].ToString()=="入库"?"checked":"" %>--%>
+                                             <input class="weui-form-checkbox" name="step"  id="g3" value="入库" type="radio" onchange="step_change()"  />  <%--<%= ViewState["STEPVALUE"].ToString()=="入库"?"checked":"" %>--%>
                                              <label for="g3" class="middle">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
@@ -537,6 +684,7 @@
                                                           <td>物料号</td>
                                                           <td>Lot No</td>
                                                           <td>数量 </td>
+                                                          <td style="visibility:hidden">分摊率 </td>
                                                       </tr>
                                               </HeaderTemplate>
 
@@ -545,6 +693,7 @@
                                                        <td><%#  Eval("sku") %></td>
                                                        <td><%# Eval("lot_no")%></td>
                                                        <td><%# Eval("need_off_qty")%></td>
+                                                       <td style="visibility:hidden"><%# Eval("ps_qty_per")%></td>
                                                    </tr>
                                         </ItemTemplate>
                                            <FooterTemplate>

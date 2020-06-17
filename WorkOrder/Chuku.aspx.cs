@@ -97,8 +97,11 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
         if (flag == "N")
         {
             string url = "/ck.aspx";
+            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
+            //    , "layer.alert('出库成功,出库单号" + msg + "', {}, function (index) {window.location.href='" + url + "'; }); "
+            //    , true);
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess"
-                , "layer.alert('出库成功,出库单号" + msg + "', {}, function (index) {window.location.href='" + url + "'; }); "
+                , "layer.alert('" + msg + "', {}, function (index) {window.location.href='" + url + "'; }); "
                 , true);
             return;
         }

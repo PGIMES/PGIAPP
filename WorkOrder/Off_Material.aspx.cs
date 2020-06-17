@@ -16,8 +16,8 @@ public partial class Off_Material : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh = Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -26,6 +26,7 @@ public partial class Off_Material : System.Web.UI.Page
         dt_append.Columns.Add("need_off_qty");
         dt_append.Columns.Add("need_no");
         dt_append.Columns.Add("idno");
+        dt_append.Columns.Add("ps_qty_per");
 
 
 
@@ -119,7 +120,9 @@ public partial class Off_Material : System.Web.UI.Page
        
         DataRow drow = dt_append.NewRow();
         string sql = "";
-        string strsql = "select sku,lot_no,cast(qty-off_qty as decimal(18,4)) as need_off_qty,need_no from Mes_App_WorkOrder_Wip where 1=1 and loading_type=1 ";
+        string strsql = @"select sku,lot_no,cast(qty-off_qty as decimal(18,4)) as need_off_qty,need_no,cast(ps_qty_per as decimal(18,4))ps_qty_per from Mes_App_WorkOrder_Wip wip
+                          join[172.16.5.26].QAD.DBO.QAD_PS_MSTR ps on wip.sku = ps_comp and wip.domain = ps_domain
+                          where 1 = 1 and loading_type = 1 and ps_par='" + txt_xmh.SelectedValue+"' ";
         dh = dh.Substring(1, dh.Length - 1)+",";
         string[] strdh = dh.Split(',');
         int strdh_lenth = strdh.Length;
@@ -132,7 +135,7 @@ public partial class Off_Material : System.Web.UI.Page
                 DataTable dt_ = SQLHelper.Query(sql).Tables[0];
                 if (dt_.Rows.Count == 0 || dt_ == null)
                 {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", @"$.toptip('来源单号不存在',3000); $('#source_dh').val('') ", true);
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert(\"来源单号不存在\"); $('#source_dh').val('') ", true);
                     return;
                 }
             
@@ -163,6 +166,7 @@ public partial class Off_Material : System.Web.UI.Page
                 drow["lot_no"] = DT_Source.Rows[i]["lot_no"].ToString();
                 drow["need_off_qty"] = DT_Source.Rows[i]["need_off_qty"].ToString();
                 drow["need_no"] = DT_Source.Rows[i]["need_no"].ToString();
+                drow["ps_qty_per"] = DT_Source.Rows[i]["ps_qty_per"].ToString();
                 drow["idno"] =i;
                 dt_append.Rows.Add(drow.ItemArray);
             }
@@ -176,6 +180,7 @@ public partial class Off_Material : System.Web.UI.Page
                 drow["lot_no"] = dt_grid.Rows[i]["lot_no"].ToString();
                 drow["need_off_qty"] = dt_grid.Rows[i]["need_off_qty"].ToString();
                 drow["need_no"] = dt_grid.Rows[i]["need_no"].ToString();
+                drow["ps_qty_per"] = dt_grid.Rows[i]["ps_qty_per"].ToString();
                 drow["idno"] = 0;
                 dt_append.Rows.Add(drow.ItemArray);
             }
@@ -294,7 +299,21 @@ public partial class Off_Material : System.Web.UI.Page
             DataTable dt2 = SQLHelper.Query(strsql).Tables[0];
 
             txt_off_qty.Text = dt2.Rows[0]["off_qty"].ToString();
-            txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+            //if (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text) < 0)
+            //{
+            //    txt_qty.Text = txt_off_qty.Text;
+            //    txt_curr_qty.Text = "0";
+            //}
+            //else
+            //{
+                txt_curr_qty.Text = (double.Parse(txt_qty.Text) - double.Parse(txt_off_qty.Text)).ToString();
+            if(double.Parse(txt_qty.Text) <double.Parse(txt_off_qty.Text))
+            {
+                txt_qty.Text = txt_off_qty.Text;
+                txt_curr_qty.Text = "0";
+            }
+            //}
+
             ViewState["STEPVALUE"] = dt2.Rows[0]["step"].ToString();
             txt_step.Text= dt2.Rows[0]["step"].ToString();
             DataTable dt_record = SQLHelper.Query(strsql).Tables[1];
@@ -327,7 +346,7 @@ public partial class Off_Material : System.Web.UI.Page
         }
         else
         {
-            re_sql = @"exec usp_app_down_material_ver '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+            re_sql = @"exec usp_app_down_material_ver1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
         }
         
 
@@ -341,5 +360,19 @@ public partial class Off_Material : System.Web.UI.Page
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
         return result;
 
+    }
+
+
+    [WebMethod]
+    public static string Check_GP(string pgino)
+    {
+
+        string result = "";
+        string re_sql = @" if exists (SELECT top 1 1  FROM [172.16.5.26].qad.dbo.qad_ro_det WHERE   ro_routing='{0}' AND ro_milestone='1' AND ro_end IS NULL) SELECT 'Y' ELSE  SELECT 'N' ";
+        re_sql = string.Format(re_sql, pgino + "-GP12");
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        result = "[{\"flag\":\"" + flag + "\"}]";
+        return result;
     }
 }
