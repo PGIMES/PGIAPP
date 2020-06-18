@@ -300,6 +300,8 @@
                     var json_op = obj[0].json_op;
                     $("#op").select("update", { items: json_op });
                     $('#op').val('');
+                    
+                    $("#div_lot_no_fixed").hide();
 
                     $("#div_ref_order").hide();
                     $("#lbl_ref_order").text("参考号/生产完成单号");
