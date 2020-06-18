@@ -15,6 +15,7 @@
     <link href="/css/weuix.css" rel="stylesheet" />    
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
+    <script src="/js/cjgl.js"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -95,7 +96,7 @@
                         <i class="fa fa-tint margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要汤<span class="f12">（测试中）</span></p>
+                        <p>要汤<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -104,26 +105,26 @@
                         <i class="fa fa-hourglass-half margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要汤监视<span class="f12">（测试中）</span></p>
+                        <p>要汤监视<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"> 
                     </div>
                 </a>   
-                <a class="weui-cell weui-cell_access"  href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access"  href="javascript:sm_workorder('<%=_workshop %>');">
                     <div class="weui-cell__hd">
                         <i class="fa fa-edit margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格处理<span class="f12">（开发中）</span></p>
+                        <p>不合格处理<span class="f12">（测试中）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-bookmark-o margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格监视<span class="f12">（开发中）</span></p>
+                        <p>不合格监视<span class="f12">（测试中）</span></p>
                     </div>
                     <div class="weui-cell__ft"> 
                     </div>

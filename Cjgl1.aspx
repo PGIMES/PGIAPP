@@ -18,6 +18,7 @@
     <link href="/css/weuix.css" rel="stylesheet" />    
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
+    <script src="/js/cjgl.js"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -51,173 +52,7 @@
             //}
         });
 
-        function sm_product_off() {
-            wx.ready(function () {
-                wx.scanQRCode({
-                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                    success: function (res) {
-                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                        // code 在这里面写上扫描二维码之后需要做的内容 
-                          var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-                        if ((bj != "W" && bj != "G") || result.length < 8) {
-                            alert("完成单号不正确，请重新扫描");
-
-                        }
-                        else {
-                            window.location.href = "/workorder/Off_Material.aspx?dh=" + result + "&workshop=<%=_workshop %>";
-                        }
-
-                    }, cancel: function () {
-                        window.location.href = "/workorder/Off_Material.aspx?dh=&workshop=<%=_workshop %>";
-                    }
-                });
-            });
-        };
-
-          function sm_qc_off() {
-            wx.ready(function () {
-                wx.scanQRCode({
-                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                    success: function (res) {
-                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                        // code 在这里面写上扫描二维码之后需要做的内容 
-                          var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-                        if ((bj != "W" && bj != "G") || result.length < 8) {
-                            alert("完成单号不正确，请重新扫描");
-
-                        }
-                        else {
-                            window.location.href = "/workorder/Quantity_Checked.aspx?dh=" + result + "&workshop=<%=_workshop %>";
-                        }
-
-                    }, cancel: function () {
-                        window.location.href = "/workorder/Quantity_Checked.aspx?dh=&workshop=<%=_workshop %>";
-                    }
-                });
-            });
-        };
-
-        function sm_ck_dh() {
-            wx.ready(function () {
-                wx.scanQRCode({
-                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                    success: function (res) {
-                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                        // code 在这里面写上扫描二维码之后需要做的内容 
-                        ck_dh_change(result);
-
-                    }, cancel: function () {
-                        $.modal({
-                            title: "",
-                            text: $("#div_2").html(),
-                            buttons: []
-                        });
-                    }
-                });
-            });
-        }
-        function ck_dh_change(result) {
-            $.ajax({
-                type: "post",
-                url: "Cjgl1.aspx/ck_dh_change",
-                data: "{'result':'" + result + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                success: function (data) {
-                    var obj = eval(data.d);
-                    var flag = obj[0].flag;
-                    var msg = obj[0].msg;
-
-                    if (flag == "Y") {
-                        layer.alert(msg);
-                        return;
-                    }
-
-                    if (msg == "hg") {
-                        window.location.href = "/workorder/Ruku_Print.aspx?dh=" + result + "&workshop=<%=_workshop %>" + "&ck=N";
-                    }
-                    else if (msg == "bf") {
-                        window.location.href = "/workorder/CKSH.aspx?dh=" + result + "&workshop=<%=_workshop %>" + "&ck=N";
-                    }
-                    else if (msg == "rk") {                        
-                        window.location.href = "/workorder/Ruku_hege.aspx?dh=" + result + "&workshop=<%=_workshop %>" + "&ck=N";
-                    }
-                }
-
-            });
-            
-        }
-
-        function sm_workorder() {
-            wx.ready(function () {
-                wx.scanQRCode({
-                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                    success: function (res) {
-                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                        // code 在这里面写上扫描二维码之后需要做的内容 
-                         workorder_change(result);
-
-                    }, cancel: function () {
-                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=&workorder_f=&workshop=<%=_workshop %>";
-                    }
-                });
-            });
-
-            //workorder_change("Q0001208");
-        };
-
-        function workorder_change(result) {
-            $.ajax({
-                type: "post",
-                url: "Cjgl1.aspx/workorder_change",
-                data: "{'result':'" + result + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                success: function (data) {
-                    var obj = eval(data.d);
-                    var json_wk = obj[0].json_wk;
-
-                    var workorder = "";
-                    var workorder_f = "";
-                    var cur_sign_step = "";
-                    if (json_wk.length == 0) {
-
-                        workorder = result;
-                        window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
-                            + "&workshop=<%=_workshop %>";
-
-                    } else if (json_wk.length == 1) {
-
-                        workorder = json_wk[0]["workorder"];
-                        workorder_f = json_wk[0]["workorder_f"];
-                        cur_sign_step = json_wk[0]["cur_sign_step"];
-                        if (cur_sign_step == "0001" || cur_sign_step == "0003" || cur_sign_step == "0004" || cur_sign_step == "0005") {//当前签核步骤在 返工，且只有一笔
-                            window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + cur_sign_step + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
-                        } else {
-                            window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
-                            + "&workshop=<%=_workshop %>";
-                        }
-                        
-                    } else {
-
-                        workorder = json_wk[0]["workorder"];
-                        window.location.href = "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder
-                            + "&workshop=<%=_workshop %>";
-
-                    }
-
-                   
-                }
-
-            });
-            
-        }
+        
     </script>
 </head>
 <body>
@@ -294,7 +129,7 @@
                         <% string i3 = Label3.Text; Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "</span>"); %>   
                     </div>
                 </a>--%>
-                <a class="weui-cell weui-cell_access"  href="javascript:sm_workorder();"   id="a_div">
+                <a class="weui-cell weui-cell_access"  href="javascript:sm_workorder('<%=_workshop %>');"   id="a_div">
                     <div class="weui-cell__hd">
                         <i class="fa fa-edit margin10-r"></i>
                     </div>
@@ -315,7 +150,7 @@
                         <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>   
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access"  href="javascript:sm_product_off();">  <%-- href="javascript:sm_product_off();" --%>
+                <a class="weui-cell weui-cell_access"  href="javascript:sm_product_off('<%=_workshop %>');">  <%-- href="javascript:sm_product_off();" --%>
                     <div class="weui-cell__hd">
                         <i class="fa fa-check-square-o margin10-r"></i>
                     </div>
@@ -324,7 +159,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:sm_qc_off();">   
+                <a class="weui-cell weui-cell_access" href="javascript:sm_qc_off('<%=_workshop %>');">   
                     <div class="weui-cell__hd">
                         <i class="fa fa-wpexplorer margin10-r"></i>
                     </div>
@@ -334,7 +169,7 @@
                     <div class="weui-cell__ft"></div>
                 </a>
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">--%>         
-                <a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh();">
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh('<%=_workshop %>');">
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
                     </div>
