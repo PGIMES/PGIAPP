@@ -479,7 +479,7 @@
                             </div>
                         </div>
                         <div class="weui-cell" id="div_lot_no_fixed">
-                            <div class="weui-cell__hd f-red "><label class="weui-label">Lot No</label></div>
+                            <div class="weui-cell__hd"><label class="weui-label">Lot No</label></div>
                             <div class="weui-cell__bd">
                                 <span style="float:left; width:90%">
                                     <asp:TextBox ID="lot_no_fixed" class="weui-input"  runat="server"></asp:TextBox>
