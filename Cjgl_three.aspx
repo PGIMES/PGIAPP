@@ -15,7 +15,7 @@
     <link href="/css/weuix.css" rel="stylesheet" />    
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
-    <script src="/js/cjgl.js"></script>
+    <script src="/js/cjgl.js?ver=20200618001"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -129,21 +129,21 @@
                     <div class="weui-cell__ft"> 
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access"  href="javascript:void(0);"> 
+                <a class="weui-cell weui-cell_access"   href="javascript:sm_yz_off('<%=_workshop %>');"> 
                     <div class="weui-cell__hd">
                         <i class="fa fa-compress margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>压铸完成<span class="f12">（开发中）</span></p>
+                        <p>压铸完成<span class="f12">（测试中）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">   
+                <a class="weui-cell weui-cell_access"   href="javascript:sm_hsolve_off('<%=_workshop %>');">   
                     <div class="weui-cell__hd">
                         <i class="fa fa-compass margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>后处理完成<span class="f12">（开发中）</span></p>
+                        <p>后处理完成<span class="f12">（测试中）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>    
