@@ -113,16 +113,19 @@
                 //} else {
                 //    $("#lbl_workorder_qc").text("参考号");
                 //}
-                if ($("#op").val() != "") {
-                    var _op = $("#op").val();
-                    if (parseInt(_op) > 700) {
-                        $("#lbl_ref_order").text("参考号");
-                    } else if (parseInt(_op) > 600) {
-                        $("#lbl_ref_order").text("终检完成单号");
-                    } else if (parseInt(_op) == 600) {
-                        $("#lbl_ref_order").text("完成单号");
-                    }
-                }
+
+                //if ($("#op").val() != "") {
+                //    var _op = $("#op").val();
+                //    if (parseInt(_op) > 700) {
+                //        $("#lbl_ref_order").text("参考号");
+                //    } else if (parseInt(_op) > 600) {
+                //        $("#lbl_ref_order").text("终检完成单号");
+                //    } else if (parseInt(_op) == 600) {
+                //        $("#lbl_ref_order").text("完成单号");
+                //    }
+                //}
+
+                $("#lbl_ref_order").text($("#laiyuan_dh_desc").val());
             }
 
             //$("#btn_sign").hide();
@@ -313,7 +316,7 @@
                                     <span class="weui-form-preview__value"><%# Eval("op") +""+ Eval("op_descr") %></span>
                                 </div>
                                 <div class="weui-form-preview__item" style="display:<%# Eval("workorder_qc").ToString()!=""?"block":"none"%>; ">
-                                    <label class="weui-form-preview__label" id="lbl_workorder_qc"></label>
+                                    <label class="weui-form-preview__label" id="lbl_ref_order"></label>
                                     <span class="weui-form-preview__value"><%# Eval("workorder_qc") %></span>
                                 </div>
                                 <div class="weui-form-preview__item" style="display:<%# (Eval("b_op_one").ToString()==Eval("op").ToString() && Convert.ToInt32(Eval("b_op_one").ToString())<600)?"block":"none"%>; ">
@@ -377,6 +380,7 @@
                             <asp:TextBox ID="pgino" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                             <asp:TextBox ID="workorder_qc" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                             <asp:TextBox ID="op" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="laiyuan_dh_desc" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
 
                         </div>

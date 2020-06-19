@@ -58,7 +58,7 @@
                 $("#lbl_ref_order").text("参考号/生产完成单号");
                 $("#ref_order").val("");
             } else {
-                if ($("#op").val()!="") {
+                /*if ($("#op").val()!="") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     //if (parseInt(_op) > 700) {
                     //    $("#lbl_ref_order").text("参考号");
@@ -74,7 +74,9 @@
                     }else {
                         
                     }
-                }
+                }*/
+                $("#lbl_ref_order").text($("#laiyuan_dh_desc").val());
+                $("#lbl_workorder_qc").text($("#laiyuan_dh_desc").val());
             }
             //lot no 
             if ($("#op").val()!="") {
@@ -324,7 +326,23 @@
                 layer.alert("请输入【工序】.");
                 return false;
             } else {//b_use_routing=0当作没有检验序
-                if ($.trim($("#ref_order").val()) == "" && $("#b_use_routing").val() == "1") {
+                if ($.trim($("#ref_order").val()) == "") {
+                    var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
+                    if ($("#b_use_routing").val() == "1") {
+                        if (parseInt(_op) > 600) {
+                            layer.alert("请输入【终检完成单号】.");
+                            return false;
+                        }else if (parseInt(_op) == 600) {
+                            layer.alert("请输入【完成单号】.");
+                            return false;
+                        }
+                    }
+                    if (parseInt(_op) > 700) {
+                        layer.alert("请输入【参考号】.");
+                        return false;
+                    }
+                }
+                /*if ($.trim($("#ref_order").val()) == "" && $("#b_use_routing").val() == "1") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     //if (parseInt(_op) > 700) {
                     //    layer.alert("请输入【参考号】.");
@@ -343,7 +361,7 @@
                         layer.alert("请输入【完成单号】.");
                         return false;
                     }
-                }
+                }*/
             }
             if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
                 layer.alert("请输入【数量】.");
@@ -614,6 +632,7 @@
                         <asp:TextBox ID="ng_reason_main" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                         <asp:TextBox ID="ng_reason_desc_main" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                         <asp:TextBox ID="workorder_qc" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="laiyuan_dh_desc" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
 
                         <ul class="collapse" style="display:<%= ViewState["dt1"].ToString()!="0"?"block":"none"%>;">
@@ -1261,26 +1280,28 @@
                     $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
 
-                    if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
+                    if ( parseInt(d.values) <= 700) {
+                        if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
 
-                        if (d.values==$("#b_op_one").val()) {
-                            $("#div_lot_no_fixed").show();
-                        }else {
-                            $("#div_lot_no_fixed").hide();
-                        }
-                        $("#lot_no_fixed").val("");
+                            if (d.values==$("#b_op_one").val()) {
+                                $("#div_lot_no_fixed").show();
+                            }else {
+                                $("#div_lot_no_fixed").hide();
+                            }
+                            $("#lot_no_fixed").val("");
 
 
-                    } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
-                        $("#div_ref_order").show();
-                        //$("#lbl_ref_order").text("生产完成单号");
-                        if (parseInt(d.values) > 600) {
-                            $("#lbl_ref_order").text("终检完成单号");
-                        }else if (parseInt(d.values) == 600) {
-                            $("#lbl_ref_order").text("完成单号");
-                        }
-                        $("#ref_order").val("");
-                    } else if (true) {
+                        } else if (parseInt(d.values) >= 600 && parseInt(d.values) <= 700) {
+                            $("#div_ref_order").show();
+                            //$("#lbl_ref_order").text("生产完成单号");
+                            if (parseInt(d.values) > 600) {
+                                $("#lbl_ref_order").text("终检完成单号");
+                            }else if (parseInt(d.values) == 600) {
+                                $("#lbl_ref_order").text("完成单号");
+                            }
+                            $("#ref_order").val("");
+                        } 
+                    } else{
                         $("#div_ref_order").show();
                         $("#lbl_ref_order").text("参考号");
                         $("#ref_order").val("");

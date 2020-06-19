@@ -56,6 +56,7 @@ public partial class WorkOrder_bhgp_sign_V1 : System.Web.UI.Page
         pgino.Text = dt.Rows[0]["pgino"].ToString();
         workorder_qc.Text = dt.Rows[0]["workorder_qc"].ToString();
         op.Text = dt.Rows[0]["op"].ToString();
+        laiyuan_dh_desc.Text = dt.Rows[0]["laiyuan_dh_desc"].ToString();
 
         DataTable dt1 = ds.Tables[1];
         Repeater_cz_one.DataSource = dt1;

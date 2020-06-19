@@ -77,6 +77,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             yb_qty.Text = dt.Rows[0]["qty"].ToString();
             reason.Text = dt.Rows[0]["reason_code"].ToString() + "-" + dt.Rows[0]["reason"].ToString();
             comment.Value= dt.Rows[0]["comment"].ToString();
+            laiyuan_dh_desc.Text = dt.Rows[0]["laiyuan_dh_desc"].ToString();
 
             listBxInfo.DataSource = dt;
             listBxInfo.DataBind();
