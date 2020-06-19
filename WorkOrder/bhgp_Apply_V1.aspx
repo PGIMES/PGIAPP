@@ -22,6 +22,9 @@
         #UpdatePanel1 .weui-cell:before{
             border-top:none;
         }
+        .f_gray{
+            color:gray;
+        }
     </style>
     
     <script>
@@ -108,6 +111,31 @@
             sm_lot_no_fixed();
             sm_pgino();
             saomiao_workorder_gl();
+
+            $("#ref_order").change(function () {
+                if ($("#op").val() != "") {
+                    var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));                    
+                    if (parseInt(_op) > 700) {
+                        $.ajax({
+                            type: "post",
+                            url: "bhgp_Apply_V1.aspx/ref_order_change",
+                            data: "{'domain': '" + $("#domain").val() + "','ref_order':'" + $("#ref_order").val() + "','pgino':'" + $('#pgino').val() + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                            success: function (data) {
+                                var obj = eval(data.d);
+                                if (obj[0].flag=="Y") {
+                                    layer.alert(obj[0].msg);
+                                }
+                                $("#qty").val(obj[0].qty);
+                            }
+                        });
+
+                    }
+                }
+            });                        
+
 
             $("#qty").change(function () {
                 var _qty=$("#qty").val();
@@ -328,16 +356,18 @@
             } else {//b_use_routing=0当作没有检验序
                 if ($.trim($("#ref_order").val()) == "") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
-                    if ($("#b_use_routing").val() == "1") {
-                        if (parseInt(_op) > 600) {
-                            layer.alert("请输入【终检完成单号】.");
-                            return false;
-                        }else if (parseInt(_op) == 600) {
-                            layer.alert("请输入【完成单号】.");
-                            return false;
+                    
+                    if (parseInt(_op) < 700) {
+                        if ($("#b_use_routing").val() == "1") {
+                            if (parseInt(_op) > 600) {
+                                layer.alert("请输入【终检完成单号】.");
+                                return false;
+                            }else if (parseInt(_op) == 600) {
+                                layer.alert("请输入【完成单号】.");
+                                return false;
+                            }
                         }
-                    }
-                    if (parseInt(_op) > 700) {
+                    }else if (parseInt(_op) > 700) {
                         layer.alert("请输入【参考号】.");
                         return false;
                     }
@@ -1217,7 +1247,8 @@
     </form>
 
     <script>
-        if ("<%= _ismodify %>"!="Y1") {
+        <%--if ("<%= _ismodify %>"!="Y1") {--%>
+        if ("<%= _ismodify %>"=="Y") {
             var datalist_pgino, datalist_reason;
             $.ajax({
                 type: "post",
@@ -1279,8 +1310,13 @@
                     $("#div_ref_order").hide();
                     $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
+                    
+                    $("#qty").removeAttr("readonly");
+                    $("#qty").removeClass("f_gray");
+                    $("#qty").val("");
+                    $("#qty").attr("placeholder","请输入处置数量");
 
-                    if ( parseInt(d.values) <= 700) {
+                    if (parseInt(d.values) <= 700) {
                         if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
 
                             if (d.values==$("#b_op_one").val()) {
@@ -1305,6 +1341,11 @@
                         $("#div_ref_order").show();
                         $("#lbl_ref_order").text("参考号");
                         $("#ref_order").val("");
+
+                        $("#qty").attr("readonly", "readonly");
+                        $("#qty").addClass("f_gray");
+                        $("#qty").val("");
+                        $("#qty").attr("placeholder","");
                     }
                 },
                 onClose: function (d) {

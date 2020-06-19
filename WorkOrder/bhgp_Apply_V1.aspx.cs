@@ -103,9 +103,9 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             _tab_index = 0; _ismodify = "Y";
         }
         else if (emp_code_name.Text == (dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString())
-            && dt_wk.Rows.Count <= 0)//dt.Rows[0]["qty"].ToString() == dt.Rows[0]["sy_qty"].ToString()
+            && dt_wk.Rows.Count <= 0 && dt.Rows[0]["loading_type_qc"].ToString()!="99")//dt.Rows[0]["qty"].ToString() == dt.Rows[0]["sy_qty"].ToString()
         {
-            _tab_index = 0; _ismodify = "Y1";
+            _tab_index = 0; _ismodify = "Y1";//排除参考号
         }
         else
         {
@@ -244,7 +244,41 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
     }
 
-    
+
+    [WebMethod]
+    public static string ref_order_change(string domain, string ref_order,string pgino)
+    {
+        string flag = "N", msg = "", qty = "";
+        //check qad 库存
+        DataTable ldt = new DataTable();
+        string sqlStr = @"select cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}'and ld_part='{1}' with (nolock)";
+        sqlStr = string.Format(sqlStr, ref_order, pgino);
+        ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+        if (ldt == null)
+        {
+            flag = "Y";
+            msg = "参考号" + ref_order + ",QAD库存不存在";
+        }
+        else if (ldt.Rows.Count <= 0)
+        {
+            flag = "Y";
+            msg = "参考号" + ref_order + ",QAD库存不存在";
+        }
+        else if (ldt.Rows.Count > 1)
+        {
+            flag = "Y";
+            msg = "参考号" + ref_order + ",QAD多笔库存";
+        }
+        else
+        {
+            qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
+        return result;
+
+    }
+
     protected void listBxInfo_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -437,14 +471,20 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         string flag = "N", msg = "";
         int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
         string re_sql = "";
-        if (op_code < 600 || _b_use_routing == "0")
+        if (op_code <= 700)
         {
-            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
-
+            if (op_code < 600 || _b_use_routing == "0")
+            {
+                re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
+            }
+            else if (op_code >= 600 && op_code <= 700)
+            {
+                re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+            }
         }
-        else if (op_code >= 600 && op_code <= 700)
+        else if (op_code == 999 || op_code == 998)//成品库、半成品库
         {
-            re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+            re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
         }
         else
         {
