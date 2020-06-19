@@ -129,6 +129,7 @@
                                     layer.alert(obj[0].msg);
                                 }
                                 $("#qty").val(obj[0].qty);
+                                $("#qty").change();
                             }
                         });
 
