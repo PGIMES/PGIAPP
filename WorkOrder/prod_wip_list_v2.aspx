@@ -77,12 +77,12 @@
 
             $('#searchInput').bind('input propertychange', function () {
 
-                var text = $("#searchInput").val();
+                var text = $("#searchInput").val().toUpperCase();
                 $('.weui-cell').each(function () {
                     var $self = $(this);
                     var flag = $self.text().search(text)
                     if (flag > -1) {
-                        $self.removeClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
+                        $self.removeClass("hide");$self.siblings('.weui-cells__title').addClass("hide");
                     } else {
                         $self.addClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
 
@@ -135,21 +135,7 @@
             showBlockCount();
         }
 
-        ////暂不用
-        //function showlinesCount() {
-        //    $(".LH").each(function () {
-        //        var id = ($(this).attr("id"));
-        //        if (id != undefined) {
-        //            var len = $("a[propline*='" + id + "']").not("[class*='hide']").length;
-        //            //if (len == 0) {
-        //                $(this).addClass("hide");
-        //            //}
-        //            //else {
-        //            //    $(this).removeClass("hide");
-        //            //}
-        //        }
-        //    });
-        //}
+
 
     </script>
 </head>
@@ -185,19 +171,8 @@
             
             <div class="page__bd" id="t2" style="height: 100%;">
                 <div class="weui-tab">
-                    <%--<div class="weui-navbar hide">
-                        <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
-                            生产监视
-                        </div>
-                        <div href="#tab2" class="weui-navbar__item">
-                            我的生产
-                        </div>
-                    </div>--%>
-                    <%--<div class="weui-search-bar">
-                        <input type="search" class="search-input" id="search" placeholder="关键字:项目号"/><button onclick="so();" class="weui-btn weui-btn_mini weui-btn_primary"><i class="icon icon-4"></i></button>
-                    </div>--%>
-                    <div class="weui-tab__panel" style="background-color: lightgray">
-                        <%--==生产监视==--%>
+                    
+                    <div class="weui-tab__panel" style="background-color: lightgray">                         
                         <div id="tab1" class="weui-tab__content">
                             <%----生产中-----%>
                              <div class="weui-form-preview">
@@ -260,7 +235,9 @@
                                                         </div>
                                                         <div class="weui-cell__bd">
                                                             <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <span class="padding10-r"><%=dr["part"]%></span>  <%=dr["part_desc"] %><br />
+                                                                <span class="padding10-r"><%=dr["part"]%></span>  <%=dr["part_desc"] %>
+                                                                <span class="weui-mark-rt- weui-badge  weui-badge-tr margin20-l <%= dr["workorder_wip"].ToString()==""?"hide":"" %>"   font-size: x-small; ">处置合格</span>
+                                                                <br />
                                                                 <span class="padding5-r">Lot：<%= dr["workorder_wip"].ToString()==""?"":dr["workorder_wip"]+"/" %>
                                                                     <%= dr["lot_no"]%>
                                                                 </span>
@@ -279,6 +256,91 @@
                                         
                                 </div>
                             </div> 
+
+
+                            <%----零箱返线-----%>
+                             <div class="weui-form-preview">
+                                <%
+                                    dt_line = ViewState["dt_data_6"] as System.Data.DataTable;
+                                    rowscount = dt_line.Rows.Count;
+                                %>
+                                <div class="weui-cells__title blocks"><i class="icon nav-icon icon-49"></i> 零箱返线<span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l" style="margin-right: 15px;"><% =rowscount %></span></div>
+                                <div class="weui-cells" >                                    
+                                     <%
+                                         dataView = dt_line.DefaultView;
+                                         dtLineDistinct = dataView.ToTable(true,"line");
+                                         foreach(System.Data.DataRow drLine in dtLineDistinct.Rows)
+                                         {
+                                            string line = drLine["line"].ToString();
+
+                                      %>
+                                            <div class="weui-cells__title LH" id="<%=line %>LH6"><i class="icon nav-icon icon-22 color-success"></i><%=line %>
+                                                <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_6"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span></div>                                               
+                                             <%                                                  
+                                                 System.Data.DataTable dt = ViewState["dt_data_6"] as System.Data.DataTable;                                                
+                                                 foreach(System.Data.DataRow dr in dt.Select("line='" + line + "'")) {
+                                                     if ("" == "")
+                                                     { %> 
+                                                    <a class="weui-cell  weui-cell_access" propline="<%=line %>LH6" title="<%=dr["pgino"] %>" href="prod_end_detail_v2.aspx?type=workorder&dh=<%=dr["workorder"] %>">
+                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                        <div class="weui-cell__hd">
+                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="weui-cell__bd f-black" style="font-size: smaller">
+                                                            <span class="span_space">
+                                                                 <%=dr["pgino"] %>
+                                                            </span>
+                                                            <span>
+                                                                <%=dr["pn"] %>
+                                                            </span>                                                             
+                                                            <br />
+                                                            <span class="span_space">完工单号:<%=dr["workorder"] %>
+                                                            </span>
+                                                            <span>完工数量:<font class="f-blue"><%=dr["act_qty"] %></font>
+                                                            </span>
+                                                            <br />
+                                                            <span class="weui-agree__text span_space">
+                                                                <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
+                                                            </span>
+                                                            <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["create_date"]) %> </span>
+                                                            <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr[ "times"] %></font></span>
+                                                            
+                                                        </div>
+                                                        <div class="weui-cell__ft">                                                            
+                                                        </div>
+                                                    </a>
+                                                <% } else {%>                                                    
+                                                   <%-- <a class="weui-cell weui-cell_access" propline="<%=line %>LH1"  title="<%=dr["part"] %>" 
+                                                        href="prod_wip_detail_V1.aspx?lotno=<%=dr["workorder_wip"].ToString()==""?dr["lot_no"]:dr["workorder_wip"] %>&needno=<%=dr["need_no"] %>&workshop=<%=_workshop %>&para=Y">
+                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                        <div class="weui-cell__hd">
+                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="weui-cell__bd">
+                                                            <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                <span class="padding10-r"><%=dr["part"]%></span>  <%=dr["part_desc"] %>
+                                                                <span class="weui-mark-rt- weui-badge  weui-badge-tr margin20-l <%= dr["workorder_wip"].ToString()==""?"hide":"" %>"   font-size: x-small; ">处置合格</span>
+                                                                <br />
+                                                                <span class="padding5-r">Lot：<%= dr["workorder_wip"].ToString()==""?"":dr["workorder_wip"]+"/" %>
+                                                                    <%= dr["lot_no"]%>
+                                                                </span>
+                                                                上料:<font class="f-blue padding5-r"><%=dr["qty"]%></font>
+                                                                下料:<font class="f-blue padding5-r"><%=dr["off_qty"]%></font>
+                                                                NG:<font class="f-blue padding5-r"><%=dr["ng_qty"]%></font>
+                                                                在制:<font class="f-blue "><%=dr["wip_qty"]%></font>
+                                                            </span>
+                                                            <span class="weui-agree__text padding10-r" style="font-size: smaller"><%=dr["emp_name"]%></span>
+                                                            <span class="weui-agree__text " style="font-size: smaller;"><%= string.Format("{0:MM-dd HH:mm}",dr["on_date"] )%>  时长<font class="f-deepfont"> <%= dr["times"]%></font> </span>
+                                                        </div>
+                                                        <div class="weui-cell__ft">
+                                                        </div>
+                                                    </a>--%>
+                                        <% }} }%>                                                
+                                        
+                                </div>
+                            </div> 
+
+
                             <%----待终检-----%>
                             <div class="weui-form-preview">
                             <%

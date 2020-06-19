@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class prod_wip_list_v2 : System.Web.UI.Page
+public partial class prod_wip_list_v3 : System.Web.UI.Page
 {
     public string _workshop = "";
     public string line1 = "";

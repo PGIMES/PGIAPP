@@ -58,7 +58,7 @@
                     $("#sp_pgino").text(obj[0].pgino);
                     $("#sp_pn").text(obj[0].pn);
                     $('#sp_qty').text(obj[0].qty);
-                    $('#sp_act_qty').text(obj[0].qty);
+                    $('#sp_act_qty').text(obj[0].act_qty);
                     $('#sp_phone').text(obj[0].phone);
                     $('#sp_create_date').text(obj[0].create_date);
                     $('#status_hg').val(obj[0].status_hg);
