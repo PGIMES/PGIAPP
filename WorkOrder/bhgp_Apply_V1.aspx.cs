@@ -252,7 +252,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         //check qad 库存
         DataTable ldt = new DataTable();
         string sqlStr = @"select ld_part,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='{1}'  with (nolock)";
-        sqlStr = string.Format(sqlStr, ref_order, pgino, domain);
+        sqlStr = string.Format(sqlStr, ref_order, domain);
         ldt = QadOdbcHelper.GetODBCRows(sqlStr);
         if (ldt == null)
         {

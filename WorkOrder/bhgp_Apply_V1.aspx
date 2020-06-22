@@ -275,11 +275,7 @@
                             var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                             // code 在这里面写上扫描二维码之后需要做的内容  
                             $('#ref_order').val(result);
-
-                            var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));                    
-                            if (parseInt(_op) > 700) {
-                                $("#ref_order").change();
-                            }
+                            $("#ref_order").change();
                         }
                     });
                 });
