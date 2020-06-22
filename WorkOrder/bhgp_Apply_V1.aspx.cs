@@ -246,7 +246,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
 
     [WebMethod]
-    public static string ref_order_change(string domain, string ref_order,string pgino)
+    public static string ref_order_change(string domain, string ref_order,string pgino, string op)
     {
         string flag = "N", msg = "", qty = "";
         //check qad 库存

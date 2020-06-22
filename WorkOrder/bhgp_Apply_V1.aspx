@@ -119,7 +119,7 @@
                         $.ajax({
                             type: "post",
                             url: "bhgp_Apply_V1.aspx/ref_order_change",
-                            data: "{'domain': '" + $("#domain").val() + "','ref_order':'" + $("#ref_order").val() + "','pgino':'" + $('#pgino').val() + "'}",
+                            data: "{'domain': '" + $("#domain").val() + "','ref_order':'" + $("#ref_order").val() + "','pgino':'" + $('#pgino').val() + "','op':'" + _op + "'}",
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
