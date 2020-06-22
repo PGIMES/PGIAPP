@@ -491,7 +491,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         }
         else if (op_code == 999 || op_code == 998)//成品库、半成品库
         {
-            re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+            re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{10}'";
         }
         else
         {
