@@ -619,6 +619,10 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 {
                     msg_row += "第" + (i + 1).ToString() + "组【关联单号】不可为空 <br />";
                 }
+                else if (txt_workorder_gl.Text.Trim().Length != 8)
+                {
+                    msg_row += "第" + (i + 1).ToString() + "组【关联单号】长度必须8位 <br />";
+                }
             }
             else
             {

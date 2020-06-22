@@ -346,6 +346,9 @@
             if ($("#workorder").val() == "") {
                 layer.alert("请输入【单号】.");
                 return false;
+            } else if ($("#workorder").val().length!=8) {
+                layer.alert("【单号】长度必须8位.");
+                return false;
             }
             if ($("#pgino").val() == "") {
                 layer.alert("请输入【物料号】.");
