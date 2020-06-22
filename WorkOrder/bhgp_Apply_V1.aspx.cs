@@ -251,8 +251,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         string flag = "N", msg = "", qty = "";
         //check qad 库存
         DataTable ldt = new DataTable();
-        string sqlStr = @"select cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}'and ld_part='{1}' with (nolock)";
-        sqlStr = string.Format(sqlStr, ref_order, pgino);
+        string sqlStr = @"select ld_part,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='{1}'  with (nolock)";
+        sqlStr = string.Format(sqlStr, ref_order, pgino, domain);
         ldt = QadOdbcHelper.GetODBCRows(sqlStr);
         if (ldt == null)
         {
@@ -271,7 +271,14 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         }
         else
         {
-            qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+            if (ldt.Rows[0]["ld_part"].ToString() != pgino)
+            {
+                flag = "Y"; msg = "物料号不一致.参考号" + ref_order + "对应的物料号" + ldt.Rows[0]["ld_part"].ToString() + "，当前申请物料号" + pgino;
+            }
+            else
+            {
+                qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+            }
         }
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
