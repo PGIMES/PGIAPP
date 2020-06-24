@@ -1,4 +1,44 @@
-﻿
+﻿//生产上线
+function sm_lotno(_workshop) {
+    wx.ready(function () {
+        wx.scanQRCode({
+            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                // code 在这里面写上扫描二维码之后需要做的内容 
+                lotno_change(result, _workshop);
+            }, cancel: function () {
+                window.location.href = "/workorder/Load_Material.aspx?lotno=&need_no=&workshop=" + _workshop + "&para=";
+            }
+        });
+    });
+}
+
+function lotno_change(result, _workshop) {
+    $.ajax({
+        type: "post",
+        url: "Cjgl1.aspx/lotno_change",
+        data: "{'result':'" + result + "'}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+        success: function (data) {
+            var obj = eval(data.d);
+            var flag = obj[0].flag;
+            var msg = obj[0].msg;
+
+            if (flag == "Y") {
+                layer.alert(msg);
+                return;
+            }
+            window.location.href = "/workorder/Load_Material.aspx?lotno=" + result + "&need_no=" + obj[0].need_no + "&workshop=" + _workshop + "&para=" + obj[0].para;
+        }
+
+    });
+
+}
+
 //生产下线
 function sm_product_off(_workshop) {
     wx.ready(function () {

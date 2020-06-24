@@ -99,6 +99,15 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="javascript:sm_lotno('<%=_workshop %>');">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-arrow-up margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>生产上线</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/YL_list_new.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cubes margin10-r"></i>

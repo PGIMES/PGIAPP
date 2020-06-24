@@ -121,6 +121,29 @@ public partial class Cjgl1 : System.Web.UI.Page
         Label1_three.Text = re_dt.Rows[0][0].ToString();
     }
 
+    [WebMethod]
+    public static string lotno_change(string result)
+    {
+
+        string re_sql = @"exec [usp_app_Cjgl1_lotno_change] '{0}'";
+        re_sql = string.Format(re_sql, result);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
+
+        string need_no = "", para = "";
+        if (flag == "N")
+        {
+            need_no = re_dt.Rows[0]["need_no"].ToString();
+            para = re_dt.Rows[0]["para"].ToString();
+        }
+
+        string res = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"need_no\":\"" + need_no + "\",\"para\":\"" + para + "\"}]";
+        return res;
+
+    }
+
 
     [WebMethod]
     public static string ck_dh_change(string result)
