@@ -222,7 +222,11 @@
                                                     </div>
                                                     <div class="weui-cell__bd"> <%-- f-gray--%>
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
+                                                            <%--<%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>--%>
+                                                            <%# Eval("location")  %>
+                                                            <span class="f-blue" style="font-weight:800">
+                                                                 <%# Eval("lot_no") %>
+                                                             </span>
                                                         </span>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
