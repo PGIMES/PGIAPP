@@ -15,7 +15,7 @@
     <link href="/css/weuix.css" rel="stylesheet" />    
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
-    <script src="/js/cjgl.js?ver=20200618001"></script>
+    <script src="/js/cjgl.js?ver=20200623001"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -165,12 +165,12 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="/workorder/prod_YZ_monitor.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-gears margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>生产监视<span class="f12">（开发中）</span></p>
+                        <p>生产监视</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>   

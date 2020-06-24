@@ -9,7 +9,7 @@ function sm_product_off(_workshop) {
                 var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                 // code 在这里面写上扫描二维码之后需要做的内容 
                 var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-                if ((bj != "W" && bj != "G") || result.length < 8) {
+                if ((bj != "W" && bj != "G") || result.length != 8) {
                     alert("完成单号不正确，请重新扫描");
 
                 }
@@ -34,7 +34,7 @@ function sm_yz_off(_workshop) {
                 var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                 // code 在这里面写上扫描二维码之后需要做的内容 
                 var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-                if ((bj != "W" && bj != "G") || result.length < 8) {
+                if ((bj != "W" && bj != "G") || result.length != 8) {
                     alert("完成单号不正确，请重新扫描");
 
                 }
@@ -60,7 +60,7 @@ function sm_hsolve_off(_workshop) {
                 var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                 // code 在这里面写上扫描二维码之后需要做的内容 
                 var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-                if ((bj != "W" && bj != "G") || result.length < 8) {
+                if ((bj != "W" && bj != "G") || result.length != 8) {
                     alert("完成单号不正确，请重新扫描");
 
                 }
@@ -85,7 +85,7 @@ function sm_qc_off(_workshop) {
                 var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                 // code 在这里面写上扫描二维码之后需要做的内容 
                 var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-                if ((bj != "W" && bj != "G") || result.length < 8) {
+                if ((bj != "W" && bj != "G") || result.length != 8) {
                     alert("完成单号不正确，请重新扫描");
 
                 }
