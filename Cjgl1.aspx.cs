@@ -16,7 +16,15 @@ public partial class Cjgl1 : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
-        bind_data();
+
+        if (_workshop == "二车间" || _workshop == "四车间")
+        {
+            bind_data();
+        }
+        else if (_workshop == "三车间")
+        {
+            bind_data_three();
+        }
 
         if (!IsPostBack)
         {
@@ -101,6 +109,18 @@ public partial class Cjgl1 : System.Web.UI.Page
         int count_scjs = dt_data_go.Rows.Count + dt_data_qc.Rows.Count + dt_data_GP.Rows.Count + dt_data_ruku_go.Rows.Count;
         Label4.Text = count_scjs.ToString();
     }
+
+    public void bind_data_three()
+    {
+        //上岗监视
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
+            where off_date is null and on_date is not null 
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location where workshop='" + _workshop + "')";
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+
+        Label1_three.Text = re_dt.Rows[0][0].ToString();
+    }
+
 
     [WebMethod]
     public static string ck_dh_change(string result)

@@ -62,6 +62,9 @@
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <div class="page-bd">
+
+            <% if (_workshop=="二车间" || _workshop=="四车间")
+                {%>
             <div class="weui-cells">
                 <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
@@ -218,6 +221,139 @@
                     <div class="weui-cell__ft"></div>
                 </a>--%>
             </div>
+               <% }%>
+
+
+               <%else if (_workshop=="三车间")
+                {%>
+            <div class="weui-cells">
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-user-circle-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login_list_new.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-group margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗监视</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label1_three" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1_three = Label1_three.Text; Response.Write("<span class='weui-badge  bg-" + (i1_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1_three + "</span>"); %>   
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cube margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>要料<span class="f12">（开发中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cubes margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>要料监视<span class="f12">（开发中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"> 
+                    </div>
+                </a>   
+                <a class="weui-cell weui-cell_access" href="/workorder/YT.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-tint margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>要汤<span class="f12"></span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/YT_list.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-hourglass-half margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>要汤监视<span class="f12"></span></p>
+                    </div>
+                    <div class="weui-cell__ft"> 
+                    </div>
+                </a>   
+                <a class="weui-cell weui-cell_access"  href="javascript:sm_workorder('<%=_workshop %>');">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-edit margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>不合格处理<span class="f12">（测试中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-bookmark-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>不合格监视<span class="f12">（测试中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"> 
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access"   href="javascript:sm_yz_off('<%=_workshop %>');"> 
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-compress margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>压铸完成<span class="f12">（测试中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access"   href="javascript:sm_hsolve_off('<%=_workshop %>');">   
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-compass margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>后处理完成<span class="f12">（测试中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>    
+                <a class="weui-cell weui-cell_access" href="javascript:void(0);">   
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-wpexplorer margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>检验完成<span class="f12">（开发中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-random margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>仓库接收<span class="f12">（开发中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/prod_YZ_monitor.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-gears margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>生产监视</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>   
+            </div>
+                <%} %>
+
+            
         </div>
         <div id="errmsg"class="f14"></div>  
         <div class="weui-footer weui-footer_fixed-bottom">
