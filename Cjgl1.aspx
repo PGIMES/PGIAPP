@@ -18,7 +18,7 @@
     <link href="/css/weuix.css" rel="stylesheet" />    
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
-    <script src="/js/cjgl.js?ver=20200624001"></script>
+    <script src="/js/cjgl.js?ver=20200624002"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {

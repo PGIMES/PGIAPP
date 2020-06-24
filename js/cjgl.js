@@ -8,9 +8,10 @@ function sm_lotno(_workshop) {
                 var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                 // code 在这里面写上扫描二维码之后需要做的内容 
                 lotno_change(result, _workshop);
-            }, cancel: function () {
-                window.location.href = "/workorder/Load_Material.aspx?lotno=&need_no=&workshop=" + _workshop + "&para=";
             }
+            //, cancel: function () {
+            //    window.location.href = "/workorder/Load_Material.aspx?lotno=&need_no=&workshop=" + _workshop + "&para=";
+            //}
         });
     });
 }
