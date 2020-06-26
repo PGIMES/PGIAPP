@@ -1322,6 +1322,7 @@
                     $("#qty").attr("placeholder","请输入处置数量");
 
                     if (parseInt(d.values) <= 700) {
+                        /*
                         if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
 
                             if (d.values==$("#b_op_one").val()) {
@@ -1340,6 +1341,34 @@
                             }else if (parseInt(d.values) == 600) {
                                 $("#lbl_ref_order").text("完成单号");
                             }
+                            $("#ref_order").val("");
+                        } 
+                        */
+                        if (parseInt(d.values) > 100 && parseInt(d.values) < 600) {
+                            if (d.values==$("#b_op_one").val()) {
+                                $("#div_lot_no_fixed").show();
+                            }else {
+                                $("#div_lot_no_fixed").hide();
+                            }
+                            $("#lot_no_fixed").val("");
+
+                        }else if (parseInt(d.values) >= 600 && parseInt(d.values) < 700) {
+                            if ($("#b_use_routing").val() == "0") {
+                                if (d.values==$("#b_op_one").val()) {
+                                    $("#div_lot_no_fixed").show();
+                                }else {
+                                    $("#div_lot_no_fixed").hide();
+                                }
+                                $("#lot_no_fixed").val("");
+                            }else {
+                                $("#div_ref_order").show();
+                                $("#lbl_ref_order").text("完成单号");
+                                $("#ref_order").val("");
+                            }
+    
+                        } else if (parseInt(d.values) == 700) {
+                            $("#div_ref_order").show();
+                            $("#lbl_ref_order").text("终检完成单号");
                             $("#ref_order").val("");
                         } 
                     } else{
