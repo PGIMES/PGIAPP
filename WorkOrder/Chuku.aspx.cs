@@ -61,6 +61,7 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
 
     }
 
+    /*
     [WebMethod]
     public static string reason_change(string workorder, string ruku_dh, string reason)
     {
@@ -79,6 +80,70 @@ public partial class WorkOrder_Chuku : System.Web.UI.Page
         {
             DataTable re_dt_2 = ds.Tables[1];
             qty = re_dt_2.Rows[0]["qty"].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
+        return result;
+
+    }*/
+    [WebMethod]
+    public static string reason_change(string workorder, string ruku_dh, string reason)
+    {
+        string flag = "N", msg = "", qty = "";
+
+        string re_sql = @"exec [usp_app_Chuku_reason_change_V1] '{0}','{1}','{2}'";
+        re_sql = string.Format(re_sql, workorder, ruku_dh, reason);
+        DataSet ds = SQLHelper.Query(re_sql);
+
+        DataTable re_dt = ds.Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        if (flag == "N")
+        {
+            string ld_ref = "";
+            if (reason == "成品领用")//form_dh
+            {
+                if (ruku_dh == "") { ld_ref = workorder; }
+                else { ld_ref = ruku_dh; }
+            }
+            else if (reason == "零箱返线") { ld_ref = ruku_dh; }
+
+            DataTable ldt = new DataTable();
+            string sqlStr = @"select ld_date,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' with (nolock)";
+            sqlStr = string.Format(sqlStr, ld_ref);
+            ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+
+            if (ldt == null)
+            {
+                flag = "Y"; msg = "参考号" + ld_ref + ",QAD不存在";
+            }
+            else if (ldt.Rows.Count <= 0)
+            {
+                flag = "Y"; msg = "参考号" + ld_ref + ",QAD不存在";
+            }
+            else if (ldt.Rows.Count > 1)
+            {
+                flag = "Y"; msg = "参考号" + ld_ref + ",QAD存在多笔.";
+            }
+            else
+            {
+                string ld_date = ldt.Rows[0]["ld_date"].ToString();
+                float ld_qty_oh = Convert.ToSingle(ldt.Rows[0]["ld_qty_oh"].ToString());
+
+                string re_sql_q = @"exec [usp_app_Chuku_reason_change_qty] '{0}','{1}','{2}','{3}',{4}";
+                re_sql_q = string.Format(re_sql_q, workorder, ruku_dh, reason, ld_date, ld_qty_oh);
+                DataSet ds_q = SQLHelper.Query(re_sql_q);
+
+                DataTable re_dt_q = ds_q.Tables[0];
+                flag = re_dt_q.Rows[0][0].ToString();
+                msg = re_dt_q.Rows[0][1].ToString();
+
+                if (flag == "N")
+                {
+                    qty = re_dt_q.Rows[0]["qty"].ToString();
+                }
+            }
         }
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
