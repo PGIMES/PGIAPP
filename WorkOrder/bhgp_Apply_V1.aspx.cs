@@ -530,6 +530,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
 
     }
 
+    /*
     protected void btnsave_Click(object sender, EventArgs e)
     {
 
@@ -574,7 +575,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
         }
     }
-    
+    */
+
     public DataTable Get_Repeat_cz(out string msg)
     {
         msg = "";
