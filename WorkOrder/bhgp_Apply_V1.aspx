@@ -608,7 +608,10 @@
                                         <label class="weui-form-preview__label" id="lbl_workorder_qc"></label>
                                         <span class="weui-form-preview__value"><%# Eval("workorder_qc") %></span>
                                     </div>
-                                    <div class="weui-form-preview__item" style="display:<%# (Eval("b_op_one").ToString()==Eval("op").ToString() && Convert.ToInt32(Eval("b_op_one").ToString())<600)?"block":"none"%>; ">
+                                    <%--<div class="weui-form-preview__item" 
+                                        style="display:<%# (Eval("b_op_one").ToString()==Eval("op").ToString() && Convert.ToInt32(Eval("b_op_one").ToString())<600)?"block":"none"%>; ">--%>
+                                    <div class="weui-form-preview__item" 
+                                        style="display:<%# Eval("lot_no_fixed").ToString()!=""?"block":"none"%>; ">
                                         <label class="weui-form-preview__label">Lot No</label>
                                         <span class="weui-form-preview__value"><%# Eval("lot_no_fixed") %></span>
                                     </div>                                 
@@ -1345,21 +1348,28 @@
                         } 
                         */
                         if (parseInt(d.values) > 100 && parseInt(d.values) < 600) {
-                            if (d.values==$("#b_op_one").val()) {
+                            /*if (d.values==$("#b_op_one").val()) {
                                 $("#div_lot_no_fixed").show();
                             }else {
                                 $("#div_lot_no_fixed").hide();
                             }
+                            $("#lot_no_fixed").val("");*/
+
+                            $("#div_lot_no_fixed").show();
                             $("#lot_no_fixed").val("");
 
                         }else if (parseInt(d.values) >= 600 && parseInt(d.values) < 700) {
                             if ($("#b_use_routing").val() == "0") {
-                                if (d.values==$("#b_op_one").val()) {
+                                /*if (d.values==$("#b_op_one").val()) {
                                     $("#div_lot_no_fixed").show();
                                 }else {
                                     $("#div_lot_no_fixed").hide();
                                 }
+                                $("#lot_no_fixed").val("");*/
+
+                                $("#div_lot_no_fixed").show();
                                 $("#lot_no_fixed").val("");
+
                             }else {
                                 $("#div_ref_order").show();
                                 $("#lbl_ref_order").text("完成单号");

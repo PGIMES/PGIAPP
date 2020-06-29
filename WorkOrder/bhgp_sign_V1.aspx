@@ -319,7 +319,10 @@
                                     <label class="weui-form-preview__label" id="lbl_ref_order"></label>
                                     <span class="weui-form-preview__value"><%# Eval("workorder_qc") %></span>
                                 </div>
-                                <div class="weui-form-preview__item" style="display:<%# (Eval("b_op_one").ToString()==Eval("op").ToString() && Convert.ToInt32(Eval("b_op_one").ToString())<600)?"block":"none"%>; ">
+                                <%--<div class="weui-form-preview__item" 
+                                    style="display:<%# (Eval("b_op_one").ToString()==Eval("op").ToString() && Convert.ToInt32(Eval("b_op_one").ToString())<600)?"block":"none"%>; ">--%>
+                                <div class="weui-form-preview__item" 
+                                    style="display:<%#  Eval("lot_no_fixed").ToString()!=""?"block":"none"%>; ">
                                     <label class="weui-form-preview__label">Lot No</label>
                                     <span class="weui-form-preview__value"><%# Eval("lot_no_fixed") %></span>
                                 </div>
