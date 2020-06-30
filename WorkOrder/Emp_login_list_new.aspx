@@ -102,7 +102,7 @@
                                                                 <span class="weui-mark-rt- weui-badge" 
                                                                     style="background-color: <%# Eval("dp").ToString()=="质"?"orange":"#10AEFF"%>;
                                                                         font-size: x-small; color: white; 
-                                                                        "><%--display:<%# (Eval("dp").ToString()=="质")?"inline-block":"none"%>; --%>
+                                                                        display:<%# (Eval("dp").ToString()=="质")?"inline-block":"none"%>;">
                                                                     <%#Eval("dp") %>
                                                                 </span>
 
