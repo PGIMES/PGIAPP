@@ -89,25 +89,30 @@ public partial class Cjgl1 : System.Web.UI.Page
         Label3_V1.Text = count_bhg.ToString();
 
         //生产监视
-
+        int iPart = 0, iWip = 0;
         //生产中
         sql = string.Format(@"exec [usp_app_wip_list_prod] '{0}','{1}'", _workshop, "");
         DataTable dt_data_go = SQLHelper.Query(sql).Tables[1];
-
+        iPart = iPart + dt_data_go.Select("ispartof='部分'").Count();
+        iWip  = iWip + dt_data_go.Select("ispartof<>'部分'").Count();
         //待终检
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", _workshop, "", 2);
         DataTable dt_data_qc = SQLHelper.Query(sql).Tables[0];
-
+        iPart = iPart + dt_data_qc.Select("ispartof='部分'").Count();
+        iWip = iWip + dt_data_qc.Select("ispartof<>'部分'").Count();
         //待GP12
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", _workshop, "", 3);
         DataTable dt_data_GP = SQLHelper.Query(sql).Tables[0];
-
+        iPart = iPart + dt_data_GP.Select("ispartof='部分'").Count();
+        iWip = iWip + dt_data_GP.Select("ispartof<>'部分'").Count();
         //待入库
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", _workshop, "", 4);
         DataTable dt_data_ruku_go = SQLHelper.Query(sql).Tables[0];
-
+         
+        iWip = iWip + dt_data_ruku_go.Rows.Count;
         int count_scjs = dt_data_go.Rows.Count + dt_data_qc.Rows.Count + dt_data_GP.Rows.Count + dt_data_ruku_go.Rows.Count;
-        Label4.Text = count_scjs.ToString();
+        lblWip.Text = iWip.ToString();
+        lblPart.Text = iPart.ToString();
     }
 
     public void bind_data_three()

@@ -33,6 +33,7 @@
             padding:10px 20px;  
         }
         i{ color:#03a9f4}
+        .bg-orange{background-color:orange}
     </style>
 
     <script type="text/javascript">
@@ -202,8 +203,9 @@
                         <p>生产监视</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label4" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i4 = Label4.Text; Response.Write("<span class='weui-badge  bg-" + (i4 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i4 + "</span>"); %>  
+                        <asp:Label ID="lblPart" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="lblWip" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string iPart = lblPart.Text;string iWip = lblWip.Text; Response.Write("<span class='weui-badge  bg-" + (iWip == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + iWip + "</span><span class='weui-badge  bg-" + (iPart == "0" ? "gray" : "orange") + "' style='margin-right: 15px;'>部" + iPart + "</span>"); %>  
                     </div>
                 </a>   
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">

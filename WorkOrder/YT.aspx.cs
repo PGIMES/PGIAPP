@@ -64,7 +64,7 @@ public partial class YL : System.Web.UI.Page
                 domain.Text = value.Rows[0]["domain"].ToString();
             }
 
-            string strsql = "select * from [dbo].Mes_App_EmployeeLogin_Location where login_id = '{0}'";
+            string strsql = "select distinct workshop,area,line,op from [dbo].Mes_App_EmployeeLogin_Location where login_id = '{0}'";
             strsql = string.Format(strsql, id);
             var value_rout = SQLHelper.reDs(strsql).Tables[0];
 
