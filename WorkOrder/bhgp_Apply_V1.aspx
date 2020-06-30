@@ -61,38 +61,21 @@
                 $("#lbl_ref_order").text("参考号/生产完成单号");
                 $("#ref_order").val("");
             } else {
-                /*if ($("#op").val()!="") {
-                    var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
-                    //if (parseInt(_op) > 700) {
-                    //    $("#lbl_ref_order").text("参考号");
-                    //} else if (parseInt(_op) >= 600) {
-                    //    $("#lbl_ref_order").text("生产完成单号");
-                    //}
-                    if (parseInt(_op) > 700) {
-                        $("#lbl_ref_order").text("参考号");
-                    }else if (parseInt(_op) >600) {
-                        $("#lbl_ref_order").text("终检完成单号");
-                    } else if (parseInt(_op) == 600) {
-                        $("#lbl_ref_order").text("完成单号");
-                    }else {
-                        
-                    }
-                }*/
                 $("#lbl_ref_order").text($("#laiyuan_dh_desc").val());
                 $("#lbl_workorder_qc").text($("#laiyuan_dh_desc").val());
             }
+
             //lot no 
+            $("#div_lot_no_fixed").hide();
             if ($("#op").val()!="") {
                 var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
-                if (parseInt(_op) < 600) {
-                    if (_op==$("#b_op_one").val()) {
+                if (parseInt(_op) > 100 && parseInt(_op) < 600) {
+                    $("#div_lot_no_fixed").show();
+                }else if (parseInt(_op) >= 600 && parseInt(_op) < 700) {
+                    if ($("#b_use_routing").val() == "0") {
                         $("#div_lot_no_fixed").show();
-                    }else {
-                        $("#div_lot_no_fixed").hide();
                     }
                 }
-            }else {
-                $("#div_lot_no_fixed").hide();
             }
         }
 
