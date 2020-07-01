@@ -29,14 +29,6 @@
     
     <script>
         $(document).ready(function () {
-            //if ($("#workorder_qc").val() != "") {
-            //    if ($("#workorder_qc").val().substr(0,1).toUpperCase()=="W" || $("#workorder_qc").val().substr(0,1).toUpperCase()=="G") {
-            //        $("#lbl_workorder_qc").text("生产完成单号");
-            //    } else {
-            //        $("#lbl_workorder_qc").text("参考号");
-            //    }
-            //}
-
             $("#workorder").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
@@ -345,41 +337,21 @@
                 if ($.trim($("#ref_order").val()) == "") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     
-                    if (parseInt(_op) < 700) {
-                        if ($("#b_use_routing").val() == "1") {
-                            if (parseInt(_op) > 600) {
-                                layer.alert("请输入【终检完成单号】.");
-                                return false;
-                            }else if (parseInt(_op) == 600) {
+                    if (parseInt(_op) <= 700) {
+                        if (parseInt(_op) >= 600 && parseInt(_op) < 700) {
+                            if ($("#b_use_routing").val() == "1") {
                                 layer.alert("请输入【完成单号】.");
                                 return false;
                             }
+                        }else if (parseInt(_op) == 700) {
+                            layer.alert("请输入【终检完成单号】.");
+                            return false;
                         }
                     }else if (parseInt(_op) > 700) {
                         layer.alert("请输入【参考号】.");
                         return false;
                     }
                 }
-                /*if ($.trim($("#ref_order").val()) == "" && $("#b_use_routing").val() == "1") {
-                    var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
-                    //if (parseInt(_op) > 700) {
-                    //    layer.alert("请输入【参考号】.");
-                    //    return false;
-                    //}else if (parseInt(_op) >= 600) {
-                    //    layer.alert("请输入【生产完成单号】.");
-                    //    return false;
-                    //}
-                    if (parseInt(_op) > 700) {
-                        layer.alert("请输入【参考号】.");
-                        return false;
-                    }else if (parseInt(_op) > 600) {
-                        layer.alert("请输入【终检完成单号】.");
-                        return false;
-                    }else if (parseInt(_op) == 600) {
-                        layer.alert("请输入【完成单号】.");
-                        return false;
-                    }
-                }*/
             }
             if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
                 layer.alert("请输入【数量】.");

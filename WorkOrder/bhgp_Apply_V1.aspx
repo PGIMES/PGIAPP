@@ -345,15 +345,15 @@
                 if ($.trim($("#ref_order").val()) == "") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     
-                    if (parseInt(_op) < 700) {
-                        if ($("#b_use_routing").val() == "1") {
-                            if (parseInt(_op) > 600) {
-                                layer.alert("请输入【终检完成单号】.");
-                                return false;
-                            }else if (parseInt(_op) == 600) {
+                    if (parseInt(_op) <= 700) {
+                        if (parseInt(_op) >= 600 && parseInt(_op) < 700) {
+                            if ($("#b_use_routing").val() == "1") {
                                 layer.alert("请输入【完成单号】.");
                                 return false;
                             }
+                        }else if (parseInt(_op) == 700) {
+                            layer.alert("请输入【终检完成单号】.");
+                            return false;
                         }
                     }else if (parseInt(_op) > 700) {
                         layer.alert("请输入【参考号】.");
