@@ -321,11 +321,11 @@
                                 </div>
                                 <%--<div class="weui-form-preview__item" 
                                     style="display:<%# (Eval("b_op_one").ToString()==Eval("op").ToString() && Convert.ToInt32(Eval("b_op_one").ToString())<600)?"block":"none"%>; ">--%>
-                                <div class="weui-form-preview__item" 
+                                <%--<div class="weui-form-preview__item" 
                                     style="display:<%#  Eval("lot_no_fixed").ToString()!=""?"block":"none"%>; ">
                                     <label class="weui-form-preview__label">Lot No</label>
                                     <span class="weui-form-preview__value"><%# Eval("lot_no_fixed") %></span>
-                                </div>
+                                </div>--%>
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">申请数量</label>
                                     <span class="weui-form-preview__value"><%# Eval("qty") %></span>

@@ -72,8 +72,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             op.Text = dt.Rows[0]["op"].ToString() + "-" + dt.Rows[0]["op_descr"].ToString();
             b_use_routing.Text = dt.Rows[0]["b_use_routing"].ToString();
             b_op_one.Text = dt.Rows[0]["b_op_one"].ToString();
-            lot_no_fixed.Text = dt.Rows[0]["lot_no_fixed"].ToString();
-            //qty.Text = dt.Rows[0]["qty"].ToString();
             yb_qty.Text = dt.Rows[0]["qty"].ToString();
             reason.Text = dt.Rows[0]["reason_code"].ToString() + "-" + dt.Rows[0]["reason"].ToString();
             comment.Value= dt.Rows[0]["comment"].ToString();
@@ -189,19 +187,9 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
     public static string init_rs(string domain,string workshop)
     {
         string result = "";
-        string sql = @"";
-        if (workshop=="一车间" || workshop == "二车间" || workshop == "四车间")
-        {
-            sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+        string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where left(rsn_code,1) in('3','5') and rsn_domain='{0}' order by rsn_code";//[rsn_type]='SCRAP'
-        }
-        //else if (workshop == "三车间")
-        //{
-        //    sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
-        //            from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-        //            where left(rsn_code,1) in('1','5') and rsn_domain='{0}' order by rsn_code";
-        //}
+                    where left(rsn_code,1) in('1','5') and rsn_domain='{0}' order by rsn_code";
         sql = string.Format(sql, domain);
         DataSet ds = SQLHelper.Query(sql);
 
@@ -217,19 +205,9 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
     public static string rs_data(string domain, string rscode, string workshop)
     {
         string result = "";
-        string sql = @"";
-        if (workshop == "一车间" || workshop == "二车间" || workshop == "四车间")
-        {
-            sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
+        string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where left(rsn_code,1) in('3','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
-        }
-        //else if (workshop == "三车间")
-        //{
-        //    sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
-        //            from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-        //            where left(rsn_code,1) in('1','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
-        //}
+                    where left(rsn_code,1) in('1','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
         sql = string.Format(sql, domain, rscode);
         DataTable dt_reason = SQLHelper.Query(sql).Tables[0];
 
@@ -318,15 +296,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
-            //Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_one_dt");
-            //DataTable dt_wk_sg = new DataTable();
-            //string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
-            //sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
-            //dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
-
-            //detail_sg.DataSource = dt_wk_sg;
-            //detail_sg.DataBind();
-
             string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             DataSet ds = SQLHelper.Query(sql_sg);
@@ -340,7 +309,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             detail_rk.DataBind();
         }
     }
-
 
     protected void Repeater_fg_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
@@ -383,15 +351,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
-            //Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_again_dt");
-            //DataTable dt_wk_sg = new DataTable();
-            //string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
-            //sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
-            //dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
-
-            //detail_sg.DataSource = dt_wk_sg;
-            //detail_sg.DataBind();
-
             string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             DataSet ds = SQLHelper.Query(sql_sg);
@@ -405,7 +364,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             detail_rk.DataBind();
         }
     }
-
 
     protected void Repeater_fx_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
@@ -448,15 +406,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
-            //Repeater detail_sg = (Repeater)e.Item.FindControl("Repeater_sg_fx_again_dt");
-            //DataTable dt_wk_sg = new DataTable();
-            //string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
-            //sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
-            //dt_wk_sg = SQLHelper.Query(sql_sg).Tables[0];
-
-            //detail_sg.DataSource = dt_wk_sg;
-            //detail_sg.DataBind();
-
             string sql_sg = @"exec [usp_app_bhgp_sign_record_V1] '{0}'";
             sql_sg = string.Format(sql_sg, item["workorder_f"].ToString());
             DataSet ds = SQLHelper.Query(sql_sg);
@@ -473,39 +422,42 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
     [WebMethod]
     public static string save2(string _emp_code_name,string _workorder, string _pgino, string _pn, string _descr, string _op
-        , string _qty, string _reason,string _comment, string _b_use_routing, string _ref_order, string _b_op_one, string _lot_no_fixed)
+        , string _qty, string _reason,string _comment, string _b_use_routing, string _ref_order)
     {
         string flag = "N", msg = "";
         int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
         string re_sql = "";
         if (op_code <= 700)
         {
-            /*if (op_code < 600 || _b_use_routing == "0")
+            if (op_code == 30)
             {
-                re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
+                re_sql = @"exec usp_app_bhgp_Apply_yz '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
             }
-            else if (op_code >= 600 && op_code <= 700)
+            else if (op_code >= 40 && op_code <= 50)
             {
-                re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-            }*/
-            if (op_code > 100 && op_code < 600)
-            {
-                re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
+                if (_b_use_routing == "0")
+                {
+                    re_sql = @"exec usp_app_bhgp_Apply_yz '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+                }
+                else
+                {
+                    re_sql = @"exec usp_app_bhgp_Apply_yz_HSolve '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+                }
             }
             else if (op_code >= 600 && op_code < 700)
             {
                 if (_b_use_routing == "0")
                 {
-                    re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
+                    re_sql = @"exec usp_app_bhgp_Apply_yz '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
                 }
                 else
                 {
-                    re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+                    re_sql = @"exec usp_app_bhgp_Apply_yz_QC '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
                 }
             }
             else if (op_code == 700)
             {
-                re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+                re_sql = @"exec usp_app_bhgp_Apply_yz_QC '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
             }
         }
         else if (op_code == 999 || op_code == 998)//成品库、半成品库
@@ -520,7 +472,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         if (flag == "N")
         {
             re_sql = string.Format(re_sql, _emp_code_name, _workorder, _pgino, _pn, _descr, _op
-           , _qty, _reason, _comment, _b_use_routing, _ref_order, _b_op_one, _lot_no_fixed);
+                                , _qty, _reason, _comment, _b_use_routing, _ref_order);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();
@@ -530,52 +482,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
     }
 
-    /*
-    protected void btnsave_Click(object sender, EventArgs e)
-    {
-
-        string _op = op.Text;
-        string _b_use_routing = b_use_routing.Text;
-
-        int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
-        string re_sql = "";
-        if (op_code < 600 || _b_use_routing == "0")
-        {
-            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
-
-        }
-        else if (op_code >= 600 && op_code <= 700)
-        {
-            re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-        }
-        else
-        {
-            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('【开发中.....】')", true);
-            return;
-        }
-
-        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, pgino.Text, pn.Text, descr.Text, op.Text
-            , qty.Text, reason.Text, comment.Value, _b_use_routing, ref_order.Text);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
-        string flag = re_dt.Rows[0][0].ToString();
-        string msg = re_dt.Rows[0][1].ToString();
-
-        if (flag == "N")
-        {
-            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg + "')", true);
-
-            //Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
-            Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
-        }
-        else
-        {
-            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "')", true);
-        }
-    }
-    */
 
     public DataTable Get_Repeat_cz(out string msg)
     {
@@ -733,7 +639,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             }
             else
             {
-                bhgp_Apply_V1_Class bdn = new bhgp_Apply_V1_Class();
+                bhgp_Apply_yz_Class bdn = new bhgp_Apply_yz_Class();
                 DataTable re_dt = bdn.save_data(dt, workorder.Text, workorder_f.Text, emp_code_name.Text, workorder_qc.Text);
 
                 flag = re_dt.Rows[0][0].ToString();
@@ -743,7 +649,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             if (flag == "N")
             {
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
-                //Response.Redirect("/workorder/bhgp_Apply_list_V1.aspx?workshop=" + _workshop);
                 Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
             }
             else
@@ -762,9 +667,9 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 }
 
 
-public class bhgp_Apply_V1_Class
+public class bhgp_Apply_yz_Class
 {
-    public bhgp_Apply_V1_Class()
+    public bhgp_Apply_yz_Class()
     {
         //
         // TODO: 在此处添加构造函数逻辑
