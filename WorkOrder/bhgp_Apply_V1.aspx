@@ -573,7 +573,7 @@
                             
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">产线</label>
-                                        <span class="weui-form-preview__value"><%= _workshop %>/<%# Eval("line") %></span>
+                                        <span class="weui-form-preview__value"><%# Eval("workshop") %>/<%# Eval("line") %></span>
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">物料号</label>

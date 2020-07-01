@@ -209,7 +209,12 @@ function sm_workorder(_workshop) {
                 workorder_change(result, _workshop);
 
             }, cancel: function () {
-                window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=&workorder_f=&workshop=" + _workshop;
+                //window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=&workorder_f=&workshop=" + _workshop;
+
+                var str_addr = "/workorder/";
+                if (_workshop == "二车间" || _workshop == "四车间") { str_addr = str_addr + "bhgp_Apply_V1.aspx"; }
+                if (_workshop == "三车间") { str_addr = str_addr + "bhgp_Apply_yz.aspx"; }
+                window.location.href = str_addr + "?workorder=&workorder_f=&workshop=" + _workshop;
             }
         });
     });
@@ -232,11 +237,16 @@ function workorder_change(result, _workshop) {
             var workorder = "";
             var workorder_f = "";
             var cur_sign_step = "";
+            var str_addr = "/workorder/";
             if (json_wk.length == 0) {
 
                 workorder = result;
-                window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
-                    + "&workshop=" + _workshop;
+                //window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
+                //    + "&workshop=" + _workshop;
+
+                if (_workshop == "二车间" || _workshop == "四车间") { str_addr = str_addr + "bhgp_Apply_V1.aspx"; }
+                if (_workshop == "三车间") { str_addr = str_addr + "bhgp_Apply_yz.aspx"; }
+                window.location.href = str_addr + "?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + _workshop;
 
             } else if (json_wk.length == 1) {
 
@@ -244,20 +254,28 @@ function workorder_change(result, _workshop) {
                 workorder_f = json_wk[0]["workorder_f"];
                 cur_sign_step = json_wk[0]["cur_sign_step"];
                 if (cur_sign_step == "0001" || cur_sign_step == "0003" || cur_sign_step == "0004" || cur_sign_step == "0005") {//当前签核步骤在 返工，且只有一笔
-                    window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + cur_sign_step + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + _workshop;
+
+                    //window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + cur_sign_step + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + _workshop;
+
+                    if (_workshop == "二车间" || _workshop == "四车间") { str_addr = str_addr + "bhgp_sign_V1.aspx"; }
+                    if (_workshop == "三车间") { str_addr = str_addr + "bhgp_sign_yz.aspx"; }
+                    window.location.href = str_addr + "?stepid=" + cur_sign_step + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + _workshop;
+
                 } else {
-                    window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
-                    + "&workshop=" + _workshop;
+                    //window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f
+                    //+ "&workshop=" + _workshop;
+
+                    if (_workshop == "二车间" || _workshop == "四车间") { str_addr = str_addr + "bhgp_Apply_V1.aspx"; }
+                    if (_workshop == "三车间") { str_addr = str_addr + "bhgp_Apply_yz.aspx"; }
+                    window.location.href = str_addr + "?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + _workshop;
                 }
 
             } else {
 
                 workorder = json_wk[0]["workorder"];
-                window.location.href = "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder
-                    + "&workshop=" + _workshop;
+                window.location.href = "/workorder/bhgp_Apply_wk_V1.aspx?workorder=" + workorder + "&workshop=" + _workshop;
 
             }
-
 
         }
 
