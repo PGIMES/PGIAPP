@@ -431,7 +431,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         {
             if (op_code == 30)
             {
-                re_sql = @"exec usp_app_bhgp_Apply_yz '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
+                re_sql = @"exec usp_app_bhgp_Apply_yz '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
             }
             else if (op_code >= 40 && op_code <= 50)
             {
