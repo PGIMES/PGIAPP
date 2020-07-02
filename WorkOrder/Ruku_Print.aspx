@@ -350,7 +350,7 @@
         <ul class="collapse">
             <li class="">
                 <div class="weui-flex js-category">
-                    <div class="weui-flex__item"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
+                    <div class="weui-flex__item"><%=dr_m_["on_date_str"]  +" "+dr_m_["emp_name"]+ " 已检数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>
                 <div class="page-category js-categoryInner"><%-- style="margin-left:20px"--%>
@@ -437,7 +437,7 @@
             <li class="">
                
                 <div class="weui-flex js-category">
-                    <div class="weui-flex__item"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
+                    <div class="weui-flex__item"><%= dr_m_["on_date_str"]+" "+ dr_m_["emp_name"] +" 已检数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>
                 <div class="page-category js-categoryInner"> <%--style="margin-left:20px"--%>
@@ -523,7 +523,7 @@
         <ul class="collapse">
             <li class="">                
                 <div class="weui-flex js-category">
-                    <div class="weui-flex__item"><%=dr_m_["emp_name"] +" "+ dr_m_["off_date_str"] +" 下料数:"+ dr_m_["qty"] %></div>
+                    <div class="weui-flex__item"><%=dr_m_["off_date_str"] +" "+ dr_m_["emp_name"] +" 下料数:"+ dr_m_["qty"] %></div>
                     <i class="icon icon-35 padding10-l"></i>
                 </div>                    
                 <div class="page-category js-categoryInner "> <%--style="margin-left:40px"--%>
