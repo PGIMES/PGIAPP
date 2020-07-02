@@ -181,7 +181,7 @@
                                                     
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date")
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date","{0:MM-dd HH:mm}")
                                                                     /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
                                                              %>  
                                                              <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
@@ -243,7 +243,7 @@
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")
-                                                                   +" "+Eval("need_date")+ " " 
+                                                                   +" "+Eval("need_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>   
                                                             <span style="color:#10AEFF">
                                                                  时长:<%# Eval("times") %>
@@ -295,7 +295,7 @@
                                                         </span>
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("reject_date")+ " " 
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("reject_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>     
                                                             <span style="color:#10AEFF">
                                                                  时长:<%# Eval("times") %>
@@ -346,7 +346,7 @@
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")
-                                                                   +" "+Eval("b_on_m_date")+ " " 
+                                                                   +" "+Eval("b_on_m_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>   
                                                         </span>
 
@@ -401,7 +401,7 @@
                                                     
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date")
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date","{0:MM-dd HH:mm}")
                                                                     /*+" <font class='f-blue'>"+Eval("need_date")+ "</font>" */
                                                              %>   
                                                             <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
@@ -459,7 +459,7 @@
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")
-                                                                    +" "+Eval("need_date")+ " " 
+                                                                    +" "+Eval("need_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>     
                                                             <span style="color:#10AEFF">
                                                                  时长:<%# Eval("times") %>
@@ -511,7 +511,7 @@
                                                         </span>
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("reject_date")+ " " 
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("reject_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>     
                                                             <span style="color:#10AEFF">
                                                                  时长:<%# Eval("times") %>
@@ -562,7 +562,7 @@
 
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")
-                                                                   +" "+Eval("b_on_m_date")+ " " 
+                                                                   +" "+Eval("b_on_m_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>   
                                                         </span>
 
