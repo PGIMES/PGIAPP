@@ -552,7 +552,7 @@
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>已入库(24h内)
                                     <%--<asp:Label ID="Label_99" runat="server" Text="Label"></asp:Label>--%>
-                                    <span class="weui-badge  bg-<% =(count_01==99?"gray":"blue") %>"><% =count_99 %></span>
+                                    <span class="weui-badge  bg-<% =(count_99==0?"gray":"blue") %>"><% =count_99 %></span>
                                 </div>
                                 <div class="weui-cells" id="_99">
                                     <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
