@@ -203,6 +203,10 @@
                     $("#btnsave2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                     return false;
                 }
+                /*var data_v={"_emp_code_name":$('#emp_code_name').val(),"_workorder": $('#workorder').val(),"_pgino":$('#pgino').val()
+                    ,"_pn":$('#pn').val(),"_descr":$('#descr').val(),"_op":$('#op').val(),"_qty":$('#qty').val(),"_reason":$('#reason').val()
+                    ,"_comment":$('#comment').val(),"_b_use_routing": $('#b_use_routing').val(),"_ref_order": $('#ref_order').val() 
+                    ,"_b_op_one":$('#b_op_one').val(),"_lot_no_fixed":$('#lot_no_fixed').val()};*/
 
                 $.ajax({
                     type: "post",
