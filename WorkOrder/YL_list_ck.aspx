@@ -105,7 +105,7 @@
                                                     
 
                                             <span class="weui-agree__text" style="font-size: smaller">
-                                                <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date") %>  
+                                                <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date","{0:MM-dd HH:mm}") %>  
                                                 <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
                                                     <%# Eval("times_type") %><%# Eval("times") %>
                                                 </span>
