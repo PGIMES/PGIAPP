@@ -102,14 +102,29 @@
     <script>
         function deal(stepid, workorder, workorder_f, workorder_gl) {
             //alert(stepid);
-            if (stepid == "0002") {//--检验处置
-                window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
-            } else if (stepid == "9998") {//--待入库
-                window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=<%=_workshop %>";
+
+            if ("<%=_workshop %>" == "二车间" || "<%=_workshop %>" == "四车间") {
+                if (stepid == "0002") {//--检验处置
+                    window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                } else if (stepid == "9998") {//--待入库
+                    window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=<%=_workshop %>";
+                }
+                else {
+                    window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                }
             }
-            else{
-                window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+            if ("<%=_workshop %>" == "三车间") {
+                if (stepid == "0002") {//--检验处置
+                    window.location.href = "/workorder/bhgp_Apply_yz.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                } else if (stepid == "9998") {//--待入库
+                    window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=<%=_workshop %>";
+                }
+                else {
+                    window.location.href = "/workorder/bhgp_sign_yz.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                }
             }
+
+
         }
     </script>
 </head>
