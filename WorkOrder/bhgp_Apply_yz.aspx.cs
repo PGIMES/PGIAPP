@@ -35,7 +35,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
             //登入岗位的域
-            if (lu.Domain == "100")
+            if (domain.Text == "100" || domain.Text=="")
             {
                 string strsql_d = "select * from [Mes_App_EmployeeLogin] where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
                 var value_login = SQLHelper.reDs(strsql_d).Tables[0];

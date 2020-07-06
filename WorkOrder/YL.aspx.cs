@@ -58,7 +58,7 @@ public partial class YL : System.Web.UI.Page
         if (value != null && value.Rows.Count > 0)
         {
             string id = value.Rows[0]["id"].ToString();
-            if (domain.Text == "100")
+            if (domain.Text == "100" || domain.Text == "")
             {
                 domain.Text = value.Rows[0]["domain"].ToString();
             }
