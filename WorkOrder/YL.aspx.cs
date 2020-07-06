@@ -96,22 +96,33 @@ public partial class YL : System.Web.UI.Page
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string pn = "", descr = "",qty = "";
+        string pn = "", descr = "", qty = "", pt_prod_line = "";
         if (flag == "N")
         {
             DataTable dt = ds.Tables[1];
             pn = dt.Rows[0]["pt_desc1"].ToString();
             descr = dt.Rows[0]["pt_desc2"].ToString();
             qty = dt.Rows[0]["pt_ord_mult"].ToString();
+            pt_prod_line = dt.Rows[0]["pt_prod_line"].ToString();
         }
 
         string ld_ref = "", ld_qty_oh = "";
         DataTable ldt = new DataTable();
-        //送料信息里，第一笔 绑定库存明细里的
-        string sqlStr = @"select top 1 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
+        string sqlStr = @"";//送料信息里，第一笔 绑定库存明细里的
+        if (pt_prod_line != "1090")
+        {
+            sqlStr = @"select top 1 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
                             where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0
                             order by ld_date,ld_ref 
                             with (nolock)";
+        }
+        else
+        {
+            sqlStr = @"select top 1 ld_part,ld_ref,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det 
+                            where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0
+                            order by ld_date,ld_ref,ld_qty_oh 
+                            with (nolock)";
+        }
         sqlStr = string.Format(sqlStr, pgino);
         ldt = QadOdbcHelper.GetODBCRows(sqlStr);
         if (ldt.Rows.Count > 0)
@@ -120,7 +131,7 @@ public partial class YL : System.Web.UI.Page
             ld_qty_oh = ldt.Rows[0]["ld_qty_oh"].ToString();
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"qty\":\"" + qty 
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"qty\":\"" + qty
             + "\",\"ld_ref\":\"" + ld_ref + "\",\"ld_qty_oh\":\"" + ld_qty_oh + "\"}]";
         return result;
 
