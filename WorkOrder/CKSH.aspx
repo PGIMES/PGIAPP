@@ -116,7 +116,7 @@
                 layer.alert("请输入【接收数量】.");
                 return false;
             }
-            if (parseInt($("#act_qty").val()) > parseInt($("#qty").val())) {
+            if (parseFloat($("#act_qty").val()) > parseFloat($("#qty").val())) {
                 layer.alert("【接收数量】不可大于【数量】.");
                 return false;
             }
@@ -158,11 +158,11 @@
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">数量</label></div>
-                    <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="" style="color:gray" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="qty" class="weui-input"  placeholder="" style="color:gray" runat="server"></asp:TextBox>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">接收数量</label></div>
-                    <asp:TextBox ID="act_qty" class="weui-input" type='number' placeholder="请输入接收数量" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="act_qty" class="weui-input" type='number' placeholder="请输入接收数量" runat="server" step="0.001"></asp:TextBox>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
