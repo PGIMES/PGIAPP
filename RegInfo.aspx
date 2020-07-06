@@ -40,7 +40,7 @@
 
                 <div id="formElementContainer" class="form-module">
 
-                    <dl class="form-item">
+                    <dl class="form-item" style='<% =Request["code"].ToString()=="0"?"display:none":"" %>'  >
                         <dd class="form-content">
                             <div class="input-outer input-bgimgs to">
                                 <span class="icons i-name"></span>

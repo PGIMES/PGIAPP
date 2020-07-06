@@ -11,7 +11,8 @@ public partial class RegInfo : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-             wxuserid.Text =  WeiXin.GetCookie("userid");
+            wxuserid.Text =  WeiXin.GetCookie("userid");
+
         }
     }
 
@@ -36,15 +37,29 @@ public partial class RegInfo : System.Web.UI.Page
 
     protected void registerBtn_Click(object sender, EventArgs e)
     {
-        var sql = string.Format("update dbo.WX_User set workcode = '{0}' where wxuserid = '{1}'  ", workcode.Text,wxuserid.Text);
-        bool i = SQLHelper.ExSql(sql);
-        if (i == false)
+
+        if (Request["code"].ToString() == "1") //完善信息
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "alertinfo", "alert('保存数据失败，请再试试。如果多次不行，请及时联系 IT 帮忙确认.')", true);
+            var sql = string.Format("update dbo.WX_User set workcode = '{0}' where wxuserid = '{1}'  ", workcode.Text,wxuserid.Text);
+            bool i = SQLHelper.ExSql(sql);
+            if (i == false)
+            {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "alertinfo", "alert('保存数据失败，请再试试。如果多次不行，请及时联系 IT 帮忙确认.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "alertinfo", "alert('保存数据成功，请退出程序，重新进入。如仍有问题，请及时联系 IT 帮忙确认.')", true);
+            }
         }
-        else
+        else if (Request["code"].ToString() == "0") //临时手动cookie
         {
-            ScriptManager.RegisterStartupScript(Page, this.GetType(), "alertinfo", "alert('保存数据成功，请退出程序，重新进入。如仍有问题，请及时联系 IT 帮忙确认.')", true);
+            WeiXin.SetCookie("workcode", workcode.Text,1);
+            string json = "{\"WorkCode\":\""+ workcode.Text + "\",\"UserName\":\""+name.Text+"\"}";
+            WeiXin.SetCookie("usermodel", HttpUtility.UrlEncode(json, System.Text.Encoding.GetEncoding("UTF-8")), 1);
+            WeiXin.SetCookie("cookiedate", DateTime.Now.ToString(), 1);
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "alertinfo", "alert('成功，请退出程序，重新进入。')", true);
         }
+
+
     }
 }
