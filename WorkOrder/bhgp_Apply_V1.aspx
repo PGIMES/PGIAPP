@@ -388,9 +388,17 @@
             if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
                 layer.alert("请输入【数量】.");
                 return false;
-            }else if (parseInt($("#qty").val()) <=0) {
+            }else if (parseFloat($("#qty").val()) <=0) {
                 layer.alert("【数量】不可小于等于0.");
                 return false;
+            }else {
+                if ($("#qty").val().indexOf('.')>=0) {
+                    var _qty = ($("#qty").val()).substr(($("#qty").val()).indexOf('.')+1);
+                    if (_qty.length>3) {
+                        layer.alert("【数量】小数位数不可超过3位.");
+                        return false;
+                    }
+                }
             }
             if ($("#reason").val() == "") {
                 layer.alert("请输入【原因名称】.");

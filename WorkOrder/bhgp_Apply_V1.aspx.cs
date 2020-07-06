@@ -609,7 +609,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 {
                     msg_row += "第" + (i + 1).ToString() + "组【处置数量】不可为空 <br />";
                 }
-                else if (Convert.ToInt32(txt_cz_qty.Text.Trim()) <= 0)
+                else if (Convert.ToSingle(txt_cz_qty.Text.Trim()) <= 0)
                 {
                     msg_row += "第" + (i + 1).ToString() + "组【处置数量】必须大于0 <br />";
                 }
@@ -617,7 +617,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 {
                     msg_row += "第" + (i + 1).ToString() + "组【剩余数量】不可为空 <br />";
                 }
-                else if (Convert.ToInt32(txt_sy_qty.Text.Trim()) < 0)
+                else if (Convert.ToSingle(txt_sy_qty.Text.Trim()) < 0)
                 {
                     msg_row += "第" + (i + 1).ToString() + "组【剩余数量】必须大于等于0 <br />";
                 }
