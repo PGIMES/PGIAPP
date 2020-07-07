@@ -39,13 +39,13 @@ public partial class YL : System.Web.UI.Page
             }
 
 
-            emp_code_name.Text = "02432何桂勤";
-            domain.Text = "200";
-            lbl_emp.Text = "15850349106何桂勤";
+            //emp_code_name.Text = "02432何桂勤";
+            //domain.Text = "200";
+            //lbl_emp.Text = "15850349106何桂勤";
 
             //绑定岗位
-            //ShowValue(lu.WorkCode);
-            ShowValue("02432");
+            ShowValue(lu.WorkCode);
+            //ShowValue("02432");
         }
 
     }
