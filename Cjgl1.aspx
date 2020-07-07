@@ -404,7 +404,7 @@
           </a>
           <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_hege.aspx?dh=&workshop=<%=_workshop %>&ck=N">
             <div class="weui-cell__bd">
-              <p>合格品入库</p>
+              <p>半成品入库</p>
             </div>
             <div class="weui-cell__ft">
             </div>
