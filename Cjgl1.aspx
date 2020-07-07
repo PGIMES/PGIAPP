@@ -306,7 +306,7 @@
                         <i class="fa fa-edit margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格处理<span class="f12">（测试中）</span></p>
+                        <p>不合格处理<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -315,7 +315,7 @@
                         <i class="fa fa-bookmark-o margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格监视<span class="f12">（测试中）</span></p>
+                        <p>不合格监视<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"> 
                     </div>
