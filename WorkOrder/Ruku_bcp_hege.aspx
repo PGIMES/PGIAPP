@@ -17,22 +17,19 @@
 
     <script>
         $(document).ready(function () {
-            $("#dh").attr("readonly", "readonly");
-            $("#status_hg").attr("readonly", "readonly");
-            $("#status_date_hg").attr("readonly", "readonly");
+            $("#workorder").attr("readonly", "readonly");
             $("#domain").attr("readonly", "readonly");
             $("#pgino").attr("readonly", "readonly");
             $("#pn").attr("readonly", "readonly");
             $("#qty").attr("readonly", "readonly");
-            $("#ac_qty").attr("readonly", "readonly");
 
             if ("<%= _dh %>" != "") {//仓库接收 扫码进来
-                $('#dh').val("<%= _dh %>");
-                dh_change();
+                $('#workorder').val("<%= _dh %>");
+                workorder_change();
             }
         });
 
-        function dh_change() {
+        function workorder_change() {
             $("#domain").val('');
             $("#pgino").val('');
             $("#pn").val('');
@@ -41,8 +38,8 @@
 
             $.ajax({
                 type: "post",
-                url: "Ruku_hege.aspx/dh_change",
-                data: "{'dh':'" + $('#dh').val() + "'}",
+                url: "Ruku_bcp_hege.aspx/workorder_change",
+                data: "{'workorder':'" + $('#workorder').val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -51,18 +48,12 @@
 
                     if (obj[0].flag == "Y") {
                         layer.alert(obj[0].msg);
-                        return;
                     }
-                    $("#sp_workorder").text(obj[0].workorder); $("#workorder").val(obj[0].workorder);
-                    $("#sp_domain").text(obj[0].domain);
-                    $("#sp_pgino").text(obj[0].pgino);
-                    $("#sp_pn").text(obj[0].pn);
-                    $('#sp_qty').text(obj[0].qty);
-                    $('#sp_act_qty').text(obj[0].act_qty);
-                    $('#sp_phone').text(obj[0].phone);
-                    $('#sp_create_date').text(obj[0].create_date);
-                    $('#status_hg').val(obj[0].status_hg);
-                    $('#status_date_hg').val(obj[0].status_date_hg);
+                    $("#domain").val(obj[0].domain);
+                    $("#pgino").val(obj[0].pgino);
+                    $("#pn").val(obj[0].pn);
+                    $('#qty').val(obj[0].qty);
+                    $('#act_qty').val(obj[0].qty);
                 }
 
             });
@@ -70,26 +61,8 @@
 
 
         $(function () {
-            sm_workorder();
             sm_loc_hg();
         });
-
-        function sm_workorder() {
-            $('#img_sm_workorder').click(function () {
-                wx.ready(function () {
-                    wx.scanQRCode({
-                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                        success: function (res) {
-                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                            // code 在这里面写上扫描二维码之后需要做的内容  
-                            $('#workorder').val(result);
-                            workorder_change();
-                        }
-                    });
-                });
-            });
-        }
 
         function sm_loc_hg() {
             $('#img_sm_loc_hg').click(function () {
@@ -107,45 +80,21 @@
             });
         }
 
-        function workorder_change() {
-            if ($.trim($("#workorder").val()) != "") {
-                if ($.trim($("#workorder").val()) != $("#sp_workorder").text()) {
-                    layer.alert("【来源单号】不正确.");
-                    return;
-                }
-
-                //更新状态为 已确认
-                $.ajax({
-                    type: "post",
-                    url: "Ruku_hege.aspx/dh_status",
-                    data: "{'dh':'" + $('#dh').val() + "','workorder':'" + $('#workorder').val() + "','emp_code_name':'" + $('#emp_code_name').val() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                    success: function (data) {
-                        var obj = eval(data.d);
-
-                        if (obj[0].flag == "Y") {
-                            layer.alert(obj[0].msg);
-                            return;
-                        }
-                        $('#status_hg').val(obj[0].status_hg);
-                        $('#status_date_hg').val(obj[0].status_date_hg);
-                    }
-
-                });
-
-
-            }
-        }
-
         function valid() {
-            if ($.trim($("#workorder").val()) == "") {
-                layer.alert("请输入【来源单号】.");
+            if ($("#workorder").val() == "") {
+                layer.alert("请输入【单号】.");
                 return false;
             }
-            if ($.trim($("#status_hg").val()) != "已确认") {
-                layer.alert("【来源单号】状态不是已确认，不可入库.");
+            if ($.trim($("#qty").val()) == "" || $.trim($("#qty").val()) == "0") {
+                layer.alert("请输入【数量】.");
+                return false;
+            }
+            if ($.trim($("#act_qty").val()) == "" || $.trim($("#act_qty").val()) == "0") {
+                layer.alert("请输入【接收数量】.");
+                return false;
+            }
+            if (parseFloat($("#act_qty").val()) > parseFloat($("#qty").val())) {
+                layer.alert("【接收数量】不可大于【数量】.");
                 return false;
             }
             if ($.trim($("#loc_hg").val()) == "") {
@@ -167,62 +116,30 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="weui-cell">
-                    <div class="weui-cell__hd f-red "><label class="weui-label">入库单号</label></div>
-                    <asp:TextBox ID="dh" class="weui-input" style="color:gray" runat="server"></asp:TextBox>                
+                    <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
+                    <asp:TextBox ID="workorder" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
                 </div>
                 <div class="weui-cell">
-                    <div class="weui-cell__hd f-red "><label class="weui-label">来源单号</label></div> 
-                    <div class="weui-cell__bd">
-                        <span style="float:left; width:90%">
-                            <asp:TextBox ID="workorder" class="weui-input" placeholder="请输入来源单号" runat="server" onkeyup="this.value=this.value.toUpperCase()" onchange="workorder_change()"></asp:TextBox>
-                            <span id="sp_workorder" style="display:none;"></span>
-                        </span>
-                        <span style="float:left; width:10%">
-                            <img id="img_sm_workorder" src="../img/fdj2.png"/>
-                        </span>
-                    </div>              
+                    <div class="weui-cell__hd"><label class="weui-label">物料号</label></div>              
+                    <asp:TextBox ID="pgino" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="domain" class="weui-input" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 </div>
                 <div class="weui-cell">
-                    <div class="weui-cell__hd f-red "><label class="weui-label">状态</label></div>
-                    <div class="weui-cell__bd">
-                        <span style="float:left; width:30%">
-                            <asp:TextBox ID="status_hg" class="weui-input" style="color:gray" runat="server"></asp:TextBox>        
-                        </span>
-                        <span style="float:left; width:70%">
-                            <asp:TextBox ID="status_date_hg" class="weui-input" style="color:gray" runat="server"></asp:TextBox>        
-                        </span>
-                    </div>
-                            
+                    <div class="weui-cell__hd"><label class="weui-label">零件号</label></div>                          
+                    <asp:TextBox ID="pn" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
                 </div>
-                <div class="weui-form-preview">
-                    <div class="weui-form-preview__bd">
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">物料号</label>
-                            <span class="weui-form-preview__value" id="sp_pgino"></span>
-                            <span class="weui-form-preview__value" id="sp_domain" style="display:none;"></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">零件号</label>
-                            <span class="weui-form-preview__value" id="sp_pn"></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">交付数量</label>
-                            <span class="weui-form-preview__value" id="sp_qty"></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">接收数量</label>
-                            <span class="weui-form-preview__value" id="sp_act_qty"></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">生成人</label>
-                            <span class="weui-form-preview__value" id="sp_phone"></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">生成时间</label>
-                            <span class="weui-form-preview__value" id="sp_create_date"></span>
-                        </div>
-                    </div>
-                </div>        
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">数量</label></div>
+                    <asp:TextBox ID="qty" class="weui-input"  placeholder="" style="color:gray" runat="server"></asp:TextBox>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">接收数量</label></div>
+                    <asp:TextBox ID="act_qty" class="weui-input" type='number' placeholder="请输入接收数量" runat="server" step="0.0001"></asp:TextBox>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                    <textarea id="Textarea1" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
+                </div>      
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">库位</label></div> 
                     <div class="weui-cell__bd">
@@ -250,7 +167,6 @@
 </body>
     <script>
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-            sm_workorder();
             sm_loc_hg();
         });
 

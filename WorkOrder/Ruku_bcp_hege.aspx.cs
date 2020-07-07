@@ -34,73 +34,38 @@ public partial class WorkOrder_Ruku_bcp_hege : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string dh_change(string dh)
+    public static string workorder_change(string workorder)
     {
 
-        string re_sql = @"exec [usp_app_Ruku_hege_workorder_change] '{0}'";
-        re_sql = string.Format(re_sql, dh);
+        string re_sql = @"exec [usp_app_Ruku_bcp_hege_workorder_change] '{0}'";
+        re_sql = string.Format(re_sql, workorder);
         DataSet ds = SQLHelper.Query(re_sql);
 
         DataTable re_dt = ds.Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
 
-        string workorder = "", domain = "", pgino = "", pn = "", qty = "", act_qty = "", phone = "", create_date = "", status_hg = "", status_date_hg = "";
+        string domain = "", pgino = "", pn = "", qty = "";
 
         if (flag == "N")
         {
             DataTable re_dt_2 = ds.Tables[1];
-            workorder = re_dt_2.Rows[0]["workorder"].ToString();
             domain = re_dt_2.Rows[0]["domain"].ToString();
             pgino = re_dt_2.Rows[0]["pgino"].ToString();
             pn = re_dt_2.Rows[0]["pn"].ToString();
             qty = re_dt_2.Rows[0]["qty"].ToString();
-            act_qty = re_dt_2.Rows[0]["act_qty"].ToString();
-            phone = re_dt_2.Rows[0]["phone"].ToString();
-            create_date = re_dt_2.Rows[0]["create_date"].ToString();
-            status_hg = re_dt_2.Rows[0]["status_hg"].ToString();
-            status_date_hg = re_dt_2.Rows[0]["status_date_hg"].ToString();
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg 
-            + "\",\"workorder\":\"" + workorder + "\",\"domain\":\"" + domain 
-            + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\",\"act_qty\":\"" 
-            + act_qty + "\",\"phone\":\"" + phone + "\",\"create_date\":\"" + create_date 
-            + "\",\"status_hg\":\"" + status_hg + "\",\"status_date_hg\":\"" + status_date_hg + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"domain\":\"" + domain + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"qty\":\"" + qty + "\"}]";
         return result;
 
     }
 
-    [WebMethod]
-    public static string dh_status(string dh, string workorder, string emp_code_name)
-    {
-
-        string re_sql = @"exec [usp_app_Ruku_hege_status] '{0}','{1}','{2}'";
-        re_sql = string.Format(re_sql, dh, workorder, emp_code_name);
-        DataSet ds = SQLHelper.Query(re_sql);
-
-        DataTable re_dt = ds.Tables[0];
-        string flag = re_dt.Rows[0][0].ToString();
-        string msg = re_dt.Rows[0][1].ToString();
-
-        string status_hg = "", status_date_hg = "";
-
-        if (flag == "N")
-        {
-            status_hg = re_dt.Rows[0][2].ToString();
-            status_date_hg = re_dt.Rows[0][3].ToString();
-        }
-
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg
-            + "\",\"status_hg\":\"" + status_hg + "\",\"status_date_hg\":\"" + status_date_hg + "\"}]";
-        return result;
-
-    }
 
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        string re_sql = re_sql = @"exec usp_app_Ruku_hege '{0}', '{1}','{2}','{3}','{4}'";
-        re_sql = string.Format(re_sql, emp_code_name.Text, dh.Text, workorder.Text, loc_hg.Text, comment.Value);
+        string re_sql = re_sql = @"exec usp_app_Ruku_bcp_hege '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        re_sql = string.Format(re_sql, emp_code_name.Text, workorder.Text, domain.Text, pgino.Text, pn.Text, qty.Text, act_qty.Text, comment.Value, loc_hg.Text);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
         string msg = re_dt.Rows[0][1].ToString();
@@ -112,12 +77,10 @@ public partial class WorkOrder_Ruku_bcp_hege : System.Web.UI.Page
             {
                 if (_ck == "N")//车间的
                 {
-                    //Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
                     url = "/Cjgl1.aspx?workshop=" + _workshop;
                 }
                 if (_ck == "Y")//仓库的
                 {
-                    //Response.Redirect("/ck.aspx");
                     url = "/ck.aspx";
                 }
             }
@@ -128,7 +91,6 @@ public partial class WorkOrder_Ruku_bcp_hege : System.Web.UI.Page
         }
         else
         {
-            //ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('失败：" + msg + "');", true);
             return;
         }
