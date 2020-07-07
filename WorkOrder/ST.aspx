@@ -41,9 +41,10 @@
 
      <script>
          $(document).ready(function () {
-        });
+         });
 
-        $(function () {
+         $(function () {
+             sm_yzj();
 
             $("#btn_sl2").click(function () {
                 $("#btn_sl2").attr("disabled", "disabled");
@@ -68,7 +69,7 @@
                         data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
                             + "','need_t_no':'" + "<%= _need_t_no %>" + "','zyb':'" + $("#zyb").val() + "','lotno':'" + $("#lot_no").val()
                             + "','act_qty':'" + $('#act_qty').val()+ "','comment':'" + $('#comment').val()+ "','sku_area':'" + $("#sku_area").val()
-                            + "'}",
+                            + "','yzj_no':'" + $('#yzj').val() + "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -140,6 +141,28 @@
             });
 
         });
+
+         function sm_yzj() {
+             $('#img_sm_yzj').click(function () {
+                 wx.ready(function () {
+                     wx.scanQRCode({
+                         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                         scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                         success: function (res) {
+                             var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                             // code 在这里面写上扫描二维码之后需要做的内容  
+                             if (result != $('#yzj_no').val()) {
+                                 layer.alert(result + "与要汤的压铸机" + $('#yzj_no').val() + "不一致.");
+                                 $('#yzj').val("");
+                                 return;
+                             }
+                             $('#yzj').val(result);
+                         }
+                     });
+                 });
+             });
+         }
+
          function zyb_change() {
              $.ajax({
                  type: "post",
@@ -222,6 +245,7 @@
                 <asp:TextBox ID="need_t_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="sku_area" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="yzj_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -272,20 +296,31 @@
             </div>
             
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">转运包</label></div>
+                <div class="weui-cell__hd f-red"><label class="weui-label">压铸机</label></div>
+                <div class="weui-cell__bd">
+                    <span style="float:left; width:90%">
+                        <asp:TextBox ID="yzj" class="weui-input"  placeholder="请输入压铸机号" runat="server"></asp:TextBox>
+                    </span>
+                    <span style="float:left; width:10%">
+                        <img id="img_sm_yzj" src="../img/fdj2.png" style="padding-top:2px; "  />
+                    </span>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">转运包</label></div>
                 <div class="weui-cell__hd">
                     <asp:TextBox ID="zyb" class="weui-input" placeholder="请输入转运包" style="color:gray" runat="server"></asp:TextBox>
                 </div>
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">Lot No</label></div>
+                <div class="weui-cell__hd f-red"><label class="weui-label">Lot No</label></div>
                 <div class="weui-cell__hd">
                     <asp:TextBox ID="lot_no" class="weui-input" placeholder="请输入Lot No" style="color:gray" runat="server"></asp:TextBox>
                 </div>
             </div>
 
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">送汤量</label></div>
+                <div class="weui-cell__hd f-red"><label class="weui-label">送汤量</label></div>
                 <asp:TextBox ID="act_qty" class="weui-input" placeholder="" runat="server" type="number"></asp:TextBox>
             </div>
 
@@ -352,28 +387,28 @@
     </script>
 </body>
     <script>
-        //var datad = [];
-        //$.ajax({
-        //    url: "/getwxconfig.aspx/GetScanQRCode",
-        //    type: "Post",
-        //    data: "{ 'url': '" + location.href + "' }",
-        //    async: false,
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: function (data) {
-        //        datad = JSON.parse(data.d); //转为Json字符串
-        //    },
-        //    error: function (error) {
-        //        alert(error)
-        //    }
-        //});
-        //wx.config({
-        //    debug: false, // 开启调试模式
-        //    appId: datad.appid, // 必填，公众号的唯一标识
-        //    timestamp: datad.timestamp, // 必填，生成签名的时间戳
-        //    nonceStr: datad.noncestr, // 必填，生成签名的随机串
-        //    signature: datad.signature,// 必填，签名，见附录1
-        //    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
-        //});
+        var datad = [];
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                datad = JSON.parse(data.d); //转为Json字符串
+            },
+            error: function (error) {
+                alert(error)
+            }
+        });
+        wx.config({
+            debug: false, // 开启调试模式
+            appId: datad.appid, // 必填，公众号的唯一标识
+            timestamp: datad.timestamp, // 必填，生成签名的时间戳
+            nonceStr: datad.noncestr, // 必填，生成签名的随机串
+            signature: datad.signature,// 必填，签名，见附录1
+            jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+        });
     </script>
 </html>

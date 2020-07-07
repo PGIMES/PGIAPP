@@ -48,6 +48,7 @@ public partial class WorkOrder_ST : System.Web.UI.Page
 
         domain.Text = dt.Rows[0]["domain"].ToString();
         sku_area.Text = dt.Rows[0]["sku_area"].ToString();
+        yzj_no.Text = dt.Rows[0]["yzj_no"].ToString();
     }
 
     [WebMethod]
@@ -104,12 +105,12 @@ public partial class WorkOrder_ST : System.Web.UI.Page
     }
    
     [WebMethod]
-    public static string sl2(string _emp_code_name, string need_t_no, string zyb, string lotno, string act_qty, string comment, string sku_area)
+    public static string sl2(string _emp_code_name, string need_t_no, string zyb, string lotno, string act_qty, string comment, string sku_area, string yzj_no)
     {
         string flag = "N", msg = "";
 
-        string re_sql = @"exec [usp_app_ST] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
-        re_sql = string.Format(re_sql, _emp_code_name, need_t_no, zyb, lotno, act_qty, comment, sku_area);
+        string re_sql = @"exec [usp_app_ST] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+        re_sql = string.Format(re_sql, _emp_code_name, need_t_no, zyb, lotno, act_qty, comment, sku_area, yzj_no);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();
