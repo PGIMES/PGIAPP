@@ -93,8 +93,8 @@ public partial class Cjgl1 : System.Web.UI.Page
         //生产中
         sql = string.Format(@"exec [usp_app_wip_list_prod] '{0}','{1}'", _workshop, "");
         DataTable dt_data_go = SQLHelper.Query(sql).Tables[1];
-        iPart = iPart + dt_data_go.Select("ispartof='部分'").Count();
-        iWip  = iWip + dt_data_go.Select("ispartof<>'部分'").Count();
+        iPart = iPart + dt_data_go.Select("ispartof='部分' and line<>'组装件'").Count(); //配件（组装件）不计数
+        iWip  = iWip + dt_data_go.Select("ispartof<>'部分' and line<>'组装件'").Count();
         //待终检
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", _workshop, "", 2);
         DataTable dt_data_qc = SQLHelper.Query(sql).Tables[0];
