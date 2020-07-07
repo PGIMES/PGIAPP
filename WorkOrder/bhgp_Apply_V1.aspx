@@ -394,8 +394,8 @@
             }else {
                 if ($("#qty").val().indexOf('.')>=0) {
                     var _qty = ($("#qty").val()).substr(($("#qty").val()).indexOf('.')+1);
-                    if (_qty.length>3) {
-                        layer.alert("【数量】小数位数不可超过3位.");
+                    if (_qty.length>4) {
+                        layer.alert("【数量】小数位数不可超过4位.");
                         return false;
                     }
                 }
@@ -539,7 +539,7 @@
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__hd f-red "><label class="weui-label">数量</label></div>
-                            <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="请输入处置数量" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="qty" class="weui-input" type='number' placeholder="请输入处置数量" runat="server" step="0.0001"></asp:TextBox>
                         </div>
                         <div class="weui-cell" style="font-size:12px;color:gray;">
                           <div class="weui-flex__item">已报不合格数量
