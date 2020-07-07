@@ -96,6 +96,9 @@
                     else if (msg == "rk") {                        
                         window.location.href = "/workorder/Ruku_hege.aspx?dh=" + result + "&ck=Y";
                     }
+                    else if (msg == "bhg") {
+                        window.location.href = "/workorder/Ruku_bcp_hege.aspx?dh=" + result + "&ck=Y";
+                    }
                 }
 
             });
@@ -307,6 +310,13 @@
           <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?dh=&ck=Y">
             <div class="weui-cell__bd">
               <p>废品接收</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_hege.aspx?dh=&ck=Y">
+            <div class="weui-cell__bd">
+              <p>半成品入库</p>
             </div>
             <div class="weui-cell__ft">
             </div>

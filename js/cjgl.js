@@ -191,6 +191,9 @@ function ck_dh_change(result, _workshop) {
             else if (msg == "rk") {
                 window.location.href = "/workorder/Ruku_hege.aspx?dh=" + result + "&workshop=" + _workshop + "&ck=N";
             }
+            else if (msg == "bhg") {
+                window.location.href = "/workorder/Ruku_bcp_hege.aspx?dh=" + result + "&workshop=" + _workshop + "&ck=N";
+            }
         }
 
     });

@@ -18,7 +18,7 @@
     <link href="/css/weuix.css" rel="stylesheet" />    
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
-    <script src="/js/cjgl.js?ver=20200701001"></script>
+    <script src="/js/cjgl.js?ver=20200707001"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -398,6 +398,13 @@
           <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?dh=&workshop=<%=_workshop %>&ck=N">
             <div class="weui-cell__bd">
               <p>废品接收</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+          </a>
+          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_hege.aspx?dh=&workshop=<%=_workshop %>&ck=N">
+            <div class="weui-cell__bd">
+              <p>合格品入库</p>
             </div>
             <div class="weui-cell__ft">
             </div>
