@@ -46,6 +46,12 @@
          $(function () {
              sm_yzj();
 
+             $("#yzj").keyup(function (e) {
+                 if (($("#yzj").val()).length >= 3) {
+                     yzj_change();
+                 }
+            });
+
             $("#btn_sl2").click(function () {
                 $("#btn_sl2").attr("disabled", "disabled");
                 $("#btn_sl2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
@@ -151,16 +157,18 @@
                          success: function (res) {
                              var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                              // code 在这里面写上扫描二维码之后需要做的内容  
-                             if (result != $('#yzj_no').val()) {
-                                 layer.alert(result + "与要汤的压铸机" + $('#yzj_no').val() + "不一致.");
-                                 $('#yzj').val("");
-                                 return;
-                             }
-                             $('#yzj').val(result);
+                             $('#yzj').val(result);//result="1-1";
+                             yzj_change();
                          }
                      });
                  });
              });
+         }
+
+         function yzj_change() {
+             if ($('#yzj').val() != $('#yzj_no').val()) {
+                 $.toptip($('#yzj').val() + '与要汤的压铸机'+ $('#yzj_no').val() +'不一致', 'error');
+             }
          }
 
          function zyb_change() {
@@ -208,6 +216,10 @@
         }
 
         function valid_sl() {
+            if ($('#yzj').val() != $('#yzj_no').val()) {
+                layer.alert($('#yzj').val() + "与要汤的压铸机" + $('#yzj_no').val() + "不一致.");
+                return false;
+            }
             if ($("#zyb").val() == "") {
                 layer.alert("请输入【转运包】.");
                 return false;
