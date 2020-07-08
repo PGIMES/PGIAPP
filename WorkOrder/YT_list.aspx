@@ -168,10 +168,16 @@
                                                         </span>--%>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%#   Eval("yzj_no_desc")+","+Eval("cl") %>
+                                                            <%#   Eval("yzj_no_desc")+","+Eval("cl")+","+Eval("need_qty")+"kg" %>
+                                                            <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
                                                         </span>
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date","{0:yyyy-MM-dd HH:mm}")%>  
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date","{0:MM-dd HH:mm}")%>  
                                                              <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>
@@ -214,17 +220,17 @@
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
                                                             <%#   Eval("yzj_no_desc")+","+Eval("cl") %>
                                                             <span class="weui-mark-rt- weui-badge" 
-                                                                style="background-color: <%# Eval("status").ToString()=="99"?"#F7CF07":"#10AEFF"%>;
-                                                                    font-size: x-small; color: white; 
-                                                                    display:<%# Eval("status").ToString()=="99"?"inline-block":"none"%>; ">
-                                                                取消送汤
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
                                                             </span>
                                                         </span>
                                                         <span class="weui-form-preview__value" style="font-size: smaller;display:<%# Eval("status").ToString()=="1"?"block":"none"%>;">
                                                             <%#   Eval("zyb")+","+Eval("lot_no")+","+Eval("act_qty")+"kg" %>
                                                         </span>
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date","{0:yyyy-MM-dd HH:mm}")+ " " %>   
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date","{0:MM-dd HH:mm}") %>   
                                                             <span style="color:#999999;">
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>
@@ -268,10 +274,16 @@
                                                         </span>--%>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%#   Eval("yzj_no_desc")+","+Eval("cl") %>
+                                                            <%#   Eval("yzj_no_desc")+","+Eval("cl")+","+Eval("need_qty")+"kg"  %>
+                                                            <span class="weui-mark-rt- weui-badge" 
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
                                                         </span>
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date","{0:yyyy-MM-dd HH:mm}")%>  
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("need_date","{0:MM-dd HH:mm}")%>  
                                                              <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>
@@ -314,17 +326,17 @@
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
                                                             <%#   Eval("yzj_no_desc")+","+Eval("cl") %>
                                                             <span class="weui-mark-rt- weui-badge" 
-                                                                style="background-color: <%# Eval("status").ToString()=="99"?"#F7CF07":"#10AEFF"%>;
-                                                                    font-size: x-small; color: white; 
-                                                                    display:<%# Eval("status").ToString()=="99"?"inline-block":"none"%>; ">
-                                                                取消送汤
+                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
+                                                                 font-size: x-small; color: white; 
+                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
                                                             </span>
                                                         </span>
-                                                        <span class="weui-form-preview__value" style="font-size: smaller;display:<%# Eval("status").ToString()=="1"?"block":"none"%>;">
+                                                        <span class="weui-form-preview__value" style="font-size: smaller;">
                                                             <%#   Eval("zyb")+","+Eval("lot_no")+","+Eval("act_qty")+"kg" %>
                                                         </span>
                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date")+ " " %>   
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date","{0:MM-dd HH:mm}")+ " " %>   
                                                             <span style="color:#999999;">
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>
