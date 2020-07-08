@@ -86,7 +86,10 @@
                             <asp:Repeater ID="list_go" runat="server" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                 <ItemTemplate>
                                     <div class="weui-form-preview">
-                                        <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i><%# Eval("line") %> </div>
+                                        <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i><%# Eval("line") %>
+                                            <span class="weui-badge  bg-<%# Eval("count_sc").ToString()=="0"?"gray":"blue" %>">生<%# Eval("count_sc") %></span>
+                                            <span class='weui-badge' style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;">质<%# Eval("count_zl") %></span>
+                                        </div>
                                         <div class="weui-cells" id="YLZ">
                                             <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
                                                 <ItemTemplate>
