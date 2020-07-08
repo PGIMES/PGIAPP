@@ -87,6 +87,10 @@
                                                 <span class="weui-form-preview__value"><%# Eval("cl") %></span>
                                             </div>
                                             <div class="weui-form-preview__item">
+                                                <label class="weui-form-preview__label">要汤量</label>
+                                                <span class="weui-form-preview__value"><%# Eval("need_qty") %></span>
+                                            </div>
+                                            <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">要求送到时间</label>
                                                 <span class="weui-form-preview__value">
                                                     <%# Eval("need_date_dl")%>
