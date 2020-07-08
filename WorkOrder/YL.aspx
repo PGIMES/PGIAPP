@@ -210,12 +210,12 @@
                     </div>
                 </div>
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">要料数量</label></div> 
+                    <div class="weui-cell__hd f-red"><label class="weui-label">要料数量</label></div> 
                     <asp:TextBox ID="need_qty" class="weui-input" type='number' placeholder="请输入要料数量" runat="server"></asp:TextBox>
                 </div>
                     
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">送到时间</label></div>
+                    <div class="weui-cell__hd f-red"><label class="weui-label">送到时间</label></div>
                     <div class="weui-cell__hd" style="width:30%">
                         <input class="weui-input" id="need_date_dl" type="text" value=""  runat="server" placeholder="请选择" style="color:gray" />
                     </div>

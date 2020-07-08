@@ -158,7 +158,7 @@
             </div>
 
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">压铸机</label></div>
+                <div class="weui-cell__hd f-red"><label class="weui-label">压铸机</label></div>
                 <div class="weui-cell__bd">
                     <span style="float:left; width:90%">
                         <asp:TextBox ID="yzj" class="weui-input"  placeholder="请输入压铸机号" runat="server"></asp:TextBox>
@@ -170,17 +170,17 @@
             </div>
 
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">材料</label></div>              
+                <div class="weui-cell__hd f-red"><label class="weui-label">材料</label></div>              
                 <asp:TextBox ID="cl" class="weui-input" runat="server"></asp:TextBox>
             </div>
             
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">要汤量</label></div> 
+                <div class="weui-cell__hd f-red"><label class="weui-label">要汤量</label></div> 
                 <asp:TextBox ID="need_qty" class="weui-input" type='number' placeholder="请输入要汤量" runat="server"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">要求送到时间</label></div>
+                <div class="weui-cell__hd f-red"><label class="weui-label">要求送到时间</label></div>
                 <div class="weui-cell__hd" style="width:30%">
                     <input class="weui-input" id="need_date_dl" type="text" value=""  runat="server" placeholder="请选择" style="color:gray" />
                 </div>
@@ -251,7 +251,7 @@
 
 
         var datalist_nd = [{ title: '半小时内', value: '30' }, { title: '1小时内', value: '60' }, { title: '1.5小时内', value: '90' }
-                        , { title: '2小时内', value: '120' }]
+                        , { title: '2小时内', value: '120' }, { title: '12小时内', value: '720' }, { title: '48小时内', value: '2880' }]
         $("#need_date_dl").select({
             title: "要求送到时间",
             items: datalist_nd,
