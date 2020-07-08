@@ -245,7 +245,7 @@
                                                             <%# Eval("phone")+" "+Eval("emp_name")
                                                                    +" "+Eval("need_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>   
-                                                            <span style="color:#10AEFF">
+                                                            <span style="color:<%# Eval("times_type").ToString()=="Y"?"red":"#10AEFF" %>;">
                                                                  时长:<%# Eval("times") %>
                                                              </span>
                                                         </span>
@@ -461,7 +461,7 @@
                                                             <%# Eval("phone")+" "+Eval("emp_name")
                                                                     +" "+Eval("need_date","{0:MM-dd HH:mm}")+ " " 
                                                              %>     
-                                                            <span style="color:#10AEFF">
+                                                            <span  style="color:<%# Eval("times_type").ToString()=="Y"?"red":"#10AEFF" %>;">
                                                                  时长:<%# Eval("times") %>
                                                              </span>
                                                         </span>
