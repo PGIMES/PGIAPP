@@ -44,7 +44,8 @@
                     url: "YT.aspx/save2",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
                         + "','yzj':'" + $("#yzj").val() + "','domain':'" + $('#domain').val() + "','cl':'" + $('#cl').val()
-                        + "','need_date':'" + $("#need_date").val() + "','need_date_dl':'" + $("#need_date_dl").val()
+                        + "','need_qty':'" + $("#need_qty").val() + "','need_date':'" + $("#need_date").val()
+                        + "','need_date_dl':'" + $("#need_date_dl").val()
                         + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -115,6 +116,13 @@
                 layer.alert("【材料】不可为空.");
                 return false;
             }
+            if ($.trim($("#need_qty").val()) == "" || $.trim($("#need_qty").val()) == "0") {
+                layer.alert("请输入【要汤量】.");
+                return false;
+            } else if (parseInt($("#need_qty").val()) <= 0) {
+                layer.alert("【要汤量】必须大于0.");
+                return false;
+            }
             if ($("#need_date_dl").val() == "") {
                 layer.alert("请输入【送到时间】.");
                 return false;
@@ -164,6 +172,11 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">材料</label></div>              
                 <asp:TextBox ID="cl" class="weui-input" runat="server"></asp:TextBox>
+            </div>
+            
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">要汤量</label></div> 
+                <asp:TextBox ID="need_qty" class="weui-input" type='number' placeholder="请输入要汤量" runat="server"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
