@@ -118,12 +118,26 @@ public partial class Cjgl1 : System.Web.UI.Page
     public void bind_data_three()
     {
         //上岗监视
+        //string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
+        //    where off_date is null and on_date is not null 
+        //        and id in (select distinct login_id from Mes_App_EmployeeLogin_Location where workshop='" + _workshop + "')";
+        //DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+
+        //Label1_three.Text = re_dt.Rows[0][0].ToString();
+
         string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
             where off_date is null and on_date is not null 
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location where workshop='" + _workshop + "')";
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location where workshop='" + _workshop + "' and e_code not like 'J%')";
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
         Label1_three.Text = re_dt.Rows[0][0].ToString();
+
+        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
+            where off_date is null and on_date is not null 
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location where workshop='" + _workshop + "' and e_code like 'J%')";
+        DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
+
+        Label1_three_j.Text = re_dt_j.Rows[0][0].ToString();
     }
 
     [WebMethod]

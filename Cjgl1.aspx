@@ -259,8 +259,17 @@
                         <p>上岗监视</p>
                     </div>
                     <div class="weui-cell__ft">
+                        <%--<asp:Label ID="Label1_three" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1_three = Label1_three.Text; Response.Write("<span class='weui-badge  bg-" + (i1_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1_three + "</span>"); %>--%> 
+                        
                         <asp:Label ID="Label1_three" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i1_three = Label1_three.Text; Response.Write("<span class='weui-badge  bg-" + (i1_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1_three + "</span>"); %>   
+                        <asp:Label ID="Label1_three_j" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1_three = Label1_three.Text;
+                            Response.Write("<span class='weui-badge  bg-" + (i1_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>生" + i1_three + "</span>");
+                        %>   
+                        <% string i1_three_j = Label1_three_j.Text;
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_three_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_three_j + "</span>"); %> 
+                          
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="javascript:void(0);">
