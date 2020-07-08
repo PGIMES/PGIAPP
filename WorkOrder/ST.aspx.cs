@@ -49,6 +49,10 @@ public partial class WorkOrder_ST : System.Web.UI.Page
         domain.Text = dt.Rows[0]["domain"].ToString();
         sku_area.Text = dt.Rows[0]["sku_area"].ToString();
         yzj_no.Text = dt.Rows[0]["yzj_no"].ToString();
+        txt_sy_qty.Text = dt.Rows[0]["sy_qty"].ToString(); cur_sy_qty.Text = dt.Rows[0]["sy_qty"].ToString();
+
+        listBx_lotno.DataSource = ds.Tables[1];
+        listBx_lotno.DataBind();
     }
 
     [WebMethod]

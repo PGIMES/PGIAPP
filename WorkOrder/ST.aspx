@@ -206,13 +206,19 @@
                         layer.alert(obj[0].msg);
                         $('#lot_no').val("");
                         $('#act_qty').val("");
+                        $('#txt_sy_qty').val($('#cur_sy_qty').val());
                     } else {
                         $('#act_qty').val(obj[0].qty);
+                        $('#txt_sy_qty').val(parseFloat($('#cur_sy_qty').val() == "" ? "0" : $('#cur_sy_qty').val()) - parseFloat(obj[0].qty == "" ? "0" : obj[0].qty));
                     }
                     return;
                 }
 
             });
+        }
+
+        function act_qty_change() {
+            $('#txt_sy_qty').val(parseFloat($('#cur_sy_qty').val() == "" ? "0" : $('#cur_sy_qty').val()) - parseFloat($('#act_qty').val() == "" ? "0" : $('#act_qty').val()));
         }
 
         function valid_sl() {
@@ -236,6 +242,10 @@
                 layer.alert("【送汤量】必须大于0.");
                 return false;
             }
+            //else if (parseInt($("#act_qty").val()) > parseInt($("#sy_qty").val())) {
+            //    layer.alert("【送汤量】不可大于【剩余量】.");
+            //    return false;
+            //}
             return true;
          }
 
@@ -258,6 +268,7 @@
                 <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="sku_area" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
                 <asp:TextBox ID="yzj_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+                <asp:TextBox ID="cur_sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
@@ -277,6 +288,10 @@
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">材料</label>
                                 <span class="weui-form-preview__value"><%# Eval("cl") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">要汤量</label>
+                                <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要求送到时间</label>
@@ -301,6 +316,33 @@
                                    <span style="font-weight:800"><%# "["+ Eval("sku_area")+"]" %></span>
                                 </span>
                             </div>--%>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+
+                <div class="weui-form-preview__bd">
+                    <asp:Repeater runat="server" ID="listBx_lotno">
+                        <ItemTemplate>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">转运包</label>
+                                <span class="weui-form-preview__value"><%# Eval("zyb") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">Lot No</label>
+                                <span class="weui-form-preview__value"><%# Eval("lot_no") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">送料数量</label>
+                                <span class="weui-form-preview__value"><%# Eval("act_qty") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">还差数量</label>
+                                <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
+                            </div>
+                            <div class="weui-form-preview__item">
+                                <label class="weui-form-preview__label">送料时间</label>
+                                <span class="weui-form-preview__value"><%# Eval("act_date","{0:yyyy-MM-dd HH:mm}") %></span>
+                            </div>
                         </ItemTemplate>
                     </asp:Repeater>
                 </div>
@@ -333,7 +375,12 @@
 
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red"><label class="weui-label">送汤量</label></div>
-                <asp:TextBox ID="act_qty" class="weui-input" placeholder="" runat="server" type="number"></asp:TextBox>
+                <asp:TextBox ID="act_qty" class="weui-input" placeholder="" runat="server" type="number" onchange="act_qty_change()"></asp:TextBox>
+            </div>
+
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">还差量</label></div>
+                <asp:TextBox ID="txt_sy_qty" class="weui-input" ReadOnly="true" placeholder="" style="color:gray" runat="server"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
