@@ -143,7 +143,7 @@ function sm_qc_off(_workshop) {
 
 
 //仓库接受
-function sm_ck_dh(_workshop) {
+/*function sm_ck_dh(_workshop) {
     wx.ready(function () {
         wx.scanQRCode({
             needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -198,7 +198,7 @@ function ck_dh_change(result, _workshop) {
 
     });
 
-}
+}*/
 
 //不合格处理
 function sm_workorder(_workshop) {
