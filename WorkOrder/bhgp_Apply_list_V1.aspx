@@ -24,6 +24,10 @@
             width: 3.375em;
             padding: 0.125em;
         }
+         .weui-badge-tr {
+            border: 1px solid ;
+            background-color: transparent;
+        }
     </style>
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
@@ -203,21 +207,21 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="无法判定"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="无法判定"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="无法判定")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -271,15 +275,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -333,15 +337,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -395,15 +399,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -428,7 +432,7 @@
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>需返工/挑选
                                     <%--<asp:Label ID="Label_01" runat="server" Text="Label"></asp:Label>--%>
-                                    <span class="weui-badge  bg-<% =(count_01==0?"gray":"blue") %>"><% =count_01 %></span>
+                                    <span class="weui-badge  bg-<% =(count_01==0?"gray":"red") %>"><% =count_01 %></span>
                                 </div>
                                 <div class="weui-cells" id="_01">
                                     <asp:Repeater runat="server" ID="list_01" EnableTheming="False">
@@ -457,15 +461,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -519,15 +523,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -581,15 +585,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -647,15 +651,21 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
+                                                        </span>                                                        
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="无法判定"?"#F7CF07":"#10AEFF"%>; 
+                                                                display:<%# (Eval("result").ToString()=="无法判定")?"inline-block":"none"%>; ">
+                                                            <%#Eval("result") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -709,15 +719,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -771,15 +781,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -833,15 +843,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -866,7 +876,7 @@
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>需返工/挑选
                                     <%--<asp:Label ID="Label_01_my" runat="server" Text="Label"></asp:Label>--%>
-                                    <span class="weui-badge  bg-<% =(count_01_my==0?"gray":"blue") %>"><% =count_01_my %></span>
+                                    <span class="weui-badge  bg-<% =(count_01_my==0?"gray":"red") %>"><% =count_01_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_01_my">
                                     <asp:Repeater runat="server" ID="list_01_my" EnableTheming="False">
@@ -895,15 +905,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -957,15 +967,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge   weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
@@ -1019,15 +1029,15 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <span style="display:<%# Eval("reason_code").ToString()!=""?"inline-block":"none"%>;"><%# Eval("reason_code") + "" + Eval("reason") + "," %></span>
                                                         <%# Eval("cur_qty")+"件" %>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                 display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                             <%#Eval("type") %>
                                                         </span>
-                                                        <span class="weui-mark-rt- weui-badge" 
-                                                            style="background-color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>;
-                                                                font-size: x-small; color: white; 
+                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="
+                                                                font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                 display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                             <%#Eval("result") %>
                                                         </span>
