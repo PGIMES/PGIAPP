@@ -24,6 +24,13 @@
             width: 3.375em;
             padding: 0.125em;
         }
+        .collapse li.js-show .weui-flex {
+            opacity: 0.8;
+        }
+        .collapse .weui-flex {     
+            padding:0px 10px 0px 10px; 
+                 
+        }
     </style>
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
@@ -53,6 +60,18 @@
                 }
             });
 
+            $('.collapse .js-category').click(function () {
+                $parent = $(this).parent('li');
+                if ($parent.hasClass('js-show')) {
+                    $parent.removeClass('js-show');
+                    $(this).children('i').removeClass('icon-35').addClass('icon-74');
+                } else {
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+                }
+            });
 
         })
     </script>
@@ -80,45 +99,56 @@
                         </div>
                     </div>
 
-                    <div class="weui-tab__panel" style="background-color:lightgray">
+                    <div class="weui-tab__panel" style="background-color:#e5e5e5">
                         <%--=======上岗监视-----%>
                         <div id="tab1" class="weui-tab__content">
                             <asp:Repeater ID="list_go" runat="server" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                 <ItemTemplate>
                                     <div class="weui-form-preview">
-                                        <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i><%# Eval("line") %>
-                                            <span class="weui-badge  bg-<%# Eval("count_sc").ToString()=="0"?"gray":"blue" %>">生<%# Eval("count_sc") %></span>
-                                            <span class='weui-badge' style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;">质<%# Eval("count_zl") %></span>
-                                        </div>
-                                        <div class="weui-cells" id="YLZ">
-                                            <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
-                                                <ItemTemplate>
-                                                    <a class="weui-cell weui-cell_access">
-                                                        <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                        <div class="weui-cell__hd">
-                                                            <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                        </div>
-                                                        <div class="weui-cell__bd">
-                                                            <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                <%# Eval("location") + "," + Eval("phone") + "," +Eval("emp_name")  %>
+                                        
+                                        <ul class="collapse">
+                                            <li>
+                                                <div class="weui-flex js-category">
+                                                    <div class="weui-cells__title  weui-flex__item"><i class="icon nav-icon icon-49"></i><%# Eval("line") %>
+                                                        <span class="weui-badge  bg-<%# Eval("count_sc").ToString()=="0"?"gray":"blue" %>">生<%# Eval("count_sc") %></span>
+                                                        <span class='weui-badge' style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;">质<%# Eval("count_zl") %></span>
+                                                    </div>
+                                                    <i class="icon icon-74"></i>
+                                                </div>
+                                                <div class="page-category js-categoryInner">
+                                                    <div class="weui-cells" id="YLZ">
+                                                        <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
+                                                            <ItemTemplate>
+                                                                <a class="weui-cell weui-cell_access">
+                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                                    <div class="weui-cell__hd">
+                                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div class="weui-cell__bd">
+                                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                            <%# Eval("location") + "," + Eval("phone") + "," +Eval("emp_name")  %>
                                                             
-                                                                <span class="weui-mark-rt- weui-badge" 
-                                                                    style="background-color: <%# Eval("dp").ToString()=="质"?"orange":"#10AEFF"%>;
-                                                                        font-size: x-small; color: white; 
-                                                                        display:<%# (Eval("dp").ToString()=="质")?"inline-block":"none"%>;">
-                                                                    <%#Eval("dp") %>
-                                                                </span>
+                                                                            <span class="weui-mark-rt- weui-badge" 
+                                                                                style="background-color: <%# Eval("dp").ToString()=="质"?"orange":"#10AEFF"%>;
+                                                                                    font-size: x-small; color: white; 
+                                                                                    display:<%# (Eval("dp").ToString()=="质")?"inline-block":"none"%>;">
+                                                                                <%#Eval("dp") %>
+                                                                            </span>
 
-                                                            </span>
-                                                             <span class="weui-agree__text" style="font-size: smaller">
-                                                                 <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
-                                                             </span>
-                                                        </div>
-                                                    </a>
+                                                                        </span>
+                                                                         <span class="weui-agree__text" style="font-size: smaller">
+                                                                             <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
+                                                                         </span>
+                                                                    </div>
+                                                                </a>
 
-                                                </ItemTemplate>
-                                            </asp:Repeater>                                       
-                                        </div>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>                                       
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
