@@ -83,10 +83,11 @@ public partial class Cjgl1 : System.Web.UI.Page
         DataSet ds = SQLHelper.Query(sql);
         DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
         DataTable dt_04 = ds.Tables[3]; DataTable dt_05 = ds.Tables[4]; DataTable dt_98 = ds.Tables[5];
-        int count_bhg = dt_01.Rows.Count + dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_98.Rows.Count;
+        int count_bhg =  dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_98.Rows.Count;
 
         //Label3.Text = count_bhg.ToString();
         Label3_V1.Text = count_bhg.ToString();
+        Label3_V1_f.Text = dt_01.Rows.Count.ToString();
 
         //生产监视
         int iPart = 0, iWip = 0;

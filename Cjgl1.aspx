@@ -182,7 +182,9 @@
                     </div>
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label3_V1" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>   
+                        <asp:Label ID="Label3_V1_f" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>  
+                        <% string i3_V1_j = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>" + i3_V1_j + "</span>"); %>  
                     </div>
                 </a>
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">--%>         
