@@ -98,7 +98,7 @@
                 <ul class="collapse">
                     <li  class="js-show">
                         <div class="weui-flex js-category">
-                            <div class="weui-flex__item"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
+                            <div class="weui-flex__item"><%= dr_m_["on_date_str"] +" " +dr_m_["emp_name"]+" 已检:"+ dr_m_["qty"] %></div>
                             <i class="icon icon-35 padding10-l"></i>
                         </div>
                         <div class="page-category js-categoryInner">
@@ -160,7 +160,7 @@
                     <li class="js-show">
                
                         <div class="weui-flex js-category">
-                            <div class="weui-flex__item"><%=dr_m_["emp_name"] +" "+ dr_m_["on_date_str"] +" 已检数:"+ dr_m_["qty"] %></div>
+                            <div class="weui-flex__item"><%=dr_m_["on_date_str"] +" "+dr_m_["emp_name"] + " 已检数:"+ dr_m_["qty"] %></div>
                             <i class="icon icon-35 padding10-l"></i>
                         </div>
                         <div class="page-category js-categoryInner"> 
@@ -221,7 +221,7 @@
                 <ul class="collapse">
                     <li class="js-show">                
                         <div class="weui-flex js-category">
-                            <div class="weui-flex__item"><%=dr_m_["emp_name"] +" "+ dr_m_["off_date_str"] +" 下料数:"+ dr_m_["qty"] %></div>
+                            <div class="weui-flex__item"><%=dr_m_["off_date_str"] +" "+dr_m_["emp_name"] + " 下料数:"+ dr_m_["qty"] %></div>
                             <i class="icon icon-35 padding10-l"></i>
                         </div>                    
                         <div class="page-category js-categoryInner "> 
@@ -231,7 +231,7 @@
                                 {%>
                                 <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "Lot:<a href='prod_wip_detail_V1.aspx?lotno="+dr_["lot_no"]+"&para=N'>"+dr_["lot_no"] + "</a>,上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
+                                        <%= "Lot:<a href='prod_wip_detail_V1.aspx?lotno="+(dr_["lot_no"].ToString().IndexOf("/")>0?dr_["lot_no"].ToString().Substring(0,dr_["lot_no"].ToString().IndexOf("/")):dr_["lot_no"].ToString())+"&para=N'>"+dr_["lot_no"] + "</a>,上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= dr_["sku"] + "," + dr_["sku_descr"] %>

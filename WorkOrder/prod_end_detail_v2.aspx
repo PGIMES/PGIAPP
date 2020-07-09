@@ -97,7 +97,7 @@
                 <ul class="collapse">
                     <li class="js-show">                
                         <div class="weui-flex js-category">
-                            <div class="weui-flex__item"><%=dr["emp_name"] +" "+ dr["off_date"] +" 下料数:"+ dr["off_qty"] %></div>
+                            <div class="weui-flex__item"><%=dr["off_date"]+" " +dr["emp_name"] + " 下料:"+ dr["off_qty"] %></div>
                             <i class="icon icon-35 padding10-l"></i>
                         </div>                    
                         <div class="page-category js-categoryInner "> 

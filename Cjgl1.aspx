@@ -334,7 +334,7 @@
                         <i class="fa fa-compress margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>压铸完成<span class="f12">（测试中）</span></p>
+                        <p>压铸完成<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -343,7 +343,7 @@
                         <i class="fa fa-compass margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>后处理完成<span class="f12">（测试中）</span></p>
+                        <p>后处理完成<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>    

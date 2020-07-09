@@ -151,8 +151,20 @@
                                     <span class="weui-form-preview__value"><%# Eval("off_qty") %> </span>
                                 </div>
                                 <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">NG数量</label>
+                                    <label class="weui-form-preview__label">不合格申请数量</label>
                                     <span class="weui-form-preview__value"><%# Eval("ng_qty") %> </span>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label margin10-l">废品数量</label>
+                                    <span class="weui-form-preview__value"><%# Eval("wastqty") %> </span>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label margin10-l">合格数量</label>
+                                    <span class="weui-form-preview__value"><%# Eval("goodqty") %> </span>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label margin10-l">未处置数量</label>
+                                    <span class="weui-form-preview__value"><%# Eval("undealqty") %> </span>
                                 </div>
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">调整数量</label>
@@ -160,7 +172,7 @@
                                 </div>
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">在制数量</label>
-                                    <span class="weui-form-preview__value"><%# Eval("wip_qty") %> </span>
+                                    <span class="weui-form-preview__value"><%# Convert.ToSingle(Eval("wip_qty")) %> </span>
                                 </div>
                             </ItemTemplate>
                         </asp:Repeater>
@@ -168,9 +180,8 @@
                     
                 </div>
                 <div class="weui-form-preview">
-                    <div class="weui-cells__title ">
-                       <%-- <i class="icon nav-icon icon-49"></i>--%>
-                        <asp:Label ID="Label1" runat="server" Text='操作明细'></asp:Label>
+                    <div class="weui-cells__title ">                         
+                        <asp:Label ID="Label1" runat="server" Text='操作明细'></asp:Label><span class="icon icon-40 f-blue f20 margin20-l"  onclick="$.toptip('[ 说明 ]  不合格：不合格申请数；IP:在制数；NG:未处置数','success') "></span>
                     </div>
                    
                     <% foreach (System.Data.DataRow dr_ in dt_dtl.Rows)
@@ -178,36 +189,34 @@
                         <ul class="collapse">
                             <li class="js-show">                
                                 <div class="weui-flex js-category">
-                                    <div class="weui-flex__item" style="font-size:14px;"><%=dr_["emp_name"] +" "+ dr_["deal_time_str"] +" "+dr_["title"]+":"+ dr_["deal_qty"] %></div>
+                                    <div class="weui-flex__item" style="font-size:14px;"><%= dr_["deal_time_str"]+" " +dr_["emp_name"]+" "+dr_["title"]+":"+ dr_["deal_qty"] %> , IP <%= dr_["wip"] %> , NG <%= dr_["ng"] %></div>
                                     <i class="icon icon-35 padding10-l" style="display :<%= dr_["workorder"].ToString()!=""?"block":"none"%>;"></i>
                                 </div>                    
                                 <div class="page-category js-categoryInner "> 
                                     <div class="weui-cells page-category-content">
                                         <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;display :<%= dr_["workorder"].ToString()!=""?"block":"none"%>;">
                                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2;">
-                                                <%= dr_["pgino"] + "," + dr_["pn"] %>
+                                                <%= dr_["pgino"] + " , " + dr_["pn"] %>  
                                             </span>
                                             <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2;">
-                                                <%--<%= ""+dr_["workorder"]+ ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>--%>
-
                                                 <% if (dr_["title"].ToString() == "下料")
                                                     { %>
                                                     <a href="prod_qcc_part_detail.aspx?dh=<%=dr_["workorder"] %>&type=0"><%= dr_["workorder"] %></a>
-                                                    <%= ",下料数" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
+                                                    <%= ",下料数 " +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
                                                 <%}
-                                                else if (dr_["title"].ToString().Contains("合格")) { %>
+                                                    else if (dr_["flag"].ToString().Contains("nglog")) { %>
                                                     <a href="bhgp_Apply_V1.aspx?workorder=<%=dr_["workorder"] %>&workorder_f=<%=dr_["workorder_f"] %>&workshop=<%=_workshop %>"><%= dr_["workorder"] %></a>
-                                                    <%= ",数量" +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
+                                                    <%= ",数量 " +dr_["deal_qty"]+" --> "+dr_["par_qty"] %>
                                                 <%} 
-                                                else if (dr_["title"].ToString() == "盘点") { %>
+                                                    else if (dr_["title"].ToString() == "盘点") { %>
                                                     <% if (dr_["workorder"].ToString().Length == 5)
                                                         { %>
                                                         <%= dr_["workorder"] %>
-                                                    <%}
+                                                      <%}
                                                         else {%>
                                                             <a href="Adjust_Apply.aspx?workorder=<%=dr_["workorder"] %>&workshop=<%=_workshop %>"><%= dr_["workorder"] %></a>
                                                         <%}%>
-                                                    <%= ",数量" +dr_["deal_qty"] %>
+                                                    <%= ",数量 " +dr_["deal_qty"] %> 
                                                 <%} %>
                                             </span>
                                         </div>
