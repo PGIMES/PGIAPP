@@ -75,6 +75,24 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="/Adjust_Apply.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-adjust margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>盘盈/盘亏<span class="f12">（开发中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/Adjust_list.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-television margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>盘盈/盘亏监视<span class="f12">（开发中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
                 <div class="weui-cell weui-cell_access">
                     <div class="weui-cell__hd">
                         <i class="fa fa-search margin10-r"></i>

@@ -51,47 +51,47 @@ public partial class Adjust_Apply : System.Web.UI.Page
         , string _qty, string _reason, string _comment, string _b_use_routing, string _ref_order, string _b_op_one, string _lot_no_fixed)
     {
         string flag = "N", msg = "";
-        int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
-        string re_sql = "";
-        if (op_code <= 700)
-        {
-            if (op_code > 100 && op_code < 600)
-            {
-                re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
-            }
-            else if (op_code >= 600 && op_code < 700)
-            {
-                if (_b_use_routing == "0")
-                {
-                    re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
-                }
-                else
-                {
-                    re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-                }
-            }
-            else if (op_code == 700)
-            {
-                re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-            }
-        }
-        else if (op_code == 999 || op_code == 998)//成品库、半成品库
-        {
-            re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{10}'";
-        }
-        else
-        {
-            flag = "Y"; msg = "开发中.....";
-        }
+        //int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
+        //string re_sql = "";
+        //if (op_code <= 700)
+        //{
+        //    if (op_code > 100 && op_code < 600)
+        //    {
+        //        re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
+        //    }
+        //    else if (op_code >= 600 && op_code < 700)
+        //    {
+        //        if (_b_use_routing == "0")
+        //        {
+        //            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
+        //        }
+        //        else
+        //        {
+        //            re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+        //        }
+        //    }
+        //    else if (op_code == 700)
+        //    {
+        //        re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
+        //    }
+        //}
+        //else if (op_code == 999 || op_code == 998)//成品库、半成品库
+        //{
+        //    re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{10}'";
+        //}
+        //else
+        //{
+        //    flag = "Y"; msg = "开发中.....";
+        //}
 
-        if (flag == "N")
-        {
-            re_sql = string.Format(re_sql, _emp_code_name, _workorder, _pgino, _pn, _descr, _op
-           , _qty, _reason, _comment, _b_use_routing, _ref_order, _b_op_one, _lot_no_fixed);
-            DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
-            flag = re_dt.Rows[0][0].ToString();
-            msg = re_dt.Rows[0][1].ToString();
-        }
+        //if (flag == "N")
+        //{
+        //    re_sql = string.Format(re_sql, _emp_code_name, _workorder, _pgino, _pn, _descr, _op
+        //   , _qty, _reason, _comment, _b_use_routing, _ref_order, _b_op_one, _lot_no_fixed);
+        //    DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        //    flag = re_dt.Rows[0][0].ToString();
+        //    msg = re_dt.Rows[0][1].ToString();
+        //}
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
         return result;
 
