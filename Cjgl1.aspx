@@ -356,12 +356,12 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh('<%=_workshop %>');">
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>仓库接收<span class="f12">（开发中）</span></p>
+                        <p>仓库接收<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
