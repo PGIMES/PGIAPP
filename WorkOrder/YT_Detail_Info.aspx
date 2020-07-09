@@ -88,7 +88,7 @@
                                             </div>
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">要汤量</label>
-                                                <span class="weui-form-preview__value"><%# Eval("need_qty") %></span>
+                                                <span class="weui-form-preview__value"><%# Eval("need_qty") %> KG </span>
                                             </div>
                                             <div class="weui-form-preview__item">
                                                 <label class="weui-form-preview__label">要求送到时间</label>
@@ -154,6 +154,10 @@
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">取消人</label>
                                         <span class="weui-form-preview__value"><%=dr["phone"] %><%=dr["emp_name"] %> </span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label">"取消量</label>
+                                        <span class="weui-form-preview__value"><%=dr["qty"] %> KG </span>
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">取消时间</label>

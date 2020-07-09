@@ -291,7 +291,7 @@
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要汤量</label>
-                                <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
+                                <span class="weui-form-preview__value"><%# Eval("sy_qty") %> KG </span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要求送到时间</label>
@@ -333,11 +333,11 @@
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">送料数量</label>
-                                <span class="weui-form-preview__value"><%# Eval("act_qty") %></span>
+                                <span class="weui-form-preview__value"><%# Eval("act_qty") %> KG </span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">还差数量</label>
-                                <span class="weui-form-preview__value"><%# Eval("sy_qty") %></span>
+                                <span class="weui-form-preview__value"><%# Eval("sy_qty") %> KG </span>
                             </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">送料时间</label>
