@@ -15,7 +15,7 @@
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
     <style>
-         .weui-mark-lt {
+        .weui-mark-lt {
             color: #fff;
             display: block;
             font-size: 0.775em !important;
@@ -279,7 +279,7 @@
                 <div class="weui-form-preview__bd">
                     <asp:Repeater runat="server" ID="listBxInfo">
                         <ItemTemplate>
-                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                             <div class="weui-mark-vip"><span class="weui-mark-lt <%# Eval("type").ToString()=="部分"?"bg-red":""%>"><%#Eval("type") %></span></div>
 
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">压铸机</label>
