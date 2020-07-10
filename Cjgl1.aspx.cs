@@ -90,17 +90,19 @@ public partial class Cjgl1 : System.Web.UI.Page
         Label3_V1_f.Text = dt_01.Rows.Count.ToString();
 
         //生产监视
-        int iPart = 0, iWip = 0;
+        int iPart = 0, iWip = 0, iNg=0; //iPart部分，iWip在制数，iNg不合格返线数
         //生产中
         sql = string.Format(@"exec [usp_app_wip_list_prod] '{0}','{1}'", _workshop, "");
         DataTable dt_data_go = SQLHelper.Query(sql).Tables[1];
         iPart = iPart + dt_data_go.Select("ispartof='部分' and line<>'组装件'").Count(); //配件（组装件）不计数
-        iWip  = iWip + dt_data_go.Select("ispartof<>'部分' and line<>'组装件'").Count();
+        iWip  = iWip + dt_data_go.Select("ispartof<>'部分' and line<>'组装件' and  isnull(workorder_wip,'') not like 'R%'").Count();
+        iNg = iNg + dt_data_go.Select(" workorder_wip like 'R%'").Count();
         //待终检
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", _workshop, "", 2);
         DataTable dt_data_qc = SQLHelper.Query(sql).Tables[0];
         iPart = iPart + dt_data_qc.Select("ispartof='部分'").Count();
-        iWip = iWip + dt_data_qc.Select("ispartof<>'部分'").Count();
+        iWip = iWip + dt_data_qc.Select("ispartof<>'部分'  and  isnull(workorder_wip,'') not like 'R%'").Count();
+        iNg = iNg + dt_data_qc.Select(" workorder_wip like 'R%'").Count();
         //待GP12
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", _workshop, "", 3);
         DataTable dt_data_GP = SQLHelper.Query(sql).Tables[0];
@@ -108,12 +110,13 @@ public partial class Cjgl1 : System.Web.UI.Page
         iWip = iWip + dt_data_GP.Select("ispartof<>'部分'").Count();
         //待入库
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", _workshop, "", 4);
-        DataTable dt_data_ruku_go = SQLHelper.Query(sql).Tables[0];
-         
+        DataTable dt_data_ruku_go = SQLHelper.Query(sql).Tables[0];         
         iWip = iWip + dt_data_ruku_go.Rows.Count;
+        
         int count_scjs = dt_data_go.Rows.Count + dt_data_qc.Rows.Count + dt_data_GP.Rows.Count + dt_data_ruku_go.Rows.Count;
         lblWip.Text = iWip.ToString();
         lblPart.Text = iPart.ToString();
+        lblNg.Text = iNg.ToString();
     }
 
     public void bind_data_three()

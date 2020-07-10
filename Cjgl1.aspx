@@ -184,7 +184,7 @@
                         <asp:Label ID="Label3_V1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3_V1_f" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>  
-                        <% string i3_V1_j = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_j == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>" + i3_V1_j + "</span>"); %>  
+                        <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>  
                     </div>
                 </a>
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">--%>         
@@ -207,7 +207,8 @@
                     <div class="weui-cell__ft">
                         <asp:Label ID="lblPart" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="lblWip" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string iPart = lblPart.Text;string iWip = lblWip.Text; Response.Write("<span class='weui-badge  bg-" + (iWip == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + iWip + "</span><span class='weui-badge  bg-" + (iPart == "0" ? "gray" : "orange") + "' style='margin-right: 15px;'>部" + iPart + "</span>"); %>  
+                        <asp:Label ID="lblNg" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string iPart = lblPart.Text;string iWip = lblWip.Text;string iNg = lblNg.Text; Response.Write("<span class='weui-badge  bg-" + (iWip == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + iWip + "</span><span class='weui-badge  bg-" + (iPart == "0" ? "gray" : "orange") + "' style='margin-right: 15px;'>部" + iPart + "</span><span class='weui-badge  bg-" + (iNg == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + iNg + "</span>"); %>  
                     </div>
                 </a>   
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
