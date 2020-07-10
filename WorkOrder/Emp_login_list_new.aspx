@@ -137,7 +137,11 @@
 
                                                                         </span>
                                                                          <span class="weui-agree__text" style="font-size: smaller">
-                                                                             <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: <font class='f-blue'>"+Eval("times")+"</font>"%>   
+                                                                             <%--<%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: <font class='f-blue'>"+Eval("times")+"</font>"%>  --%> 
+                                                                             <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: " %>  
+                                                                             <span style="color:<%# Eval("times_type").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                                <%# Eval("times") %>
+                                                                             </span>
                                                                          </span>
                                                                     </div>
                                                                 </a>

@@ -80,7 +80,7 @@
                         <i class="fa fa-adjust margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>盘盈/盘亏<span class="f12">（开发中）</span></p>
+                        <p>盘盈亏<span class="f12">（开发中）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -89,7 +89,7 @@
                         <i class="fa fa-television margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>盘盈/盘亏监视<span class="f12">（开发中）</span></p>
+                        <p>盘盈亏监视<span class="f12">（开发中）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
