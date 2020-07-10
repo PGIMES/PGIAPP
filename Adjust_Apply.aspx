@@ -22,21 +22,36 @@
         .f_gray{
             color:gray;
         }
+        .weui-btn + .weui-btn{
+            margin-top:0px;
+        }
     </style>
     <script>
         $(document).ready(function () {
+            $("#pgino").attr("readonly", "readonly");
+            $("#pn").attr("readonly", "readonly");
+            $("#from_qty").attr("readonly", "readonly");
+
+            $("#btn_cancel2").hide();
+            if ("<%= _formno %>"!="") {
+                $("#btn_cancel2").show();
+            }
+
         });
 
         $(function () {
             sm_dh();
+            
+            $("#btn_save2").click(function(){
+                $("#btn_save2").attr("disabled", "disabled");
+                $("#btn_save2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
-            $("#btnsave2").click(function(){
-                $("#btnsave2").attr("disabled","disabled");
-                $("#btnsave2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+                $("#btn_cancel2").attr("disabled", "disabled");
+                $("#btn_cancel2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
                 if(!valid()){
-                    $("#btnsave2").removeAttr("disabled");
-                    $("#btnsave2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    $("#btn_save2").removeAttr("disabled");
+                    $("#btn_save2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                     return false;
                 }
 
@@ -44,11 +59,10 @@
                     type: "post",
                     url: "Adjust_Apply.aspx/save2",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
-                        + "','_workorder':'" + $('#workorder').val() + "','_pgino':'" + $('#pgino').val() + "','_pn':'" + $('#pn').val() 
-                        + "','_descr':'" + $('#descr').val() + "','_op':'" + $('#op').val() + "','_qty':'" + $('#qty').val() 
-                        + "','_reason':'" + $('#reason').val() + "','_comment':'" + $('#comment').val() + "','_b_use_routing':'" 
-                        + $('#b_use_routing').val() + "','_ref_order':'" + $('#ref_order').val() + "','_b_op_one':'" + $('#b_op_one').val() 
-                        + "','_lot_no_fixed':'" + $('#lot_no_fixed').val() + "'}",
+                        + "','_source':'" + $('#source').val() + "','_dh':'" + $('#dh').val() + "','_pgino':'" + $('#pgino').val()
+                        + "','_pn':'" + $('#pn').val() + "','_from_qty':'" + $('#from_qty').val() + "','_adj_qty':'" + $('#adj_qty').val()
+                        + "','_comment':'" + $('#comment').val() 
+                        + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -56,8 +70,11 @@
                         var obj = eval(data.d);
                         if (obj[0].flag=="Y") {
                             layer.alert(obj[0].msg);
-                            $("#btnsave2").removeAttr("disabled");
-                            $("#btnsave2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            $("#btn_save2").removeAttr("disabled");
+                            $("#btn_save2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_cancel2").removeAttr("disabled");
+                            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                             return false;
                         }
 
@@ -66,6 +83,38 @@
 
                 });
             });
+
+            $("#btn_cancel2").click(function () {
+                $("#btn_save2").attr("disabled", "disabled");
+                $("#btn_save2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $("#btn_cancel2").attr("disabled", "disabled");
+                $("#btn_cancel2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $.ajax({
+                    type: "post",
+                    url: "Adjust_Apply.aspx/cancel2",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
+                        + "','_formno':'" + $('#formno').val() + "','_comment':'" + $('#comment').val()
+                        + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag=="Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_save2").removeAttr("disabled");
+                            $("#btn_save2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_cancel2").removeAttr("disabled");
+                            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+                        window.location.href = "/workshop.aspx";
+                    }
+                });
+             });
         });
 
         function sm_dh() {
@@ -89,29 +138,59 @@
             $.ajax({
                 type: "post",
                 url: "Adjust_Apply.aspx/dh_change",
-                data: "{'pgino':'" + $('#dh').val() + "','domain':'" + $("#domain").val() + "'}",
+                data: "{'dh':'" + $('#dh').val() + "','source':'" + $("#source").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                 success: function (data) {
                     var obj = eval(data.d);
+                    if (obj[0].flag == "Y") {
+                        layer.alert(obj[0].msg);
+                    }
+                    $('#pgino').val(obj[0].pgino);
                     $('#pn').val(obj[0].pn);
-                    $('#descr').val(obj[0].descr);
-                    $('#b_use_routing').val(obj[0].b_use_routing);
-                    $('#b_op_one').val(obj[0].b_op_one);
+                    $('#from_qty').val(obj[0].from_qty);
+                    $('#flagwhere').val(obj[0].flagwhere);
+                    $('#need_no').val(obj[0].need_no);
                 }
 
             });
         }
 
         function valid() {
-            //if ($("#workorder").val() == "") {
-            //    layer.alert("请输入【单号】.");
-            //    return false;
-            //} else if ($("#workorder").val().length != 8) {
-            //    layer.alert("【单号】长度必须8位.");
-            //    return false;
-            //}
+            if ($("#source").val() == "") {
+                layer.alert("请输入【地点】.");
+                return false;
+            }
+            if ($("#dh").val() == "") {
+                layer.alert("请输入【单号】.");
+                return false;
+            }
+            if ($("#pgino").val() == "") {
+                layer.alert("【项目号】不可为空.");
+                return false;
+            }
+            if ($("#pn").val() == "") {
+                layer.alert("【零件号】不可为空.");
+                return false;
+            }
+            if ($("#from_qty").val() == "") {
+                layer.alert("【数量】不可为空.");
+                return false;
+            } else if (parseFloat($("#from_qty").val()) <= 0) {
+                layer.alert("【数量】不可小于等于0.");
+                return false;
+            }
+
+            if ($.trim($("#adj_qty").val()) == "" || $.trim($("#adj_qty").val()) == "0") {
+                layer.alert("请输入【盈亏数量】.");
+                return false;
+            } else if (parseFloat($("#adj_qty").val()) < 0) {
+                if (parseFloat($("#from_qty").val()) + parseFloat($("#adj_qty").val())<0) {
+                    layer.alert("盘亏时，负的数量不可超过在制数量.");
+                    return false;
+                }
+            } 
             return true;
         }
 
@@ -124,25 +203,28 @@
         </asp:ScriptManager>
     
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+        <asp:TextBox ID="formno" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <div class="weui-cells weui-cells_form">     
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">来源</label></div>
+                <div class="weui-cell__hd f-red "><label class="weui-label">地点</label></div>
                 <asp:TextBox ID="source" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>                            
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
                 <div class="weui-cell__bd">
                     <span style="float:left; width:90%">
-                        <asp:TextBox ID="dh" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="dh" class="weui-input" style="color:gray" runat="server" onchange="dh_change()"></asp:TextBox>
                     </span>
                     <span style="float:left; width:10%">
                         <img id="img_sm_dh" src="../img/fdj2.png" />
                     </span>
+                    <asp:TextBox ID="flagwhere" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+                    <asp:TextBox ID="need_no" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
                 </div>
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">项目号</label></div>
+                <div class="weui-cell__hd"><label class="weui-label">项目号</label></div>
                 <div class="weui-cell__bd">
                     <asp:TextBox ID="pgino" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
                 </div>
@@ -156,25 +238,23 @@
                 <asp:TextBox ID="from_qty" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">调整至</label></div>
-                <asp:TextBox ID="to_qty" class="weui-input" type='number' placeholder="请输入调整至" runat="server" step="0.0001"></asp:TextBox>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">本次调整</label></div>                          
-                <asp:TextBox ID="adj_qty" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                <div class="weui-cell__hd f-red "><label class="weui-label">盈亏数量</label></div>                          
+                <asp:TextBox ID="adj_qty" class="weui-input" runat="server" placeholder="盈正数，亏负数" type="number"></asp:TextBox>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
                 <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
             </div>
             <div class="weui-cell">
-                <input id="btnsave2" type="button" value="提交" class="weui-btn weui-btn_primary" />
+                <input id="btn_save2" type="button" value="提交" class="weui-btn weui-btn_primary" />
+                <input id="btn_cancel2" type="button" value="放弃申请" class="weui-btn weui-btn_primary" style="margin-left:10px;" />
             </div>
         </div>
 
     </form>
     <script>
-        var datalist_sr = [{ title: '备料区', value: '备料区' }, { title: '已上线', value: '已上线' }]
+        var datalist_sr = [{ title: '二车间', value: '二车间' }, { title: '三车间', value: '三车间' }, { title: '四车间', value: '四车间' }
+                        , { title: '原材料', value: '原材料' }, { title: '成品库', value: '成品库' }, { title: '半成品库', value: '半成品库' }]
         $("#source").select({
             title: "来源",
             items: datalist_sr,

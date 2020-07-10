@@ -9,9 +9,12 @@ using System.Web.UI.WebControls;
 
 public partial class Adjust_Apply : System.Web.UI.Page
 {
+    public string _formno = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Request.QueryString["formno"] != null) { _formno = Request.QueryString["formno"].ToString(); }
+
         if (WeiXin.GetCookie("workcode") == null)
         {
             Response.Write("<script>layer.alert('登入信息过期，请退出程序重新进入。');window.history.back();location.reload();</script>");
@@ -23,26 +26,39 @@ public partial class Adjust_Apply : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             //emp_code_name.Text = "02432何桂勤";
+
+            formno.Text = _formno;
+            //init_data(_formno);
         }
     }
 
 
 
     [WebMethod]
-    public static string dh_change(string pgino, string domain)
+    public static string dh_change(string dh, string domain)
     {
-        string pn = "", descr = "", b_use_routing = "", b_op_one = "";
+        string flag = "N", msg = "";
+        string pgino = "", pn = "", from_qty = "", flagwhere = "", need_no = "";
 
         string re_sql = @"exec [usp_app_Adjust_Apply_dh_change] '{0}','{1}'";
         re_sql = string.Format(re_sql, pgino, domain);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        DataSet ds = SQLHelper.Query(re_sql);
 
-        pn = re_dt.Rows[0]["pn"].ToString();
-        descr = re_dt.Rows[0]["descr"].ToString();
-        b_use_routing = re_dt.Rows[0]["b_use_routing"].ToString();
-        b_op_one = re_dt.Rows[0]["b_op_one"].ToString();
+        flag = ds.Tables[0].Rows[0][0].ToString();
+        msg = ds.Tables[0].Rows[0][1].ToString();
 
-        string result = "[{\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"b_use_routing\":\"" + b_use_routing + "\",\"b_op_one\":\"" + b_op_one + "\"}]";
+        if (flag == "N")
+        {
+            DataTable re_dt = ds.Tables[1];
+            pgino = re_dt.Rows[0]["pgino"].ToString();
+            pn = re_dt.Rows[0]["pn"].ToString();
+            from_qty = re_dt.Rows[0]["from_qty"].ToString();
+            flagwhere = re_dt.Rows[0]["flagwhere"].ToString();
+            need_no = re_dt.Rows[0]["need_no"].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"from_qty\":\"" + from_qty 
+            + "\",\"flagwhere\":\"" + flagwhere + "\",\"need_no\":\"" + need_no + "\"}]";
         return result;
     }
 
