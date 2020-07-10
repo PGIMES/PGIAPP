@@ -49,9 +49,17 @@ public partial class WorkOrder_bhgp_Apply_list_ck : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
-            Label1.Text = "(" + dt_wk.Rows.Count + ")";
+            //Label1.Text = "(" + dt_wk.Rows.Count + ")";
 
-
+            Label1.Text = dt_wk.DefaultView.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 

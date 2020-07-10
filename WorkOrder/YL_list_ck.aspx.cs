@@ -50,9 +50,19 @@ public partial class WorkOrder_YL_list_ck : System.Web.UI.Page
             dt_wk.DefaultView.RowFilter = "workshop='" + item["workshop"].ToString() + "'";
 
             detail.DataSource = dt_wk;
-            detail.DataBind(); 
+            detail.DataBind();
 
-            Label1.Text = "(" + dt_wk.DefaultView.Count + ")";
+            //Label1.Text = "(" + dt_wk.DefaultView.Count + ")";
+
+            Label1.Text = dt_wk.DefaultView.Count.ToString();
+            if (Label1.Text=="0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
