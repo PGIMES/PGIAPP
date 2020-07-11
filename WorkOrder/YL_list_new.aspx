@@ -154,6 +154,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_go_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -211,6 +212,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_wc_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -271,6 +273,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_rj_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -323,6 +326,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_end_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -374,6 +378,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_go_my_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -431,6 +436,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_wc_my_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -487,6 +493,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_rj_my_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -539,6 +546,7 @@
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
                                                 <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_end_my_dt" EnableTheming="False">
                                             <ItemTemplate>

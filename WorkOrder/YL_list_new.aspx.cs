@@ -121,6 +121,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_go_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_go"] as DataTable;
@@ -128,6 +129,16 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
 
             detail.DataSource = dt_wk;
             detail.DataBind();
+
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
@@ -136,6 +147,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_wc_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_wc"] as DataTable;
@@ -144,6 +156,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
@@ -152,6 +173,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_rj_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_rj"] as DataTable;
@@ -160,6 +182,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
@@ -168,6 +199,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_end_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_end"] as DataTable;
@@ -176,6 +208,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
@@ -184,6 +225,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_go_my_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_go_my"] as DataTable;
@@ -192,6 +234,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
@@ -200,6 +251,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_wc_my_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_wc_my"] as DataTable;
@@ -208,6 +260,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
@@ -216,6 +277,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_rj_my_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_rj_my"] as DataTable;
@@ -224,6 +286,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
@@ -232,6 +303,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_end_my_dt");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_end_my"] as DataTable;
@@ -240,6 +312,15 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             detail.DataSource = dt_wk;
             detail.DataBind();
 
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
         }
     }
 
