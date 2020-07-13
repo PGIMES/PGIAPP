@@ -101,7 +101,16 @@
             showBlockCount();
         }
     </script>
-
+     <script>
+         function deal(lot_no, need_no, reject_where) {
+             if (reject_where == "线边库") {
+                window.location.href = "Load_Material.aspx?lotno=" + lot_no + "&need_no=" + need_no + "&workshop=<%=_workshop %>&para=T"
+             }
+             if (reject_where == "仓库") {
+                 window.location.href = "Sure_Material.aspx?lotno=" + lot_no + "&need_no=" + need_no + "&workshop=<%=_workshop %>"
+             }
+        }
+    </script>
 </head>
 <body ontouchstart>
     <div class="weui-pull-to-refresh__layer">
@@ -277,8 +286,9 @@
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_rj_dt" EnableTheming="False">
                                             <ItemTemplate>
-                                                <a class="weui-cell weui-cell_access" 
-                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">
+                                                <%--<a class="weui-cell weui-cell_access" 
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">--%>
+                                                <a class="weui-cell weui-cell_access"  onclick=deal_rej('<%# Eval("lot_no") %>','<%# Eval("need_no") %>','<%# Eval("reject_where") %>') >
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-danger"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -289,7 +299,14 @@
                                                         </span>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%#   Eval("pgino")+","+Eval("pn") %><br />
+                                                            <%#   Eval("pgino")+","+Eval("pn") %>
+                                                            <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                                style="
+                                                                    font-size: x-small; color: <%# Eval("type").ToString()=="仓库"?"#07c160":"#10AEFF"%>; 
+                                                                    display:<%# Eval("reject_where").ToString()=="仓库"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
+                                                            <br />
                                                             <span class="padding5-r"><%# "Lot:"+Eval("lot_no").ToString()%></span>
                                                             已送:<font class="f-blue padding5-r"><%# Eval("feed_qty")%></font>
                                                             下料:<font class="f-blue padding5-r"><%# Eval("off_qty")%></font>
@@ -497,8 +514,9 @@
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_rj_my_dt" EnableTheming="False">
                                             <ItemTemplate>
-                                                <a class="weui-cell weui-cell_access" 
-                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">
+                                                <%--<a class="weui-cell weui-cell_access" 
+                                                    href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%=_workshop %>&para=T">--%>
+                                                <a class="weui-cell weui-cell_access"  onclick=deal_rej('<%# Eval("lot_no") %>','<%# Eval("need_no") %>','<%# Eval("reject_where") %>') >
                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-danger"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -509,7 +527,14 @@
                                                         </span>
                                                     
                                                        <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%#   Eval("pgino")+","+Eval("pn") %><br />
+                                                            <%#   Eval("pgino")+","+Eval("pn") %>
+                                                            <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
+                                                                style="
+                                                                    font-size: x-small; color: <%# Eval("type").ToString()=="仓库"?"#07c160":"#10AEFF"%>; 
+                                                                    display:<%# Eval("reject_where").ToString()=="仓库"?"inline-block":"none"%>; ">
+                                                                <%#Eval("type") %>
+                                                            </span>
+                                                            <br />
                                                             <span class="padding5-r"><%# "Lot:"+Eval("lot_no").ToString()%></span>
                                                             已送:<font class="f-blue padding5-r"><%# Eval("feed_qty")%></font>
                                                             下料:<font class="f-blue padding5-r"><%# Eval("off_qty")%></font>
