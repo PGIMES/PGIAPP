@@ -35,13 +35,13 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
 
     [WebMethod]
-    public static string dh_change(string dh, string domain)
+    public static string dh_change(string dh, string source)
     {
         string flag = "N", msg = "";
         string pgino = "", pn = "", from_qty = "", flagwhere = "", need_no = "";
 
         string re_sql = @"exec [usp_app_Adjust_Apply_dh_change] '{0}','{1}'";
-        re_sql = string.Format(re_sql, pgino, domain);
+        re_sql = string.Format(re_sql, dh, source);
         DataSet ds = SQLHelper.Query(re_sql);
 
         flag = ds.Tables[0].Rows[0][0].ToString();
@@ -63,51 +63,28 @@ public partial class Adjust_Apply : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string save2(string _emp_code_name, string _workorder, string _pgino, string _pn, string _descr, string _op
-        , string _qty, string _reason, string _comment, string _b_use_routing, string _ref_order, string _b_op_one, string _lot_no_fixed)
+    public static string save2(string _emp_code_name, string _source, string _dh, string _pgino, string _pn, string _from_qty
+        , string _adj_qty, string _comment, string _flagwhere, string _need_no)
     {
         string flag = "N", msg = "";
-        //int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
-        //string re_sql = "";
-        //if (op_code <= 700)
-        //{
-        //    if (op_code > 100 && op_code < 600)
-        //    {
-        //        re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
-        //    }
-        //    else if (op_code >= 600 && op_code < 700)
-        //    {
-        //        if (_b_use_routing == "0")
-        //        {
-        //            re_sql = @"exec usp_app_bhgp_Apply_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{11}','{12}'";
-        //        }
-        //        else
-        //        {
-        //            re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-        //        }
-        //    }
-        //    else if (op_code == 700)
-        //    {
-        //        re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-        //    }
-        //}
-        //else if (op_code == 999 || op_code == 998)//成品库、半成品库
-        //{
-        //    re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{10}'";
-        //}
-        //else
-        //{
-        //    flag = "Y"; msg = "开发中.....";
-        //}
+        string re_sql = "";
+        if (_source == "二车间" || _source == "四车间")
+        {
+            re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+        }
+        else
+        {
+            flag = "Y"; msg = "开发中.....";
+        }
 
-        //if (flag == "N")
-        //{
-        //    re_sql = string.Format(re_sql, _emp_code_name, _workorder, _pgino, _pn, _descr, _op
-        //   , _qty, _reason, _comment, _b_use_routing, _ref_order, _b_op_one, _lot_no_fixed);
-        //    DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
-        //    flag = re_dt.Rows[0][0].ToString();
-        //    msg = re_dt.Rows[0][1].ToString();
-        //}
+        if (flag == "N")
+        {
+            re_sql = string.Format(re_sql, _emp_code_name, _source, _dh, _pgino, _pn, _from_qty, _adj_qty
+           , _comment, _flagwhere, _need_no);
+            DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+            flag = re_dt.Rows[0][0].ToString();
+            msg = re_dt.Rows[0][1].ToString();
+        }
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
         return result;
 

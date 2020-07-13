@@ -61,7 +61,7 @@
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
                         + "','_source':'" + $('#source').val() + "','_dh':'" + $('#dh').val() + "','_pgino':'" + $('#pgino').val()
                         + "','_pn':'" + $('#pn').val() + "','_from_qty':'" + $('#from_qty').val() + "','_adj_qty':'" + $('#adj_qty').val()
-                        + "','_comment':'" + $('#comment').val() 
+                        + "','_comment':'" + $('#comment').val() + "','_flagwhere':'" + $('#flagwhere').val() + "','_need_no':'" + $('#need_no').val()
                         + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -264,6 +264,9 @@
             onClose: function (d) {
                 var obj = eval(d.data);
                 //alert(obj.values);
+                if ($('#dh').val() != "") {
+                    dh_change();
+                }
             },
             onOpen: function () {
                 //  console.log("open");
