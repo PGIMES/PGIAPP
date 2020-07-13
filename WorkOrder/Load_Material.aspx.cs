@@ -15,6 +15,7 @@ public partial class Load_Material : System.Web.UI.Page
     public string _needno = "";
     public string _para = "";
     public string _emp = "";
+    public string _btn = "";
     public DataTable dt_infor;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -43,6 +44,16 @@ public partial class Load_Material : System.Web.UI.Page
 
     void load_data()
     {
+        string sql = @"select count(1) from [dbo].[Mes_App_EmployeeLogin] a 
+                        inner join [Mes_App_EmployeeLogin_Location] b on a.id=b.login_id 
+	                    inner join [172.16.5.26].[Production].[dbo].[Hrm_Emp] c on a.emp_code=c.EMPLOYEEID
+                    where emp_code='" + emp_code_name.Text + "' and off_date is null and (b.e_code like 'G%' or c.dept_name='IT部')";
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        if (Convert.ToInt32(re_dt.Rows[0][0].ToString()) > 0)
+        {
+            _btn = "Y";
+        }
+
         string re_sql = @"exec [usp_app_load_material_load_data_V1] '{0}','{1}','{2}'";
         re_sql = string.Format(re_sql, _lotno, _needno, _para);
         DataSet ds = SQLHelper.Query(re_sql);

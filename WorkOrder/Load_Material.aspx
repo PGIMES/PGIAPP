@@ -420,7 +420,7 @@
             <div class="weui-cell">
                 <%--<asp:Button ID="btnsave" class="weui-btn weui-btn_primary"  runat="server" Text="上线" OnClick="btnsave_Click" />--%>
                 <input id="btn_save" type="button" class="weui-btn weui-btn_primary" value="上线" />
-                <input id="btn_cancel" type="button" class="weui-btn weui-btn_primary" value="退料" style="margin-left:10px;" />
+                <input id="btn_cancel" type="button" class="weui-btn weui-btn_primary" value="退料" style="margin-left:10px;display:<%= _btn=="Y"?"flex":"none"%>;" />
             </div>
 
         </div>
