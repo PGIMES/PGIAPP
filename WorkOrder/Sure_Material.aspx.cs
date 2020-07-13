@@ -33,7 +33,6 @@ public partial class Sure_Material : System.Web.UI.Page
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             _emp = lu.WorkCode + lu.UserName;
-            emp_code_name.Text = lu.WorkCode;
 
             load_data();
         }
@@ -72,7 +71,7 @@ public partial class Sure_Material : System.Web.UI.Page
     {
         string result = "";
 
-        string re_sql = @"exec [usp_app_Sure_Sku] '{0}','{1}','{2}',{3},'{4}'";
+        string re_sql = @"exec [usp_app_Sure_Sku] '{0}','{1}','{2}',{3}";
         re_sql = string.Format(re_sql, emp, needno, lotno, Convert.ToSingle(reject_qty == "" ? "0" : reject_qty));
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         string flag = re_dt.Rows[0][0].ToString();
