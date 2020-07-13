@@ -14,6 +14,7 @@ public partial class prod_wip_detail_V1 : System.Web.UI.Page
     public string _needno = "";
     public string _para = "";
     public string _emp = "";//当前登入
+    public string _btn = "";
 
     public DataTable dt_dtl;
 
@@ -34,12 +35,22 @@ public partial class prod_wip_detail_V1 : System.Web.UI.Page
         _emp = lu.WorkCode + lu.UserName;
         //_emp = "02432何桂勤";
 
-        GetData(_lotno);
+        GetData(_lotno, lu.WorkCode);
        
     }
 
-    private void GetData(string _lotno)
+    private void GetData(string _lotno, string emp_code)
     {
+        string sql_re = @"select count(1) from [dbo].[Mes_App_EmployeeLogin] a 
+                        inner join [Mes_App_EmployeeLogin_Location] b on a.id=b.login_id 
+	                    inner join [172.16.5.26].[Production].[dbo].[Hrm_Emp] c on a.emp_code=c.EMPLOYEEID
+                    where emp_code='" + emp_code + "' and off_date is null and (b.e_code like 'G%' or c.dept_name='IT部')";
+        DataTable re_dt = SQLHelper.Query(sql_re).Tables[0];
+        if (Convert.ToInt32(re_dt.Rows[0][0].ToString()) > 0)
+        {
+            _btn = "Y";
+        }
+
         string sql = string.Format(@"exec [usp_app_prod_wip_detail_V1] '{0}'", _lotno);
         DataSet ds  = SQLHelper.Query(sql);
 
