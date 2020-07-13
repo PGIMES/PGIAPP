@@ -24,6 +24,10 @@
             width: 3.375em;
             padding: 0.125em;
         }
+          .weui-badge-tr {
+            border: 1px solid ;
+            background-color: transparent;
+        }
     </style>
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
@@ -302,9 +306,9 @@
                                                             <%#   Eval("pgino")+","+Eval("pn") %>
                                                             <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
                                                                 style="
-                                                                    font-size: x-small; color: <%# Eval("type").ToString()=="仓库"?"#07c160":"#10AEFF"%>; 
+                                                                    font-size: x-small; color: <%# Eval("reject_where").ToString()=="仓库"?"#07c160":"#10AEFF"%>; 
                                                                     display:<%# Eval("reject_where").ToString()=="仓库"?"inline-block":"none"%>; ">
-                                                                <%#Eval("type") %>
+                                                                <%# "退"+Eval("reject_where") %>
                                                             </span>
                                                             <br />
                                                             <span class="padding5-r"><%# "Lot:"+Eval("lot_no").ToString()%></span>
@@ -530,9 +534,9 @@
                                                             <%#   Eval("pgino")+","+Eval("pn") %>
                                                             <span class="weui-mark-rt- weui-badge  weui-badge-tr" 
                                                                 style="
-                                                                    font-size: x-small; color: <%# Eval("type").ToString()=="仓库"?"#07c160":"#10AEFF"%>; 
+                                                                    font-size: x-small; color: <%# Eval("reject_where").ToString()=="仓库"?"#07c160":"#10AEFF"%>; 
                                                                     display:<%# Eval("reject_where").ToString()=="仓库"?"inline-block":"none"%>; ">
-                                                                <%#Eval("type") %>
+                                                                <%# "退"+Eval("reject_where") %>
                                                             </span>
                                                             <br />
                                                             <span class="padding5-r"><%# "Lot:"+Eval("lot_no").ToString()%></span>

@@ -99,7 +99,7 @@
             });
 
             $(document.body).pullToRefresh({
-                distance: 10,
+                distance: 20,
                 onRefresh: function () {
                     //$.post("../php/page.php", { "page": 1, "pagesize": 8, ajax: 2 }, function (rs) {
                     //    $("#rank-list").html(tpl(document.getElementById('tpl').innerHTML, rs));
@@ -292,7 +292,7 @@
                                            <% }%>
                                                             <div class="weui-cells__title LH weui-flex__item" id="<%=line %>LH1"><i class="icon nav-icon icon-22 color-success"></i><%= (line=="组装件"?"配件":line) %>  
                                                                 <span class="weui-badge bg-blue  margin20-l <% =line == "组装件"?"zzj_head":"" %> " ><% =dtispartof.Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>                                         
-                                                                <span class="weui-badge bg-orange  <% =line == "组装件"?"zzj_head":"" %> "  >部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
+                                                                <span class="weui-badge bg-orange  <% =line == "组装件"?"zzj_head hide":"" %> "  >部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
                                                             </div> 
                                             <%if (line == "组装件"||1==1)
                                              { %>
@@ -357,7 +357,7 @@
                                                                     在制:<font class="f-blue "><%= Convert.ToSingle(dr["wip_qty"])%></font>
                                                                 </span>
                                                                 <span class="weui-agree__text padding10-r" style="font-size: smaller"><%=dr["emp_name"]%></span>
-                                                                <span class="weui-agree__text " style="font-size: smaller;"><%= string.Format("{0:MM-dd HH:mm}",dr["on_date"] )%>  时长<font class="f-deepfont"> <%= dr["times"]%></font> </span>
+                                                                <span class="weui-agree__text " style="font-size: smaller;"><%= string.Format("{0:MM-dd HH:mm}",dr["on_date"] )%>  时长<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>2400?"f-red":"f-deepfont" %>"> <%= dr["times"]%></font> </span>
                                                             </div>
                                                             <div class="weui-cell__ft">
                                                             </div>
@@ -534,11 +534,11 @@
                                                                         <span>待检：<font class="f-blue"><%=dr["wait_qty"] %></font>
                                                                         </span>
                                                                         <br />
-                                                                        <span class="weui-agree__text span_space">
+                                                                        <span class="weui-agree__text span_space  ">
                                                                             <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                                         </span>
                                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["on_date"]) %> </span>
-                                                                        <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                                        <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"><%=dr["times"] %> </font>
                                                                         </span>
                                                                     </div>
                                                                     <div class="weui-cell__ft">
@@ -663,7 +663,7 @@
                                                                         <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                                     </span>
                                                                     <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["on_date"]) %> </span>
-                                                                    <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
                                                                     </span>
                                                                 </div>
                                                                 <div class="weui-cell__ft">
@@ -797,7 +797,7 @@
                                                                         <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                                     </span>
                                                                     <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["off_date"]) %> </span>
-                                                                    <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font></span>
+                                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font></span>
 
                                                                 </div>
                                                                 <div class="weui-cell__ft">
