@@ -312,7 +312,7 @@
                 </div>
             </div>
 
-            <div class="weui-cell">
+            <div class="weui-cell" style="display:<%= _btn=="Y"?"flex":"none"%>;">
                 <input id="btn_sure" type="button" class="weui-btn weui-btn_primary" value="确认" style="margin-left:10px;" />
             </div>
 

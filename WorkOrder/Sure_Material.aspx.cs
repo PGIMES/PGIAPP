@@ -14,6 +14,7 @@ public partial class Sure_Material : System.Web.UI.Page
     public string _lotno = "";
     public string _needno = "";
     public string _emp = "";
+    public string _btn = "";
     public DataTable dt_infor;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -34,12 +35,20 @@ public partial class Sure_Material : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             _emp = lu.WorkCode + lu.UserName;
 
-            load_data();
+            load_data(lu.WorkCode);
         }
     }
 
-    void load_data()
+    void load_data(string emp_code)
     {
+        string sql = @"select count(1) from [172.16.5.26].[Production].[dbo].[Hrm_Emp] 
+                    where DIMISSIONDATE='' and ((UNITNAME like '%仓库%' and gwzz is not null) or dept_name='IT部') and EMPLOYEEID='"+ emp_code + "'";
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        if (Convert.ToInt32(re_dt.Rows[0][0].ToString()) > 0)
+        {
+            _btn = "Y";
+        }
+
         string re_sql = @"exec [usp_app_sure_material_load_data] '{0}','{1}'";
         re_sql = string.Format(re_sql, _lotno, _needno);
         DataSet ds = SQLHelper.Query(re_sql);
