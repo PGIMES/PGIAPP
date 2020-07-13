@@ -106,7 +106,7 @@
         }
     </script>
      <script>
-         function deal(lot_no, need_no, reject_where) {
+         function deal_rej(lot_no, need_no, reject_where) {
              if (reject_where == "线边库") {
                 window.location.href = "Load_Material.aspx?lotno=" + lot_no + "&need_no=" + need_no + "&workshop=<%=_workshop %>&para=T"
              }
