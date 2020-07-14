@@ -69,7 +69,7 @@ public partial class Adjust_sign : System.Web.UI.Page
     {
         string flag = "N", msg = "";
 
-        string re_sql = @"exec [usp_app_bhgp_sign_V1] '{0}','{1}','{2}','{3}'";
+        string re_sql = @"exec [usp_app_Adjust_sign] '{0}','{1}','{2}','{3}'";
         re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _sign_comment);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
@@ -85,7 +85,7 @@ public partial class Adjust_sign : System.Web.UI.Page
     {
         string flag = "N", msg = "";
 
-        string re_sql = @"exec [usp_app_bhgp_sign_cancel_V1] '{0}','{1}','{2}','{3}'";
+        string re_sql = @"exec [usp_app_Adjust_sign_cancel] '{0}','{1}','{2}','{3}'";
         re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _sign_comment);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
