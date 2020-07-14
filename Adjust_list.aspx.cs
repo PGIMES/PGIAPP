@@ -29,10 +29,10 @@ public partial class Adjust_list : System.Web.UI.Page
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
-        DataTable dt_99 = ds.Tables[6];
+        DataTable dt_99 = ds.Tables[3];
 
-        DataTable dt_01_my = ds.Tables[7]; DataTable dt_02_my = ds.Tables[8]; DataTable dt_03_my = ds.Tables[9];
-        DataTable dt_99_my = ds.Tables[13];
+        DataTable dt_01_my = ds.Tables[4]; DataTable dt_02_my = ds.Tables[5]; DataTable dt_03_my = ds.Tables[6];
+        DataTable dt_99_my = ds.Tables[7];
 
         list_01.DataSource = dt_01; list_01.DataBind(); count_01 = dt_01.Rows.Count;
         list_02.DataSource = dt_02; list_02.DataBind(); count_02 = dt_02.Rows.Count;

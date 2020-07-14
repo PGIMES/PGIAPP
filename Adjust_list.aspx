@@ -180,7 +180,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
@@ -222,7 +222,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
@@ -264,7 +264,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
@@ -306,7 +306,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
@@ -352,7 +352,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
@@ -394,7 +394,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
@@ -436,7 +436,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
@@ -478,7 +478,7 @@
                                                     <span class="weui-form-preview__value" style="font-size: smaller">
                                                         <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#10AEFF"%>; ">
+                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
                                                     </span>
