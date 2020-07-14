@@ -110,7 +110,12 @@
     <script>
         function deal(stepid, formno) {
             //alert(stepid);
-            window.location.href = "/Adjust_sign.aspx?stepid=" + stepid + "&formno=" + formno;
+            if (stepid == "0001") {
+                window.location.href = "/Adjust_Apply.aspx?stepid=" + stepid + "&formno=" + formno;
+            } else {
+                window.location.href = "/Adjust_sign.aspx?stepid=" + stepid + "&formno=" + formno;
+            }
+            
 
         }
     </script>
