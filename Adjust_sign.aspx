@@ -44,35 +44,6 @@
                 }
             });
 
-            //$('.collapse .js-category').click(function () {
-            //    $parent = $(this).parent('li');
-            //    if ($parent.hasClass('js-show')) {
-            //        $parent.removeClass('js-show');
-            //        $(this).children('i').removeClass('icon-35').addClass('icon-74');
-            //    } else {
-            //        $parent.siblings().removeClass('js-show');
-            //        $parent.addClass('js-show');
-            //        $(this).children('i').removeClass('icon-74').addClass('icon-35');
-            //        $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
-            //    }
-            //});
-            //$("ul li .js-category").find("label").each(function () {
-            //    //if ($(this).text().indexOf("")>=0) {
-            //        $(this).parent().parent().siblings().removeClass('js-show');
-            //        $(this).parent().parent().addClass('js-show');
-            //        $(this).parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
-            //        $(this).parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
-
-            //        //单号红色
-            //        $(this).css("color", "#428BCA");
-
-            //        //处置信息
-            //        $(this).parent().children('div').children().css("color", "#428BCA");
-
-            //    //} 
-            //});
-            
-
             $("#btn_sign2").click(function () {
                 $("#btn_sign2").attr("disabled", "disabled");
                 $("#btn_sign2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
@@ -83,9 +54,8 @@
                 $.ajax({
                     type: "post",
                     url: "Adjust_sign.aspx/sure2",
-                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
-                        + "','_workorder':'" + $('#workorder').val() + "','_workorder_f':'" + $('#workorder_f').val() + "','_stepid':'" + $('#stepid').val()
-                        + "','_fg_comment':'" + $('#fg_comment').val() + "','_sign_comment':'" + $('#sign_comment').val() + "','_workorder_qc':'" + $('#workorder_qc').val()
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val()
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_sign_comment':'" + $('#sign_comment').val() 
                         + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -129,8 +99,8 @@
                     type: "post",
                     url: "Adjust_sign.aspx/cancel2",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
-                        + "','_workorder':'" + $('#workorder').val() + "','_workorder_f':'" + $('#workorder_f').val() + "','_stepid':'" + $('#stepid').val()
-                        + "','_sign_comment':'" + $('#sign_comment').val() + "'}",
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_sign_comment':'" + $('#sign_comment').val()
+                        + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码

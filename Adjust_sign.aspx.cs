@@ -65,13 +65,12 @@ public partial class Adjust_sign : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string sure2(string _emp_code_name, string _workorder, string _workorder_f, string _stepid, string _fg_comment, string _sign_comment
-        , string _workorder_qc)
+    public static string sure2(string _emp_code_name, string _formno, string _stepid, string _sign_comment)
     {
         string flag = "N", msg = "";
 
-        string re_sql = @"exec [usp_app_bhgp_sign_V1] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
-        re_sql = string.Format(re_sql, _emp_code_name, _workorder, _workorder_f, _stepid, _fg_comment, _sign_comment, _workorder_qc);
+        string re_sql = @"exec [usp_app_bhgp_sign_V1] '{0}','{1}','{2}','{3}'";
+        re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _sign_comment);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();
@@ -80,13 +79,14 @@ public partial class Adjust_sign : System.Web.UI.Page
         return result;
 
     }
+
     [WebMethod]
-    public static string cancel2(string _emp_code_name, string _workorder, string _workorder_f, string _stepid, string _sign_comment)
+    public static string cancel2(string _emp_code_name, string _formno, string _stepid, string _sign_comment)
     {
         string flag = "N", msg = "";
 
-        string re_sql = @"exec [usp_app_bhgp_sign_cancel_V1] '{0}', '{1}','{2}','{3}','{4}'";
-        re_sql = string.Format(re_sql, _emp_code_name, _workorder, _workorder_f, _stepid, _sign_comment);
+        string re_sql = @"exec [usp_app_bhgp_sign_cancel_V1] '{0}','{1}','{2}','{3}'";
+        re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _sign_comment);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();
