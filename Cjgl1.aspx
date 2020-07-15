@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title><%=_workshop %></title>
@@ -37,23 +37,16 @@
     </style>
 
     <script type="text/javascript">
-        <%-- function getQueryString(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-            var r = decodeURI(window.location.search).substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        }
-        var workshop = getQueryString("workshop");
-        //alert(workshop);--%>
-
         $(function () {
-            //if ($("#emp_code_name").val() == "01968孙娟" || $("#emp_code_name").val() == "02274李晓根") {
-            //    $("#sc_div").show();
-            //} else {
-            //    $("#sc_div").hide(); 
-            //}
+            var _wrokshop = "<%=Request["workshop"]%>";
+            if (_wrokshop == "三车间") {
+                show_prod_3(_wrokshop);
+            } else {
+                show_prod_24(_wrokshop);
+            };
+                 
         });
-
-        
+                
     </script>
 </head>
 <body>
@@ -205,10 +198,16 @@
                         <p>生产监视</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="lblPart" runat="server" Text="" style="display:none;"></asp:Label>
+                       <%-- <asp:Label ID="lblPart" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="lblWip" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="lblNg" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string iPart = lblPart.Text;string iWip = lblWip.Text;string iNg = lblNg.Text; Response.Write("<span class='weui-badge  bg-" + (iWip == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + iWip + "</span><span class='weui-badge  bg-" + (iPart == "0" ? "gray" : "orange") + "' style='margin-right: 15px;'>部" + iPart + "</span><span class='weui-badge  bg-" + (iNg == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + iNg + "</span>"); %>  
+                    --%>
+                                                 
+                        <span class="weui-badge bg-blue" id="wip24" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-orange" id="part24"  style='margin-right: 15px;'>部..</span>
+                        <span class="weui-badge bg-red" id="ng24" style='margin-right: 15px;'>返..</span>
+                     
                     </div>
                 </a>   
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
@@ -373,9 +372,13 @@
                         <i class="fa fa-gears margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>生产监视</p>
+                        <p>生产监视</p>                        
                     </div>
-                    <div class="weui-cell__ft"></div>
+                    <div class="weui-cell__ft">                        
+                        <span class="weui-badge bg-blue" id="wip3" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-orange" id="part3"  style='margin-right: 15px;'>部..</span>
+                        <span class="weui-badge bg-red" id="ng3" style='margin-right: 15px;'>返..</span>
+                    </div>
                 </a>   
             </div>
                 <%} %>
@@ -449,5 +452,58 @@
             signature: datad.signature,// 必填，签名，见附录1
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
+
+        //show workshop 3 product data
+        function show_prod_3(_workshop){
+            $.ajax({
+                url: "/Cjgl1.aspx/ProdList3_Data",
+                type: "Post",
+                data: "{ 'workshop': '" + _workshop + "' }",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if(datad.length>0){
+                        $("#wip3").text(datad[0].wip);
+                        $("#part3").text('部'+datad[0].part);
+                        $("#ng3").text('返' + datad[0].ng);
+                        if (datad[0].ng == 0) { $("#ng3").addClass("bg-gray") }
+                        if (datad[0].part == 0) { $("#part3").addClass("bg-gray") }
+                        if (datad[0].wip == 0) { $("#wip3").addClass("bg-gray") }
+                    }
+
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        }
+        //show workshop 3 product data
+        function show_prod_24(_workshop) {
+            $.ajax({
+                url: "/Cjgl1.aspx/ProdList24_Data",
+                type: "Post",
+                data: "{ 'workshop': '" + _workshop + "' }",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#wip24").text(datad[0].wip);
+                        $("#part24").text('部' + datad[0].part);
+                        $("#ng24").text('返' + datad[0].ng);
+                        if (datad[0].ng == 0) { $("#ng24").addClass("bg-gray") }
+                        if (datad[0].part == 0) { $("#part24").addClass("bg-gray") }
+                        if (datad[0].wip == 0) { $("#wip24").addClass("bg-gray") }
+                    }
+
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        }
     </script>
 </html>
