@@ -481,10 +481,10 @@
                         if (datad[0].wip == 0) { $("#wip3").addClass("bg-gray") }
                     }
 
-                },
-                error: function (error) {
-                    alert(error);
-                }
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
             });
         }
         //show workshop 3 product data
@@ -507,10 +507,10 @@
                         if (datad[0].wip == 0) { $("#wip24").addClass("bg-gray") }
                     }
 
-                },
-                error: function (error) {
-                    alert(error);
-                }
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
             });
         }
     </script>
