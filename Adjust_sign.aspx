@@ -179,7 +179,7 @@
                         </div>
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">单号</label>
-                            <span class="weui-form-preview__value"><%# Eval("lot_no") %></span><%--/<%# Eval("need_no") %>--%>
+                            <span class="weui-form-preview__value" style="font-weight:800;"><%# Eval("lot_no") %></span><%--/<%# Eval("need_no") %>--%>
                         </div>
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">物料号</label>
@@ -210,6 +210,15 @@
                     </ItemTemplate>
                 </asp:Repeater>
 
+            </div>
+
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">签核信息</label>
+                    <label class="weui-form-preview__"></label>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
                 <asp:Repeater runat="server" ID="Repeater_sg">
                     <ItemTemplate>
                         <div class="weui-form-preview__item">
@@ -228,7 +237,6 @@
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>
-
             </div>
 
              <div class="weui-cell" id="div_com">
