@@ -121,4 +121,20 @@ public partial class Adjust_Apply : System.Web.UI.Page
         return result;
 
     }
+
+    [WebMethod]
+    public static string cancel2(string _emp_code_name, string _formno, string _stepid, string _comment)
+    {
+        string flag = "N", msg = "";
+
+        string re_sql = @"exec usp_app_Adjust_Apply_cancel '{0}','{1}','{2}','{3}'";
+        re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _comment);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
 }
