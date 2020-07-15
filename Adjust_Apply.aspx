@@ -78,7 +78,7 @@
                         + "','_source':'" + $('#source').val() + "','_dh':'" + $('#dh').val() + "','_pgino':'" + $('#pgino').val()
                         + "','_pn':'" + $('#pn').val() + "','_from_qty':'" + $('#from_qty').val() + "','_adj_qty':'" + $('#adj_qty').val()
                         + "','_comment':'" + $('#comment').val() + "','_flagwhere':'" + $('#flagwhere').val() + "','_need_no':'" + $('#need_no').val()
-                        + "'}",
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
