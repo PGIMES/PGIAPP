@@ -232,6 +232,10 @@
                             </span>
                         </div> 
                         <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">签核结果</label>
+                            <span class="weui-form-preview__value"><%# Eval("sign_result_desc") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">签核意见</label>
                             <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
                         </div>
