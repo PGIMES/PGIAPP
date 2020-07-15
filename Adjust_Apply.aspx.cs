@@ -10,10 +10,12 @@ using System.Web.UI.WebControls;
 public partial class Adjust_Apply : System.Web.UI.Page
 {
     public string _formno = "";
+    public string _stepid = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["formno"] != null) { _formno = Request.QueryString["formno"].ToString(); }
+        if (Request.QueryString["stepid"] != null) { _stepid = Request.QueryString["stepid"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -27,12 +29,42 @@ public partial class Adjust_Apply : System.Web.UI.Page
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             //emp_code_name.Text = "02432何桂勤";
 
-            formno.Text = _formno;
-            //init_data(_formno);
+            formno.Text = _formno; stepid.Text = _stepid;
+
+            if (_formno != "")
+            {
+                init_data(_formno, _stepid);
+            }
+            
         }
     }
 
+    void init_data(string formno, string stepid)
+    {
+        string sql = @"exec [usp_app_Adjust_Apply_init] '{0}','{1}'";
+        sql = string.Format(sql, formno, stepid);
+        DataSet ds = SQLHelper.Query(sql);
 
+        DataTable dt = ds.Tables[0];
+        if (dt.Rows.Count == 1)
+        {
+            source.Text = dt.Rows[0]["source"].ToString();
+            dh.Text = dt.Rows[0]["lot_no"].ToString(); 
+            pgino.Text = dt.Rows[0]["pgino"].ToString();
+            pn.Text = dt.Rows[0]["pn"].ToString();
+            adj_qty.Text = dt.Rows[0]["adj_qty"].ToString();
+            comment.Value = dt.Rows[0]["remark"].ToString();
+
+            //改三个字段proc重新复制喽
+            from_qty.Text = dt.Rows[0]["from_qty_cur"].ToString();
+            need_no.Text = dt.Rows[0]["need_no"].ToString();
+            flagwhere.Text = dt.Rows[0]["flagwhere"].ToString();
+        }
+
+        DataTable dt_sg = ds.Tables[1];
+        Repeater_sg.DataSource = dt_sg;
+        Repeater_sg.DataBind();
+    }
 
     [WebMethod]
     public static string dh_change(string dh, string source)

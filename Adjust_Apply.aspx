@@ -33,10 +33,23 @@
             $("#from_qty").attr("readonly", "readonly");
 
             $("#btn_cancel2").hide();
-            if ("<%= _formno %>"!="") {
-                $("#btn_cancel2").show();
-            }
+            if ("<%= _formno %>" != "") {
+                $("#source").attr("readonly", "readonly");
+                $("#dh").attr("readonly", "readonly"); $("#img_sm_dh").hide();
 
+                if ("<%= _stepid %>" == "0001") {
+                    $("#btn_cancel2").show();
+                } else {
+                    $("#adj_qty").attr("readonly", "readonly");
+                    $("#comment").attr("readonly", "readonly");
+                }
+
+                if ($("#from_qty").val() == "") {
+                    $.toptip('【数量】不可为空.<font color=red>请【放弃申请】.</font>', 2000, 'warning');
+                } else if (parseFloat($("#from_qty").val()) <= 0) {
+                    $.toptip('【数量】不可小于等于0.<font color=red>请【放弃申请】.</font>', 2000, 'warning');
+                }
+            }
         });
 
         $(function () {
@@ -52,6 +65,9 @@
                 if(!valid()){
                     $("#btn_save2").removeAttr("disabled");
                     $("#btn_save2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    $("#btn_cancel2").removeAttr("disabled");
+                    $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                     return false;
                 }
 
@@ -95,7 +111,7 @@
                     type: "post",
                     url: "Adjust_Apply.aspx/cancel2",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
-                        + "','_formno':'" + $('#formno').val() + "','_comment':'" + $('#comment').val()
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_comment':'" + $('#comment').val()
                         + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -175,10 +191,10 @@
                 return false;
             }
             if ($("#from_qty").val() == "") {
-                layer.alert("【数量】不可为空.");
+                layer.alert("【数量】不可为空.<font color=red>请【放弃申请】.</font>");
                 return false;
             } else if (parseFloat($("#from_qty").val()) <= 0) {
-                layer.alert("【数量】不可小于等于0.");
+                layer.alert("【数量】不可小于等于0.<font color=red>请【放弃申请】.</font>");
                 return false;
             }
 
@@ -204,6 +220,7 @@
     
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="formno" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+        <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <div class="weui-cells weui-cells_form">     
             <div class="weui-cell">
@@ -245,6 +262,38 @@
                 <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
                 <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
             </div>
+
+            <div class="weui-form-preview__hd" style="display:<%= _formno!=""?"block":"none"%>;">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">签核信息</label>
+                    <label class="weui-form-preview__"></label>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <asp:Repeater runat="server" ID="Repeater_sg">
+                    <ItemTemplate>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"><%# Eval("sign_stepname") %></label>
+                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("sign_empname") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">签核时间</label>
+                            <span class="weui-form-preview__value">
+                                <%# Eval("sign_time","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                            </span>
+                        </div> 
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">签核结果</label>
+                            <span class="weui-form-preview__value"><%# Eval("sign_result_desc") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">签核意见</label>
+                            <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+
             <div class="weui-cell">
                 <input id="btn_save2" type="button" value="提交" class="weui-btn weui-btn_primary" />
                 <input id="btn_cancel2" type="button" value="放弃申请" class="weui-btn weui-btn_primary" style="margin-left:10px;" />
@@ -253,26 +302,28 @@
 
     </form>
     <script>
-        var datalist_sr = [{ title: '二车间', value: '二车间' }, { title: '三车间', value: '三车间' }, { title: '四车间', value: '四车间' }
-                        , { title: '原材料', value: '原材料' }, { title: '成品库', value: '成品库' }, { title: '半成品库', value: '半成品库' }]
-        $("#source").select({
-            title: "来源",
-            items: datalist_sr,
-            onChange: function (d) {
-                //    console.log(this, d);
-            },
-            onClose: function (d) {
-                var obj = eval(d.data);
-                //alert(obj.values);
-                if ($('#dh').val() != "") {
-                    dh_change();
-                }
-            },
-            onOpen: function () {
-                //  console.log("open");
-            },
+        if ("<%= _formno %>" == "") {
+            var datalist_sr = [{ title: '二车间', value: '二车间' }, { title: '三车间', value: '三车间' }, { title: '四车间', value: '四车间' }
+                            , { title: '原材料', value: '原材料' }, { title: '成品库', value: '成品库' }, { title: '半成品库', value: '半成品库' }]
+            $("#source").select({
+                title: "来源",
+                items: datalist_sr,
+                onChange: function (d) {
+                    //    console.log(this, d);
+                },
+                onClose: function (d) {
+                    var obj = eval(d.data);
+                    //alert(obj.values);
+                    if ($('#dh').val() != "") {
+                        dh_change();
+                    }
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
 
-        });
+            });
+        }
         
     </script>
 </body>
