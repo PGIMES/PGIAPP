@@ -36,10 +36,12 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
 
         string sql = @"exec [usp_app_YT_list] '{0}','{1}'";
         sql = string.Format(sql, _workshop, emp);
-        dt_go = SQLHelper.Query(sql).Tables[0];
-        dt_end = SQLHelper.Query(sql).Tables[1];
-        dt_go_my = SQLHelper.Query(sql).Tables[2];
-        dt_end_my = SQLHelper.Query(sql).Tables[3];
+        DataSet ds = SQLHelper.Query(sql);
+
+        dt_go = ds.Tables[0];
+        dt_end = ds.Tables[1];
+        dt_go_my = ds.Tables[2];
+        dt_end_my = ds.Tables[3];
 
         ViewState["dt_go"] = dt_go;
         ViewState["dt_end"] = dt_end;

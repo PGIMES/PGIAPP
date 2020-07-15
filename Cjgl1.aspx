@@ -346,6 +346,10 @@
                         <p>要汤监视<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"> 
+                        <asp:Label ID="Label_YT" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i_YT = Label_YT.Text;
+                            Response.Write("<span class='weui-badge  bg-" + (i_YT == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i_YT + "</span>");
+                        %> 
                     </div>
                 </a>   
                 <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>">
@@ -356,6 +360,10 @@
                         <p>不合格监视<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"> 
+                        <asp:Label ID="Label_bhg_thr" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="Label_bhg_thr_f" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i_bhg_3 = Label_bhg_thr.Text; Response.Write("<span class='weui-badge  bg-" + (i_bhg_3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i_bhg_3 + "</span>"); %>  
+                        <% string i_bhg_3_f = Label_bhg_thr_f.Text;Response.Write("<span class='weui-badge  bg-" + (i_bhg_3_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i_bhg_3_f + "</span>"); %>  
                     </div>
                 </a>
                 <%--<a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh('<%=_workshop %>');">

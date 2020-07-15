@@ -127,13 +127,6 @@ public partial class Cjgl1 : System.Web.UI.Page
     public void bind_data_three()
     {
         //上岗监视
-        //string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
-        //    where off_date is null and on_date is not null 
-        //        and id in (select distinct login_id from Mes_App_EmployeeLogin_Location where workshop='" + _workshop + "')";
-        //DataTable re_dt = SQLHelper.Query(sql).Tables[0];
-
-        //Label1_three.Text = re_dt.Rows[0][0].ToString();
-
         string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
             where off_date is null and on_date is not null 
                 and id in (select distinct login_id from Mes_App_EmployeeLogin_Location
@@ -145,11 +138,31 @@ public partial class Cjgl1 : System.Web.UI.Page
         sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
             where off_date is null and on_date is not null 
                 and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
-                        where workshop='" + _workshop + "' and (e_code like 'J%' and e_code like 'Q%'))";
+                        where workshop='" + _workshop + "' and (e_code like 'J%' or e_code like 'Q%'))";
         DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
 
         Label1_three_j.Text = re_dt_j.Rows[0][0].ToString();
+
+        //要汤监视
+        sql = @"exec [usp_app_YT_list] '{0}','{1}'";
+        sql = string.Format(sql, _workshop, "");
+        DataTable dt_YT_go = SQLHelper.Query(sql).Tables[0];
+        Label_YT.Text = dt_YT_go.Rows.Count.ToString();
+
+
+        //不合格监视
+        sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}'";
+        sql = string.Format(sql, _workshop, "");
+        DataSet ds = SQLHelper.Query(sql);
+        DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
+        DataTable dt_04 = ds.Tables[3]; DataTable dt_05 = ds.Tables[4]; DataTable dt_98 = ds.Tables[5];
+        int count_bhg = dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_98.Rows.Count;
+
+        Label_bhg_thr.Text = count_bhg.ToString();
+        Label_bhg_thr_f.Text = dt_01.Rows.Count.ToString();
     }
+
+
     //二、四车间生产监视
     [WebMethod]
     public static string ProdList24_Data(string workshop)
