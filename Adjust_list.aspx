@@ -314,6 +314,11 @@
                                                             style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                             <%#Eval("adj_result") %>
                                                         </span>
+                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                            style="font-size: x-small; display: <%# Eval("status").ToString()=="6"?"inline-block":"none"%>;
+                                                                color: <%# Eval("status").ToString()=="6"?"gray":"#07c160"%>; ">
+                                                            <%# Eval("status").ToString()=="6"?"放弃申请":"" %>
+                                                        </span>
                                                     </span>
                                                     <span class="weui-agree__text" style="font-size: smaller">
                                                         <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
