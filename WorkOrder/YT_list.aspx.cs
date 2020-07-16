@@ -49,26 +49,26 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
         ViewState["dt_end_my"] = dt_end_my;
 
         //list_go.DataSource = dt_go;
-        DataTable rowsline_go = dt_go.DefaultView.ToTable(true, "line");
+        DataTable rowsline_go = dt_go.DefaultView.ToTable(true, "cl");
         list_go.DataSource = rowsline_go;
         list_go.DataBind();
         count1 = dt_go.Rows.Count;
 
         //list_end.DataSource = dt_end;
-        DataTable rowsline_end = dt_end.DefaultView.ToTable(true, "line");
+        DataTable rowsline_end = dt_end.DefaultView.ToTable(true, "cl");
         list_end.DataSource = rowsline_end;
         list_end.DataBind();
         count4 = dt_end.Rows.Count;
         
 
         //list_go_my.DataSource = dt_go_my;
-        DataTable rowsline_go_my = dt_go_my.DefaultView.ToTable(true, "line");
+        DataTable rowsline_go_my = dt_go_my.DefaultView.ToTable(true, "cl");
         list_go_my.DataSource = rowsline_go_my;
         list_go_my.DataBind();
         count5 = dt_go_my.Rows.Count;     
 
         //list_end_my.DataSource = dt_end_my;
-        DataTable rowsline_end_my = dt_end_my.DefaultView.ToTable(true, "line");
+        DataTable rowsline_end_my = dt_end_my.DefaultView.ToTable(true, "cl");
         list_end_my.DataSource = rowsline_end_my;
         list_end_my.DataBind();
         count8 = dt_end_my.Rows.Count;
@@ -84,7 +84,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_go"] as DataTable;
-            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+            dt_wk.DefaultView.RowFilter = "cl='" + item["cl"].ToString() + "'";
 
             detail.DataSource = dt_wk;
             detail.DataBind();
@@ -99,7 +99,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_end"] as DataTable;
-            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+            dt_wk.DefaultView.RowFilter = "cl='" + item["cl"].ToString() + "'";
 
             detail.DataSource = dt_wk;
             detail.DataBind();
@@ -115,7 +115,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_go_my"] as DataTable;
-            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+            dt_wk.DefaultView.RowFilter = "cl='" + item["cl"].ToString() + "'";
 
             detail.DataSource = dt_wk;
             detail.DataBind();
@@ -132,7 +132,7 @@ public partial class WorkOrder_YL_list_new : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_end_my"] as DataTable;
-            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+            dt_wk.DefaultView.RowFilter = "cl='" + item["cl"].ToString() + "'";
 
             detail.DataSource = dt_wk;
             detail.DataBind();

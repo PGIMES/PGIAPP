@@ -153,7 +153,7 @@
                                     <asp:Repeater runat="server" ID="list_go" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
-                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("cl") %>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_go_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -203,7 +203,7 @@
                                     <asp:Repeater runat="server" ID="list_end" EnableTheming="False" OnItemDataBound="list_end_ItemDataBound">
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
-                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("cl") %>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_end_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -259,7 +259,7 @@
                                     <asp:Repeater runat="server" ID="list_go_my" EnableTheming="False" OnItemDataBound="list_go_my_ItemDataBound">
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
-                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("cl") %>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_go_my_dt" EnableTheming="False">
                                             <ItemTemplate>
@@ -309,7 +309,7 @@
                                     <asp:Repeater runat="server" ID="list_end_my" EnableTheming="False" OnItemDataBound="list_end_my_ItemDataBound">
                                         <ItemTemplate>
                                             <div class="weui-cells__title ">
-                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("cl") %>
                                             </div>                                        
                                             <asp:Repeater runat="server" ID="list_end_my_dt" EnableTheming="False">
                                             <ItemTemplate>
