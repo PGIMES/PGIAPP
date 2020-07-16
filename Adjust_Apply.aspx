@@ -32,14 +32,16 @@
             $("#pn").attr("readonly", "readonly");
             $("#from_qty").attr("readonly", "readonly");
 
-            $("#btn_cancel2").hide();
+            $("#btn_save2").show(); $("#btn_cancel2").hide();
             if ("<%= _formno %>" != "") {
                 $("#source").attr("readonly", "readonly");
                 $("#dh").attr("readonly", "readonly"); $("#img_sm_dh").hide();
 
-                if ("<%= _stepid %>" == "0001") {
-                    $("#btn_cancel2").show();
+                if ("<%= _stepid %>" == "0001" && $('#emp_code_name').val() == $('#emp_code_name_db').val()) {
+                    $("#btn_save2").show(); $("#btn_cancel2").show();
                 } else {
+                    $("#btn_save2").hide();
+
                     $("#adj_qty").attr("readonly", "readonly");
                     $("#comment").attr("readonly", "readonly");
                 }
@@ -221,6 +223,7 @@
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="formno" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+        <asp:TextBox ID="emp_code_name_db" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
         <div class="weui-cells weui-cells_form">     
             <div class="weui-cell">
@@ -251,8 +254,15 @@
                 <asp:TextBox ID="pn" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">数量</label></div>                          
-                <asp:TextBox ID="from_qty" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                <div class="weui-cell__hd"><label class="weui-label">数量</label></div> 
+                 <div class="weui-cell__bd">   
+                    <span style="float:left; width:50%">
+                        <asp:TextBox ID="from_qty" class="weui-input" style="color:gray" runat="server"></asp:TextBox>
+                    </span>
+                    <span style="float:left; width:50%">
+                        <asp:TextBox ID="from_qty_db" class="weui-input" style="color:gray;color:blue;" runat="server" Visible="false"></asp:TextBox>
+                    </span>
+                </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red "><label class="weui-label">盈亏数量</label></div>                          

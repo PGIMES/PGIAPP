@@ -48,10 +48,12 @@ public partial class Adjust_Apply : System.Web.UI.Page
         DataTable dt = ds.Tables[0];
         if (dt.Rows.Count == 1)
         {
+            emp_code_name_db.Text = dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString();
             source.Text = dt.Rows[0]["source"].ToString();
             dh.Text = dt.Rows[0]["lot_no"].ToString(); 
             pgino.Text = dt.Rows[0]["pgino"].ToString();
             pn.Text = dt.Rows[0]["pn"].ToString();
+            from_qty_db.Text = "原数量"+dt.Rows[0]["from_qty"].ToString(); from_qty_db.Visible = true;
             adj_qty.Text = dt.Rows[0]["adj_qty"].ToString();
             comment.Value = dt.Rows[0]["remark"].ToString();
 
