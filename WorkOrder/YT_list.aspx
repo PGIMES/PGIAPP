@@ -231,7 +231,7 @@
                                                         </span>
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date","{0:MM-dd HH:mm}") %>   
-                                                            <span style="color:#999999;">
+                                                            <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>
                                                         </span>
@@ -337,7 +337,7 @@
                                                         </span>
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("end_date","{0:MM-dd HH:mm}")+ " " %>   
-                                                            <span style="color:#999999;">
+                                                            <span style="color:<%# Eval("times_type").ToString()=="还差"?"#10AEFF":(Eval("times_type").ToString()=="超时"?"red":"#999999") %>;">
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>
                                                         </span>
