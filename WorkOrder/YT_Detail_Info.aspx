@@ -101,7 +101,7 @@
                                                 <label class="weui-form-preview__label">要汤人</label>
                                                 <span class="weui-form-preview__value">
                                                     <%# Eval("phone")+""+ Eval("emp_name") %>
-                                                    <%# Eval("times_type") %> <font class="f-blue"><%# Eval("times") %></font>
+                                                    <font class="f-blue"><%# Eval("times_type") %> <%# Eval("times") %></font>
                                                 </span>
                                 
                                             </div>               
@@ -145,7 +145,8 @@
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">送汤时间</label>
                                         <span class="weui-form-preview__value">
-                                            <%= string.Format("{0:MM-dd HH:mm}",dr["date"])%> 时长<font class="f-blue"> <%=dr["shichang"].ToString() %></font>
+                                            <%= string.Format("{0:MM-dd HH:mm}",dr["date"])%> 
+                                            <font class="f-blue"><%= dr["times_type"] %><%=dr["times"] %></font>
                                         </span>
                                     </div>
                                     <% }
@@ -161,7 +162,9 @@
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">取消时间</label>
-                                        <span class="weui-form-preview__value"><%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %> 时长<font class="f-blue"> <%=dr["shichang"].ToString() %> </span>
+                                        <span class="weui-form-preview__value">
+                                            <%=string.Format("{0:MM-dd HH:mm}",dr["date"]) %> 
+                                            <font class="f-blue"><%= dr["times_type"] %><%=dr["times"] %> </span>
                                     </div>
                                     <% } %>  
                                 </div>
