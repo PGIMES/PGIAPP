@@ -34,27 +34,30 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
+
             //登入岗位的域
-            if (domain.Text == "100" || domain.Text == "")
+            string strsql_d = "select * from [Mes_App_EmployeeLogin] where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
+            var value_login = SQLHelper.reDs(strsql_d).Tables[0];
+            string location = "";
+            if (value_login != null && value_login.Rows.Count > 0)
             {
-                string strsql_d = "select * from [Mes_App_EmployeeLogin] where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
-                var value_login = SQLHelper.reDs(strsql_d).Tables[0];
-                if (value_login != null && value_login.Rows.Count > 0)
+                if (domain.Text == "100" || domain.Text == "")
                 {
                     domain.Text = value_login.Rows[0]["domain"].ToString();
                 }
+                location = value_login.Rows[0]["location"].ToString();
             }
 
             //emp_code_name.Text = "02432何桂勤";
             //domain.Text = "200";
 
             workorder.Text = _workorder; workorder_f.Text = _workorder_f;
-            init_data(_workorder, _workorder_f);
+            init_data(_workorder, _workorder_f, location);
         }
         
     }
 
-    void init_data(string workorder, string workorder_f)
+    void init_data(string workorder, string workorder_f,string location)
     {
         yb_qty.Text = "0";
 
@@ -92,9 +95,9 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 UpdatePanel1.Visible = false;
             }
         }
-        
 
-        //是否可以修改数量:申请人本人，且申请数量=剩余数量
+
+        //是否可以修改数量:申请人本人，且申请数量=剩余数量 
         string sql_wk = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder='"+ workorder + "'";
         DataTable dt_wk = SQLHelper.Query(sql_wk).Tables[0];
 
@@ -102,8 +105,10 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         {
             _tab_index = 0; _ismodify = "Y";
         }
-        else if (emp_code_name.Text == (dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString())
-            && dt_wk.Rows.Count <= 0 && dt.Rows[0]["loading_type_qc"].ToString()!="99")//dt.Rows[0]["qty"].ToString() == dt.Rows[0]["sy_qty"].ToString()
+        /*else if (emp_code_name.Text == (dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString())
+            && dt_wk.Rows.Count <= 0 && dt.Rows[0]["loading_type_qc"].ToString()!="99")//dt.Rows[0]["qty"].ToString() == dt.Rows[0]["sy_qty"].ToString()*/
+        else if (location == dt.Rows[0]["login_location"].ToString()
+           && dt_wk.Rows.Count <= 0 && dt.Rows[0]["loading_type_qc"].ToString() != "99")
         {
             _tab_index = 0; _ismodify = "Y1";//排除参考号
         }
