@@ -467,7 +467,7 @@
                 url: "/Cjgl1.aspx/ProdList3_Data",
                 type: "Post",
                 data: "{ 'workshop': '" + _workshop + "' }",
-                async: false,
+                async: true,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -487,13 +487,13 @@
                 //}
             });
         }
-        //show workshop 3 product data
+        //show workshop 2,4 product data
         function show_prod_24(_workshop) {
             $.ajax({
                 url: "/Cjgl1.aspx/ProdList24_Data",
                 type: "Post",
                 data: "{ 'workshop': '" + _workshop + "' }",
-                async: false,
+                async: true,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {

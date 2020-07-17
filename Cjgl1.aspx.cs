@@ -163,18 +163,24 @@ public partial class Cjgl1 : System.Web.UI.Page
     }
 
 
-    //二、四车间生产监视
+    //三车间生产监视
     [WebMethod]
-    public static string ProdList24_Data(string workshop)
+    public static string ProdList3_Data(string workshop)
     {
         //生产监视
         int iPart = 0, iWip = 0, iNg = 0; //iPart部分，iWip在制数，iNg不合格返线数
         //生产中
-        string sql = string.Format(@"exec [usp_app_wip_list_prod] '{0}','{1}'", workshop, "");
-        DataTable dt_data_go = SQLHelper.Query(sql).Tables[1];
-        iPart = iPart + dt_data_go.Select("ispartof='部分' and line<>'组装件'").Count(); //配件（组装件）不计数
-        iWip = iWip + dt_data_go.Select("ispartof<>'部分' and line<>'组装件' and  isnull(workorder_wip,'') not like 'R%'").Count();
-        iNg = iNg + dt_data_go.Select(" workorder_wip like 'R%'").Count();
+        string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',1", workshop, "");
+        DataTable dt_data_go = SQLHelper.Query(sql).Tables[0];
+        iPart = iPart + dt_data_go.Select("ispartof='部分'  ").Count();  
+        iWip = iWip + dt_data_go.Select("ispartof<>'部分'  ").Count();
+        // iNg = iNg + dt_data_go.Select(" workorder_wip like 'R%'").Count();
+        //后处理
+        sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',6", workshop, "");
+        dt_data_go = SQLHelper.Query(sql).Tables[0];
+        iPart = iPart + dt_data_go.Select("ispartof='部分'  ").Count();  
+        iWip = iWip + dt_data_go.Select("ispartof<>'部分'  ").Count();
+        // iNg = iNg + dt_data_go.Select(" workorder_wip like 'R%'").Count();
         //待终检
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", workshop, "", 2);
         DataTable dt_data_qc = SQLHelper.Query(sql).Tables[0];
@@ -200,9 +206,9 @@ public partial class Cjgl1 : System.Web.UI.Page
         return res;
 
     }
-    //三车间生产监视
+    //二、四车间生产监视
     [WebMethod]
-    public static string ProdList3_Data(string workshop)
+    public static string ProdList24_Data(string workshop)
     {
         //生产监视
         int iPart = 0, iWip = 0, iNg = 0; //iPart部分，iWip在制数，iNg不合格返线数
@@ -222,7 +228,9 @@ public partial class Cjgl1 : System.Web.UI.Page
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", workshop, "", 3);
         DataTable dt_data_GP = SQLHelper.Query(sql).Tables[0];
         iPart = iPart + dt_data_GP.Select("ispartof='部分'").Count();
-        iWip = iWip + dt_data_GP.Select("ispartof<>'部分'").Count();
+        iWip = iWip + dt_data_GP.Select("ispartof<>'部分' and  isnull(workorder_wip,'') not like 'R%'").Count();
+        iNg = iNg + dt_data_GP.Select(" isnull(workorder_wip,'') <>''").Count();
+
         //待入库
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", workshop, "", 4);
         DataTable dt_data_ruku_go = SQLHelper.Query(sql).Tables[0];
