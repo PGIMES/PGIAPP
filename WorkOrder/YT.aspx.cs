@@ -27,14 +27,26 @@ public partial class YL : System.Web.UI.Page
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
+
+            //登入岗位的域
+            string strsql_d = "select * from [Mes_App_EmployeeLogin] where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
+            var value_login = SQLHelper.reDs(strsql_d).Tables[0];
+            if (value_login != null && value_login.Rows.Count > 0)
+            {
+                if (domain.Text == "100" || domain.Text == "")
+                {
+                    domain.Text = value_login.Rows[0]["domain"].ToString();
+                }
+            }
+
             lbl_emp.Text = lu.Telephone + lu.UserName;
             if (string.IsNullOrEmpty( lu.Telephone))//增加手机号的获取，因为cookIE里的手机号有可能会是空值
             {
-                string strsql = "select * from [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] where employeeid = '" + lu.WorkCode + "'";
+                string strsql = "select * from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where employeeid = '" + lu.WorkCode + "'";
                 var value_rout = SQLHelper.reDs(strsql).Tables[0];
                 if (value_rout != null && value_rout.Rows.Count > 0)
                 {
-                    lbl_emp.Text = value_rout.Rows[0]["cellphone"].ToString() + lu.UserName;
+                    lbl_emp.Text = value_rout.Rows[0]["tel"].ToString() + lu.UserName;
                 }
             }
 
@@ -87,7 +99,7 @@ public partial class YL : System.Web.UI.Page
     public static string init_yzj(string workshop, string emp, string yzj_no)
     {
         string result = "";
-        string sql = @" exec [usp_app_YT_yzj] '" + workshop + "','" + emp + "','" + yzj_no + "'";
+        string sql = @" exec [usp_app_YT_yzj_V1] '" + workshop + "','" + emp + "','" + yzj_no + "'";
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt_yzj = ds.Tables[0];
@@ -99,17 +111,29 @@ public partial class YL : System.Web.UI.Page
         }
         else//change
         {
-            string flag = "N", msg = ""; string yzj = "";
+            string flag = "N", msg = ""; string yzj = ""; string json_pgino = "";
+
             if (dt_yzj.Rows.Count != 1)
             {
                 flag = "Y"; msg = "压铸机"+ yzj_no + "不存在";
             }
-           
+
+            DataTable dt_pgino = ds.Tables[1];
+            if (dt_pgino.Rows.Count <=0)
+            {
+                flag = "Y"; msg = "压铸机" + yzj_no + ",对应的物料号不存在";
+            }
+
             if (flag == "N")
             {
                 yzj = dt_yzj.Rows[0]["title"].ToString();
+                json_pgino = JsonConvert.SerializeObject(dt_pgino);
+                result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"yzj\":\"" + yzj + "\",\"json_pgino\":" + json_pgino + "}]";
             }
-            result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"yzj\":\"" + yzj + "\"}]";
+            else
+            {
+                result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"yzj\":\"" + yzj + "\",\"json_pgino\":\"" + json_pgino + "\"}]";
+            }
         }
         
         return result;
@@ -117,12 +141,46 @@ public partial class YL : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string nd_change(string nd_jg)
+    public static string pgino_change(string domain, string pgino, string workshop,string mojuno)
     {
-        string time = "";
+        string flag = "N", msg = "";
+        string cl = "", JgSec = "", weight1 = "", need_qty_xh = "";
+        string sql = @" exec [usp_app_YT_pgino_change] '" + pgino + "','" + domain + "','" + workshop + "','" + mojuno + "'";
+        DataSet ds = SQLHelper.Query(sql);
+
+        DataTable re_dt = ds.Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        if (flag == "N")
+        {
+            DataTable dt = ds.Tables[1];
+            cl = dt.Rows[0]["cl"].ToString();
+            JgSec = dt.Rows[0]["JgSec"].ToString();
+            weight1 = dt.Rows[0]["weight1"].ToString();
+            need_qty_xh = dt.Rows[0]["need_qty_xh"].ToString();
+        }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"cl\":\"" + cl 
+            + "\",\"JgSec\":\"" + JgSec + "\",\"weight1\":\"" + weight1 + "\",\"need_qty_xh\":\"" + need_qty_xh + "\"}]";
+        return result;
+
+    }
+
+    [WebMethod]
+    public static string nd_change(string nd_jg, string yzj, string pgino, string domain, string JgSec, string weight1)
+    {
+        string time = "", need_qty = "";
         time = DateTime.Now.AddMinutes(Convert.ToDouble(nd_jg)).ToString("yyyy-MM-dd HH:mm");
 
-        string result = "[{\"time\":\"" + time + "\"}]";
+        string sql = @" exec [usp_app_YT_nd_change] '" + time + "','" + yzj + "','" + pgino + "','" + domain + "','" + JgSec + "','" + weight1 + "'";
+        DataTable dt = SQLHelper.Query(sql).Tables[0];
+        if (dt.Rows.Count == 1)
+        {
+            need_qty = dt.Rows[0][0].ToString();
+        }
+
+        string result = "[{\"time\":\"" + time + "\",\"need_qty\":\"" + need_qty + "\"}]";
         return result;
 
     }

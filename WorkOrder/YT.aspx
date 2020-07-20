@@ -22,7 +22,13 @@
     </style>
     <script>     
         $(document).ready(function () {
-            $("#need_date").attr("readonly", "readonly");
+            $("#pgino").attr("readonly", "readonly");
+            $("#cl").attr("readonly", "readonly");
+            $("#JgSec").attr("readonly", "readonly");
+            $("#weight1").attr("readonly", "readonly");
+            $("#need_qty_xh").attr("readonly", "readonly");
+            $("#need_qty").attr("readonly", "readonly");
+            $("#need_date").attr("readonly", "readonly"); 
         });
 
         $(function () {
@@ -96,11 +102,21 @@
                     var flag = obj[0].flag;
                     if (flag == "Y") {
                         layer.alert(obj[0].msg);
-                        $('#yzj').val("");
+                        $('#yzj').val(obj[0].yzj);
+                        $('#yzj').val('');
                     } else {
                         $('#yzj').val(obj[0].yzj);
-                    }
 
+                        var json_pgino = obj[0].json_pgino;
+                        $("#pgino").select("update", { items: json_pgino });
+                    }
+                    $('#pgino').val('');
+                    $('#cl').val('');
+                    $('#JgSec').val('');
+                    $('#weight1').val('');
+                    $('#need_qty_xh').val('');
+                    $('#need_date_dl').val(''); $('#need_date').val('');
+                    $('#need_qty').val('');
                 }
             });
         }
@@ -112,8 +128,41 @@
                 layer.alert("请输入【压铸机】.");
                 return false;
             }
+            if ($("#pgino").val() == "") {
+                layer.alert("请输入【物料号】.");
+                return false;
+            }
             if ($("#cl").val() == "") {
                 layer.alert("【材料】不可为空.");
+                return false;
+            }
+            if ($.trim($("#JgSec").val()) == "") {
+                layer.alert("【加工时长(秒)】必须大于0.");
+                return false;
+            } else if (parseInt($.trim($("#JgSec").val())) == 0) {
+                layer.alert("【加工时长(秒)】必须大于0.");
+                return false;
+            }
+            if ($.trim($("#weight1").val()) == "") {
+                layer.alert("【带料柄铸件重量(kg)】必须大于0.");
+                return false;
+            } else if (parseInt($.trim($("#weight1").val())) == 0) {
+                layer.alert("【带料柄铸件重量(kg)】必须大于0.");
+                return false;
+            }
+            if ($.trim($("#need_qty_xh").val()) == "" || $.trim($("#need_qty_xh").val()) == "0") {
+                layer.alert("请输入【小时用汤量】.");
+                return false;
+            } else if (parseInt($("#need_qty_xh").val()) <= 0) {
+                layer.alert("【小时用汤量】必须大于0.");
+                return false;
+            }
+            if ($("#need_date_dl").val() == "") {
+                layer.alert("请输入【要求送到时间】.");
+                return false;
+            }
+            if ($("#need_date").val() == "") {
+                layer.alert("请输入【要求送到时间】.");
                 return false;
             }
             if ($.trim($("#need_qty").val()) == "" || $.trim($("#need_qty").val()) == "0") {
@@ -121,14 +170,6 @@
                 return false;
             } else if (parseInt($("#need_qty").val()) <= 0) {
                 layer.alert("【要汤量】必须大于0.");
-                return false;
-            }
-            if ($("#need_date_dl").val() == "") {
-                layer.alert("请输入【送到时间】.");
-                return false;
-            }
-            if ($("#need_date").val() == "") {
-                layer.alert("请选择【送到时间】.");
                 return false;
             }
             return true;
@@ -168,15 +209,28 @@
                     </span>
                 </div>
             </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">物料号</label></div>              
+                <asp:TextBox ID="pgino" class="weui-input" runat="server" style="color:gray;"></asp:TextBox>
+            </div>
 
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red"><label class="weui-label">材料</label></div>              
-                <asp:TextBox ID="cl" class="weui-input" runat="server"></asp:TextBox>
+                <div class="weui-cell__hd"><label class="weui-label">材料</label></div>              
+                <asp:TextBox ID="cl" class="weui-input" runat="server" style="color:gray;"></asp:TextBox>
             </div>
-            
+
+            <div class="weui-cell" style="font-size:12px;color:gray;">
+                <div class="weui-flex__item">加工时长(秒)
+                    <asp:TextBox ID="JgSec" class="weui-input" runat="server" style="color:gray;width:50%; border-bottom:1px solid #e5e5e5; text-align:center;" ></asp:TextBox>
+                </div>
+                <div class="weui-flex__item">带料柄铸件重量(kg)
+                    <asp:TextBox ID="weight1" class="weui-input" runat="server" style="color:gray;width:20%; border-bottom:1px solid #e5e5e5; text-align:center;" ></asp:TextBox>
+                </div>
+            </div>
+
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red"><label class="weui-label">要汤量</label></div> 
-                <asp:TextBox ID="need_qty" class="weui-input" type='number' placeholder="请输入要汤量" runat="server"></asp:TextBox>
+                <div class="weui-cell__hd"><label class="weui-label">小时用汤量</label></div>              
+                <asp:TextBox ID="need_qty_xh" class="weui-input" runat="server" style="color:gray;"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
@@ -187,6 +241,11 @@
                 <div class="weui-cell__hd" style="width:70%; text-align:right;">
                     <asp:TextBox ID="need_date" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
                 </div>
+            </div>
+            
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">要汤量</label></div> 
+                <asp:TextBox ID="need_qty" class="weui-input" type='number' placeholder="请输入要汤量" runat="server"></asp:TextBox>
             </div>
 
             <div class="weui-cell">
@@ -220,6 +279,7 @@
             onClose: function (d) {
                 var obj = eval(d.data);
                 //alert(obj.values);
+                yzj_change(obj.values);
             },
             onOpen: function () {
                 //  console.log("open");
@@ -231,6 +291,45 @@
             $("#yzj").val(datalist_yzj[0].title);
         }
 
+        $("#pgino").select({
+            title: "物料号",
+            items: [{ title: '', value: '' }],
+            onChange: function (d) {
+                //alert(d.titles);
+                //alert(d.values);
+
+                $.ajax({
+                    type: "post",
+                    url: "YT.aspx/pgino_change",
+                    data: "{'domain': '" + $("#domain").val() + "','pgino':'" + d.titles + "','workshop':'" + "<%= _workshop %>" + "','mojuno':'" + d.values + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d); 
+                        var flag = obj[0].flag;
+                        if (flag == "Y") {
+                            layer.alert(obj[0].msg);
+                        }
+                        $('#cl').val(obj[0].cl);
+                        $('#JgSec').val(obj[0].JgSec);
+                        $('#weight1').val(obj[0].weight1);
+                        $('#need_qty_xh').val(obj[0].need_qty_xh);
+                    }
+                });
+            },
+            onClose: function (d) {
+                //var obj = eval(d.data);
+                //alert(obj.values);
+
+            },
+            onOpen: function () {
+                //  console.log("open");
+            },
+
+        });
+
+        /*
         var datalist_cl = [{ title: 'A380', value: '1' }, { title: 'EN46000', value: '2' }, { title: 'ADC12', value: '3' }
                         , { title: 'EN47100', value: '4' }]
         $("#cl").select({
@@ -247,7 +346,7 @@
                 //  console.log("open");
             }
 
-        });
+        });*/
 
 
         var datalist_nd = [{ title: '半小时内', value: '30' }, { title: '1小时内', value: '60' }, { title: '1.5小时内', value: '90' }
@@ -264,15 +363,15 @@
                 $.ajax({
                     type: "post",
                     url: "YT.aspx/nd_change",
-                    data: "{'nd_jg':'" + obj.values + "'}",
+                    data: "{'nd_jg':'" + obj.values + "','yzj': '" + $("#yzj").val() + "','pgino': '" + $("#pgino").val() + "','domain': '" + $("#domain").val()
+                        + "','JgSec': '" + $("#JgSec").val() + "','weight1': '" + $("#weight1").val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                     success: function (data) {
                         var obj = eval(data.d);
-                        var time = obj[0].time;
-                        //alert(time);
-                        $("#need_date").val(time);
+                        $("#need_date").val(obj[0].time);
+                        $("#need_qty").val(obj[0].need_qty);
                     }
 
                 });
@@ -298,7 +397,7 @@
                 datad = JSON.parse(data.d); //转为Json字符串
             },
             error: function (error) {
-                alert(error)
+                alert(error);
             }
         });
         wx.config({
