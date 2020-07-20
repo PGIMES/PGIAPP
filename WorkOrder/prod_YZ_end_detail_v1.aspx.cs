@@ -24,8 +24,8 @@ public partial class prod_YZ_end_detail_v1 : System.Web.UI.Page
 
     private void GetData()
     {
-         
-        string type = Request["type"].ToString();
+
+        string type = "";// Request["type"].ToString(); 暂时用不上
         string dh = Request["dh"].ToString();
 
 

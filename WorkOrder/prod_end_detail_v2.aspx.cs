@@ -38,7 +38,7 @@ public partial class prod_end_detail_v2 : System.Web.UI.Page
 
         sql = string.Format(@"
             select a.emp_name,format(a.off_date,'MM/dd HH:mm') as off_date,sum(off_qty) as off_qty  from Mes_App_WorkOrder_History a left join Mes_App_WorkOrder_Ng_Result b on  workorder_gl=a.lot_no  
-            where  a.{0}='{1}'    group by a.emp_name,a.off_date order by off_date ;
+            where  a.{0}='{1}'  and prod_line<>'1090'    group by a.emp_name,a.off_date order by off_date ;
 
             select a.*,iif(b.lot_no is null,'',b.lot_no+'/')+a.lot_no as new_lot,FORMAT(off_Date,'MM/dd HH:mm') as off_date_str,
                 cast(datediff(mi,on_date,off_date)/60 as varchar)+':'+right('00'+cast(datediff(mi,on_date,off_date)%60  as varchar),2)  as times from Mes_App_WorkOrder_History a left join Mes_App_WorkOrder_Ng_Result b on  workorder_gl=a.lot_no  where  a.{0}='{1}'    order by off_date", type,dh);

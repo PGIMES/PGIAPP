@@ -79,7 +79,7 @@ public partial class prod_YZ_monitor : System.Web.UI.Page
     //待入库
     private void BindData4()
     {
-        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 4 );
+        string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 4 );
         DataSet ds = SQLHelper.Query(sql);
        // DataTable dt_line = ds.Tables[0];
         DataTable dt_data = ds.Tables[0];

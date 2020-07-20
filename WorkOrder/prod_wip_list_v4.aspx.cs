@@ -21,9 +21,7 @@ public partial class prod_wip_list_v4 : System.Web.UI.Page
         }
         //生产中
         BindData1();
-        //零箱返线
-        BindData6();
-
+     
         //待终检
         BindData2();
         //待GP12

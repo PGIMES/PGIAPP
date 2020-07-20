@@ -7,8 +7,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
     <title>终检</title>
-    <%--<script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="../Content/layer/layer.js"></script>--%>
+    <script src="../scripts/jquery-1.10.2.min.js"></script>
+    <%--<script src="../Content/layer/layer.js"></script>--%>
     <link rel="stylesheet" href="../css/weui.css" />
     <link rel="stylesheet" href="../css/weuix.css" />
     <script src="../js/zepto.min.js"></script>
@@ -49,23 +49,22 @@
                 alert("请输入生产完成单号.");
                 return false;
             }
-            if ($("#dh_record").val() == "") {
-                alert("请输入来源单号.");
-                return false;
+            if (parseFloat($("#txt_curr_qty").val()) > 0) {
+                if ($("#dh_record").val() == "") {
+                    alert("请输入来源单号.");
+                    return false;
+                }
             }
+         
            
 
-            if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
-
-                return confirm('零托,确认执行下一步吗？');
-            } else {
-                return true;
-            }
             //if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
-            //    $.confirm('零托,确认执行下一步吗？', function () {  $('#btn_wc').click() }, function () {  })
-            //}
 
-            //return true;
+            //    return confirm('零托,确认执行下一步吗？');
+            //} else {
+            //    return true;
+            //}
+            return true;
         }
 
         function zcvalid() {
@@ -73,10 +72,14 @@
                 alert("请输入生产完成单号.");
                 return false;
             }
-            if ($("#dh_record").val() == "") {
-                alert("请输入来源单号.");
-                return false;
+            if (parseFloat($("#txt_curr_qty").val()) > 0)
+            {
+                if ($("#dh_record").val() == "") {
+                    alert("请输入来源单号.");
+                    return false;
+                }
             }
+           
             
             return true;
         }
@@ -106,6 +109,124 @@
 
         //    })
         //});
+
+        $(function () {
+            $("#btnsave2").click(function () {
+                $(":button").attr("disabled", "disabled");
+                $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if (!zcvalid()) {
+                    $(":button").removeAttr("disabled");
+                    $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return false;
+                    //}
+                }
+
+                if (parseFloat($("#txt_curr_qty").val()) < 0)
+                {
+                    $.confirm('本次检验数量小于0,确认倒冲吗？', function () { btnclick(0); },
+                       function () {
+                           $(":button").removeAttr("disabled");
+                           $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                       });
+                }
+                else {
+                    var qty = $("#txt_qty").val();
+                    $.confirm('当前输入检验数量为 ' + qty + ' ，确认要暂存吗？', function () { btnclick(0); },
+                                  function () {
+                                      $(":button").removeAttr("disabled");
+                                      $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                                  });
+                   
+                } 
+            });
+
+            $("#btnsave3").click(function () {
+                debugger
+                $(":button").attr("disabled", "disabled");
+                $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if (!valid()) {
+                    $(":button").removeAttr("disabled");
+                    $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return false;
+                    //}
+                }
+                if (parseFloat($("#txt_curr_qty").val()) < 0) {
+                    $.confirm('本次检验数量小于0,确认倒冲吗？', function () { btnclick(1); },
+                       function () {
+                           $(":button").removeAttr("disabled");
+                           $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                       });
+                }
+                else {
+                    if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
+                        $.confirm('零托,确认执行下一步吗？', function () { btnclick(1); },
+                            function () {
+                                $(":button").removeAttr("disabled");
+                                $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            });
+                    }
+                    else {
+
+                        var qty = $("#txt_qty").val();
+                        $.confirm('当前输入下料数量为 ' + qty + ' ，确认要下料吗？', function () { btnclick(1); },
+                                function () {
+                                    $(":button").removeAttr("disabled");
+                                    $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                                });
+
+                        
+                    }
+                }
+
+                
+
+            });
+        });
+
+         function btnclick(btnevent){
+               $.ajax({
+                      type: "post",
+                      url: "Quantity_Checked.aspx/save2",
+                      data: "{'_dh':'" + $('#txt_dh').val()
+                          + "','_curr_qty':'" + $('#txt_curr_qty').val() + "','_emp':'" + $('#txt_emp').val() + "','_pgino':'" + $('#txt_pgino').val()
+                          + "','_btnms':'" + btnevent + "','_dh_record':'" + $('#dh_record').val() 
+                          + "','_remark':'" + $('#txt_remark').val() + "','_stepvalue':'" + $("input[name='step']:checked").val() + "'}",
+                      contentType: "application/json; charset=utf-8",
+                      dataType: "json",
+                      async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                      success: function (data) {
+                          var obj = eval(data.d);
+                          if (obj[0].flag == "Y") {
+                              alert(obj[0].msg);
+                              if (obj[0].msg.indexOf('上岗') > 0)
+                              { window.location.href = "Emp_Login.aspx?workshop=<%=_workshop %>"; }
+
+                              $(":button").removeAttr("disabled");
+                              $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                              return false;
+                          }
+                          var ms="";
+                          var script;
+                          if (btnevent == 0) { ms = "部分"; }
+                          if (parseFloat($("#txt_curr_qty").val()) < 0) { ms = "倒冲";}
+                          if ($("input[name='step']:checked").val() == "入库")
+                          {
+                              script = "已" + ms + "完成,待入库";
+                          }
+                          else
+                          {
+                              script = "已" + ms + "完成,待GP12";
+                          }
+                          alert(script);
+                          window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
+                      }
+
+                  });
+          }
+
+
 
         function Bind_WorkOrder(workorder, sourceorder) {
            debugger
@@ -213,16 +334,18 @@
             });
 
             if (is_tr_row) {
-                //alert(totalRow);
-                if (parseFloat(totalRow) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_qty").val())) {
+               
+                if (parseFloat(totalRow) + parseFloat($("#txt_off_qty").val()) <= parseFloat($("#txt_qty").val())) {
 
                     $("#txt_qty").val(totalRow + parseFloat($("#txt_off_qty").val()));
                     $("#txt_curr_qty").val(totalRow);
+                    
                 }
                 else
                 {
                     $("#txt_qty").val($("#txt_ztsl").val());
                     $("#txt_curr_qty").val(parseFloat($("#txt_ztsl").val()) - parseFloat($("#txt_off_qty").val()));
+                 
                 }
             }
         }
@@ -299,6 +422,8 @@
                         <asp:TextBox ID="txt_emp" class="weui-input" ReadOnly="true" placeholder="" Style="max-width: 100%" runat="server"></asp:TextBox> 
                         
                         <asp:TextBox ID="txt_step" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                         <asp:TextBox ID="txt_tiaoxuan" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+
                     </div>
                 </div>
 
@@ -541,17 +666,20 @@
 
 
                         <asp:Button ID="btn_bind_data" runat="server" Text="绑定来源数据" Style="display: none;" OnClick="btn_bind_data_Click" />
-                        <div class="weui-cell">
+                     <%--   <div class="weui-cell">
                             <asp:Button ID="btnzc" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="暂存"   UseSubmitBehavior="false"  OnClick ="btnzc_Click" OnClientClick="if(!zcvalid()){return false;}this.disabled=false;this.value='处理中…';" />
-                           <%-- <asp:Button ID="btn_wc" runat="server" Text="未合托完成" OnClick="btn_wc_Click" Style="display: none" />--%>
+                            <asp:Button ID="btn_wc" runat="server" Text="未合托完成" OnClick="btn_wc_Click" Style="display: none" />
                             <asp:Button ID="btnsave" class="weui-btn weui-btn_primary" BackColor="#428bca" runat="server" Text="下一步" UseSubmitBehavior="false" OnClick="btnsave_Click" OnClientClick="if(!valid()){return false;}this.disabled=false;this.value='处理中…';" Style="margin-left: 10px;" />
                         </div>
-
-                        </div>
+                     --%>
                     </ContentTemplate>
                 </asp:UpdatePanel>
 
+              <div class="weui-cell">
 
+                   <input id="btnsave2" type="button" value="暂存" class="weui-btn weui-btn_primary" />
+                  <input id="btnsave3" type="button" value="下料" class="weui-btn weui-btn_primary" style="margin-left:10px;" />
+              </div>
 
            
     </form>

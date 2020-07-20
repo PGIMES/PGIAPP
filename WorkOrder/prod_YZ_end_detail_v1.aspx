@@ -78,7 +78,7 @@
                     <div class="weui-form-preview__bd">
                         <asp:Repeater runat="server" ID="dtMain">
                             <ItemTemplate>
-                                <div class="weui-mark-vip"><span class="weui-mark-lt <%# Request["type"].ToString()=="workorder"?"bg-gray":"bg-yellow"%>"></span></div>
+                                <%--<div class="weui-mark-vip"><span class="weui-mark-lt <%# Request["type"].ToString()=="workorder"?"bg-gray":"bg-yellow"%>"></span></div>--%>
 
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">项目号</label>
