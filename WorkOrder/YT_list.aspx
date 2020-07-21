@@ -310,7 +310,7 @@
                                             <asp:Repeater runat="server" ID="list_pre_my_dt" EnableTheming="False">
                                             <ItemTemplate>
                                                 <a class="weui-cell weui-cell_access">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -325,6 +325,7 @@
                                                                  <%# Eval("times_type") %><%# Eval("times") %>
                                                              </span>
                                                         </span>
+                                                        <br />
                                                         <span class="weui-agree__text" style="font-size: smaller">
                                                             <%# Eval("pgino")+","+Eval("pn")+",<font color=#10AEFF>已用"+Eval("qty_xiaohao")+"kg</font>"
                                                                     +","+ (Convert.ToSingle(Eval("rate").ToString())*100).ToString()+"%" %>  
