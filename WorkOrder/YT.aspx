@@ -27,7 +27,7 @@
             $("#JgSec").attr("readonly", "readonly");
             $("#weight1").attr("readonly", "readonly");
             $("#need_qty_xh").attr("readonly", "readonly");
-            $("#need_qty").attr("readonly", "readonly");
+            //$("#need_qty").attr("readonly", "readonly");
             $("#need_date").attr("readonly", "readonly"); 
         });
 
