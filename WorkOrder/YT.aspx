@@ -315,6 +315,9 @@
                         $('#JgSec').val(obj[0].JgSec);
                         $('#weight1').val(obj[0].weight1);
                         $('#need_qty_xh').val(obj[0].need_qty_xh);
+
+                        $('#need_date_dl').val(''); $('#need_date').val('');
+                        $('#need_qty').val('');
                     }
                 });
             },

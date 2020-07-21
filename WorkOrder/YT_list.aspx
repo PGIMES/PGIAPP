@@ -144,6 +144,50 @@
                     <div class="weui-tab__panel" style="background-color:lightgray">
                         <%--=======所有工单-----%>
                         <div id="tab1" class="weui-tab__content">
+                            <%-----要汤预警----%>
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要汤预警
+                                    <span class="weui-badge  bg-<% =(count0==0?"gray":"blue") %>"><% =count0 %></span>
+                                </div>
+                                <div class="weui-cells" id="YLYJ">
+                                    <asp:Repeater runat="server" ID="list_pre" EnableTheming="False" OnItemDataBound="list_pre_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("cl") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_pre_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")
+                                                                    +","+Eval("cl")+","+Eval("bwl_weight_toal")+"kg" %>
+                                                        </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("act_date","{0:MM-dd HH:mm}")%>  
+                                                             <span style="color:#10AEFF;">
+                                                                 <%# Eval("times_type") %><%# Eval("times") %>
+                                                             </span>
+                                                        </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("pgino")+","+Eval("pn")+",<font color=#10AEFF>已用"+Eval("qty_xiaohao")+"kg</font>"
+                                                                    +","+ (Convert.ToSingle(Eval("rate").ToString())*100).ToString()+"%" %>  
+                                                        </span>
+                                                    </div>
+                                                    <%--<div class="weui-cell__ft">
+                                                    </div>--%>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+
                             <%-----要料中----%>
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要汤中
@@ -168,7 +212,8 @@
                                                         </span>--%>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("cl")+",<font color=#10AEFF>"+Eval("need_qty")+"kg</font>" %>
+                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("pgino")
+                                                                    +","+Eval("cl")+",<font color=#10AEFF>"+Eval("need_qty")+"kg</font>" %>
                                                             <span class="weui-mark-rt- weui-badge" 
                                                             style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                                  font-size: x-small; color: white; 
@@ -197,7 +242,7 @@
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要汤完成(24h内)
-                                    <span class="weui-badge  bg-<% =(count4==0?"gray":"blue") %>"><% =count4 %></span>
+                                    <span class="weui-badge  bg-<% =(count2==0?"gray":"blue") %>"><% =count2 %></span>
                                 </div>
                                 <div class="weui-cells" id="YL_END">
                                     <asp:Repeater runat="server" ID="list_end" EnableTheming="False" OnItemDataBound="list_end_ItemDataBound">
@@ -218,7 +263,7 @@
                                                         </span>--%>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%#  "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("cl") %>
+                                                            <%#  "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("pgino")+","+Eval("cl") %>
                                                             <span class="weui-mark-rt- weui-badge" 
                                                             style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                                  font-size: x-small; color: white; 
@@ -250,10 +295,54 @@
                         </div>
                         <%--=======我的工单-----%>
                         <div id="tab2" class="weui-tab__content">
+                            <%-----要汤预警----%>
+                            <div class="weui-form-preview">
+                                <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要汤预警
+                                    <span class="weui-badge  bg-<% =(count0_my==0?"gray":"blue") %>"><% =count0_my %></span>
+                                </div>
+                                <div class="weui-cells" id="YLYJ_My">
+                                    <asp:Repeater runat="server" ID="list_pre_my" EnableTheming="False" OnItemDataBound="list_pre_my_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="weui-cells__title ">
+                                                <i class="icon nav-icon icon-22 color-success"></i><%# Eval("cl") %>
+                                            </div>                                        
+                                            <asp:Repeater runat="server" ID="list_pre_my_dt" EnableTheming="False">
+                                            <ItemTemplate>
+                                                <a class="weui-cell weui-cell_access">
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                    <div class="weui-cell__hd">
+                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="weui-cell__bd">
+                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")
+                                                                    +","+Eval("cl")+","+Eval("bwl_weight_toal")+"kg" %>
+                                                        </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("act_date","{0:MM-dd HH:mm}")%>  
+                                                             <span style="color:#10AEFF;">
+                                                                 <%# Eval("times_type") %><%# Eval("times") %>
+                                                             </span>
+                                                        </span>
+                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                            <%# Eval("pgino")+","+Eval("pn")+",<font color=#10AEFF>已用"+Eval("qty_xiaohao")+"kg</font>"
+                                                                    +","+ (Convert.ToSingle(Eval("rate").ToString())*100).ToString()+"%" %>  
+                                                        </span>
+                                                    </div>
+                                                    <%--<div class="weui-cell__ft">
+                                                    </div>--%>
+                                                </a>
+                                            </ItemTemplate>
+                                            </asp:Repeater>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+
                             <%-----要料中----%>
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要汤中 
-                                    <span class="weui-badge  bg-<% =(count5==0?"gray":"blue") %>"><% =count5 %></span>
+                                    <span class="weui-badge  bg-<% =(count1_my==0?"gray":"blue") %>"><% =count1_my %></span>
                                 </div>
                                 <div class="weui-cells" id="YLZ_my">
                                     <asp:Repeater runat="server" ID="list_go_my" EnableTheming="False" OnItemDataBound="list_go_my_ItemDataBound">
@@ -274,7 +363,8 @@
                                                         </span>--%>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("cl")+",<font color=#10AEFF>"+Eval("need_qty")+"kg</font>"  %>
+                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("pgino")
+                                                                    +","+Eval("cl")+",<font color=#10AEFF>"+Eval("need_qty")+"kg</font>"  %>
                                                             <span class="weui-mark-rt- weui-badge" 
                                                             style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                                  font-size: x-small; color: white; 
@@ -303,7 +393,7 @@
                             <%-----要料完成----%>
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  "><i class="icon nav-icon icon-49"></i> 要汤完成(24h内)
-                                    <span class="weui-badge  bg-<% =(count8==0?"gray":"blue") %>"><% =count8 %></span>
+                                    <span class="weui-badge  bg-<% =(count2_my==0?"gray":"blue") %>"><% =count2_my %></span>
                                 </div>
                                 <div class="weui-cells" id="YL_END_my">
                                     <asp:Repeater runat="server" ID="list_end_my" EnableTheming="False" OnItemDataBound="list_end_my_ItemDataBound">
@@ -324,7 +414,7 @@
                                                         </span>--%>
                                                     
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("cl") %>
+                                                            <%# "<font color=#10AEFF>"+Eval("yzj_no")+"</font>"+Eval("yzj_name")+","+Eval("pgino")+","+Eval("cl") %>
                                                             <span class="weui-mark-rt- weui-badge" 
                                                             style="background-color: <%# Eval("type").ToString()=="部分"?"red":"#10AEFF"%>;
                                                                  font-size: x-small; color: white; 
