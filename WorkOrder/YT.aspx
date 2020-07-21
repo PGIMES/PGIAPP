@@ -51,7 +51,8 @@
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
                         + "','yzj':'" + $("#yzj").val() + "','domain':'" + $('#domain').val() + "','cl':'" + $('#cl').val()
                         + "','need_qty':'" + $("#need_qty").val() + "','need_date':'" + $("#need_date").val()
-                        + "','need_date_dl':'" + $("#need_date_dl").val()
+                        + "','need_date_dl':'" + $("#need_date_dl").val() + "','JgSec':'" + $("#JgSec").val()
+                        + "','weight1':'" + $("#weight1").val() + "','need_qty_xh':'" + $("#need_qty_xh").val()
                         + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

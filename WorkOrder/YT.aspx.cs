@@ -199,7 +199,8 @@ public partial class YL : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string save2(string _emp_code_name, string yzj, string domain, string cl, string need_qty, string need_date, string need_date_dl)
+    public static string save2(string _emp_code_name, string yzj, string domain, string cl, string need_qty, string need_date, string need_date_dl
+        , string JgSec, string weight1, string need_qty_xh)
     {
         string flag = "N", msg = "";
 
@@ -214,8 +215,8 @@ public partial class YL : System.Web.UI.Page
 
         if (flag == "N")
         {
-            string re_sql = @"exec [usp_app_YT] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}'";
-            re_sql = string.Format(re_sql, _emp_code_name, yzj, domain, cl, need_qty, need_date, need_date_dl);
+            string re_sql = @"exec [usp_app_YT] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+            re_sql = string.Format(re_sql, _emp_code_name, yzj, domain, cl, need_qty, need_date, need_date_dl, JgSec, weight1, need_qty_xh);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();
