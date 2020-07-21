@@ -140,14 +140,14 @@
             if ($.trim($("#JgSec").val()) == "") {
                 layer.alert("【加工时长(秒)】必须大于0.");
                 return false;
-            } else if (parseInt($.trim($("#JgSec").val())) == 0) {
+            } else if (parseFloat($.trim($("#JgSec").val())) == 0) {
                 layer.alert("【加工时长(秒)】必须大于0.");
                 return false;
             }
             if ($.trim($("#weight1").val()) == "") {
                 layer.alert("【带料柄铸件重量(kg)】必须大于0.");
                 return false;
-            } else if (parseInt($.trim($("#weight1").val())) == 0) {
+            } else if (parseFloat($.trim($("#weight1").val())) == 0) {
                 layer.alert("【带料柄铸件重量(kg)】必须大于0.");
                 return false;
             }
