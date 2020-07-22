@@ -34,7 +34,7 @@ public partial class prod_wip_list_v4 : System.Web.UI.Page
     //生产中
     private void BindData1()
     {
-        string sql = string.Format(@"exec [usp_app_wip_list_prod] '{0}','{1}'",  Request["workshop"], WeiXin.GetCookie("workcode"));
+        string sql = string.Format(@"exec [usp_app_wip_list_prod_] '{0}','{1}'",  Request["workshop"], WeiXin.GetCookie("workcode"));
         DataSet ds= SQLHelper.Query(sql);
         DataTable dt_line = ds.Tables[0];
         DataTable dt_data = ds.Tables[1];
