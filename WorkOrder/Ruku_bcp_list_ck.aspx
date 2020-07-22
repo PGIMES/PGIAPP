@@ -227,7 +227,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>
                                                 <%=line+",产品数"+rowscount_2+",<font class=f-blue>Lot"+rowscount
-                                                        +"</font>,<font class=f-orange>时长"+Avg_ss_2+"h</font>" %>
+                                                        +"</font>,<font class=f-orange>平均时长"+Avg_ss_2+"h</font>" %>
                                                <%-- <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " 
                                                     style="margin-right: 15px;"><% =rowscount %></span>--%>
                                             </div>

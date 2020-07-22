@@ -254,7 +254,15 @@
                     <div class="weui-cell__bd">
                         <p>半成品库</p>
                     </div>
-                    <div class="weui-cell__ft"></div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label3" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="Label3_v" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i3 = Label3.Text;
+                            Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>Lot" + i3 + "</span>");
+                        %>   
+                        <% string i3_v = Label3_v.Text;
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i3_v == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>平均时长" + i3_v + "</span>"); %> 
+                    </div>
                 </a>
             </div>
         </div>
