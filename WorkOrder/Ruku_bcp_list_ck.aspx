@@ -168,7 +168,20 @@
             //$('ul li ul li').children(".js-category2").css("display", "")
             showBlockCount();
         }
+        function showorhide(obj) {
+            var divLineBody = $(obj)[0].nextElementSibling;
+            var ishide = $(divLineBody).css("display");
+            // alert(ishide);
+            if (ishide == "none") {
+                $(divLineBody).show("fast")//;.removeClass("hide")
+                // $(obj).find(".icon-74").removeClass(".icon-74").addClass(".icon-35")
+            }
+            else {
+                $(divLineBody).hide()// ;.addClass("hide")
+                // $(obj).find(".icon-35").removeClass(".icon-35").addClass(".icon-74")
+            }
 
+        }
     </script>
 </head>
 <body ontouchstart >
