@@ -249,7 +249,7 @@
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_list_ck.aspx">
                     <div class="weui-cell__hd">
-                        <i class="fa fa-random margin10-r"></i>
+                        <i class="fa fa-hdd-o margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
                         <p>半成品库</p>
