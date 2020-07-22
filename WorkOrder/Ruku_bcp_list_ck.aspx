@@ -109,10 +109,7 @@
                 }
             });
 
-            //$("#search").keyup(function () {
-            //    so();
-            //})
-            //showBlockCount();
+           
 
             $('#searchInput').bind('input propertychange', function () {
 
@@ -140,83 +137,38 @@
             });
 
         })
-        //搜索
-        //function so() {
-        //    var val =  $("#search").val().toUpperCase();
-        //    if (val != "") {
-        //        $("a").addClass("hide");                
-        //        $("a").filter("[title*='" + val + "']").removeClass("hide");
-        //        $(".LH").addClass("hide");
-        //    }
-        //    else {
-        //        $("a").removeClass("hide");
-        //        $(".LH").removeClass("hide");
-        //    }            
-        //    showBlockCount()
-        //}
         //显示数量
         function showBlockCount() {
-            $(".weui-form-preview .weui-cells").each(function (i, item) {
-                var rowcount = $(this).find("a:not(.hide)").length;                
-                var ipart = $(this).find("a:not(.hide) :contains('部分')").length;
-
-                var obj = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
-                var objpart = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
-                 
-
-                $(obj).text(rowcount-ipart);
-                $(objpart).text("部"+ipart);
-                 
-
-                if (rowcount - ipart == 0) {
-                    $(obj).addClass("bg-gray").removeClass("bg-blue")
-                }
-                else {
-                    $(obj).addClass("bg-blue").removeClass("bg-gray")
-                }
-                //部分
-                if (ipart == 0) {
-                    $(objpart).addClass("bg-gray").removeClass("bg-orange")
-                }
-                else {
-                    $(objpart).addClass("bg-orange").removeClass("bg-gray")
-                }
+            $(".weui-form-preview").each(function (i, item) {//>.weui-cells
+                //var rowcount = $(this).find("a:not(.hide)").length;
+                //// debugger;
+                //var obj = $(item).prev().children().last();
+                //$(obj).text(rowcount);
+                //if (rowcount == 0) {
+                //    $(obj).addClass("bg-gray").removeClass("bg-blue")
+                //}
+                //else {
+                //    $(obj).addClass("bg-blue").removeClass("bg-gray")
+                //}
             });
-            //组装件数量
-           
-
         }
+
         function cancel() {
-            $('.weui-cell').removeClass("hide");
-            $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            //$('.weui-cell').removeClass("hide");
+            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
              
-            $('ul li ul li').children(".js-category2").css("display", "")
+            //$('ul li ul li').children(".js-category2").css("display", "")
             showBlockCount();
         }
 
         function clear() {
             $('#searchInput').val('');
-            $('.weui-cell').removeClass("hide");
-            $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
-            $('ul li ul li').children(".js-category2").css("display", "")
+            //$('.weui-cell').removeClass("hide");
+            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+            //$('ul li ul li').children(".js-category2").css("display", "")
             showBlockCount();
         }
 
-        //组装件显示折叠
-        function showorhide(obj) {
-            var divLineBody=$(obj)[0].nextElementSibling;
-            var ishide = $(divLineBody).css("display");
-            // alert(ishide);
-            if (ishide == "none") {
-                $(divLineBody).show("fast")//;.removeClass("hide")
-               // $(obj).find(".icon-74").removeClass(".icon-74").addClass(".icon-35")
-            }
-            else {
-                $(divLineBody).hide()// ;.addClass("hide")
-               // $(obj).find(".icon-35").removeClass(".icon-35").addClass(".icon-74")
-            }
-
-        }
     </script>
 </head>
 <body ontouchstart >
@@ -266,13 +218,16 @@
                                         string line = drLine["line"].ToString();
                                         int rowscount = dt_line.Select("line='" + line + "'").Count();
                                         int rowscount_2 = dtLineDistinct_2.Select("line='" + line + "'").Count();
+                                        string Avg_ss_2=string.Format("{0:N0}",Convert.ToDecimal(dt_line.Compute("Avg(minss)"
+                                            ,"line='" + line + "'"))/60);
                                 %>
                                 <ul class="collapse">
                                     <li>
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>
-                                                <%=line+",产品数"+rowscount_2+",Lot"+rowscount %>
+                                                <%=line+",产品数"+rowscount_2+",<font class=f-blue>Lot"+rowscount
+                                                        +"</font>,<font class=f-orange>时长"+Avg_ss_2+"h</font>" %>
                                                <%-- <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " 
                                                     style="margin-right: 15px;"><% =rowscount %></span>--%>
                                             </div>
@@ -319,7 +274,19 @@
                                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="weui-cell__bd " style="font-size: smaller">
-                                                                    <span class="margin10-r">
+                                                                    <%=dr["workorder"]+","+dr["act_qty"]+"件,"+dr["loc_hg"]
+                                                                        +","+string.Format("{0:MM-dd HH:mm}",dr["create_date"])%> 
+                                                                    时长: 
+                                                                    <% if (Convert.ToInt32(dr["hhs"]) >= 120) {%>
+                                                                    <font class="f-red"><%=dr["times"] %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(dr["hhs"]) >= 72) {%>
+                                                                    <font class="f-blue"><%=dr["times"] %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=dr["times"] %>
+                                                                        <%}  %>
+                                                                    <%--<span class="margin10-r">
                                                                         <%=dr["workorder"] %> 
                                                                     </span>
                                                                     <span class="margin10-r">
@@ -334,7 +301,7 @@
                                                                     </span>
                                                                     <span class="margin10-r">
                                                                         时长: <font class="f-blue"><%=dr["times"] %></font>
-                                                                    </span>
+                                                                    </span>--%>
                                                                 </div>
                                                             </a>
                                                             <% }%>
