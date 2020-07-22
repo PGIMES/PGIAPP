@@ -71,7 +71,7 @@
                 var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                 if (parseInt(_op) > 100 && parseInt(_op) < 600) {
                     $("#div_lot_no_fixed").show();
-                }else if (parseInt(_op) >= 600 && parseInt(_op) < 700) {
+                }else if ((parseInt(_op) >= 600 && parseInt(_op) < 700) || parseInt(_op)==800) {
                     if ($("#b_use_routing").val() == "0") {
                         $("#div_lot_no_fixed").show();
                     }
@@ -98,7 +98,7 @@
             $("#ref_order").change(function () {
                 if ($("#op").val() != "") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));                    
-                    if (parseInt(_op) > 700) {
+                    if (parseInt(_op) > 900) {
                         $.ajax({
                             type: "post",
                             url: "bhgp_Apply_V1.aspx/ref_order_change",
@@ -349,8 +349,8 @@
                 if ($.trim($("#ref_order").val()) == "") {
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     
-                    if (parseInt(_op) <= 700) {
-                        if (parseInt(_op) >= 600 && parseInt(_op) < 700) {
+                    if (parseInt(_op) <= 700 || parseInt(_op)==800) {
+                        if ((parseInt(_op) >= 600 && parseInt(_op) < 700) || parseInt(_op)==800) {
                             if ($("#b_use_routing").val() == "1") {
                                 layer.alert("请输入【完成单号】.");
                                 return false;
@@ -1319,7 +1319,7 @@
                     $("#qty").val("");
                     $("#qty").attr("placeholder","请输入处置数量");
 
-                    if (parseInt(d.values) <= 700) {
+                    if (parseInt(d.values) <= 700 || parseInt(d.values)==800) {
                         /*
                         if (parseInt(d.values) < 600 || $("#b_use_routing").val() == "0") {
 
@@ -1353,7 +1353,7 @@
                             $("#div_lot_no_fixed").show();
                             $("#lot_no_fixed").val("");
 
-                        }else if (parseInt(d.values) >= 600 && parseInt(d.values) < 700) {
+                        }else if ((parseInt(d.values) >= 600 && parseInt(d.values) < 700) || parseInt(d.values)==800) {
                             if ($("#b_use_routing").val() == "0") {
                                 /*if (d.values==$("#b_op_one").val()) {
                                     $("#div_lot_no_fixed").show();
