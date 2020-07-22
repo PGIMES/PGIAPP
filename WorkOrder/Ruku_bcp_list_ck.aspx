@@ -258,44 +258,61 @@
                             <div class="weui-form-preview">
                                 <%
                                     System.Data.DataTable dt_line = ViewState["dt_data"] as System.Data.DataTable;
-                                    int rowscount = dt_line.Rows.Count;
+                                    System.Data.DataView dataView = dt_line.DefaultView;
+                                    System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "line");
+                                    System.Data.DataTable dtLineDistinct_2 = dataView.ToTable(true, "line","pgino");
+                                    foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
+                                    {
+                                        string line = drLine["line"].ToString();
+                                        int rowscount = dt_line.Select("line='" + line + "'").Count();
+                                        int rowscount_2 = dtLineDistinct_2.Select("line='" + line + "'").Count();
                                 %>
                                 <ul class="collapse">
                                     <li>
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item">
-                                                <i class="icon nav-icon icon-49"></i>入库完成(24小时内)
-                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " 
-                                                    style="margin-right: 15px;"><% =rowscount %></span>
+                                                <i class="icon nav-icon icon-49"></i>
+                                                <%=line+",产品数"+rowscount_2+",Lot"+rowscount %>
+                                               <%-- <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " 
+                                                    style="margin-right: 15px;"><% =rowscount %></span>--%>
                                             </div>
                                             <i class="icon icon-74"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
                                             <div class="weui-cells">
                                                 <%                                          
-                                                     System.Data.DataView dataView = dt_line.DefaultView;
-                                                     System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "pgino");
-                                                    foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
+                                                    System.Data.DataTable dtLineDistinct_p = dataView.ToTable(true,"line", "pgino", "pn");
+                                                    foreach (System.Data.DataRow drpgino in dtLineDistinct_p.Rows)
                                                     {
-                                                        string pgino = drLine["pgino"].ToString();
+                                                        string pgino = drpgino["pgino"].ToString();
+                                                        string pn = drpgino["pn"].ToString();
+                                                        int rowscount_p = dt_line.Select("line='" + line + "'and pgino='" + pgino 
+                                                            + "'and pn='" + pn + "'").Count();
+                                                        if (rowscount_p <= 0) continue;
+                                                        string sum_qty=dt_line.Compute("Sum(act_qty)"
+                                                            ,"line='" + line + "'and pgino='" + pgino + "'and pn='" + pn + "'").ToString();
+                                                        string Avg_ss=string.Format("{0:N0}",Convert.ToDecimal(dt_line.Compute("Avg(minss)"
+                                                            ,"line='" + line + "'and pgino='" + pgino + "'and pn='" + pn + "'"))/60);
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title weui-flex__item LH" id="<%=pgino %>LH5">
-                                                                <i class="icon nav-icon icon-22 color-success"></i><%=pgino %>
-                                                                <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
-                                                                    <% =(ViewState["dt_data"] as System.Data.DataTable)
-                                                                            .Select("pgino='" + pgino + "'").Count() %>
-                                                                </span>
+                                                                <i class="icon nav-icon icon-22 color-success"></i>
+                                                                <%=pgino+"," +pn +","+sum_qty+"件,"+rowscount_p+"托,时长"+Avg_ss+"h"%>
+                                                                <%--<span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
+                                                                    <% =rowscount_p %>
+                                                                </span>--%>
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
                                                         <div class="page-category js-categoryInner a_body" style="display: none">
                                                             <%                                                  
-                                                                System.Data.DataTable dt = ViewState["dt_data"] as System.Data.DataTable;
-                                                                foreach (System.Data.DataRow dr in dt.Select("pgino='" + pgino + "'"))
-                                                                { %>
+                                                                foreach (System.Data.DataRow dr in 
+                                                                    dt_line.Select("line='" + line + "'and pgino='" + pgino 
+                                                                    + "'and pn='" + pn + "'"))
+                                                                { 
+                                                                    %>
                                                             <a class="weui-cell  weui-cell_access " style="color: black">
                                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                                 <div class="weui-cell__hd">
@@ -330,7 +347,8 @@
                                         </div>
                                     </li>
                                 </ul>
-
+                                <%  
+                                    }%>
                             </div>
                             
 
