@@ -247,6 +247,15 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_list_ck.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-random margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>半成品库</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
             </div>
         </div>
         <div id="errmsg"class="f14"></div>  
