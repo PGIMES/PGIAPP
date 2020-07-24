@@ -305,7 +305,7 @@
             $.ajax({
                 type: "post",
                 url: "bhgp_Apply_V1.aspx/pgino_change",
-                data: "{'pgino':'" + pgino + "','domain':'" + $("#domain").val() + "'}",
+                data: "{'pgino':'" + pgino + "','domain':'" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
