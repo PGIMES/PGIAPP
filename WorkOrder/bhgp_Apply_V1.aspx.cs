@@ -483,7 +483,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         string flag = "N", msg = "";
         int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
         string re_sql = "";
-        if ((op_code <= 700 || op_code == 800) || op_code == 996)
+        if (op_code <= 700 || op_code == 800 || op_code == 996)
         {
             /*if (op_code < 600 || _b_use_routing == "0")
             {
