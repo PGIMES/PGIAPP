@@ -78,6 +78,15 @@
                 }
             });
 
+           $("ul li").find("#line_s").each(function () {
+                if ("配件" != $(this).text()) {
+                    $(this).parent().parent().parent().siblings().removeClass('js-show');
+                    $(this).parent().parent().parent().addClass('js-show');
+                    $(this).parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
+                    $(this).parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
+                } 
+            });
+
             $('#searchInput').bind('input propertychange', function () {
 
                 var text = $("#searchInput").val();
@@ -190,7 +199,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
@@ -259,7 +268,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
@@ -331,7 +340,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
@@ -403,7 +412,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
@@ -466,7 +475,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
@@ -535,7 +544,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
@@ -603,7 +612,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
@@ -675,7 +684,7 @@
                                                 <li>
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
-                                                            <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                            <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                         </div>
                                                         <i class="icon icon-74"></i>
