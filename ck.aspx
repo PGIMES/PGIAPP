@@ -247,7 +247,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_list_ck.aspx">
+                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_list_ck_V1.aspx">
                     <div class="weui-cell__hd">
                         <i class="fa fa-hdd-o margin10-r"></i>
                     </div>
