@@ -359,7 +359,7 @@
                             layer.alert("请输入【终检完成单号】.");
                             return false;
                         }
-                    }else if (parseInt(_op) > 700) {
+                    }else if (parseInt(_op) > 700 && parseInt(_op) != 996) {
                         layer.alert("请输入【参考号】.");
                         return false;
                     }
