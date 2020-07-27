@@ -17,8 +17,12 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = "三车间";//  Request.QueryString["workshop"].ToString(); // "四车间";//
-        _dh = "G0013089";// Request.QueryString["dh"].ToString();// "W0000456";
+        //_workshop = "三车间";//  Request.QueryString["workshop"].ToString(); // "四车间";//
+        //_dh = "G0013089";// Request.QueryString["dh"].ToString();// "W0000456";
+
+        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";//
+        _dh = Request.QueryString["dh"].ToString();// "W0000456";
+
         // lotno = "G0000301";
         //_dh = "W0000450";
 
