@@ -46,7 +46,7 @@
 
             if ("<%= _ismodify %>"=="Y1") {
                 $("#pgino").attr("readonly", "readonly");$("#img_sm_pgino").hide();
-                $("#op").attr("readonly", "readonly");$("#lot_no").attr("readonly", "readonly");
+                $("#op").attr("readonly", "readonly");//$("#lot_no").attr("readonly", "readonly");
                 $("#reason").attr("readonly", "readonly");
                 $("#rscode").attr("readonly", "readonly");
             }
