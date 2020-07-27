@@ -60,6 +60,7 @@
                 $("#div_ref_order").hide();
                 $("#lbl_ref_order").text("参考号/生产完成单号");
                 $("#ref_order").val("");
+                $("#workorder_qc_loc").val("");
             } else {
                 $("#lbl_ref_order").text($("#laiyuan_dh_desc").val());
                 $("#lbl_workorder_qc").text($("#laiyuan_dh_desc").val());
@@ -112,6 +113,8 @@
                                     layer.alert(obj[0].msg);
                                 }
                                 $("#qty").val(obj[0].qty);
+                                $("#workorder_qc_loc").val(obj[0].workorder_qc_loc);
+
                                 $("#qty").change();
                             }
                         });
@@ -216,7 +219,7 @@
                         + "','_descr':'" + $('#descr').val() + "','_op':'" + $('#op').val() + "','_qty':'" + $('#qty').val() 
                         + "','_reason':'" + $('#reason').val() + "','_comment':'" + $('#comment').val() + "','_b_use_routing':'" 
                         + $('#b_use_routing').val() + "','_ref_order':'" + $('#ref_order').val() + "','_b_op_one':'" + $('#b_op_one').val() 
-                        + "','_lot_no_fixed':'" + $('#lot_no_fixed').val() + "'}",
+                        + "','_lot_no_fixed':'" + $('#lot_no_fixed').val() + "','_workorder_qc_loc':'" + $('#workorder_qc_loc').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -325,6 +328,7 @@
                     $("#div_ref_order").hide();
                     $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
+                    $("#workorder_qc_loc").val("");
                 }
 
             });
@@ -526,6 +530,7 @@
                             <div class="weui-cell__bd">
                                 <span style="float:left; width:90%">
                                     <asp:TextBox ID="ref_order" class="weui-input"  runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="workorder_qc_loc" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
                                 </span>
                                 <span style="float:left; width:10%">
                                     <img id="img_sm_ref_order" src="../img/fdj2.png" />
@@ -1319,7 +1324,8 @@
                     $("#div_ref_order").hide();
                     $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
-                    
+                    $("#workorder_qc_loc").val("");
+
                     $("#qty").removeAttr("readonly");
                     $("#qty").removeClass("f_gray");
                     $("#qty").val("");
@@ -1375,17 +1381,20 @@
                                 $("#div_ref_order").show();
                                 $("#lbl_ref_order").text("完成单号");
                                 $("#ref_order").val("");
+                                $("#workorder_qc_loc").val("");
                             }
     
                         } else if (parseInt(d.values) == 700) {
                             $("#div_ref_order").show();
                             $("#lbl_ref_order").text("终检完成单号");
                             $("#ref_order").val("");
+                            $("#workorder_qc_loc").val("");
                         } 
                     } else{
                         $("#div_ref_order").show();
                         $("#lbl_ref_order").text("参考号");
                         $("#ref_order").val("");
+                        $("#workorder_qc_loc").val("");
 
                         $("#qty").attr("readonly", "readonly");
                         $("#qty").addClass("f_gray");

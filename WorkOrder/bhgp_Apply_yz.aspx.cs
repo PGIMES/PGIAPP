@@ -231,7 +231,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
     [WebMethod]
     public static string ref_order_change(string domain, string ref_order,string pgino, string op)
     {
-        string flag = "N", msg = "", qty = "";
+        string flag = "N", msg = "", qty = "", workorder_qc_loc = "";
         //check qad 库存
         DataTable ldt = new DataTable();
         string sqlStr = @"select ld_part,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
@@ -274,10 +274,11 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             else
             {
                 qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+                workorder_qc_loc = ldt.Rows[0]["ld_loc"].ToString();
             }
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\"}]";
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"qty\":\"" + qty + "\",\"workorder_qc_loc\":\"" + workorder_qc_loc + "\"}]";
         return result;
 
     }
@@ -440,7 +441,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
     [WebMethod]
     public static string save2(string _emp_code_name,string _workorder, string _pgino, string _pn, string _descr, string _op
-        , string _qty, string _reason,string _comment, string _b_use_routing, string _ref_order)
+        , string _qty, string _reason,string _comment, string _b_use_routing, string _ref_order, string _workorder_qc_loc)
     {
         string flag = "N", msg = "";
         int op_code = Convert.ToInt32(_op.Substring(0, _op.IndexOf('-')));
@@ -480,7 +481,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         }
         else if (op_code == 999 || op_code == 998 || op_code == 997)//成品库、半成品库、原材料库
         {
-            re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{10}'";
+            re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{10}','{11}'";
         }
         else
         {
@@ -490,7 +491,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         if (flag == "N")
         {
             re_sql = string.Format(re_sql, _emp_code_name, _workorder, _pgino, _pn, _descr, _op
-                                , _qty, _reason, _comment, _b_use_routing, _ref_order);
+                                , _qty, _reason, _comment, _b_use_routing, _ref_order, _workorder_qc_loc);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();

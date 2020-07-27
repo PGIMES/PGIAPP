@@ -52,6 +52,7 @@
                 $("#div_ref_order").hide();
                 $("#lbl_ref_order").text("参考号/生产完成单号");
                 $("#ref_order").val("");
+                $("#workorder_qc_loc").val("");
             } else {
                 $("#lbl_ref_order").text($("#laiyuan_dh_desc").val());
                 $("#lbl_workorder_qc").text($("#laiyuan_dh_desc").val());
@@ -89,6 +90,8 @@
                                     layer.alert(obj[0].msg);
                                 }
                                 $("#qty").val(obj[0].qty);
+                                $("#workorder_qc_loc").val(obj[0].workorder_qc_loc);
+
                                 $("#qty").change();
                             }
                         });
@@ -180,7 +183,7 @@
                     $("#btnsave2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                     return false;
                 }
-
+                
                 $.ajax({
                     type: "post",
                     url: "bhgp_Apply_yz.aspx/save2",
@@ -188,7 +191,7 @@
                         + "','_workorder':'" + $('#workorder').val() + "','_pgino':'" + $('#pgino').val() + "','_pn':'" + $('#pn').val() 
                         + "','_descr':'" + $('#descr').val() + "','_op':'" + $('#op').val() + "','_qty':'" + $('#qty').val() 
                         + "','_reason':'" + $('#reason').val() + "','_comment':'" + $('#comment').val() + "','_b_use_routing':'" 
-                        + $('#b_use_routing').val() + "','_ref_order':'" + $('#ref_order').val() 
+                        + $('#b_use_routing').val() + "','_ref_order':'" + $('#ref_order').val() + "','_workorder_qc_loc':'" + $('#workorder_qc_loc').val() 
                         + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -263,6 +266,7 @@
                     $("#div_ref_order").hide();
                     $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
+                    $("#workorder_qc_loc").val("");
                 }
 
             });
@@ -435,6 +439,7 @@
                             <div class="weui-cell__bd">
                                 <span style="float:left; width:90%">
                                     <asp:TextBox ID="ref_order" class="weui-input"  runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="workorder_qc_loc" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
                                 </span>
                                 <span style="float:left; width:10%">
                                     <img id="img_sm_ref_order" src="../img/fdj2.png" />
@@ -1212,6 +1217,7 @@
                     $("#div_ref_order").hide();
                     $("#lbl_ref_order").text("参考号/生产完成单号");
                     $("#ref_order").val("");
+                    $("#workorder_qc_loc").val("");
                     
                     $("#qty").removeAttr("readonly");
                     $("#qty").removeClass("f_gray");
@@ -1224,22 +1230,26 @@
                                 $("#div_ref_order").show();
                                 $("#lbl_ref_order").text("压铸完成单号");
                                 $("#ref_order").val("");
+                                $("#workorder_qc_loc").val("");
                             }
                         }else if ((parseInt(d.values) >= 600 && parseInt(d.values) < 700) || parseInt(d.values)==800) {
                             if ($("#b_use_routing").val() == "1") {
                                 $("#div_ref_order").show();
                                 $("#lbl_ref_order").text("后处理完成单号");
                                 $("#ref_order").val("");
+                                $("#workorder_qc_loc").val("");
                             }
                         } else if (parseInt(d.values) == 700) {
                             $("#div_ref_order").show();
                             $("#lbl_ref_order").text("终检完成单号");
                             $("#ref_order").val("");
+                            $("#workorder_qc_loc").val("");
                         } 
                     } else{
                         $("#div_ref_order").show();
                         $("#lbl_ref_order").text("参考号");
                         $("#ref_order").val("");
+                        $("#workorder_qc_loc").val("");
 
                         $("#qty").attr("readonly", "readonly");
                         $("#qty").addClass("f_gray");
