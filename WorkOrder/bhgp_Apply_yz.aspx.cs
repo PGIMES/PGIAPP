@@ -79,6 +79,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             reason.Text = dt.Rows[0]["reason_code"].ToString() + "-" + dt.Rows[0]["reason"].ToString();
             comment.Value= dt.Rows[0]["comment"].ToString();
             laiyuan_dh_desc.Text = dt.Rows[0]["laiyuan_dh_desc"].ToString();
+            workorder_qc_loc.Text = dt.Rows[0]["workorder_qc_loc"].ToString();
 
             listBxInfo.DataSource = dt;
             listBxInfo.DataBind();
