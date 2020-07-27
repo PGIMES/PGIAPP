@@ -360,7 +360,7 @@
                             success: function (res) {
                                 var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                                 $('#source_dh').val(result);
-                                $('#dh_record').val($('#dh_record').val() + "," + result);
+                                //$('#dh_record').val($('#dh_record').val() + "," + result);
                                 source_dh_change();
                                <%-- $("#<%=btn_bind_data.ClientID%>").click();
                                 Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());--%>
