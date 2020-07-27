@@ -256,7 +256,8 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         string flag = "N", msg = "", qty = "";
         //check qad 库存
         DataTable ldt = new DataTable();
-        string sqlStr = @"select ld_part,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='{1}'  with (nolock)";
+        string sqlStr = @"select ld_part,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh,ld_loc 
+                        from pub.ld_det where ld_ref='{0}' and ld_domain='{1}' and ld_qty_oh>0  with (nolock)";
         sqlStr = string.Format(sqlStr, ref_order, domain);
         ldt = QadOdbcHelper.GetODBCRows(sqlStr);
         if (ldt == null)
@@ -279,6 +280,18 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
             if (ldt.Rows[0]["ld_part"].ToString() != pgino)
             {
                 flag = "Y"; msg = "物料号不一致.参考号" + ref_order + "对应的物料号" + ldt.Rows[0]["ld_part"].ToString() + "，当前申请物料号" + pgino;
+            }
+            else if (op == "997" && ldt.Rows[0]["ld_loc"].ToString() != "2002")
+            {
+                flag = "Y"; msg = "参考号" + ref_order + "当前库位不是2002，请联系仓库.";
+            }
+            else if (op == "998" && ldt.Rows[0]["ld_loc"].ToString() != "4002")
+            {
+                flag = "Y"; msg = "参考号" + ref_order + "当前库位不是4002，请联系仓库.";
+            }
+            else if (op == "999" && ldt.Rows[0]["ld_loc"].ToString() != "9002")
+            {
+                flag = "Y"; msg = "参考号" + ref_order + "当前库位不是9002，请联系仓库.";
             }
             else
             {
@@ -513,7 +526,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 re_sql = @"exec usp_app_bhgp_Apply_QC_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
             }
         }
-        else if (op_code == 999 || op_code == 998)//成品库、半成品库
+        else if (op_code == 999 || op_code == 998 || op_code == 997)//成品库、半成品库、原材料库
         {
             re_sql = @"exec usp_app_bhgp_Apply_CP '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{10}'";
         }
