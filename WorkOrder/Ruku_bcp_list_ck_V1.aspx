@@ -85,19 +85,6 @@
                 }
             });
 
-            //$('.collapse2 .js-category2').click(function () {
-            //    $parent = $(this).parent('li');
-            //    if ($parent.hasClass('js-show')) {
-            //        $parent.removeClass('js-show');
-            //        $(this).children('i').removeClass('icon-35').addClass('icon-74');
-            //    } else {
-            //        $parent.siblings().removeClass('js-show');
-            //        $parent.addClass('js-show');
-            //        $(this).children('i').removeClass('icon-74').addClass('icon-35');
-            //        $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
-            //    }
-            //});
-
             $(document.body).pullToRefresh({
                 distance: 20,
                 onRefresh: function () {
@@ -107,20 +94,16 @@
             });
         });
 
-        //组装件显示折叠
+        //显示折叠
         function showorhide(obj) {
             var divLineBody = $(obj)[0].nextElementSibling;
             var ishide = $(divLineBody).css("display");
-            // alert(ishide);
             if (ishide == "none") {
-                $(divLineBody).show("fast")//;.removeClass("hide")
-                // $(obj).find(".icon-74").removeClass(".icon-74").addClass(".icon-35")
+                $(divLineBody).show("fast")
             }
             else {
-                $(divLineBody).hide()// ;.addClass("hide")
-                // $(obj).find(".icon-35").removeClass(".icon-35").addClass(".icon-74")
+                $(divLineBody).hide()
             }
-
         }
     </script>
 </head>
@@ -190,9 +173,9 @@
                                                     foreach (System.Data.DataRow drpgino in dt_pgino.Select("line='" + drLine["line"].ToString() + "'"))
                                                     {
                                                 %>
-                                                <ul class="collapse2 ">
+                                                <ul class="collapse ">
                                                     <li  style="margin-top: 0px; margin-bottom: 0px">
-                                                        <div class="weui-flex js-category2 " onclick="showorhide(this);">
+                                                        <div class="weui-flex js-category " onclick="showorhide(this);">
                                                             <div class="weui-cells__title weui-flex__item LH" id="<%=drpgino["pgino"] %>LH5">
                                                                 <i class="icon nav-icon icon-22 color-success"></i>
                                                                 <%= drpgino["pgino"]+","+drpgino["pn"] %>
