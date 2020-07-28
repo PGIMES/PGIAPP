@@ -176,7 +176,7 @@
                                                     {
                                                 %>
                                                 <ul class="collapse2 ">
-                                                    <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
+                                                    <li  style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category2 ">
                                                             <div class="weui-cells__title weui-flex__item LH" id="<%=drpgino["pgino"] %>LH5">
                                                                 <i class="icon nav-icon icon-22 color-success"></i>
@@ -212,7 +212,7 @@
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
-                                                        <div class="page-category js-categoryInner a_body">
+                                                        <div class="page-category js-categoryInner">
                                                             <%                                                  
                                                                 foreach (System.Data.DataRow dr in dt_detail.Select("line='" +  drLine["line"].ToString() 
                                                                     + "'and pgino='" +  drpgino["pgino"].ToString() + "'and pn='" +  drpgino["pn"].ToString() + "'"))
