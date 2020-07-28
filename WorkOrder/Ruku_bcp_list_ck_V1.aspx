@@ -99,10 +99,10 @@
             var divLineBody = $(obj)[0].nextElementSibling;
             var ishide = $(divLineBody).css("display");
             if (ishide == "none") {
-                $(divLineBody).show("fast")
+                $(divLineBody).show("fast");
             }
             else {
-                $(divLineBody).hide()
+                $(divLineBody).hide();
             }
         }
     </script>
