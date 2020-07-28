@@ -85,18 +85,18 @@
                 }
             });
 
-            $('.collapse2 .js-category2').click(function () {
-                $parent = $(this).parent('li');
-                if ($parent.hasClass('js-show')) {
-                    $parent.removeClass('js-show');
-                    $(this).children('i').removeClass('icon-35').addClass('icon-74');
-                } else {
-                    $parent.siblings().removeClass('js-show');
-                    $parent.addClass('js-show');
-                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
-                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
-                }
-            });
+            //$('.collapse2 .js-category2').click(function () {
+            //    $parent = $(this).parent('li');
+            //    if ($parent.hasClass('js-show')) {
+            //        $parent.removeClass('js-show');
+            //        $(this).children('i').removeClass('icon-35').addClass('icon-74');
+            //    } else {
+            //        $parent.siblings().removeClass('js-show');
+            //        $parent.addClass('js-show');
+            //        $(this).children('i').removeClass('icon-74').addClass('icon-35');
+            //        $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+            //    }
+            //});
 
             $(document.body).pullToRefresh({
                 distance: 20,
@@ -106,7 +106,22 @@
                 }
             });
         });
-           
+
+        //组装件显示折叠
+        function showorhide(obj) {
+            var divLineBody = $(obj)[0].nextElementSibling;
+            var ishide = $(divLineBody).css("display");
+            // alert(ishide);
+            if (ishide == "none") {
+                $(divLineBody).show("fast")//;.removeClass("hide")
+                // $(obj).find(".icon-74").removeClass(".icon-74").addClass(".icon-35")
+            }
+            else {
+                $(divLineBody).hide()// ;.addClass("hide")
+                // $(obj).find(".icon-35").removeClass(".icon-35").addClass(".icon-74")
+            }
+
+        }
     </script>
 </head>
 <body ontouchstart >
@@ -151,7 +166,7 @@
                                     {
                                 %>
                                 <ul class="collapse">
-                                    <li>
+                                    <li class="js-show">
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>
@@ -167,7 +182,7 @@
                                                     <% =drLine["avg_hhs"]+"h" %>
                                                 </span>
                                             </div>
-                                            <i class="icon icon-74"></i>
+                                            <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
                                             <div class="weui-cells">
@@ -177,7 +192,7 @@
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li  style="margin-top: 0px; margin-bottom: 0px">
-                                                        <div class="weui-flex js-category2 ">
+                                                        <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title weui-flex__item LH" id="<%=drpgino["pgino"] %>LH5">
                                                                 <i class="icon nav-icon icon-22 color-success"></i>
                                                                 <%= drpgino["pgino"]+","+drpgino["pn"] %>
@@ -212,14 +227,14 @@
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
-                                                        <div class="page-category js-categoryInner">
+                                                        <div class="page-category js-categoryInner a_body" style="display: none">
                                                             <%                                                  
                                                                 foreach (System.Data.DataRow dr in dt_detail.Select("line='" +  drLine["line"].ToString() 
                                                                     + "'and pgino='" +  drpgino["pgino"].ToString() + "'and pn='" +  drpgino["pn"].ToString() + "'"))
                                                                 { 
                                                                     %>
                                                             <a class="weui-cell  weui-cell_access " style="color: black">
-                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                                <%--<div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>--%>
                                                                 <div class="weui-cell__hd">
                                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                 </div>
