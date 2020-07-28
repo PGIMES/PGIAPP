@@ -8,6 +8,10 @@ using System.Web.UI.WebControls;
 
 public partial class WorkOrder_Ruku_bcp_list_ck_V1 : System.Web.UI.Page
 {
+    public DataTable dt_line;
+    public DataTable dt_pgino;
+    public DataTable dt_detail;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (WeiXin.GetCookie("workcode") == null)
@@ -21,11 +25,11 @@ public partial class WorkOrder_Ruku_bcp_list_ck_V1 : System.Web.UI.Page
 
     private void BindData5()
     {
-        string sql = @"exec [usp_app_Ruku_bcp_list_ck]";
+        string sql = @"exec [usp_app_Ruku_bcp_list_ck_V1]";
         DataSet ds = SQLHelper.Query(sql);
-        DataTable dt_data = ds.Tables[0];
 
-
-        ViewState["dt_data"] = dt_data;
+        dt_line = ds.Tables[0];
+        dt_pgino = ds.Tables[1];
+        dt_detail = ds.Tables[2];
     }
 }

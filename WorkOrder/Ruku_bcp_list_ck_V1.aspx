@@ -101,103 +101,12 @@
             $(document.body).pullToRefresh({
                 distance: 20,
                 onRefresh: function () {
-                    //$.post("../php/page.php", { "page": 1, "pagesize": 8, ajax: 2 }, function (rs) {
-                    //    $("#rank-list").html(tpl(document.getElementById('tpl').innerHTML, rs));
-                    //}, 'json')
                     window.location.reload();
                     $(document.body).pullToRefreshDone();
                 }
             });
-
+        });
            
-
-            $('#searchInput').bind('input propertychange', function () {
-
-                var text = $("#searchInput").val().toUpperCase();
-                $('.weui-cells__title').each(function () {
-                    var $self = $(this);
-                    var flag = $self.text().search(text)
-                    if (flag > -1) {
-                        $self.removeClass("hide");
-                        $self.siblings().removeClass("hide");
-                        //$self.siblings('.weui-cells__title').addClass("hide");
-                       // $self.closest('li').children(".js-category").css("display", "none");//js-category
-                    } else {
-                        $self.addClass("hide");
-                        $self.addClass().removeClass("hide");
-                        //$self.siblings('.weui-cells__title').addClass("hide");
-                       // $self.closest('li').children(".js-category").css("display", "none");//js-category
-                    }
-                    
-                    //$self.closest('li .LH').children(".js-category2").css("display", "none");//js-category
-                });
-                $('.weui-cell').each(function () {
-                    var $self = $(this);
-                    var flag = $self.text().search(text)
-                    if (flag > -1) {
-                        $self.removeClass("hide");
-                        //$self.siblings('.weui-cells__title').addClass("hide");
-                        //// $self.closest('li').children(".js-category").css("display", "none");//js-category
-                    } else {
-                        $self.addClass("hide");
-                        //$self.siblings('.weui-cells__title').addClass("hide");
-                        // $self.closest('li').children(".js-category").css("display", "none");//js-category
-                    }
-
-                    //$self.closest('li .LH').children(".js-category2").css("display", "none");//js-category
-                });
-
-                showBlockCount();
-
-                $(".a_body").css("display", "");//显示内容 a
-            });
-
-        })
-        //显示数量
-        function showBlockCount() {
-            //$(".weui-form-preview>.weui-cells .weui-cells__title").each(function (i, item) {//>.weui-cells
-                //var rowcount = $(this).find("a:not(.hide)").length;
-                //// debugger;
-                //var obj = $(item).prev().children().last();
-                //$(obj).text(rowcount);
-                //if (rowcount == 0) {
-                //    $(obj).addClass("bg-gray").removeClass("bg-blue")
-                //}
-                //else {
-                //    $(obj).addClass("bg-blue").removeClass("bg-gray")
-                //}
-            //});
-        }
-
-        function cancel() {
-            //$('.weui-cell').removeClass("hide");
-            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
-             
-            //$('ul li ul li').children(".js-category2").css("display", "")
-            showBlockCount();
-        }
-
-        function clear() {
-            $('#searchInput').val('');
-            //$('.weui-cell').removeClass("hide");
-            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
-            //$('ul li ul li').children(".js-category2").css("display", "")
-            showBlockCount();
-        }
-        function showorhide(obj) {
-            var divLineBody = $(obj)[0].nextElementSibling;
-            var ishide = $(divLineBody).css("display");
-            // alert(ishide);
-            if (ishide == "none") {
-                $(divLineBody).show("fast")//;.removeClass("hide")
-                // $(obj).find(".icon-74").removeClass(".icon-74").addClass(".icon-35")
-            }
-            else {
-                $(divLineBody).hide()// ;.addClass("hide")
-                // $(obj).find(".icon-35").removeClass(".icon-35").addClass(".icon-74")
-            }
-
-        }
     </script>
 </head>
 <body ontouchstart >
@@ -238,63 +147,75 @@
 
                             <div class="weui-form-preview">
                                 <%
-                                    System.Data.DataTable dt_line = ViewState["dt_data"] as System.Data.DataTable;
-                                    System.Data.DataView dataView = dt_line.DefaultView;
-                                    System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "line");
-                                    System.Data.DataTable dtLineDistinct_2 = dataView.ToTable(true, "line","pgino");
-                                    foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
+                                    foreach (System.Data.DataRow drLine in dt_line.Rows)
                                     {
-                                        string line = drLine["line"].ToString();
-                                        int rowscount = dt_line.Select("line='" + line + "'").Count();
-                                        int rowscount_2 = dtLineDistinct_2.Select("line='" + line + "'").Count();
-                                        string Avg_ss_2=string.Format("{0:N0}",Convert.ToDecimal(dt_line.Compute("Avg(minss)"
-                                            ,"line='" + line + "'"))/60);
                                 %>
                                 <ul class="collapse">
                                     <li>
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>
-                                                <%=line+",产品数"+rowscount_2+",<font class=f-blue>Lot"+rowscount
-                                                        +"</font>,<font class=f-orange>平均时长"+Avg_ss_2+"h</font>" %>
-                                               <%-- <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " 
-                                                    style="margin-right: 15px;"><% =rowscount %></span>--%>
+                                                <%= drLine["line"] %>
+
+                                                <span class="weui-badge  bg-<% =(drLine["cps"].ToString()=="0"?"gray":"blue") %> margin20-l ">
+                                                    <% =drLine["cps"]+"个" %>
+                                                </span>   
+                                                <span class="weui-badge  bg-<% =(drLine["sum_ts"].ToString()=="0"?"gray":"blue") %> margin20-l ">
+                                                    <% =drLine["sum_ts"]+"托" %>
+                                                </span>
+                                                <span class="weui-badge  bg-<% =(drLine["avg_hhs"].ToString()=="0"?"gray":"orange") %> margin20-l ">
+                                                    <% =drLine["avg_hhs"]+"h" %>
+                                                </span>
                                             </div>
                                             <i class="icon icon-74"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
                                             <div class="weui-cells">
                                                 <%                                          
-                                                    System.Data.DataTable dtLineDistinct_p = dataView.ToTable(true,"line", "pgino", "pn");
-                                                    foreach (System.Data.DataRow drpgino in dtLineDistinct_p.Rows)
+                                                    foreach (System.Data.DataRow drpgino in dt_pgino.Select("line='" + drLine["line"].ToString() + "'"))
                                                     {
-                                                        string pgino = drpgino["pgino"].ToString();
-                                                        string pn = drpgino["pn"].ToString();
-                                                        int rowscount_p = dt_line.Select("line='" + line + "'and pgino='" + pgino 
-                                                            + "'and pn='" + pn + "'").Count();
-                                                        if (rowscount_p <= 0) continue;
-                                                        string sum_qty=dt_line.Compute("Sum(act_qty)"
-                                                            ,"line='" + line + "'and pgino='" + pgino + "'and pn='" + pn + "'").ToString();
-                                                        string Avg_ss=string.Format("{0:N0}",Convert.ToDecimal(dt_line.Compute("Avg(minss)"
-                                                            ,"line='" + line + "'and pgino='" + pgino + "'and pn='" + pn + "'"))/60);
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
-                                                        <div class="weui-flex js-category2 " onclick="showorhide(this);">
-                                                            <div class="weui-cells__title weui-flex__item LH" id="<%=pgino %>LH5">
+                                                        <div class="weui-flex js-category2 ">
+                                                            <div class="weui-cells__title weui-flex__item LH" id="<%=drpgino["pgino"] %>LH5">
                                                                 <i class="icon nav-icon icon-22 color-success"></i>
-                                                                <%=pgino+"," +pn +","+sum_qty+"件,"+rowscount_p+"托,时长"+Avg_ss+"h"%>
-                                                                <%--<span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
-                                                                    <% =rowscount_p %>
-                                                                </span>--%>
+                                                                <%= drpgino["pgino"]+","+drpgino["pn"] %>
+                                                                <br />
+                                                                <span style="padding-left:20px;">
+                                                                    <%= drpgino["ts"]+"托,"+drpgino["sum_qty"]+"件,平均"%>
+
+                                                                    <% if (Convert.ToInt32(drpgino["avg_hhs"]) >= 60) {%>
+                                                                    <font class="f-red"><%=drpgino["avg_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(drpgino["avg_hhs"]) >= 36) {%>
+                                                                    <font class="f-blue"><%=drpgino["avg_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=drpgino["avg_hhs"]+"h" %>
+                                                                        <%}  %>
+
+                                                                     <%= ",最长"%>
+
+                                                                    <% if (Convert.ToInt32(drpgino["max_hhs"]) >= 120) {%>
+                                                                    <font class="f-red"><%=drpgino["max_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(drpgino["max_hhs"]) >= 72) {%>
+                                                                    <font class="f-blue"><%=drpgino["max_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=drpgino["max_hhs"]+"h" %>
+                                                                        <%}  %>
+                                                                    
+                                                                </span>
+                                                                
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
-                                                        <div class="page-category js-categoryInner a_body" style="display: none">
+                                                        <div class="page-category js-categoryInner a_body">
                                                             <%                                                  
-                                                                foreach (System.Data.DataRow dr in 
-                                                                    dt_line.Select("line='" + line + "'and pgino='" + pgino 
-                                                                    + "'and pn='" + pn + "'"))
+                                                                foreach (System.Data.DataRow dr in dt_detail.Select("line='" +  drLine["line"].ToString() 
+                                                                    + "'and pgino='" +  drpgino["pgino"].ToString() + "'and pn='" +  drpgino["pn"].ToString() + "'"))
                                                                 { 
                                                                     %>
                                                             <a class="weui-cell  weui-cell_access " style="color: black">
@@ -305,32 +226,7 @@
                                                                 <div class="weui-cell__bd " style="font-size: smaller">
                                                                     <%=dr["workorder"]+","+dr["act_qty"]+"件,"+dr["loc_hg"]
                                                                         +","+string.Format("{0:MM-dd HH:mm}",dr["create_date"])%> 
-                                                                    时长: 
-                                                                    <% if (Convert.ToInt32(dr["hhs"]) >= 120) {%>
-                                                                    <font class="f-red"><%=dr["times"] %></font>
-                                                                        <%}  %>
-                                                                    <% else if (Convert.ToInt32(dr["hhs"]) >= 72) {%>
-                                                                    <font class="f-blue"><%=dr["times"] %></font>
-                                                                        <%}  %>
-                                                                    <% else {%>
-                                                                        <%=dr["times"] %>
-                                                                        <%}  %>
-                                                                    <%--<span class="margin10-r">
-                                                                        <%=dr["workorder"] %> 
-                                                                    </span>
-                                                                    <span class="margin10-r">
-                                                                        <%=dr["act_qty"] %>件
-                                                                    </span>
-                                                                    <span class="margin10-r">
-                                                                        <%=dr["loc_hg"] %>
-                                                                    </span>
-                                                                    <br />
-                                                                    <span class="margin10-r">
-                                                                        <%=string.Format("{0:MM-dd HH:mm}",dr["create_date"]) %>
-                                                                    </span>
-                                                                    <span class="margin10-r">
-                                                                        时长: <font class="f-blue"><%=dr["times"] %></font>
-                                                                    </span>--%>
+                                                                    时长: <%=dr["times"] %>
                                                                 </div>
                                                             </a>
                                                             <% }%>
@@ -355,9 +251,9 @@
         </div>
         
 
-        <div class="weui-footer weui-footer_fixed-bottom">
+        <%--<div class="weui-footer weui-footer_fixed-bottom">
             <p class="weui-footer__text"><%=WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %></p>
-        </div>
+        </div>--%>
         <script>
             $(function () {
                 $('.weui-navbar__item').on('click', function () {
