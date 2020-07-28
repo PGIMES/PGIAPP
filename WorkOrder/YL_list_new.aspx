@@ -87,7 +87,8 @@
                 } 
             });
 
-            $('#searchInput').bind('input propertychange', function () {
+           $('#searchInput').bind('input propertychange', function () {
+               $(".js-category").css("display", "none");
 
                 var text = $("#searchInput").val();
                 $('.weui-cell').each(function () {
@@ -123,12 +124,16 @@
         }
 
         function cancel() {
+            $(".js-category").css("display", "");
+
             $('.weui-cell').removeClass("hide");
             $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
             showBlockCount();
         }
 
         function clear() {
+            $(".js-category").css("display", "");
+
             $('#searchInput').val('');
             $('.weui-cell').removeClass("hide");
             $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
