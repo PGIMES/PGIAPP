@@ -46,13 +46,11 @@ public partial class ck : System.Web.UI.Page
         Label2.Text = count_bhg.ToString();
 
         //半成品库
-        sql = @"exec [usp_app_Ruku_bcp_list_ck]";
-        DataTable dt_bcp = SQLHelper.Query(sql).Tables[0];
-        int count_lot = dt_bcp.Rows.Count;
-        string count_ms = string.Format("{0:N0}", Convert.ToDecimal(dt_bcp.Compute("Avg(minss)", "true")) / 60);
+        sql = @"exec [usp_app_Ruku_bcp_list_ck_V1]";
+        DataTable dt_bcp = SQLHelper.Query(sql).Tables[3];
 
-        Label3.Text = count_lot.ToString();
-        Label3_v.Text = count_ms;
+        Label3.Text = dt_bcp.Rows[0]["sum_ts"].ToString();
+        Label3_v.Text = dt_bcp.Rows[0]["avg_hhs"].ToString();
     }
 
 
