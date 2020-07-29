@@ -208,10 +208,10 @@
                                                                     
                                                                      <%= ",可用"%>
 
-                                                                    <% if (Convert.ToInt32(drpgino["day_s"]) >= 5) {%>
+                                                                    <% if (Convert.ToSingle(drpgino["day_s"]) >= 5) {%>
                                                                     <font class="f-red"><%=drpgino["day_s"]+"天" %></font>
                                                                         <%}  %>
-                                                                    <% else if (Convert.ToInt32(drpgino["day_s"]) >= 3) {%>
+                                                                    <% else if (Convert.ToSingle(drpgino["day_s"]) >= 3) {%>
                                                                     <font class="f-blue"><%=drpgino["day_s"]+"天" %></font>
                                                                         <%}  %>
                                                                     <% else {%>
