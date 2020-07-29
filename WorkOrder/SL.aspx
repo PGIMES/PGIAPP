@@ -324,6 +324,10 @@
                                 <label class="weui-form-preview__label">要料数量</label>
                                 <span class="weui-form-preview__value"><%# Eval("need_qty") %></span>
                             </div>
+                            <div class="weui-form-preview__item" style="font-weight:800;display:<%# Eval("ld_ref").ToString()==""?"none":"" %>;">
+                                <label class="weui-form-preview__label">推荐Lot No</label>
+                                <span class="weui-form-preview__value"><%# Eval("ld_ref") %></span>
+                            </div>
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">要求送到时间</label>
                                 <span class="weui-form-preview__value">
