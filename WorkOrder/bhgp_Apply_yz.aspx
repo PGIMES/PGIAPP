@@ -112,7 +112,7 @@
                 $.ajax({
                     type: "post",
                     url: "bhgp_Apply_yz.aspx/rs_data",
-                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $("#rscode").val() + "','workshop':'" + "<%= _workshop %>" + "'}",
+                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $("#rscode").val() + "','workshop':'" + "<%= _workshop %>" + "','type':'apply'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -1379,7 +1379,7 @@
                 $.ajax({
                     type: "post",
                     url: "bhgp_Apply_yz.aspx/rs_data",
-                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $(this).val() + "','workshop':'" + "<%= _workshop %>" + "'}",
+                    data: "{'domain': '" + $("#domain").val() + "','rscode':'" + $(this).val() + "','workshop':'" + "<%= _workshop %>" + "','type':'deal'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码

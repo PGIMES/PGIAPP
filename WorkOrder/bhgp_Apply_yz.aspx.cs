@@ -195,7 +195,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         string result = "";
         string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where left(rsn_code,1) in('1','5') and rsn_domain='{0}' order by rsn_code";
+                    where left(rsn_code,1) in('1') and rsn_domain='{0}' order by rsn_code";
         sql = string.Format(sql, domain);
         DataSet ds = SQLHelper.Query(sql);
 
@@ -208,14 +208,23 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string rs_data(string domain, string rscode, string workshop)
+    public static string rs_data(string domain, string rscode, string workshop, string type)
     {
         string result = "";
         string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where left(rsn_code,1) in('1','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
+                    where rsn_domain='{0}' and rsn_code='{1}'";
         sql = string.Format(sql, domain, rscode);
         DataTable dt_reason = SQLHelper.Query(sql).Tables[0];
+
+        if (type == "apply")
+        {
+            sql = sql + @" and left(rsn_code,1) in('1','8')";
+        }
+        else if (type == "deal")
+        {
+            sql = sql + @" and left(rsn_code,1) in('1')";
+        }
 
         string title = "";
         if (dt_reason.Rows.Count == 1)
@@ -235,7 +244,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         string flag = "N", msg = "", qty = "", workorder_qc_loc = "";
         //check qad 库存
         DataTable ldt = new DataTable();
-        string sqlStr = @"select ld_part,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
+        string sqlStr = @"select ld_part,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh,ld_loc  
                         from pub.ld_det where ld_ref='{0}' and ld_domain='{1}' and ld_qty_oh>0  with (nolock)";
         sqlStr = string.Format(sqlStr, ref_order, domain);
         ldt = QadOdbcHelper.GetODBCRows(sqlStr);

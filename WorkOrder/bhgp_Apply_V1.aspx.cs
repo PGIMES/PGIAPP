@@ -202,12 +202,6 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
                     where left(rsn_code,1) in('3','5') and rsn_domain='{0}' order by rsn_code";//[rsn_type]='SCRAP'
         }
-        //else if (workshop == "三车间")
-        //{
-        //    sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
-        //            from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-        //            where left(rsn_code,1) in('1','5') and rsn_domain='{0}' order by rsn_code";
-        //}
         sql = string.Format(sql, domain);
         DataSet ds = SQLHelper.Query(sql);
 
@@ -220,7 +214,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string rs_data(string domain, string rscode, string workshop)
+    public static string rs_data(string domain, string rscode, string workshop, string type)
     {
         string result = "";
         string sql = @"";
@@ -228,14 +222,17 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
         {
             sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-                    where left(rsn_code,1) in('3','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
+                    where rsn_domain='{0}' and rsn_code='{1}'";
+
+            if (type == "apply")
+            {
+                sql = sql + @" and left(rsn_code,1) in('1','3','5')";
+            }
+            else if (type == "deal")
+            {
+                sql = sql + @" and left(rsn_code,1) in('3','5')";
+            }
         }
-        //else if (workshop == "三车间")
-        //{
-        //    sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
-        //            from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
-        //            where left(rsn_code,1) in('1','5') and rsn_domain='{0}' and rsn_code='{1}' order by rsn_code";
-        //}
         sql = string.Format(sql, domain, rscode);
         DataTable dt_reason = SQLHelper.Query(sql).Tables[0];
 
