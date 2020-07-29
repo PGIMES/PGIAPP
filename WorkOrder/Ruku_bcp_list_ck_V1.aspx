@@ -181,9 +181,9 @@
                                                                 <%= drpgino["pgino"]+","+drpgino["pn"] %>
                                                                 <br />
                                                                 <span style="padding-left:20px;">
-                                                                    <%= drpgino["ts"]+"托,"+drpgino["sum_qty"]+"件,平均"%>
+                                                                    <%= drpgino["ts"]+"托,"+drpgino["sum_qty"]+"件"%>
 
-                                                                    <% if (Convert.ToInt32(drpgino["avg_hhs"]) >= 60) {%>
+                                                                   <%-- ,平均<% if (Convert.ToInt32(drpgino["avg_hhs"]) >= 60) {%>
                                                                     <font class="f-red"><%=drpgino["avg_hhs"]+"h" %></font>
                                                                         <%}  %>
                                                                     <% else if (Convert.ToInt32(drpgino["avg_hhs"]) >= 36) {%>
@@ -191,7 +191,7 @@
                                                                         <%}  %>
                                                                     <% else {%>
                                                                         <%=drpgino["avg_hhs"]+"h" %>
-                                                                        <%}  %>
+                                                                        <%}  %>--%>
 
                                                                      <%= ",最长"%>
 
@@ -203,6 +203,19 @@
                                                                         <%}  %>
                                                                     <% else {%>
                                                                         <%=drpgino["max_hhs"]+"h" %>
+                                                                        <%}  %>
+
+                                                                    
+                                                                     <%= ",可用"%>
+
+                                                                    <% if (Convert.ToInt32(drpgino["day_s"]) >= 5) {%>
+                                                                    <font class="f-red"><%=drpgino["day_s"]+"天" %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(drpgino["day_s"]) >= 3) {%>
+                                                                    <font class="f-blue"><%=drpgino["day_s"]+"天" %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=drpgino["day_s"]+"天" %>
                                                                         <%}  %>
                                                                     
                                                                 </span>
@@ -224,7 +237,16 @@
                                                                 <div class="weui-cell__bd " style="font-size: smaller">
                                                                     <%=dr["workorder"]+","+dr["act_qty"]+"件,"+dr["loc_hg"]
                                                                         +","+string.Format("{0:MM-dd HH:mm}",dr["create_date"])%> 
-                                                                    时长: <%=dr["times"] %>
+                                                                    时长: 
+                                                                    <% if (Convert.ToInt32(dr["hhs"]) >= 120) {%>
+                                                                    <font class="f-red"><%=dr["times"] %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(dr["hhs"]) >= 72) {%>
+                                                                    <font class="f-blue"><%=dr["times"] %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=dr["times"] %>
+                                                                        <%}  %>
                                                                 </div>
                                                             </a>
                                                             <% }%>
