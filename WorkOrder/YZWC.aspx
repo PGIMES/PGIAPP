@@ -89,8 +89,7 @@
           $(document).ready(function () {
               page_show();
               sm_source();
-           
-          
+
 
           });
 
@@ -283,7 +282,7 @@
     
         
             <div class="weui-cells weui-cells_form">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
             <script type="text/javascript">
                 Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
@@ -296,7 +295,8 @@
 
                     init_data();
                 });
-            </script>
+            </script>--%>
+
                <%-- <asp:TextBox ID="txt_step" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>--%>
              <asp:TextBox ID="ps_part" class="weui-input" placeholder="" Style="max-width: 100%; display:none" runat="server" ></asp:TextBox>
 
@@ -416,8 +416,16 @@
                     <div class="weui-cell__bd">
                         <textarea id="txt_remark" class="weui-textarea" placeholder="请输入说明" rows="2" runat="server"></textarea>
                     </div>
-                </div>     
-
+                </div>   
+                  
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                <script type="text/javascript">
+                    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                        page_show();
+                    
+                    });
+                </script>
                  <div class="weui-form-preview">
 
                      <ul class="collapse">
@@ -622,6 +630,8 @@
 
     
        <script>
+
+           init_data();
 
            function init_data() {
                var datalist_yzj, datalist_pgino;
