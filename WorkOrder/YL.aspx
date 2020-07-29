@@ -26,6 +26,9 @@
             $("#pn").attr("readonly", "readonly");
             $("#descr").attr("readonly", "readonly");
             $("#need_date").attr("readonly", "readonly");
+
+            $('#ld_ref').attr("readonly", "readonly");
+            $('#ld_qty_oh').attr("readonly", "readonly");
         });
 
         $(function () {
@@ -48,7 +51,7 @@
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
                         + "','pgino':'" + $("#pgino").val() + "','domain':'" + $('#domain').val() + "','pn':'" + $('#pn').val() + "','descr':'" + $('#descr').val()
                         + "','need_qty':'" + $("#need_qty").val() + "','need_date':'" + $("#need_date").val() + "','need_date_dl':'" + $("#need_date_dl").val()
-                        + "'}",
+                        + "','ld_ref':'" + $("#ld_ref").val() + "','ld_qty_oh':'" + $("#ld_qty_oh").val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -112,6 +115,9 @@
                         $('#ld_ref').val(obj[0].ld_ref);
                         $('#ld_qty_oh').val(obj[0].ld_qty_oh);
                         $("#div_lot").show();
+
+                        var json_lot = obj[0].json_lot;
+                        $("#ld_ref").select("update", { items: json_lot });
                     }
 
                     return;
@@ -263,6 +269,26 @@
                     }
 
                 });
+            },
+            onOpen: function () {
+                //  console.log("open");
+            },
+
+        });
+
+        $("#ld_ref").select({
+            title: "推荐Lot No",
+            items:  [{title:'' ,value:''}],
+            onChange: function (d) {
+                //alert(d.values);
+                var _ref = d.titles.substr(0, (d.titles).indexOf(','));
+                $("#ld_ref").val(_ref);
+                $("#ld_qty_oh").val(d.values);
+            },
+            onClose: function (d) {
+                //var obj = eval(d.data);
+                //alert(obj.values);
+
             },
             onOpen: function () {
                 //  console.log("open");

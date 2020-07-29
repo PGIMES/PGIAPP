@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -39,7 +40,7 @@ public partial class YL : System.Web.UI.Page
            
 
             //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            domain.Text = "200";
             //lbl_emp.Text = "15850349106何桂勤";
 
             //绑定岗位
@@ -108,6 +109,8 @@ public partial class YL : System.Web.UI.Page
 
         string ld_ref = "", ld_qty_oh = "";
         DataTable ldt = new DataTable();
+
+        /* 
         string sqlStr = @"";//送料信息里，第一笔 绑定库存明细里的
         if (pt_prod_line != "1090")
         {
@@ -130,11 +133,60 @@ public partial class YL : System.Web.UI.Page
             ld_ref = ldt.Rows[0]["ld_ref"].ToString();
             ld_qty_oh = ldt.Rows[0]["ld_qty_oh"].ToString();
         }
+        */
+
+        string sqlStr = @"select ld_ref title,cast(cast(ld_qty_oh as numeric(18,4)) as float) value
+                    from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0";
+
+        if (pt_prod_line != "1090")
+        {
+            sqlStr = sqlStr + @" order by ld_date,ld_ref";
+        }
+        else
+        {
+            sqlStr = sqlStr + @" order by ld_date,ld_ref,ld_qty_oh";
+        }
+        sqlStr = sqlStr + @" with (nolock)";
+
+        sqlStr = string.Format(sqlStr, pgino);
+        ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+        if (ldt.Rows.Count > 0)
+        {
+            ld_ref = ldt.Rows[0]["title"].ToString();
+            ld_qty_oh = ldt.Rows[0]["value"].ToString();
+        }
+
+        DataTable ldt_n = UpdateDataTable(ldt);
+        string json_lot = JsonConvert.SerializeObject(ldt_n);
 
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pn\":\"" + pn + "\",\"descr\":\"" + descr + "\",\"qty\":\"" + qty
-            + "\",\"ld_ref\":\"" + ld_ref + "\",\"ld_qty_oh\":\"" + ld_qty_oh + "\"}]";
+            + "\",\"ld_ref\":\"" + ld_ref + "\",\"ld_qty_oh\":\"" + ld_qty_oh + "\",\"json_lot\":" + json_lot + "}]";
         return result;
 
+    }
+
+    private static DataTable UpdateDataTable(DataTable argDataTable)
+    {
+        DataTable dtResult = new DataTable();
+        //克隆表结构
+        dtResult = argDataTable.Clone();
+        foreach (DataColumn col in dtResult.Columns)
+        {
+            col.ColumnName = col.ColumnName.ToLower();
+            if (col.ColumnName.ToLower() == "value")
+            {
+                //修改列类型
+                col.DataType = typeof(string);
+            }
+        }
+        foreach (DataRow row in argDataTable.Rows)
+        {
+            DataRow rowNew = dtResult.NewRow();
+            rowNew["title"] = row["title"]+","+ row["value"];
+            rowNew["value"] = row["value"];
+            dtResult.Rows.Add(rowNew);
+        }
+        return dtResult;
     }
 
 
@@ -163,7 +215,8 @@ public partial class YL : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string save2(string _emp_code_name, string pgino, string domain, string pn, string descr, string need_qty, string need_date, string need_date_dl)
+    public static string save2(string _emp_code_name, string pgino, string domain, string pn, string descr, string need_qty, string need_date, string need_date_dl
+                    , string ld_ref, string ld_qty_oh)
     {
         string flag = "N", msg = "";
 
@@ -178,8 +231,8 @@ public partial class YL : System.Web.UI.Page
 
         if (flag == "N")
         {
-            string re_sql = @"exec [usp_app_YL] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
-            re_sql = string.Format(re_sql, _emp_code_name, pgino, domain, pn, descr, need_qty, need_date, need_date_dl);
+            string re_sql = @"exec [usp_app_YL] '{0}', '{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
+            re_sql = string.Format(re_sql, _emp_code_name, pgino, domain, pn, descr, need_qty, need_date, need_date_dl, ld_ref, ld_qty_oh == "" ? "0" : ld_qty_oh);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();
