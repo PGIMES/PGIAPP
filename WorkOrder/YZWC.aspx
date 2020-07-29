@@ -68,11 +68,11 @@
                 }
 
             });
-            if (bs < 2)
-            {
-                alert("送汤笔数小于2笔,不可下线.");
-                return false;
-            }
+            //if (bs < 2)
+            //{
+            //    alert("送汤笔数小于2笔,不可下线.");
+            //    return false;
+            //}
            
 
             return true;
@@ -230,6 +230,27 @@
            }
 
 
+           <%--function yzj_change(yzj) {
+               $.ajax({
+                   type: "post",
+                   url: "YZWC.aspx/yzj_change",
+                   data: "{'emp': '" + $("#txt_emp").val() + "','workshop':'" + "<%= _workshop %>" + "','workorder': '" + $("#txt_dh").val() + "','yzj_no': '" + yzj + "'}",
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                   success: function (data) {
+                       var obj = eval(data.d);
+                       $('#txt_pn').val(obj[0].pt_desc1);
+                       //$('#descr').val(obj[0].descr);
+                       //$('#b_use_routing').val(obj[0].b_use_routing);
+                       //$('#b_op_one').val(obj[0].b_op_one);
+                       var json_op = obj[0].json_op;
+                       $("#txt_pgino").select("update", { items: json_op });
+                   }
+
+               });
+           }--%>
+
           function sm_source() {
               $('img[id*=img_sm]').click(function () {
                   wx.ready(function () {
@@ -269,7 +290,8 @@
                     $("#txt_pn").attr("readonly", "readonly");
                     page_show();
                     sm_source();
-                   
+
+                    init_data();
                 });
             </script>
                <%-- <asp:TextBox ID="txt_step" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>--%>
@@ -314,7 +336,7 @@
                 </div>
 
 
-                <div class="weui-cell">
+<%--                <div class="weui-cell">
                     <div class="weui-cell__hd">
                         <label class="weui-label">来源单号</label>
                     </div>
@@ -326,17 +348,33 @@
                             <img id="img_sm" src="../img/fdj2.png" style="padding-top: 10px;" />
                         </span>
                     </div>
+                </div>--%>
+
+                   <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">压铸机</label></div>
+                <div class="weui-cell__bd">
+                    <span style="float:left; width:90%">
+                        <asp:TextBox ID="txt_yzj" class="weui-input"  placeholder="请输入压铸机号" runat="server"></asp:TextBox>
+                    </span>
+                    <span style="float:left; width:10%">
+                        <img id="img_sm_yzj" src="../img/fdj2.png" style="padding-top:2px; "  />
+                    </span>
                 </div>
+            </div>
 
-
-                <div class="weui-cell">
+              <%--  <div class="weui-cell">
                     <div class="weui-cell__hd">
                         <label class="weui-label f-red">物料号</label>
                     </div>
                     <div class="weui-cell__bd">
                         <asp:DropDownList ID="txt_xmh" class="weui-input" runat="server" onchange="xmh_change()" ></asp:DropDownList>
                     </div>
-                </div>
+                </div>--%>
+
+                  <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">物料号</label></div>              
+                <asp:TextBox ID="txt_pgino" class="weui-input" runat="server" style="color:gray;"></asp:TextBox>
+            </div>
 
                  <div class="weui-cell">
                     <div class="weui-cell__hd">
@@ -578,6 +616,107 @@
        
     </div>
     </form>
+
+    
+       <script>
+
+           function init_data() {
+               var datalist_yzj, datalist_pgino;
+
+               $.ajax({
+                   type: "post",
+                   url: "YZWC.aspx/init_yzj",
+                   data: "{'emp': '" + $("#txt_emp").val() + "','workshop':'" + "<%= _workshop %>" + "','workorder': '" + $("#txt_dh").val() + "'}",
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                   success: function (data) {
+                       var obj = eval(data.d);
+                       datalist_yzj = obj[0].json;
+                       datalist_pgino = obj[0].json_pgino;
+                   }
+               });
+
+               $("#txt_yzj").select({
+                   title: "压铸机",
+                   items: datalist_yzj,
+                   onChange: function (d) {
+                       //alert(d.values);
+                       yzj_change(d.values);
+                       
+                   },
+                   onClose: function (d) {
+                       //var obj = eval(d.data);
+                       //alert(obj.values);
+
+                   },
+                   onOpen: function () {
+                       //  console.log("open");
+                   },
+
+               });
+               if (datalist_yzj.length == 1) {
+                   $("#txt_yzj").val(datalist_yzj[0].title);
+                   yzj_change(datalist_yzj[0].value);
+               }
+
+               $("#txt_pgino").select({
+                   title: "物料号",
+                   items: [{ title: '', value: '' }],
+                   onChange: function (d) {
+                       //alert(d.values);
+
+                       //绑定零件号
+                       pgino_change(d.values);
+                   },
+                   onClose: function (d) {
+                       //var obj = eval(d.data);
+                       //alert(obj.values);
+
+                   },
+                   onOpen: function () {
+                       //  console.log("open");
+                   },
+
+               });
+           }
+           
+
+           function yzj_change(yzj_no) {
+               $.ajax({
+                   type: "post",
+                   url: "YZWC.aspx/yzj_change",
+                   data: "{'emp': '" + $("#txt_emp").val() + "','workshop':'" + "<%= _workshop %>" + "','workorder': '" + $("#txt_dh").val() + "','yzj_no': '" + yzj_no + "'}",
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                   success: function (data) {
+                       var obj = eval(data.d);
+                       //$('#txt_pn').val(obj[0].pt_desc1);
+                       //$('#descr').val(obj[0].descr);
+                       //$('#b_use_routing').val(obj[0].b_use_routing);
+                       //$('#b_op_one').val(obj[0].b_op_one);
+                       var json_op = obj[0].json_op;
+                       $("#txt_pgino").select("update", { items: json_op });
+
+
+                       if (json_op.length == 1) {
+                           $("#txt_pgino").val(json_op[0].title);
+                           pgino_change(json_op[0].value);
+                       }
+                   }
+
+               });
+           }
+
+
+           //物料change
+           function pgino_change(pgino) {
+
+               //$('#txt_pn').val(obj[0].pt_desc1);
+           }
+
+    </script>
 </body>
     <script>
         var datad = [];
@@ -604,5 +743,13 @@
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
     </script>
+
+    
+  
+
+
 </html>
+
+
+
 

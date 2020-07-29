@@ -92,7 +92,48 @@
                     $(document.body).pullToRefreshDone();
                 }
             });
+
+            $('#searchInput').bind('input propertychange', function () {
+
+                var text = $("#searchInput").val();
+                $('.select').each(function () {
+                    var $self = $(this);
+
+                    $parent = $self.parents('li');
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+
+
+                    var flag = $self.text().search(text)
+                    if (flag > -1) {
+                        $self.removeClass("hide");
+                    } else {
+                        $self.addClass("hide"); 
+                    }
+                });
+
+
+                $(".line_par").css("display", "none");
+            });
+
+
         });
+
+        function cancel() {
+            $(".line_par").css("display", "");
+
+            $('.select').removeClass("hide");
+        }
+
+        function clear() {
+            $(".line_par").css("display", "");
+
+            $('#searchInput').val('');
+            $('.select').removeClass("hide");
+        }
 
         //显示折叠
         function showorhide(obj) {
@@ -128,7 +169,7 @@
             </div>
             <label class="weui-search-bar__label" id="searchText">
                 <i class="weui-icon-search"></i>
-                <span>请输入查看的关键字</span>
+                <span>请输入查看的物料号、零件号</span>
             </label>
         </form>
         <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
@@ -150,7 +191,7 @@
                                 %>
                                 <ul class="collapse">
                                     <li> <%--class="js-show"--%>
-                                        <div class="weui-flex js-category">
+                                        <div class="weui-flex js-category line_par">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>
                                                 <%= drLine["line"] %>
@@ -174,7 +215,7 @@
                                                     foreach (System.Data.DataRow drpgino in dt_pgino.Select("line='" + drLine["line"].ToString() + "'"))
                                                     {
                                                 %>
-                                                <ul class="collapse ">
+                                                <ul class="collapse select">
                                                     <li  style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category " onclick="showorhide(this);">
                                                             <div class="weui-cells__title weui-flex__item LH" id="<%=drpgino["pgino"] %>LH5">

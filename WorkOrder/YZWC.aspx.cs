@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
+using Newtonsoft.Json;
 
 public partial class WorkOrder_YZWC : System.Web.UI.Page
 {
@@ -14,8 +15,8 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     public DataTable dt_append;
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop = "三车间"; //Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh = "G0014103";// Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -32,7 +33,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = lu.WorkCode;
+            txt_emp.Text = "01968";// lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -41,46 +42,46 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     public void ShowValue( string WorkCode)
     {
 
-        string pgino = "";
-        string yzjno = "";
-        string sql_str = @"exec usp_app_yz_xmh_sel '{0}','{1}','{2}','{3}'";
-        sql_str = string.Format(sql_str, WorkCode, _workshop, txt_dh.Text, txt_xmh.SelectedValue);
-        DataTable dt = SQLHelper.Query(sql_str).Tables[0];
-        if (dt != null && dt.Rows.Count > 0)
-        {
-            txt_xmh.DataSource = dt;
-            txt_xmh.DataTextField = "pgino";
-            txt_xmh.DataValueField = "pgino";
-            txt_xmh.DataBind();
-            if (dt.Rows.Count > 1)
-            {
-                txt_xmh.Items.Insert(0, new ListItem("--请选择--", ""));
-            }
+        //string pgino = "";
+        //string yzjno = "";
+        //string sql_str = @"exec usp_app_yz_xmh_sel '{0}','{1}','{2}','{3}'";
+        //sql_str = string.Format(sql_str, WorkCode, _workshop, txt_dh.Text, txt_xmh.SelectedValue);
+        //DataTable dt = SQLHelper.Query(sql_str).Tables[0];
+        //if (dt != null && dt.Rows.Count > 0)
+        //{
+        //    txt_xmh.DataSource = dt;
+        //    txt_xmh.DataTextField = "pgino";
+        //    txt_xmh.DataValueField = "pgino";
+        //    txt_xmh.DataBind();
+        //    if (dt.Rows.Count > 1)
+        //    {
+        //        txt_xmh.Items.Insert(0, new ListItem("--请选择--", ""));
+        //    }
 
-        }
+        //}
 
-        string sql_his = "select top 1 yzj_no,pgino,NextStep   from [dbo].[Mes_App_WorkOrder_YZ_History] where workorder='{0}'";
-        sql_his = string.Format(sql_his, txt_dh.Text);
-        DataTable dt_his = SQLHelper.Query(sql_his).Tables[0];
-        if (dt_his.Rows.Count > 0)
-        {
-            pgino = dt_his.Rows[0]["pgino"].ToString();
-            yzjno = dt_his.Rows[0]["yzj_no"].ToString();
+        //string sql_his = "select top 1 yzj_no,pgino,NextStep   from [dbo].[Mes_App_WorkOrder_YZ_History] where workorder='{0}'";
+        //sql_his = string.Format(sql_his, txt_dh.Text);
+        //DataTable dt_his = SQLHelper.Query(sql_his).Tables[0];
+        //if (dt_his.Rows.Count > 0)
+        //{
+        //    pgino = dt_his.Rows[0]["pgino"].ToString();
+        //    yzjno = dt_his.Rows[0]["yzj_no"].ToString();
 
-            if (!txt_xmh.Items.Contains(new ListItem(pgino)) && dt.Rows.Count > 0)
-            {
-                ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('请上岗压铸机号" + yzjno + "');", true);
-                return;
-            }
-            pgino = dt_his.Rows[0]["pgino"].ToString();
-            txt_xmh.SelectedValue = pgino;
-            txt_xmh.Attributes.Add("disabled", "disabled");
+        //    if (!txt_xmh.Items.Contains(new ListItem(pgino)) && dt.Rows.Count > 0)
+        //    {
+        //        ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", "alert('请上岗压铸机号" + yzjno + "');", true);
+        //        return;
+        //    }
+        //    pgino = dt_his.Rows[0]["pgino"].ToString();
+        //    txt_xmh.SelectedValue = pgino;
+        //    txt_xmh.Attributes.Add("disabled", "disabled");
 
-            g1.Attributes.Add("disabled", "disabled");
-            g2.Attributes.Add("disabled", "disabled");
-            g3.Attributes.Add("disabled", "disabled");
-            g4.Attributes.Add("disabled", "disabled");
-        }
+        //    g1.Attributes.Add("disabled", "disabled");
+        //    g2.Attributes.Add("disabled", "disabled");
+        //    g3.Attributes.Add("disabled", "disabled");
+        //    g4.Attributes.Add("disabled", "disabled");
+        //}
 
 
     }
@@ -97,30 +98,30 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     protected void Bind_reperter()
     {
 
-        string sql = @"exec usp_app_yz_xmh_sel '{0}','{1}','{2}','{3}'";
-        sql = string.Format(sql, txt_emp.Text, _workshop, txt_dh.Text, txt_xmh.SelectedValue);
+        string sql = @"exec usp_app_yz_xmh_sel_ver '{0}','{1}','{2}','{3}','{4}'";
+        sql = string.Format(sql, txt_emp.Text, _workshop, txt_dh.Text, txt_pgino.Text, txt_yzj.Text);
         DataSet ds = SQLHelper.Query(sql);
-        DataTable dt1 = ds.Tables[0];
-        if(dt1.Rows.Count>0 && txt_xmh.SelectedValue!="")
-        { 
-        txt_pn.Text = dt1.Rows[0]["pt_desc1"].ToString();
-        txt_qty.Text = dt1.Rows[0]["pt_ord_mult"].ToString();
-        txt_ztsl.Text= dt1.Rows[0]["pt_ord_mult"].ToString();
-        txt_off_qty.Text = dt1.Rows[0]["off_qty"].ToString();
-        txt_curr_qty.Text = dt1.Rows[0]["curr_qty"].ToString();
-        txt_desc2.Text= dt1.Rows[0]["pt_desc2"].ToString();
-        }
-        ViewState["DT_Grid"] = ds.Tables[1];
+        //DataTable dt1 = ds.Tables[0];
+        //if(dt1.Rows.Count>0 && txt_xmh.SelectedValue!="")
+        //{ 
+        //txt_pn.Text = dt1.Rows[0]["pt_desc1"].ToString();
+        //txt_qty.Text = dt1.Rows[0]["pt_ord_mult"].ToString();
+        //txt_ztsl.Text= dt1.Rows[0]["pt_ord_mult"].ToString();
+        //txt_off_qty.Text = dt1.Rows[0]["off_qty"].ToString();
+        //txt_curr_qty.Text = dt1.Rows[0]["curr_qty"].ToString();
+        //txt_desc2.Text= dt1.Rows[0]["pt_desc2"].ToString();
+        //}
+        ViewState["DT_Grid"] = ds.Tables[3];
         DataTable dtnew = GetAll();
         Repeater_lotno.DataSource = dtnew;
         Repeater_lotno.DataBind();
-        DataTable dt_record = ds.Tables[2];
+        DataTable dt_record = ds.Tables[4];
         if (dt_record.Rows.Count > 0)
         {
             Repeater_record.DataSource = dt_record;
             Repeater_record.DataBind();
         }
-        string stepvalue = ds.Tables[3].Rows[0]["StepValue"].ToString();
+        string stepvalue = ds.Tables[5].Rows[0]["StepValue"].ToString();
         g1.Checked = (stepvalue == "后处理完成") ? true : false;
         g2.Checked = (stepvalue == "终检") ? true : false;
         g3.Checked = (stepvalue == "GP12") ? true : false;
@@ -272,4 +273,52 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
 
     }
 
+
+    [WebMethod]
+    public static string init_yzj( string emp , string workshop, string workorder)
+    {
+        string result = "";
+        string sql = @"exec [usp_app_yz_xmh_sel_ver] '" + emp + "','" + workshop + "','"+workorder+"','',''";
+        DataSet ds = SQLHelper.Query(sql);
+
+        DataTable dt = ds.Tables[0];
+        string json = JsonConvert.SerializeObject(dt);
+        result = "[{\"json\":" + json + "}]";
+
+        DataTable dt_pgino = ds.Tables[1];
+        string json_pgino = JsonConvert.SerializeObject(dt_pgino);
+
+        result = "[{\"json\":" + json + ",\"json_pgino\":" + json_pgino + "}]";
+
+        return result;
+
+    }
+
+
+
+
+    [WebMethod]
+    public static string yzj_change(string emp, string workshop, string workorder, string yzj_no)
+    {
+        string pt_desc1 = "", pt_desc2 = ""; double pt_ord_mult = 0, off_qty = 0, curr_qty = 0;
+        string sql = @" exec [usp_app_yz_xmh_sel_ver] '" + emp + "','" + workshop + "','" + workorder + "','','" + yzj_no + "'";
+        DataSet ds = SQLHelper.Query(sql);
+
+
+
+        string json_op = JsonConvert.SerializeObject(ds.Tables[1]);
+
+        DataTable dt = ds.Tables[2];
+        pt_desc1 = dt.Rows[0]["pt_desc1"].ToString();
+        pt_desc2 = dt.Rows[0]["pt_desc2"].ToString();
+        pt_ord_mult = double.Parse(dt.Rows[0]["pt_ord_mult"].ToString());
+        off_qty = double.Parse(dt.Rows[0]["off_qty"].ToString());
+        curr_qty = double.Parse(dt.Rows[0]["curr_qty"].ToString());
+
+
+        string result = "[{\"pt_desc1\":\"" + pt_desc1
+            + "\",\"pt_desc2\":\"" + pt_desc2 + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\",\"json_op\":" + json_op + "}]";
+        return result;
+
+    }
 }
