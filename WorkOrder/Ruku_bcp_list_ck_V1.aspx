@@ -149,7 +149,7 @@
                                     {
                                 %>
                                 <ul class="collapse">
-                                    <li class="js-show">
+                                    <li> <%--class="js-show"--%>
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>
@@ -165,7 +165,8 @@
                                                     <% =drLine["avg_hhs"]+"h" %>
                                                 </span>
                                             </div>
-                                            <i class="icon icon-35"></i>
+                                            <%--<i class="icon icon-35"></i>--%>
+                                            <i class="icon icon-74 right"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
                                             <div class="weui-cells">
