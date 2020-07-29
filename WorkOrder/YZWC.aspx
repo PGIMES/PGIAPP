@@ -48,9 +48,13 @@
 
         function valid() {
 
-            if ($("#txt_xmh").val() == "")
+            if ($("#txt_pgino").val() == "")
             {
                 alert("请选择物料号.");
+                return false;
+            }
+            if ($("#txt_yzj").val() == "") {
+                alert("请选择压铸机号.");
                 return false;
             }
             if ($("#txt_dh").val() == "") {
@@ -120,7 +124,6 @@
               });
 
               $("#btnsave3").click(function () {
-                  debugger
                   $(":button").attr("disabled","disabled");
                   $(":button").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
@@ -160,11 +163,11 @@
                $.ajax({
                       type: "post",
                       url: "YZWC.aspx/save2",
-                      data: "{'_dh':'" + $('#txt_dh').val() + "','_emp':'" + $('#txt_emp').val() + "','_pgino':'" + $('#txt_xmh').val()
+                      data: "{'_dh':'" + $('#txt_dh').val() + "','_emp':'" + $('#txt_emp').val() + "','_pgino':'" + $('#txt_pgino').val()
                           + "','_pn':'" + $('#txt_pn').val() + "','_descr':'" + $('#txt_desc2').val()
                           + "','_curr_qty':'" + $('#txt_curr_qty').val() + "','_btnms':'" + btnevent + "','_lot':'" + $('#txt_lotno').val()
                           + "','_stepvalue':'" + $("input[name='step']:checked").val() + "','_remark':'" + $('#txt_remark').val()
-                          + "','_dh_record':'" + $('#dh_record').val() + "','_workshop':'<%=_workshop %>' }",
+                          + "','_dh_record':'" + $('#dh_record').val() + "','_workshop':'<%=_workshop %>','_yzjno':'" + $('#txt_yzj').val() + "' }",
                       contentType: "application/json; charset=utf-8",
                       dataType: "json",
                       async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -354,11 +357,11 @@
                 <div class="weui-cell__hd f-red"><label class="weui-label">压铸机</label></div>
                 <div class="weui-cell__bd">
                     <span style="float:left; width:90%">
-                        <asp:TextBox ID="txt_yzj" class="weui-input"  placeholder="请输入压铸机号" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txt_yzj" class="weui-input"  placeholder="请选择压铸机号" runat="server"></asp:TextBox>
                     </span>
-                    <span style="float:left; width:10%">
+                    <%--<span style="float:left; width:10%">
                         <img id="img_sm_yzj" src="../img/fdj2.png" style="padding-top:2px; "  />
-                    </span>
+                    </span>--%>
                 </div>
             </div>
 
@@ -373,7 +376,7 @@
 
                   <div class="weui-cell">
                 <div class="weui-cell__hd f-red"><label class="weui-label">物料号</label></div>              
-                <asp:TextBox ID="txt_pgino" class="weui-input" runat="server" style="color:gray;"></asp:TextBox>
+                <asp:TextBox ID="txt_pgino" class="weui-input" runat="server" placeholder="请选择物料号" style="color:gray;"></asp:TextBox>
             </div>
 
                  <div class="weui-cell">
@@ -418,7 +421,7 @@
                  <div class="weui-form-preview">
 
                      <ul class="collapse">
-                         <li>
+                         <li class="js-show">
                              <div class="weui-flex js-category">
                                  <div class="weui-flex__item"><span>下一步</span></div>
                                  <i class="icon icon-74"></i>
@@ -698,23 +701,49 @@
                        //$('#b_op_one').val(obj[0].b_op_one);
                        var json_op = obj[0].json_op;
                        $("#txt_pgino").select("update", { items: json_op });
-
+                       $('#txt_pgino').val('');
+                       $('#txt_pn').val('');
+                       $('#txt_desc2').val('');
+                       $('#txt_qty').val('');
+                       $('#txt_off_qty').val('');
+                       $('#txt_curr_qty').val('');
 
                        if (json_op.length == 1) {
                            $("#txt_pgino").val(json_op[0].title);
-                           pgino_change(json_op[0].value);
+                           pgino_change(json_op[0].value,yzj_no);
                        }
                    }
 
                });
+               
            }
 
 
            //物料change
-           function pgino_change(pgino) {
+           function pgino_change(pgino,yzj_no) {
 
-               //$('#txt_pn').val(obj[0].pt_desc1);
+              $.ajax({
+                   type: "post",
+                   url: "YZWC.aspx/pgino_change",
+                   data: "{'emp': '" + $("#txt_emp").val() + "','workshop':'" + "<%= _workshop %>" + "','workorder': '" + $("#txt_dh").val() + "','pgino': '" + pgino + "','yzj_no': '" + yzj_no + "'}",
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                   success: function (data) {
+                       var obj = eval(data.d);
+                       $('#txt_pn').val(obj[0].pt_desc1);
+                       $('#txt_desc2').val(obj[0].pt_desc2);
+                       $('#txt_qty').val(obj[0].pt_ord_mult);
+                       $('#txt_off_qty').val(obj[0].off_qty);
+                       $('#txt_curr_qty').val(obj[0].curr_qty);
+                     
+                   }
+
+              });
+               $("#<%=btn_bind_xm.ClientID%>").click(); 
            }
+
+         
 
     </script>
 </body>

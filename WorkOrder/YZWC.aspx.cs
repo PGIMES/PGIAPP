@@ -15,8 +15,8 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     public DataTable dt_append;
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = "三车间"; //Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh = "G0014103";// Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop =Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh =  Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -33,7 +33,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = "01968";// lu.WorkCode;
+            txt_emp.Text = lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -170,7 +170,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
 
     [WebMethod]
     public static string save2(string _dh, string _emp, string _pgino, string _pn, string _descr, float _curr_qty, string _btnms
-       , string _lot, string _stepvalue, string _remark,string _workshop,string _dh_record)
+       , string _lot, string _stepvalue, string _remark,string _workshop,string _dh_record,string _yzjno)
     {
         string flag = "N", msg = "", re_sql = "", _lotno = "" , _dh_source = "";
 
@@ -180,11 +180,11 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
         if (_lot.Contains(","))
         { _lotno = _lot.Substring(0, _lot.Length - 1); }
       
-        re_sql = @"exec usp_app_yz_off_V1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
+        re_sql = @"exec usp_app_yz_off_V2 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
 
         if (flag == "N")
         {
-            re_sql = string.Format(re_sql, _dh, _emp, _pgino, _pn, _descr,_curr_qty, _btnms, _lotno, _stepvalue, _remark,_workshop, _dh_source);
+            re_sql = string.Format(re_sql, _dh, _emp, _pgino, _pn, _descr,_curr_qty, _btnms, _lotno, _stepvalue, _remark,_workshop, _dh_source,_yzjno);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();
@@ -300,13 +300,39 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     [WebMethod]
     public static string yzj_change(string emp, string workshop, string workorder, string yzj_no)
     {
-        string pt_desc1 = "", pt_desc2 = ""; double pt_ord_mult = 0, off_qty = 0, curr_qty = 0;
+        //string pt_desc1 = "", pt_desc2 = ""; double pt_ord_mult = 0, off_qty = 0, curr_qty = 0;
         string sql = @" exec [usp_app_yz_xmh_sel_ver] '" + emp + "','" + workshop + "','" + workorder + "','','" + yzj_no + "'";
         DataSet ds = SQLHelper.Query(sql);
 
 
 
         string json_op = JsonConvert.SerializeObject(ds.Tables[1]);
+       string result = "[{\"json_op\":" + json_op + "}]";
+        //DataTable dt = ds.Tables[2];
+        //pt_desc1 = dt.Rows[0]["pt_desc1"].ToString();
+        //pt_desc2 = dt.Rows[0]["pt_desc2"].ToString();
+        //pt_ord_mult = double.Parse(dt.Rows[0]["pt_ord_mult"].ToString());
+        //off_qty = double.Parse(dt.Rows[0]["off_qty"].ToString());
+        //curr_qty = double.Parse(dt.Rows[0]["curr_qty"].ToString());
+
+
+        //string result = "[{\"pt_desc1\":\"" + pt_desc1
+        //    + "\",\"pt_desc2\":\"" + pt_desc2 + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\",\"json_op\":" + json_op + "}]";
+        return result;
+
+    }
+
+
+    [WebMethod]
+    public static string pgino_change(string emp, string workshop, string workorder,string pgino, string yzj_no)
+    {
+        string pt_desc1 = "", pt_desc2 = ""; double pt_ord_mult = 0, off_qty = 0, curr_qty = 0;
+        string sql = @" exec [usp_app_yz_xmh_sel_ver] '" + emp + "','" + workshop + "','" + workorder + "','"+pgino+"','" + yzj_no + "'";
+        DataSet ds = SQLHelper.Query(sql);
+
+
+
+       // string json_op = JsonConvert.SerializeObject(ds.Tables[1]);
 
         DataTable dt = ds.Tables[2];
         pt_desc1 = dt.Rows[0]["pt_desc1"].ToString();
@@ -317,7 +343,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
 
 
         string result = "[{\"pt_desc1\":\"" + pt_desc1
-            + "\",\"pt_desc2\":\"" + pt_desc2 + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\",\"json_op\":" + json_op + "}]";
+            + "\",\"pt_desc2\":\"" + pt_desc2 + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\"}]";
         return result;
 
     }
