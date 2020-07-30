@@ -108,14 +108,28 @@
                       //}
                   }
 
-                  var qty = $("#txt_qty").val();
-                  $.confirm('当前输入下料数量为 ' + qty + ' ，确认要暂存吗？', function () { btnclick($("#btnsave2").val()); },
-                          function () {
-                              $(":button").removeAttr("disabled");
-                              $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-                          });
+                  //var qty = $("#txt_qty").val();
+                  //$.confirm('当前输入下料数量为 ' + qty + ' ，确认要暂存吗？', function () { btnclick($("#btnsave2").val()); },
+                  //        function () {
+                  //            $(":button").removeAttr("disabled");
+                  //            $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                  //        });
 
-                      
+                  if (parseFloat($("#txt_curr_qty").val()) < 0) {
+                      $.confirm('本次下线数量小于0,确认倒冲吗？', function () { btnclick($("#btnsave2").val()); },
+                         function () {
+                             $(":button").removeAttr("disabled");
+                             $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                         });
+                  }
+                  else {
+                      var qty = $("#txt_qty").val();
+                      $.confirm('当前输入下料数量为 ' + qty + ' ，确认要暂存吗？', function () { btnclick($("#btnsave2").val()); },
+                              function () {
+                                  $(":button").removeAttr("disabled");
+                                  $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                              });
+                  }
                   
 
 
@@ -133,6 +147,25 @@
                       //}
                   }
                  
+                      //if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
+                      //    $.confirm('零托,确认执行下一步吗？', function () { btnclick($("#btnsave3").val()); },
+                      //        function () {
+                      //            $(":button").removeAttr("disabled");
+                      //            $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                      //        });
+                      //}
+                      //else {
+                      //    btnclick($("#btnsave3").val());
+                      //}
+
+                  if (parseFloat($("#txt_curr_qty").val()) < 0) {
+                      $.confirm('本次下线数量小于0,确认倒冲吗？', function () { btnclick($("#btnsave3").val()); },
+                         function () {
+                             $(":button").removeAttr("disabled");
+                             $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                         });
+                  }
+                  else {
                       if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
                           $.confirm('零托,确认执行下一步吗？', function () { btnclick($("#btnsave3").val()); },
                               function () {
@@ -141,8 +174,16 @@
                               });
                       }
                       else {
-                          btnclick($("#btnsave3").val());
+                          var qty = $("#txt_qty").val();
+                          $.confirm('当前输入下料数量为 ' + qty + ' ，确认要下料吗？', function () { btnclick($("#btnsave3").val()); },
+                                  function () {
+                                      $(":button").removeAttr("disabled");
+                                      $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                                  });
+
+
                       }
+                  }
                   
 
                   
@@ -262,7 +303,7 @@
                           success: function (res) {
                               var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                                $('#source_dh').val(result);
-                                $('#dh_record').val($('#dh_record').val()+","+result);
+                                //$('#dh_record').val($('#dh_record').val()+","+result);
                                $("#<%=btn_bind_data.ClientID%>").click();
                           }
                       });
@@ -339,7 +380,7 @@
                 </div>
 
 
-<%--                <div class="weui-cell">
+                <div class="weui-cell">
                     <div class="weui-cell__hd">
                         <label class="weui-label">来源单号</label>
                     </div>
@@ -351,7 +392,7 @@
                             <img id="img_sm" src="../img/fdj2.png" style="padding-top: 10px;" />
                         </span>
                     </div>
-                </div>--%>
+                </div>
 
                    <div class="weui-cell">
                 <div class="weui-cell__hd f-red"><label class="weui-label">压铸机</label></div>
