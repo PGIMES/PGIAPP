@@ -95,15 +95,29 @@
                       //}
                   }
 
-                  var qty = $("#txt_qty").val();
-                  $.confirm('当前输入下料数量为 ' + qty + ' ，确认要暂存吗？', function () { btnclick(0); },
-                          function () {
-                              $(":button").removeAttr("disabled");
-                              $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-                          });
+                  //var qty = $("#txt_qty").val();
+                  //$.confirm('当前输入下料数量为 ' + qty + ' ，确认要暂存吗？', function () { btnclick(0); },
+                  //        function () {
+                  //            $(":button").removeAttr("disabled");
+                  //            $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                  //        });
 
                     
-                  
+                  if (parseFloat($("#txt_curr_qty").val()) < 0) {
+                      $.confirm('本次下线数量小于0,确认倒冲吗？', function () { btnclick(0); },
+                         function () {
+                             $(":button").removeAttr("disabled");
+                             $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                         });
+                  }
+                  else {
+                      var qty = $("#txt_qty").val();
+                      $.confirm('当前输入下料数量为 ' + qty + ' ，确认要暂存吗？', function () { btnclick(0); },
+                              function () {
+                                  $(":button").removeAttr("disabled");
+                                  $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                              });
+                  }
 
 
                      
@@ -121,18 +135,43 @@
                       //}
                   }
                  
+                      //if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
+                      //    $.confirm('零托,确认执行下一步吗？', function () { btnclick(1); },
+                      //        function () {
+                      //            $(":button").removeAttr("disabled");
+                      //            $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                      //        });
+                      //}
+                      //else {
+                      //    btnclick(1);
+                      //}
+                  
+                  if (parseFloat($("#txt_curr_qty").val()) < 0) {
+                      $.confirm('本次下线数量小于0,确认倒冲吗？', function () { btnclick(1); },
+                         function () {
+                             $(":button").removeAttr("disabled");
+                             $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                         });
+                  }
+                  else {
                       if (parseFloat($("#txt_curr_qty").val()) + parseFloat($("#txt_off_qty").val()) < parseFloat($("#txt_ztsl").val())) {
-                          $.confirm('零托,确认执行下一步吗？', function () { btnclick($("#btnsave3").val()); },
+                          $.confirm('零托,确认执行下一步吗？', function () { btnclick(1); },
                               function () {
                                   $(":button").removeAttr("disabled");
                                   $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                               });
                       }
                       else {
-                          btnclick(1);
-                      }
-                  
+                          var qty = $("#txt_qty").val();
+                          $.confirm('当前输入下料数量为 ' + qty + ' ，确认要下料吗？', function () { btnclick(1); },
+                                  function () {
+                                      $(":button").removeAttr("disabled");
+                                      $(":button").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                                  });
 
+
+                      }
+                  }
                   
               });
 

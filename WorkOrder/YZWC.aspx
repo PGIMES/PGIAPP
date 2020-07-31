@@ -672,8 +672,6 @@
     
        <script>
 
-           init_data();
-
            function init_data() {
                var datalist_yzj, datalist_pgino;
 
@@ -709,11 +707,6 @@
                    },
 
                });
-               if (datalist_yzj.length == 1) {
-                   $("#txt_yzj").val(datalist_yzj[0].title);
-                   yzj_change(datalist_yzj[0].value);
-               }
-
                $("#txt_pgino").select({
                    title: "物料号",
                    items: [{ title: '', value: '' }],
@@ -733,6 +726,14 @@
                    },
 
                });
+
+
+
+               if (datalist_yzj.length == 1) {
+                   $("#txt_yzj").val(datalist_yzj[0].title);
+                   yzj_change(datalist_yzj[0].value);
+               }
+
            }
            
 
@@ -794,7 +795,8 @@
                $("#<%=btn_bind_xm.ClientID%>").click(); 
            }
 
-         
+
+           init_data();
 
     </script>
 </body>

@@ -129,7 +129,12 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
         g2.Checked = (stepvalue == "终检") ? true : false;
         g3.Checked = (stepvalue == "GP12") ? true : false;
         g4.Checked = (stepvalue == "入库") ? true : false;
-
+        if (ds.Tables[3].Rows[0]["cz"].ToString() == "Y")
+        {
+            g2.Attributes.Add("disabled", "disabled");
+            g3.Attributes.Add("disabled", "disabled");
+            g4.Attributes.Add("disabled", "disabled");
+        }
 
     }
 
@@ -264,9 +269,16 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
         if (_dh_record.Contains(","))
         { _dh_source = _dh_record.Substring(1, _dh_record.Length - 1); }
 
-          re_sql = @"exec usp_app_YZ_HSolve_Insert '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
-    
+          
 
+        if (_curr_qty <= 0)
+        {
+            re_sql = @"exec usp_app_YZ_HSolve_Insert '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+        }
+        else
+        {
+            re_sql = @"exec usp_app_yz_hsolve_recover '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+        }
 
         if (flag == "N")
         {
