@@ -255,8 +255,12 @@
                         <p>半成品库</p>
                     </div>
                     <div class="weui-cell__ft">
+                        <asp:Label ID="Label3_v1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3_v" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i3_v1 = Label3_v1.Text;
+                            Response.Write("<span class='weui-badge  bg-" + (i3_v1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_v1 + "个</span>");
+                        %>   
                         <% string i3 = Label3.Text;
                             Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "托</span>");
                         %>   

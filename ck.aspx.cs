@@ -49,6 +49,7 @@ public partial class ck : System.Web.UI.Page
         sql = @"exec [usp_app_Ruku_bcp_list_ck_V1]";
         DataTable dt_bcp = SQLHelper.Query(sql).Tables[3];
 
+        Label3_v1.Text = dt_bcp.Rows[0]["sum_cps"].ToString();
         Label3.Text = dt_bcp.Rows[0]["sum_ts"].ToString();
         Label3_v.Text = dt_bcp.Rows[0]["avg_hhs"].ToString();
     }
