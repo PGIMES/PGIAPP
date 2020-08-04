@@ -196,13 +196,13 @@
                                                 <i class="icon nav-icon icon-49"></i>
                                                 <%= drLine["line"] %>
 
-                                                <span class="weui-badge  bg-<% =(drLine["cps"].ToString()=="0"?"gray":"blue") %> margin20-l ">
+                                                <span class="weui-badge  bg-<% =(drLine["cps"].ToString()=="0"?"gray":"blue") %> margin10-l ">
                                                     <% =drLine["cps"]+"个" %>
                                                 </span>   
-                                                <span class="weui-badge  bg-<% =(drLine["sum_ts"].ToString()=="0"?"gray":"blue") %> margin20-l ">
+                                                <span class="weui-badge  bg-<% =(drLine["sum_ts"].ToString()=="0"?"gray":"blue") %> margin10-l ">
                                                     <% =drLine["sum_ts"]+"托" %>
                                                 </span>
-                                                <span class="weui-badge  bg-<% =(drLine["avg_hhs"].ToString()=="0"?"gray":"orange") %> margin20-l ">
+                                                <span class="weui-badge  bg-<% =(drLine["avg_hhs"].ToString()=="0"?"gray":"orange") %> margin10-l ">
                                                     <% =drLine["avg_hhs"]+"h" %>
                                                 </span>
                                             </div>
