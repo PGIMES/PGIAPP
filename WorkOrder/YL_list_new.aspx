@@ -88,16 +88,18 @@
             });
 
            $('#searchInput').bind('input propertychange', function () {
-               $(".js-category").css("display", "none");
+               //$(".js-category").css("display", "none");
 
                 var text = $("#searchInput").val();
                 $('.weui-cell').each(function () {
                     var $self = $(this);
-                    var flag = $self.text().search(text)
+                    $parent = $self.parents('li');
+
+                    var flag = $self.text().search(text);
                     if (flag > -1) {
-                        $self.removeClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
+                        $self.removeClass("hide"); $parent.children('.js-category').css("display", "none"); //$self.siblings('.weui-cells__title').addClass("hide");
                     } else {
-                        $self.addClass("hide"); $self.siblings('.weui-cells__title').addClass("hide");
+                        $self.addClass("hide"); $parent.children('.js-category').css("display", "none"); //$self.siblings('.weui-cells__title').addClass("hide");
 
                     }
                 });
