@@ -235,7 +235,35 @@
                                                                         <%=drpgino["avg_hhs"]+"h" %>
                                                                         <%}  %>--%>
 
-                                                                     <%= ",最长"%>
+                                                                    <%--<%= ",最长"%>
+
+                                                                    <% if (Convert.ToInt32(drpgino["max_hhs"]) >= 120) {%>
+                                                                    <font class="f-red"><%=drpgino["max_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(drpgino["max_hhs"]) >= 72) {%>
+                                                                    <font class="f-blue"><%=drpgino["max_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=drpgino["max_hhs"]+"h" %>
+                                                                        <%}  %>--%>
+
+                                                                    
+                                                                     <%= ","%>
+
+                                                                     <% if (Convert.ToInt32(drpgino["min_hhs"]) == Convert.ToInt32(drpgino["max_hhs"])) {%>
+                                                                    -
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(drpgino["min_hhs"]) >= 120) {%>
+                                                                    <font class="f-red"><%=drpgino["min_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToInt32(drpgino["min_hhs"]) >= 72) {%>
+                                                                    <font class="f-blue"><%=drpgino["min_hhs"]+"h" %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=drpgino["min_hhs"]+"h" %>
+                                                                        <%}  %>
+
+                                                                     <%= ","%>
 
                                                                     <% if (Convert.ToInt32(drpgino["max_hhs"]) >= 120) {%>
                                                                     <font class="f-red"><%=drpgino["max_hhs"]+"h" %></font>
