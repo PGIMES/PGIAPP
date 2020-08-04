@@ -305,7 +305,7 @@
                                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="weui-cell__bd " style="font-size: smaller">
-                                                                    <%=dr["workorder"]+","+dr["act_qty"]+"件,"+dr["loc_hg"]
+                                                                    <%=dr["dh"]+","+dr["act_qty"]+"件,"+dr["loc_hg"]
                                                                         +","+string.Format("{0:MM-dd HH:mm}",dr["create_date"])%> 
                                                                     时长: 
                                                                     <% if (Convert.ToInt32(dr["hhs"]) >= 120) {%>
