@@ -52,6 +52,14 @@ public partial class ck : System.Web.UI.Page
         Label3_v1.Text = dt_bcp.Rows[0]["sum_cps"].ToString();
         Label3.Text = dt_bcp.Rows[0]["sum_ts"].ToString();
         Label3_v.Text = dt_bcp.Rows[0]["avg_hhs"].ToString();
+
+        //成品库
+        sql = @"exec [usp_app_Ruku_cp_list_ck]";
+        DataTable dt_cp = SQLHelper.Query(sql).Tables[3];
+
+        Label4_v1.Text = dt_cp.Rows[0]["sum_cps"].ToString();
+        Label4.Text = dt_cp.Rows[0]["sum_ts"].ToString();
+        Label4_v.Text = dt_cp.Rows[0]["avg_hhs"].ToString();
     }
 
 

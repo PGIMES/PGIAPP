@@ -268,6 +268,27 @@
                             Response.Write("<span class='weui-badge' style='background-color:" + (i3_v == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>" + i3_v + "h</span>"); %> 
                     </div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_cp_list_ck.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-hdd-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>产成品库</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label4_v1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="Label4_v" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i4_v1 = Label4_v1.Text;
+                            Response.Write("<span class='weui-badge  bg-" + (i4_v1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i4_v1 + "个</span>");
+                        %>   
+                        <% string i4 = Label4.Text;
+                            Response.Write("<span class='weui-badge  bg-" + (i4 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i4 + "托</span>");
+                        %>   
+                        <% string i4_v = Label4_v.Text;
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i4_v == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>" + i4_v + "h</span>"); %> 
+                    </div>
+                </a>
             </div>
         </div>
         <div id="errmsg"class="f14"></div>  
