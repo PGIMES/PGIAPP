@@ -78,14 +78,7 @@
                 }
             });
 
-           $("ul li").find("#line_s").each(function () {
-                if ("配件" != $(this).text()) {
-                    $(this).parent().parent().parent().siblings().removeClass('js-show');
-                    $(this).parent().parent().parent().addClass('js-show');
-                    $(this).parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
-                    $(this).parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
-                } 
-            });
+            pj_hide();
 
            $('#searchInput').bind('input propertychange', function () {
                //$(".js-category").css("display", "none");
@@ -93,7 +86,13 @@
                 var text = $("#searchInput").val();
                 $('.weui-cell').each(function () {
                     var $self = $(this);
+
                     $parent = $self.parents('li');
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
 
                     var flag = $self.text().search(text);
                     if (flag > -1) {
@@ -108,6 +107,20 @@
             });
 
         });
+
+        function pj_hide() {
+            $("ul li").find("#line_s").each(function () {
+                if ("配件" != $(this).text()) {
+                    $(this).parent().parent().parent().siblings().removeClass('js-show');
+                    $(this).parent().parent().parent().addClass('js-show');
+                    $(this).parent().parent().children('i').removeClass('icon-74').addClass('icon-35');
+                    $(this).parent().parent().siblings().find('i').removeClass('icon-35').addClass('icon-74');
+                } else {
+                    $(this).parent().parent().parent().removeClass('js-show');
+                    $(this).parent().parent().parent().children('i').removeClass('icon-35').addClass('icon-74');
+                }
+            });
+        }
 
         //显示数量
         function showBlockCount() {
@@ -131,6 +144,7 @@
             $('.weui-cell').removeClass("hide");
             $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
             showBlockCount();
+            pj_hide();
         }
 
         function clear() {
@@ -140,6 +154,7 @@
             $('.weui-cell').removeClass("hide");
             $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
             showBlockCount();
+            pj_hide();
         }
     </script>
      <script>
