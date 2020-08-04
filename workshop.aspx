@@ -36,30 +36,37 @@
         });
         function show() {
             dh = $("#dj").val();
-            if (dh == "") { alert("请输入或扫描单据号(不含R字头)."); return false;}
-            $.ajax({
-                url: "/workshop.aspx/TraceByDH",
-                type: "Post",
-                data: "{ 'dh': '" + dh + "' }",
-                async: false,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    datad = JSON.parse(data.d); //转为Json字符串
-                    if (datad.length>0)
-                    {
-                        //alert(datad[0].href)
-                        if (datad[0].href != "")
-                        { window.location.href = datad[0].href; }
-                        else {
-                            alert("未发现【" + dh + "】对应的记录.");
-                        }
-                    }
-                },
-                error: function (error) {
-                    alert(error);
-                }
-            });
+            if (dh == "") {
+               // alert("请输入或扫描单据号(不含R字头).");
+                $.alert("请输入或扫描单据号(不含R字头).","提示",function(){
+                    return ;
+                });
+                return false;
+            }
+            window.location.href = "/workorder/trace_bycode.aspx?dh="+dh;
+            //$.ajax({
+            //    url: "/workshop.aspx/TraceByDH",
+            //    type: "Post",
+            //    data: "{ 'dh': '" + dh + "' }",
+            //    async: false,
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    success: function (data) {
+            //        datad = JSON.parse(data.d); //转为Json字符串
+            //        if (datad.length>0)
+            //        {
+            //            //alert(datad[0].href)
+            //            if (datad[0].href != "")
+            //            { window.location.href = datad[0].href; }
+            //            else {
+            //                alert("未发现【" + dh + "】对应的记录.");
+            //            }
+            //        }
+            //    },
+            //    error: function (error) {
+            //        alert(error);
+            //    }
+            //});
         }
         
     </script>

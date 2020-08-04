@@ -298,12 +298,12 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>    
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">   
+                <a class="weui-cell weui-cell_access" href="javascript:sm_qc_off('<%=_workshop %>');">   
                     <div class="weui-cell__hd">
                         <i class="fa fa-wpexplorer margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>检验完成<span class="f12">（开发中）</span></p>
+                        <p>检验完成</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
