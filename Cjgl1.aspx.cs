@@ -143,6 +143,19 @@ public partial class Cjgl1 : System.Web.UI.Page
 
         Label1_three_j.Text = re_dt_j.Rows[0][0].ToString();
 
+        //要料监视
+        DataTable dt_go = new DataTable();
+        DataTable dt_wc = new DataTable();
+        DataTable dt_rj = new DataTable();
+
+        sql = @"exec [usp_app_YL_list_new] '" + _workshop + "',''";
+        dt_go = SQLHelper.Query(sql).Tables[0];
+        dt_wc = SQLHelper.Query(sql).Tables[1];
+        dt_rj = SQLHelper.Query(sql).Tables[2];
+
+        int count_yl = dt_go.Rows.Count + dt_wc.Rows.Count + dt_rj.Rows.Count;
+        Label2_three.Text = count_yl.ToString();
+
         //要汤监视
         sql = @"exec [usp_app_YT_list] '{0}','{1}'";
         sql = string.Format(sql, _workshop, "");

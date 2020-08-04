@@ -253,12 +253,12 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="/workorder/YL.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cube margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要料<span class="f12">（开发中）</span></p>
+                        <p>要料</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -328,14 +328,16 @@
                           
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <a class="weui-cell weui-cell_access" href="/workorder/YL_list_new.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cubes margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要料监视<span class="f12">（开发中）</span></p>
+                        <p>要料监视</p>
                     </div>
-                    <div class="weui-cell__ft"> 
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label2_three" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i2_three = Label2_three.Text; Response.Write("<span class='weui-badge  bg-" + (i2_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_three + "</span>"); %>  
                     </div>
                 </a>   
                 <a class="weui-cell weui-cell_access" href="/workorder/YT_list.aspx?workshop=<%=_workshop %>">
