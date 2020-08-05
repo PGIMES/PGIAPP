@@ -292,7 +292,7 @@
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     
                     if (parseInt(_op) <= 700 || parseInt(_op) == 800) {
-                        if (parseInt(_op) >= 40 && parseInt(_op) <= 50) {
+                        if (parseInt(_op) >= 40 && parseInt(_op) < 100) {//parseInt(_op) <= 50
                             if ($("#b_use_routing").val() == "1") {
                                 layer.alert("请输入【压铸完成单号】.");
                                 return false;
@@ -1225,7 +1225,7 @@
                     $("#qty").attr("placeholder","请输入处置数量");
 
                     if (parseInt(d.values) <= 700 || parseInt(d.values)==800) {
-                        if (parseInt(d.values) >= 40 && parseInt(d.values) <= 50) {
+                        if (parseInt(d.values) >= 40 && parseInt(d.values) < 100) {//parseInt(d.values) <= 50
                             if ($("#b_use_routing").val() == "1") {
                                 $("#div_ref_order").show();
                                 $("#lbl_ref_order").text("压铸完成单号");

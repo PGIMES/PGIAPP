@@ -462,7 +462,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             {
                 re_sql = @"exec usp_app_bhgp_Apply_yz '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}'";
             }
-            else if (op_code >= 40 && op_code <= 50)
+            else if (op_code >= 40 && op_code < 100)//op_code <= 50
             {
                 if (_b_use_routing == "0")
                 {

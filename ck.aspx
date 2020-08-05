@@ -247,6 +247,16 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void(0)">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-ravelry margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>原材料库</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                    </div>
+                </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_list_ck_V1.aspx">
                     <div class="weui-cell__hd">
                         <i class="fa fa-hdd-o margin10-r"></i>
@@ -273,7 +283,7 @@
                         <i class="fa fa-product-hunt margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>产成品库</p>
+                        <p>成品库</p>
                     </div>
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label4_v1" runat="server" Text="" style="display:none;"></asp:Label>
