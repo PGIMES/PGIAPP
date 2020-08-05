@@ -36,9 +36,8 @@
         }
 
         .weui-badge-tr {
-            border: 1px solid orange;
+            border: 1px solid ;
             background-color: transparent;
-            color: orange;
         }
 
         .f-deepfont {
@@ -287,6 +286,14 @@
                                                                     <% else {%>
                                                                         <%=drpgino["day_s"]+"天" %>
                                                                         <%}  %>
+
+                                                                     <% if (drpgino["flag_xp"].ToString() != "")
+                                                                         {%>
+                                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: #10AEFF;">
+                                                                            <%=drpgino["flag_xp"] %>
+                                                                        </span>
+                                                                        <%}  %>
+
                                                                     
                                                                 </span>
                                                                 
