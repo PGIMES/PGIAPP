@@ -143,6 +143,9 @@
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2 = Label2.Text; Response.Write("<span class='weui-badge  bg-" + (i2 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2 + "</span>"); %>   
+                        
+                        <asp:Label ID="Label2_end" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i2_end = Label2_end.Text; Response.Write("<span class='weui-badge  bg-" + (i2_end == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_end + "</span>"); %>   
                     </div>
                 </a>                
                 <%--<a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply.aspx?workshop=<%=_workshop %>">
@@ -176,7 +179,9 @@
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label3_V1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3_V1_f" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="Label3_V1_e" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>  
+                        <% string i3_V1_e = Label3_V1_e.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1_e == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1_e + "</span>"); %>  
                         <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>  
                     </div>
                 </a>
@@ -339,6 +344,10 @@
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label2_three" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2_three = Label2_three.Text; Response.Write("<span class='weui-badge  bg-" + (i2_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_three + "</span>"); %>  
+                        
+                        <asp:Label ID="Label2_three_end" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i2_three_end = Label2_three_end.Text;
+                            Response.Write("<span class='weui-badge  bg-" + (i2_three_end == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_three_end + "</span>"); %>   
                     </div>
                 </a>   
                 <a class="weui-cell weui-cell_access" href="/workorder/YT_list.aspx?workshop=<%=_workshop %>">
@@ -365,7 +374,9 @@
                     <div class="weui-cell__ft"> 
                         <asp:Label ID="Label_bhg_thr" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label_bhg_thr_f" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i_bhg_3 = Label_bhg_thr.Text; Response.Write("<span class='weui-badge  bg-" + (i_bhg_3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i_bhg_3 + "</span>"); %>  
+                        <asp:Label ID="Label_bhg_thr_e" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i_bhg_3 = Label_bhg_thr.Text; Response.Write("<span class='weui-badge  bg-" + (i_bhg_3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i_bhg_3 + "</span>"); %> 
+                        <% string i_bhg_3_e = Label_bhg_thr_e.Text;Response.Write("<span class='weui-badge  bg-" + (i_bhg_3_e == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i_bhg_3_e + "</span>"); %>   
                         <% string i_bhg_3_f = Label_bhg_thr_f.Text;Response.Write("<span class='weui-badge  bg-" + (i_bhg_3_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i_bhg_3_f + "</span>"); %>  
                     </div>
                 </a>

@@ -95,7 +95,7 @@
 
 
           $(function () {
-              $("#<%=btn_bind_xm.ClientID%>").click();  
+           <%--   $("#<%=btn_bind_xm.ClientID%>").click();  --%>
 
               $("#btnsave2").click(function () { 
                   $(":button").attr("disabled", "disabled");
@@ -194,11 +194,42 @@
             function source_dh_change() {
 
               $("#dh_record").val($("#dh_record").val() + "," + $("#source_dh").val());
+                //$("#txt_yzj").val("2-6");
 
               $("#<%=btn_bind_data.ClientID%>").click();
+                
+               yz_wip_change($("#dh_record").val());
+
+            }
+
+            //物料change
+         function yz_wip_change(source_dh) {
+
+              $.ajax({
+                   type: "post",
+                   url: "YZWC.aspx/yz_source_change",
+                   data: "{'source_dh': '" + source_dh + "'}",
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                   success: function (data) {
+                       var obj = eval(data.d);
+                       
+                           $('#txt_pgino').val(obj[0].pgino);
+                           $('#txt_pn').val(obj[0].pt_desc2);
+                           $('#txt_qty').val(obj[0].act_qty);
+                           $('#txt_off_qty').val(obj[0].off_qty);
+                           $('#txt_curr_qty').val(obj[0].curr_qty);
+                           $('#txt_ztsl').val(obj[0].pt_ord_mult);
+                       
+                     
+                   }
+
+              });
+<%--               $("#<%=btn_bind_xm.ClientID%>").click(); --%>
+         }
 
 
-          }
           function btnclick(btnevent){
                $.ajax({
                       type: "post",
@@ -302,9 +333,10 @@
                           scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
                           success: function (res) {
                               var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                               $('#source_dh').val(result);
+                              $('#source_dh').val(result);
+                              source_dh_change();
                                 //$('#dh_record').val($('#dh_record').val()+","+result);
-                               $("#<%=btn_bind_data.ClientID%>").click();
+                              <%-- $("#<%=btn_bind_data.ClientID%>").click();--%>
                           }
                       });
                   });
@@ -361,6 +393,8 @@
                         <asp:TextBox ID="txt_cz" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
                          <asp:TextBox ID="txt_desc2" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
                         <asp:TextBox ID="txt_lotno" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txt_equipno" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
+                         <asp:TextBox ID="txt_equipname" class="weui-input" placeholder="" Style="max-width: 100%;" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
@@ -686,6 +720,10 @@
                        var obj = eval(data.d);
                        datalist_yzj = obj[0].json;
                        datalist_pgino = obj[0].json_pgino;
+                       if (obj[0].yzjno != "") {
+                           $("#txt_equipno").val(obj[0].equip_no);
+                           $("#txt_equipname").val(obj[0].equip_name);
+                       }
                    }
                });
 
@@ -707,6 +745,7 @@
                    },
 
                });
+
                $("#txt_pgino").select({
                    title: "物料号",
                    items: [{ title: '', value: '' }],
@@ -714,7 +753,8 @@
                        //alert(d.values);
 
                        //绑定零件号
-                       pgino_change(d.values);
+                       pgino_change(d.values, $("#txt_yzj").val());
+                        
                    },
                    onClose: function (d) {
                        //var obj = eval(d.data);
@@ -726,14 +766,17 @@
                    },
 
                });
-
-
-
-               if (datalist_yzj.length == 1) {
-                   $("#txt_yzj").val(datalist_yzj[0].title);
-                   yzj_change(datalist_yzj[0].value);
+               if ($("#txt_yzjno").val() != "")
+               {
+                   $("#txt_yzj").val($("#txt_equipname").val());
+                   yzj_change($("#txt_equipno").val());
                }
 
+               //if (datalist_yzj.length == 1) {
+              
+               //    $("#txt_yzj").val(datalist_yzj[0].title);
+               //    yzj_change(datalist_yzj[0].value);
+               //}
            }
            
 
@@ -762,8 +805,12 @@
 
                        if (json_op.length == 1) {
                            $("#txt_pgino").val(json_op[0].title);
-                           pgino_change(json_op[0].value,yzj_no);
+                           pgino_change(json_op[0].title, yzj_no);
+                          
                        }
+                      
+                     
+                      
                    }
 
                });
@@ -772,7 +819,7 @@
 
 
            //物料change
-           function pgino_change(pgino,yzj_no) {
+         function pgino_change(pgino,yzj_no) {
 
               $.ajax({
                    type: "post",
@@ -783,17 +830,21 @@
                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                    success: function (data) {
                        var obj = eval(data.d);
-                       $('#txt_pn').val(obj[0].pt_desc1);
-                       $('#txt_desc2').val(obj[0].pt_desc2);
-                       $('#txt_qty').val(obj[0].pt_ord_mult);
-                       $('#txt_off_qty').val(obj[0].off_qty);
-                       $('#txt_curr_qty').val(obj[0].curr_qty);
+                       
+                           $('#txt_pn').val(obj[0].pt_desc1);
+                           $('#txt_desc2').val(obj[0].pt_desc2);
+                           $('#txt_qty').val(obj[0].pt_ord_mult);
+                           $('#txt_off_qty').val(obj[0].off_qty);
+                           $('#txt_curr_qty').val(obj[0].curr_qty);
+                           $('#txt_ztsl').val(obj[0].pt_ord_mult);
+                       
                      
                    }
 
               });
                $("#<%=btn_bind_xm.ClientID%>").click(); 
            }
+
 
 
            init_data();

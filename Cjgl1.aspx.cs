@@ -56,14 +56,17 @@ public partial class Cjgl1 : System.Web.UI.Page
         DataTable dt_go = new DataTable();
         DataTable dt_wc = new DataTable();
         DataTable dt_rj = new DataTable();
+        DataTable dt_end = new DataTable();
 
         sql = @"exec [usp_app_YL_list_new] '"+ _workshop + "',''";
         dt_go = SQLHelper.Query(sql).Tables[0];
         dt_wc = SQLHelper.Query(sql).Tables[1];
         dt_rj = SQLHelper.Query(sql).Tables[2];
+        dt_end = SQLHelper.Query(sql).Tables[3];
 
         int count_yl = dt_go.Rows.Count + dt_wc.Rows.Count + dt_rj.Rows.Count;
         Label2.Text = count_yl.ToString();
+        Label2_end.Text = dt_end.Rows.Count.ToString();
 
         //不合格监视
         //sql = @"exec [usp_app_bhgp_Apply_list_dv] '"+ _workshop + "','','0001',''";
@@ -85,11 +88,13 @@ public partial class Cjgl1 : System.Web.UI.Page
         DataSet ds = SQLHelper.Query(sql);
         DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
         DataTable dt_04 = ds.Tables[3]; DataTable dt_05 = ds.Tables[4]; DataTable dt_98 = ds.Tables[5];
+        DataTable dt_99 = ds.Tables[6];
         int count_bhg = dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_98.Rows.Count;
 
         //Label3.Text = count_bhg.ToString();
         Label3_V1.Text = count_bhg.ToString();
         Label3_V1_f.Text = dt_01.Rows.Count.ToString();
+        Label3_V1_e.Text = dt_99.Rows.Count.ToString();
 
         //以下marked by fish 20.7.14
         #region marked by fish 20.7.14
@@ -147,14 +152,17 @@ public partial class Cjgl1 : System.Web.UI.Page
         DataTable dt_go = new DataTable();
         DataTable dt_wc = new DataTable();
         DataTable dt_rj = new DataTable();
+        DataTable dt_end = new DataTable();
 
         sql = @"exec [usp_app_YL_list_new] '" + _workshop + "',''";
         dt_go = SQLHelper.Query(sql).Tables[0];
         dt_wc = SQLHelper.Query(sql).Tables[1];
         dt_rj = SQLHelper.Query(sql).Tables[2];
+        dt_end = SQLHelper.Query(sql).Tables[3];
 
         int count_yl = dt_go.Rows.Count + dt_wc.Rows.Count + dt_rj.Rows.Count;
         Label2_three.Text = count_yl.ToString();
+        Label2_three_end.Text = dt_end.Rows.Count.ToString();
 
         //要汤监视
         sql = @"exec [usp_app_YT_list] '{0}','{1}'";
@@ -169,10 +177,12 @@ public partial class Cjgl1 : System.Web.UI.Page
         DataSet ds = SQLHelper.Query(sql);
         DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
         DataTable dt_04 = ds.Tables[3]; DataTable dt_05 = ds.Tables[4]; DataTable dt_98 = ds.Tables[5];
+        DataTable dt_99 = ds.Tables[6];
         int count_bhg = dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_98.Rows.Count;
 
         Label_bhg_thr.Text = count_bhg.ToString();
         Label_bhg_thr_f.Text = dt_01.Rows.Count.ToString();
+        Label_bhg_thr_e.Text = dt_99.Rows.Count.ToString();
     }
 
 
