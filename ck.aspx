@@ -34,6 +34,12 @@
         /*.weui-cells_radio .weui-check:checked+.weui-icon-checked:before{
             color:#09bb07;
         }*/
+        .orange{
+            background-color:orange;color: white;
+        }
+        .lightgray{
+            background-color:lightgray;color: white;
+        }
     </style>
         
     <script type="text/javascript">
@@ -46,7 +52,8 @@
         //alert(workshop);--%>
 
         $(function () {
-
+            show_bcp();
+            show_cp();
         });
 
         function sm_ck_dh() {
@@ -265,7 +272,7 @@
                         <p>半成品库</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label3_v1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label3_v1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3_v" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i3_v1 = Label3_v1.Text;
@@ -275,7 +282,11 @@
                             Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "托</span>");
                         %>   
                         <% string i3_v = Label3_v.Text;
-                            Response.Write("<span class='weui-badge' style='background-color:" + (i3_v == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>" + i3_v + "h</span>"); %> 
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i3_v == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>" + i3_v + "h</span>"); %> --%>
+                        
+                        <span class='weui-badge  bg-blue' id="bcp_gs" style='margin-right: 15px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="bcp_ts"  style='margin-right: 15px;'>..</span>
+                        <span class='weui-badge  orange' id="bcp_ss"  style='margin-right: 15px;'>..</span>
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_cp_list_ck.aspx">
@@ -286,7 +297,7 @@
                         <p>成品库</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label4_v1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label4_v1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label4" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label4_v" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i4_v1 = Label4_v1.Text;
@@ -296,7 +307,11 @@
                             Response.Write("<span class='weui-badge  bg-" + (i4 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i4 + "托</span>");
                         %>   
                         <% string i4_v = Label4_v.Text;
-                            Response.Write("<span class='weui-badge' style='background-color:" + (i4_v == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>" + i4_v + "h</span>"); %> 
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i4_v == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>" + i4_v + "h</span>"); %> --%>
+                        
+                        <span class='weui-badge  bg-blue' id="cp_gs" style='margin-right: 15px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="cp_ts"  style='margin-right: 15px;'>..</span>
+                        <span class='weui-badge  orange' id="cp_ss"  style='margin-right: 15px;'>..</span>
                     </div>
                 </a>
             </div>
@@ -401,5 +416,57 @@
             signature: datad.signature,// 必填，签名，见附录1
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
+
+        function show_bcp() {
+            $.ajax({
+                url: "/ck.aspx/bcp_Data",
+                type: "Post",
+                data: "{ }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#bcp_gs").text(datad[0].gs + "个");
+                        $("#bcp_ts").text(datad[0].ts + "托");
+                        $("#bcp_ss").text(datad[0].ss + "h");
+                        if (datad[0].gs == 0) { $("#bcp_gs").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].ts == 0) { $("#bcp_ts").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].ss == 0) { $("#bcp_ss").removeClass("orange").addClass("lightgray"); }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
+
+        function show_cp() {
+            $.ajax({
+                url: "/ck.aspx/cp_Data",
+                type: "Post",
+                data: "{ }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#cp_gs").text(datad[0].gs + "个");
+                        $("#cp_ts").text(datad[0].ts + "托");
+                        $("#cp_ss").text(datad[0].ss+"h");
+                        if (datad[0].gs == 0) { $("#cp_gs").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].ts == 0) { $("#cp_ts").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].ss == 0) { $("#cp_ss").removeClass("orange").addClass("lightgray"); }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
     </script>
 </html>
