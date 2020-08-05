@@ -205,6 +205,7 @@
                     --%>
                                                  
                         <span class="weui-badge bg-blue" id="wip24" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-blue" id="sh24" style='margin-right: 15px;'>..</span>
                         <span class="weui-badge bg-orange" id="part24"  style='margin-right: 15px;'>部..</span>
                         <span class="weui-badge bg-red" id="ng24" style='margin-right: 15px;'>返..</span>
                      
@@ -386,6 +387,7 @@
                     </div>
                     <div class="weui-cell__ft">                        
                         <span class="weui-badge bg-blue" id="wip3" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-blue" id="sh3" style='margin-right: 15px;'>..</span>
                         <span class="weui-badge bg-orange" id="part3"  style='margin-right: 15px;'>部..</span>
                         <span class="weui-badge bg-red" id="ng3" style='margin-right: 15px;'>返..</span>
                     </div>
@@ -476,9 +478,11 @@
                     datad = JSON.parse(data.d); //转为Json字符串
                     if(datad.length>0){
                         $("#wip3").text(datad[0].wip);
+                        $("#sh3").text(datad[0].sh);
                         $("#part3").text('部'+datad[0].part);
                         $("#ng3").text('返' + datad[0].ng);
                         if (datad[0].ng == 0) { $("#ng3").addClass("bg-gray") }
+                        if (datad[0].sh == 0) { $("#sh3").addClass("bg-gray") }
                         if (datad[0].part == 0) { $("#part3").addClass("bg-gray") }
                         if (datad[0].wip == 0) { $("#wip3").addClass("bg-gray") }
                     }
@@ -502,9 +506,11 @@
                     datad = JSON.parse(data.d); //转为Json字符串
                     if (datad.length > 0) {
                         $("#wip24").text(datad[0].wip);
+                        $("#sh24").text(datad[0].sh);
                         $("#part24").text('部' + datad[0].part);
                         $("#ng24").text('返' + datad[0].ng);
                         if (datad[0].ng == 0) { $("#ng24").addClass("bg-gray") }
+                        if (datad[0].sh == 0) { $("#sh24").addClass("bg-gray") }
                         if (datad[0].part == 0) { $("#part24").addClass("bg-gray") }
                         if (datad[0].wip == 0) { $("#wip24").addClass("bg-gray") }
                     }

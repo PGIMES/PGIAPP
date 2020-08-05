@@ -181,7 +181,7 @@ public partial class Cjgl1 : System.Web.UI.Page
     public static string ProdList3_Data(string workshop)
     {
         //生产监视
-        int iPart = 0, iWip = 0, iNg = 0; //iPart部分，iWip在制数，iNg不合格返线数
+        int iPart = 0, iWip = 0, iNg = 0,iSh=0; //iPart部分，iWip在制数，iNg不合格返线数   iSh  24H入库数
         //生产中
         string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',1", workshop, "");
         DataTable dt_data_go = SQLHelper.Query(sql).Tables[0];
@@ -209,13 +209,16 @@ public partial class Cjgl1 : System.Web.UI.Page
         sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}", workshop, "", 4);
         DataTable dt_data_ruku_go = SQLHelper.Query(sql).Tables[0];
         iWip = iWip + dt_data_ruku_go.Rows.Count;
-
+        //24入库
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", workshop, "", 5);
+        DataTable dt_data_SH = SQLHelper.Query(sql).Tables[0];
+        iSh = iSh + dt_data_SH.Rows.Count;
         /// int count_scjs = dt_data_go.Rows.Count + dt_data_qc.Rows.Count + dt_data_GP.Rows.Count + dt_data_ruku_go.Rows.Count;
         // lblWip.Text = iWip.ToString();
         // lblPart.Text = iPart.ToString();
         //lblNg.Text = iNg.ToString(); 
 
-        string res = "[{\"wip\":\"" + iWip.ToString() + "\",\"part\":\"" + iPart.ToString() + "\",\"ng\":\"" + iNg.ToString() + "\",\"msg\":\"ok\"}]";
+        string res = "[{\"wip\":\"" + iWip.ToString() + "\",\"part\":\"" + iPart.ToString() + "\",\"ng\":\"" + iNg.ToString() + "\",\"sh\":\"" + iSh.ToString() + "\",\"msg\":\"ok\"}]";
         return res;
 
     }
@@ -224,7 +227,7 @@ public partial class Cjgl1 : System.Web.UI.Page
     public static string ProdList24_Data(string workshop)
     {
         //生产监视
-        int iPart = 0, iWip = 0, iNg = 0; //iPart部分，iWip在制数，iNg不合格返线数
+        int iPart = 0, iWip = 0, iNg = 0, iSh = 0; //iPart部分，iWip在制数，iNg不合格返线数   iSh  24H入库数 
         //生产中
         string sql = string.Format(@"exec [usp_app_wip_list_prod_] '{0}','{1}'", workshop, "");
         DataTable dt_data_go = SQLHelper.Query(sql).Tables[1];
@@ -248,13 +251,16 @@ public partial class Cjgl1 : System.Web.UI.Page
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", workshop, "", 4);
         DataTable dt_data_ruku_go = SQLHelper.Query(sql).Tables[0];
         iWip = iWip + dt_data_ruku_go.Rows.Count;
-
-       /// int count_scjs = dt_data_go.Rows.Count + dt_data_qc.Rows.Count + dt_data_GP.Rows.Count + dt_data_ruku_go.Rows.Count;
-       // lblWip.Text = iWip.ToString();
-       // lblPart.Text = iPart.ToString();
+        //24入库
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", workshop, "", 5);
+        DataTable dt_data_SH = SQLHelper.Query(sql).Tables[0];
+        iSh = iSh + dt_data_SH.Rows.Count;
+        /// int count_scjs = dt_data_go.Rows.Count + dt_data_qc.Rows.Count + dt_data_GP.Rows.Count + dt_data_ruku_go.Rows.Count;
+        // lblWip.Text = iWip.ToString();
+        // lblPart.Text = iPart.ToString();
         //lblNg.Text = iNg.ToString(); 
 
-        string res = "[{\"wip\":\"" + iWip.ToString() + "\",\"part\":\"" + iPart.ToString() + "\",\"ng\":\"" + iNg.ToString() + "\",\"msg\":\"ok\"}]";
+        string res = "[{\"wip\":\"" + iWip.ToString() + "\",\"part\":\"" + iPart.ToString() + "\",\"ng\":\"" + iNg.ToString() + "\",\"sh\":\"" + iSh.ToString() + "\",\"msg\":\"ok\"}]";
         return res;
 
     }
