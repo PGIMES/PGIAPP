@@ -252,7 +252,7 @@
                         <i class="fa fa-ravelry margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>原材料库</p>
+                        <p>原材料库<span class="f12">（开发中）</span></p>
                     </div>
                     <div class="weui-cell__ft">
                     </div>
