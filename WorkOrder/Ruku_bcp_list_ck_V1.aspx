@@ -222,7 +222,17 @@
                                                                 <%= drpgino["pgino"]+","+drpgino["pn"] %>
                                                                 <br />
                                                                 <span style="padding-left:20px;">
-                                                                    <%= drpgino["ts"]+"托,"+drpgino["sum_qty"]+"件"%>
+                                                                    <%--<%= drpgino["ts"]+"托,"+drpgino["sum_qty"]+"件"%>--%>
+
+                                                                    <% if (Convert.ToSingle(drpgino["ts"]) >= 8) {%>
+                                                                    <font class="f-red"><%=drpgino["ts"]+"托" %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToSingle(drpgino["ts"]) >= 4) {%>
+                                                                    <font class="f-blue"><%=drpgino["ts"]+"托" %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=drpgino["ts"]+"托" %>
+                                                                        <%}  %>
 
                                                                    <%-- ,平均<% if (Convert.ToInt32(drpgino["avg_hhs"]) >= 60) {%>
                                                                     <font class="f-red"><%=drpgino["avg_hhs"]+"h" %></font>
@@ -246,7 +256,8 @@
                                                                         <%=drpgino["max_hhs"]+"h" %>
                                                                         <%}  %>--%>
 
-                                                                    
+                                                                    <%= ","+drpgino["sum_qty"]+"件"%>
+
                                                                      <%= ","%>
 
                                                                      <% if (Convert.ToInt32(drpgino["min_hhs"]) == Convert.ToInt32(drpgino["max_hhs"])) {%>
@@ -287,12 +298,12 @@
                                                                         <%=drpgino["day_s"]+"天" %>
                                                                         <%}  %>
 
-                                                                     <% if (drpgino["flag_xp"].ToString() != "")
+                                                                    <%-- <% if (drpgino["flag_xp"].ToString() != "")
                                                                          {%>
                                                                         <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: #10AEFF;">
                                                                             <%=drpgino["flag_xp"] %>
                                                                         </span>
-                                                                        <%}  %>
+                                                                        <%}  %>--%>
 
                                                                     
                                                                 </span>
