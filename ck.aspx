@@ -261,12 +261,12 @@
                         <i class="fa fa-ravelry margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>原材料库(开发中)</p>
+                        <p>原材料库(测试)</p>
                     </div>
                     <div class="weui-cell__ft">                        
-                        <span class='weui-badge  bg-blue' id="ycl_gs" style='margin-right: 15px;'>..</span>
-                        <span class='weui-badge  bg-blue' id="ycl_ts"  style='margin-right: 15px;'>..</span>
-                        <span class='weui-badge  orange' id="ycl_ss"  style='margin-right: 15px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="ycl_gs" style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="ycl_ts"  style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  orange' id="ycl_ss"  style='margin-right: 5px;'>..</span>
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_list_ck_V1.aspx">
@@ -277,9 +277,9 @@
                         <p>半成品库</p>
                     </div>
                     <div class="weui-cell__ft">         
-                        <span class='weui-badge  bg-blue' id="bcp_gs" style='margin-right: 15px;'>..</span>
-                        <span class='weui-badge  bg-blue' id="bcp_ts"  style='margin-right: 15px;'>..</span>
-                        <span class='weui-badge  orange' id="bcp_ss"  style='margin-right: 15px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="bcp_gs" style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="bcp_ts"  style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  orange' id="bcp_ss"  style='margin-right: 5px;'>..</span>
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_cp_list_ck.aspx">
@@ -290,9 +290,9 @@
                         <p>成品库</p>
                     </div>
                     <div class="weui-cell__ft">                       
-                        <span class='weui-badge  bg-blue' id="cp_gs" style='margin-right: 15px;'>..</span>
-                        <span class='weui-badge  bg-blue' id="cp_ts"  style='margin-right: 15px;'>..</span>
-                        <span class='weui-badge  orange' id="cp_ss"  style='margin-right: 15px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="cp_gs" style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="cp_ts"  style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  orange' id="cp_ss"  style='margin-right: 5px;'>..</span>
                     </div>
                 </a>
 
@@ -439,7 +439,7 @@
                     if (datad.length > 0) {
                         $("#cp_gs").text(datad[0].gs + "个");
                         $("#cp_ts").text(datad[0].ts + "托");
-                        $("#cp_ss").text(datad[0].ss+"h");
+                        $("#cp_ss").text(datad[0].ss+"天");
                         if (datad[0].gs == 0) { $("#cp_gs").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].ts == 0) { $("#cp_ts").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].ss == 0) { $("#cp_ss").removeClass("orange").addClass("lightgray"); }

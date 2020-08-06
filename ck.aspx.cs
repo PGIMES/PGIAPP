@@ -33,33 +33,12 @@ public partial class ck : System.Web.UI.Page
         int count_yl = dt_go.Rows.Count;
         Label1.Text = count_yl.ToString();
 
-
         //不合格监视
-        //sql = @"exec [usp_app_bhgp_Apply_list_dv] '','','9998',''";
-        //DataTable dt_06 = SQLHelper.Query(sql).Tables[0];
-        //int count_bhg = dt_06.Rows.Count;
-
         sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','9998'";
         DataTable dt_98 = SQLHelper.Query(sql).Tables[0];
         int count_bhg = dt_98.Rows.Count;
 
         Label2.Text = count_bhg.ToString();
-
-        //半成品库
-        //sql = @"exec [usp_app_Ruku_bcp_list_ck_V1]";
-        //DataTable dt_bcp = SQLHelper.Query(sql).Tables[3];
-
-        //Label3_v1.Text = dt_bcp.Rows[0]["sum_cps"].ToString();
-        //Label3.Text = dt_bcp.Rows[0]["sum_ts"].ToString();
-        //Label3_v.Text = dt_bcp.Rows[0]["avg_hhs"].ToString();
-
-        //成品库
-        //sql = @"exec [usp_app_Ruku_cp_list_ck]";
-        //DataTable dt_cp = SQLHelper.Query(sql).Tables[3];
-
-        //Label4_v1.Text = dt_cp.Rows[0]["sum_cps"].ToString();
-        //Label4.Text = dt_cp.Rows[0]["sum_ts"].ToString();
-        //Label4_v.Text = dt_cp.Rows[0]["avg_hhs"].ToString();
     }
 
     [WebMethod]
@@ -89,7 +68,7 @@ public partial class ck : System.Web.UI.Page
 
         gs = dt_cp.Rows[0]["sum_cps"].ToString();
         ts = dt_cp.Rows[0]["sum_ts"].ToString();
-        ss = dt_cp.Rows[0]["avg_hhs"].ToString();
+        ss = dt_cp.Rows[0]["avg_days"].ToString();
 
         string res = "[{\"gs\":\"" + gs + "\",\"ts\":\"" + ts + "\",\"ss\":\"" + ss + "\"}]";
         return res;
