@@ -198,7 +198,7 @@
 
               $("#<%=btn_bind_data.ClientID%>").click();
                 
-               yz_wip_change($("#dh_record").val());
+              $("#<%=btn_bind_xm.ClientID%>").click(); 
 
             }
 

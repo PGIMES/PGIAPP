@@ -98,8 +98,11 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     protected void Bind_reperter()
     {
 
-        string sql = @"exec usp_app_yz_xmh_sel_ver '{0}','{1}','{2}','{3}','{4}'";
-        sql = string.Format(sql, txt_emp.Text, _workshop, txt_dh.Text, txt_pgino.Text, txt_yzj.Text);
+        string sql = @"exec usp_app_yz_xmh_sel_ver1 '{0}','{1}','{2}','{3}','{4}','{5}'";
+        string _dh_source = "";
+        if (dh_record.Text.Contains(","))
+        { _dh_source = dh_record.Text.Substring(1, dh_record.Text.Length - 1); }
+        sql = string.Format(sql, txt_emp.Text, _workshop, txt_dh.Text, txt_pgino.Text, txt_yzj.Text, _dh_source);
         DataSet ds = SQLHelper.Query(sql);
         //DataTable dt1 = ds.Tables[2];
         //if (dt1.Rows.Count > 0 && txt_pgino.Text != "")
