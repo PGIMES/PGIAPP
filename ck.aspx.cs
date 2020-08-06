@@ -95,7 +95,26 @@ public partial class ck : System.Web.UI.Page
         return res;
 
     }
+    /// <summary>
+    /// 原材料 标注
+    /// </summary>
+    /// <returns></returns>
+    [WebMethod]
+    public static string ycl_Data()
+    {
+        string gs = "0", ts = "0", ss = "0";
 
+        string sql = @"exec [usp_app_Ruku_YCL_list_ck]";
+        DataTable dt_cp = SQLHelper.Query(sql).Tables[3];
+
+        gs = dt_cp.Rows[0]["sum_cps"].ToString();
+        ts = dt_cp.Rows[0]["sum_ts"].ToString();
+        ss = dt_cp.Rows[0]["avg_hhs"].ToString();
+
+        string res = "[{\"gs\":\"" + gs + "\",\"ts\":\"" + ts + "\",\"ss\":\"" + ss + "\"}]";
+        return res;
+
+    }
 
     [WebMethod]
     public static string ckck_dh_change(string result)
