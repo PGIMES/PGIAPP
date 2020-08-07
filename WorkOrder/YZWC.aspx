@@ -195,34 +195,37 @@
 
               $("#dh_record").val($("#dh_record").val() + "," + $("#source_dh").val());
                 //$("#txt_yzj").val("2-6");
-
-              $("#<%=btn_bind_data.ClientID%>").click();
-                
-              $("#<%=btn_bind_xm.ClientID%>").click(); 
-
+            $("#<%=btn_bind_data.ClientID%>").click();
+     <%--           
+              $("#<%=btn_bind_xm.ClientID%>").click(); --%>
+                yz_wip_change($("#txt_dh").val(), $("#dh_record").val());
             }
 
             //物料change
-         function yz_wip_change(source_dh) {
+         function yz_wip_change(workorder,source_dh) {
 
               $.ajax({
                    type: "post",
                    url: "YZWC.aspx/yz_source_change",
-                   data: "{'source_dh': '" + source_dh + "'}",
+                   data: "{'workorder': '" + workorder + "','source_dh': '" + source_dh + "'}",
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                    success: function (data) {
                        var obj = eval(data.d);
+
+                       //alert(obj[0].yzj_no);
                        
                            $('#txt_pgino').val(obj[0].pgino);
                            $('#txt_pn').val(obj[0].pt_desc2);
-                           $('#txt_qty').val(obj[0].act_qty);
+                           $('#txt_qty').val(obj[0].pt_ord_mult);
                            $('#txt_off_qty').val(obj[0].off_qty);
                            $('#txt_curr_qty').val(obj[0].curr_qty);
                            $('#txt_ztsl').val(obj[0].pt_ord_mult);
+                           $('#txt_yzj').val(obj[0].yzj_no);
                        
                      
+              //$("#<%=btn_bind_data.ClientID%>").click();
                    }
 
               });
@@ -516,7 +519,7 @@
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
                                              <input class="weui-form-checkbox" name="step"  id="g1" value="后处理完成" type="radio"  runat="server" />  
-                                             <label for="g1">
+                                             <label for="g1" id="lb1" runat="server">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
                                                      <p>后处理完成</p>
@@ -529,7 +532,7 @@
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
                                              <input class="weui-form-checkbox" name="step"  id="g2" value="终检" type="radio"   runat="server" />   
-                                             <label for="g2">
+                                             <label for="g2" id="lb2" runat="server">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
                                                      <p>终检</p>
@@ -542,7 +545,7 @@
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
                                              <input class="weui-form-checkbox" name="step"  id="g3" value="GP12" type="radio" runat="server" />  
-                                             <label for="g3" class="middle">
+                                             <label for="g3" class="middle" id="lb3" runat="server">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
                                                      <p>GP12</p>
@@ -555,7 +558,7 @@
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
                                              <input class="weui-form-checkbox" name="step"  id="g4" value="入库" type="radio" runat="server"  /> 
-                                             <label for="g4" class="middle">
+                                             <label for="g4" class="middle" id="lb4" runat="server">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
                                                      <p>入库</p>
@@ -766,11 +769,11 @@
                    },
 
                });
-               if ($("#txt_yzjno").val() != "")
-               {
+               //if ($("#txt_yzjno").val() != "")
+               //{
                    $("#txt_yzj").val($("#txt_equipname").val());
                    yzj_change($("#txt_equipno").val());
-               }
+               //}
 
                //if (datalist_yzj.length == 1) {
               

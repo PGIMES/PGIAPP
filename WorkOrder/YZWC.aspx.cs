@@ -15,8 +15,8 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     public DataTable dt_append;
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = "三车间";  // Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh = "G0011223";   //Request.QueryString["dh"].ToString(); //"W1497589";
+        _workshop =   Request.QueryString["workshop"].ToString(); // "四车间";  
+        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -33,7 +33,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = "01968";//  lu.WorkCode;
+            txt_emp.Text =  lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -98,11 +98,8 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     protected void Bind_reperter()
     {
 
-        string sql = @"exec usp_app_yz_xmh_sel_ver1 '{0}','{1}','{2}','{3}','{4}','{5}'";
-        string _dh_source = "";
-        if (dh_record.Text.Contains(","))
-        { _dh_source = dh_record.Text.Substring(1, dh_record.Text.Length - 1); }
-        sql = string.Format(sql, txt_emp.Text, _workshop, txt_dh.Text, txt_pgino.Text, txt_yzj.Text, _dh_source);
+        string sql = @"exec usp_app_yz_xmh_sel_ver '{0}','{1}','{2}','{3}','{4}'";  
+        sql = string.Format(sql, txt_emp.Text, _workshop, txt_dh.Text, txt_pgino.Text, txt_yzj.Text );
         DataSet ds = SQLHelper.Query(sql);
         //DataTable dt1 = ds.Tables[2];
         //if (dt1.Rows.Count > 0 && txt_pgino.Text != "")
@@ -135,6 +132,16 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
             g2.Attributes.Add("disabled", "disabled");
             g3.Attributes.Add("disabled", "disabled");
             g4.Attributes.Add("disabled", "disabled");
+        }
+        if (int.Parse(ds.Tables[5].Rows[0]["op"].ToString()) < 600)
+        {
+            lb2.Visible = false;
+            lb3.Visible = false;
+        }
+        else
+        {
+            lb2.Visible = true;
+            lb3.Visible = true;
         }
 
     }
@@ -188,9 +195,14 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
 
         if (_lot.Contains(","))
         { _lotno = _lot.Substring(0, _lot.Length - 1); }
-      
-        re_sql = @"exec usp_app_yz_off_V2 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
-
+        if (_curr_qty >0)
+        {
+            re_sql = @"exec usp_app_yz_off_V2 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
+        }
+        else
+        {
+            re_sql = @"exec usp_app_yz_off_recover '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
+        }
         if (flag == "N")
         {
             re_sql = string.Format(re_sql, _dh, _emp, _pgino, _pn, _descr,_curr_qty, _btnms, _lotno, _stepvalue, _remark,_workshop, _dh_source,_yzjno);
@@ -368,7 +380,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
 
 
     [WebMethod]
-    public static string yz_source_change(string source_dh)
+    public static string yz_source_change(string workorder,string source_dh)
     {
         string sqlspend = "", pgino = "", pt_desc1 = "", pt_desc2 = "", yzj_no = "";
         double pt_ord_mult = 0,off_qty=0,curr_qty = 0;
@@ -379,11 +391,10 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
                 dh = source_dh.Substring(1, source_dh.Length - 1);
             }
         }
-        sqlspend = @"select zyb,right(lot_no,8)zyb_lot,zl as act_qty,cl,yzj_no,lot_no,pgino,pn,yzj_no,pn,pt_ord_mult from Mes_App_WorkOrder_YZ_Wip wip
-                  join [172.16.5.26].qad.dbo.qad_pt_mstr pt on pt.pt_part=wip.pgino and wip.domain=pt_domain ";
-        sqlspend += "  and wip.workorder_wip  in  (select *  from dbo.StrToTable('" + dh + "'))";
+         sqlspend = @" exec [usp_yz_source_gl] '" + workorder + "','" + dh + "'";
 
-       
+
+
         DataSet ds = SQLHelper.Query(sqlspend);
 
 
@@ -395,12 +406,12 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
         pt_desc2 = dt.Rows[0]["pn"].ToString();
         pt_ord_mult = double.Parse(dt.Rows[0]["pt_ord_mult"].ToString());
         yzj_no= dt.Rows[0]["yzj_no"].ToString();
-        off_qty = 0;
-        curr_qty = pt_ord_mult;
+        off_qty = double.Parse(dt.Rows[0]["off_qty"].ToString());
+        curr_qty = pt_ord_mult- off_qty;
 
 
-        string result = "[{\"pt_desc1\":\"" + pt_desc1
-            + "\",\"pt_desc2\":\"" + pt_desc2 + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\"}]";
+        string result = "[{\"pgino\":\"" + pgino
+            + "\",\"pt_desc2\":\"" + pt_desc2 + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\",\"yzj_no\":\"" + yzj_no + "\"}]";
         return result;
 
     }
