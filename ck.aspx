@@ -217,23 +217,33 @@
                         <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> 
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:sm_ckck_dh()">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-shopping-basket margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>成品出库</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
                 <a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh();"><%--/workorder/CKSH.aspx--%>
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>仓库接收</p>
+                        <p>仓库入库</p>
                     </div>
                     <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ruku_print();">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-print margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>入库标签补打</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-bookmark-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>入库监视<span class="f12">（开发中）</span></p>
+                    </div>
+                    <div class="weui-cell__ft">
+                    </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_ck.aspx">
                     <div class="weui-cell__hd">
@@ -247,12 +257,12 @@
                         <% string i2 = Label2.Text; Response.Write("<span class='weui-badge  bg-" + (i2 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2 + "</span>"); %> 
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:sm_ruku_print();">
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ckck_dh()">
                     <div class="weui-cell__hd">
-                        <i class="fa fa-print margin10-r"></i>
+                        <i class="fa fa-shopping-basket margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>入库标签补打</p>
+                        <p>成品出库</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
