@@ -465,7 +465,7 @@
                     if (datad.length > 0) {
                         $("#ycl_gs").text(datad[0].gs + "个");
                         $("#ycl_ts").text(datad[0].ts + "托");
-                        $("#ycl_ss").text(datad[0].ss + "h");
+                        $("#ycl_ss").text(datad[0].ss + "天");
                         if (datad[0].gs == 0) { $("#ycl_gs").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].ts == 0) { $("#ycl_ts").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].ss == 0) { $("#ycl_ss").removeClass("orange").addClass("lightgray"); }
