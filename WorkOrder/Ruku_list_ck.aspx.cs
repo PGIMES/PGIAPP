@@ -42,7 +42,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = new DataTable();
-            string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}','{2}'";
+            string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}','{2}','all'";
             sql = string.Format(sql, item["workshop"].ToString(), "", item["stepid"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
