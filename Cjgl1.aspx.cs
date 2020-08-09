@@ -203,7 +203,8 @@ public partial class Cjgl1 : System.Web.UI.Page
         dt_data_go = SQLHelper.Query(sql).Tables[0];
         iPart = iPart + dt_data_go.Select("ispartof='部分'  ").Count();  
         iWip = iWip + dt_data_go.Select("ispartof<>'部分'  ").Count();
-        // iNg = iNg + dt_data_go.Select(" workorder_wip like 'R%'").Count();
+        iNg = iNg + dt_data_go.Select(" isnull(workorder_wip,'')<>''").Count();
+       
         //待终检
         sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", workshop, "", 2);
         DataTable dt_data_qc = SQLHelper.Query(sql).Tables[0];

@@ -121,6 +121,15 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="/ZL.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-quora margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>质量</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
                 <a class="weui-cell weui-cell_access" href="/Adjust_Apply.aspx">
                     <div class="weui-cell__hd">
                         <i class="fa fa-adjust margin10-r"></i>
