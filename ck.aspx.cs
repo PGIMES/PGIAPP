@@ -33,12 +33,25 @@ public partial class ck : System.Web.UI.Page
         int count_yl = dt_go.Rows.Count;
         Label1.Text = count_yl.ToString();
 
-        //不合格监视
+        //入库监视
         sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','9998'";
-        DataTable dt_98 = SQLHelper.Query(sql).Tables[0];
-        int count_bhg = dt_98.Rows.Count;
+        DataTable dt_98_bhg_rk = SQLHelper.Query(sql).Tables[0];
+        int count_bhg_rk = dt_98_bhg_rk.Rows.Count;
 
-        Label2.Text = count_bhg.ToString();
+        Label2.Text = count_bhg_rk.ToString();
+
+        //不合格监视
+        sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','Y'";
+        DataSet ds = SQLHelper.Query(sql);
+        DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
+        DataTable dt_04 = ds.Tables[3]; DataTable dt_05 = ds.Tables[4]; DataTable dt_98 = ds.Tables[5];
+        DataTable dt_99 = ds.Tables[6];
+        int count_bhg = dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_98.Rows.Count;
+
+        //Label3.Text = count_bhg.ToString();
+        Label3_V1.Text = count_bhg.ToString();
+        Label3_V1_f.Text = dt_01.Rows.Count.ToString();
+        Label3_V1_e.Text = dt_99.Rows.Count.ToString();
     }
 
     [WebMethod]

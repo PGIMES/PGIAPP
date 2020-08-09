@@ -104,27 +104,27 @@
         }
     </script>
     <script>
-        function deal(stepid, workorder, workorder_f, workorder_gl) {
+        function deal(stepid, workorder, workorder_f, workorder_gl, workshop) {
             //alert(stepid);
 
-            if ("<%=_workshop %>" == "二车间" || "<%=_workshop %>" == "四车间") {
+            if (workshop == "二车间" || workshop == "四车间") {
                 if (stepid == "0002") {//--检验处置
-                    window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                    window.location.href = "/workorder/bhgp_Apply_V1.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + workshop+"&para_ck=<%=_para_ck %>";
                 } else if (stepid == "9998") {//--待入库
-                    window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=<%=_workshop %>";
+                    window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=" + workshop+"&para_ck=<%=_para_ck %>";
                 }
                 else {
-                    window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                    window.location.href = "/workorder/bhgp_sign_V1.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + workshop+"&para_ck=<%=_para_ck %>";
                 }
             }
-            if ("<%=_workshop %>" == "三车间") {
+            if (workshop == "三车间") {
                 if (stepid == "0002") {//--检验处置
-                    window.location.href = "/workorder/bhgp_Apply_yz.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                    window.location.href = "/workorder/bhgp_Apply_yz.aspx?workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + workshop+"&para_ck=<%=_para_ck %>";
                 } else if (stepid == "9998") {//--待入库
-                    window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=<%=_workshop %>";
+                    window.location.href = "/workorder/CKSH.aspx?workorder_f=" + workorder_f + "&dh=" + workorder_gl + "&workshop=" + workshop+"&para_ck=<%=_para_ck %>";
                 }
                 else {
-                    window.location.href = "/workorder/bhgp_sign_yz.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=<%=_workshop %>";
+                    window.location.href = "/workorder/bhgp_sign_yz.aspx?stepid=" + stepid + "&workorder=" + workorder + "&workorder_f=" + workorder_f + "&workshop=" + workshop+"&para_ck=<%=_para_ck %>";
                 }
             }
 
@@ -183,7 +183,7 @@
                                 <div class="weui-cells" id="_02">
                                     <asp:Repeater runat="server" ID="list_02" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -251,7 +251,7 @@
                                 <div class="weui-cells" id="_03">
                                     <asp:Repeater runat="server" ID="list_03" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -313,7 +313,7 @@
                                 <div class="weui-cells" id="_04">
                                     <asp:Repeater runat="server" ID="list_04" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -375,7 +375,7 @@
                                 <div class="weui-cells" id="_05">
                                     <asp:Repeater runat="server" ID="list_05" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -437,7 +437,7 @@
                                 <div class="weui-cells" id="_01">
                                     <asp:Repeater runat="server" ID="list_01" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-danger"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -499,7 +499,7 @@
                                 <div class="weui-cells" id="_98">
                                     <asp:Repeater runat="server" ID="list_98" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -561,7 +561,7 @@
                                 <div class="weui-cells" id="_99">
                                     <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -627,7 +627,7 @@
                                 <div class="weui-cells" id="_02_my">
                                     <asp:Repeater runat="server" ID="list_02_my" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -695,7 +695,7 @@
                                 <div class="weui-cells" id="_03_my">
                                     <asp:Repeater runat="server" ID="list_03_my" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -757,7 +757,7 @@
                                 <div class="weui-cells" id="_04_my">
                                     <asp:Repeater runat="server" ID="list_04_my" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -819,7 +819,7 @@
                                 <div class="weui-cells" id="_05_my">
                                     <asp:Repeater runat="server" ID="list_05_my" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -881,7 +881,7 @@
                                 <div class="weui-cells" id="_01_my">
                                     <asp:Repeater runat="server" ID="list_01_my" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-danger"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -943,7 +943,7 @@
                                 <div class="weui-cells" id="_98_my">
                                     <asp:Repeater runat="server" ID="list_98_my" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -1005,7 +1005,7 @@
                                 <div class="weui-cells" id="_99_my">
                                     <asp:Repeater runat="server" ID="list_99_my" EnableTheming="False">
                                         <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>'),'<%# Eval("workorder_gl") %>')>
+                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>'),'<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                 <div class="weui-cell__hd">
                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
