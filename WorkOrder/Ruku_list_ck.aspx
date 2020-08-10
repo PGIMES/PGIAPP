@@ -240,7 +240,7 @@
                                     <div class="page-category js-categoryInner lined" style="display: none">
                                         <div class="weui-cells">
                                         <%                                                  
-                                            System.Data.DataTable dt = ViewState["dt_data_4"] as System.Data.DataTable;
+                                            System.Data.DataTable dt = ViewState["dt_data_2"] as System.Data.DataTable;
                                             foreach (System.Data.DataRow dr in dt.Select("line='" + line + "'"))
                                             {%>
                                             <a class="weui-cell  weui-cell_access " style="color: black" href="<% =( dr["is_print"].ToString()=="未打印"?("/workorder/Ruku_Print.aspx?dh="+ dr["workorder"]):("/workorder/Ruku_hege.aspx?dh="+dr["is_print"]))+"&workshop=二车间&ck=N" %>">
@@ -338,7 +338,7 @@
                                     <div class="page-category js-categoryInner lined" style="display: none">
                                         <div class="weui-cells">
                                         <%                                                  
-                                            System.Data.DataTable dt = ViewState["dt_data_4"] as System.Data.DataTable;
+                                            System.Data.DataTable dt = ViewState["dt_data_3"] as System.Data.DataTable;
                                             foreach (System.Data.DataRow dr in dt.Select("line='" + line + "'"))
                                             {%>
                                             <a class="weui-cell  weui-cell_access " style="color: black" href="<% =( dr["is_print"].ToString()=="未打印"?("/workorder/Ruku_Print.aspx?dh="+ dr["workorder"]):("/workorder/Ruku_hege.aspx?dh="+dr["is_print"]))+"&workshop=三车间&ck=N" %>">
@@ -436,7 +436,7 @@
                                     <div class="page-category js-categoryInner lined" style="display: none">
                                         <div class="weui-cells">
                                         <%                                                  
-                                            System.Data.DataTable dt = ViewState["dt_data_4"] as System.Data.DataTable;
+                                            System.Data.DataTable dt = ViewState["dt_data_3"] as System.Data.DataTable;
                                             foreach (System.Data.DataRow dr in dt.Select("line='" + line + "'"))
                                             {%>
                                             <a class="weui-cell  weui-cell_access " style="color: black" href="<% =( dr["is_print"].ToString()=="未打印"?("/workorder/Ruku_Print.aspx?dh="+ dr["workorder"]):("/workorder/Ruku_hege.aspx?dh="+dr["is_print"]))+"&workshop=四车间&ck=N" %>">
