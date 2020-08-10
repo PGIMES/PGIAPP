@@ -158,16 +158,17 @@
             $(".weui-form-preview .weui-cells").each(function (i, item) {
                 var rowcount = $(this).find("a:not(.hide)").length;
                 var ipart = $(this).find("a:not(.hide) :contains('部分')").length;
-
+                var iNg = $(this).find("a:not(.hide) :contains('不合格返线')").length+$(this).find("a:not(.hide) :contains('挑选')").length;
+                var iWip = rowcount - ipart - iNg;
                 var obj = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
                 var objpart = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
+                var objNg = $(this).closest('li').children(".js-category").find("span").eq(2); //红标题span
 
-
-                $(obj).text(rowcount - ipart);
+                $(obj).text(iWip);
                 $(objpart).text("部" + ipart);
+                $(objNg).text("返" + iNg);
 
-
-                if (rowcount - ipart == 0) {
+                if (iWip == 0) {
                     $(obj).addClass("bg-gray").removeClass("bg-blue")
                 }
                 else {
@@ -179,6 +180,13 @@
                 }
                 else {
                     $(objpart).addClass("bg-orange").removeClass("bg-gray")
+                }
+                //不合格返线
+                if (iNg == 0) {
+                    $(objNg).addClass("bg-gray").removeClass("bg-red")
+                }
+                else {
+                    $(objNg).addClass("bg-red").removeClass("bg-gray")
                 }
             });
             //组装件数量

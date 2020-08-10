@@ -159,16 +159,17 @@
             $(".weui-form-preview .weui-cells").each(function (i, item) {
                 var rowcount = $(this).find("a:not(.hide)").length;                
                 var ipart = $(this).find("a:not(.hide) :contains('部分')").length;
-
+                var iNg = $(this).find("a:not(.hide) :contains('不合格返线')").length + $(this).find("a:not(.hide) :contains('挑选')").length;
+                var iWip = rowcount - ipart - iNg;
                 var obj = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
                 var objpart = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
-                 
+                var objNg = $(this).closest('li').children(".js-category").find("span").eq(2); //红标题span
 
-                $(obj).text(rowcount-ipart);
+                $(obj).text(iWip);
                 $(objpart).text("部"+ipart);
-                 
+                $(objNg).text("返" + iNg);
 
-                if (rowcount - ipart == 0) {
+                if (iWip == 0) {
                     $(obj).addClass("bg-gray").removeClass("bg-blue")
                 }
                 else {
@@ -180,6 +181,13 @@
                 }
                 else {
                     $(objpart).addClass("bg-orange").removeClass("bg-gray")
+                }
+                //不合格返线
+                if (iNg == 0) {
+                    $(objNg).addClass("bg-gray").removeClass("bg-red")
+                }
+                else {
+                    $(objNg).addClass("bg-red").removeClass("bg-gray")
                 }
             });
             //组装件数量
@@ -386,7 +394,9 @@
                                                             <div class="weui-cell__bd">
                                                                 <span class="weui-form-preview__value" style="font-size: smaller">
                                                                     <span class="padding10-r"><%=dr["part"]%></span>  <%=dr["part_desc"] %>
-                                                                    <span class="weui-mark-rt- weui-badge  weui-badge-tr margin20-l <%= dr["workorder_wip"].ToString() == "" ? "hide" : "" %>"   font-size: x-small; ">不合格返线</span>
+                                                                    <% if (dr["workorder_wip"].ToString() != "")
+                                                                        {%>
+                                                                    <span class='weui-mark-rt- weui-badge  weui-badge-tr margin20-l "   font-size: x-small; '>不合格返线</span><%}%>
                                                                     <br />
                                                                     <span class="padding5-r">Lot:<%= dr["workorder_wip"].ToString() == "" ? "" : dr["workorder_wip"] + "/" %>
                                                                         <%= dr["lot_no"]%>
@@ -654,8 +664,9 @@
                                                                     <span>
                                                                         <%=dr["pn"] %>
                                                                     </span>
-                                                                    
-                                                                     <span class="weui-mark-rt- weui-badge  weui-badge-tr <%= dr["workorder_wip"].ToString()==""?"hide":"" %>"   font-size: x-small; ">不合格返线</span>
+                                                                    <%if (dr["workorder_wip"].ToString() != "")
+                                                                        {%>
+                                                                     <span class="weui-mark-rt- weui-badge  weui-badge-tr "   font-size: x-small; ">不合格返线</span><%} %>
                                                                     <br />
                                                                     <span class="margin5-r">
                                                                         <%=dr["laiyuan"].ToString()=="终检完待GP12"?"终检单":"完工单" %>:<%=dr["workorder"] %>
@@ -753,7 +764,7 @@
                                                                             {%>
                                                                         <span>GP12单:</span>
                                                                         <%}%>
-                                                                        <%=dr["workorder"] %>
+                                                                        <%=dr["workorder"]%>
                                                                     </span>
                                                                     <span>                                                                        
                                                                         <span>数量:</span>                                                                        
