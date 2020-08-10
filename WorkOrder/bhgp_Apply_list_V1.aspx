@@ -675,8 +675,7 @@
                                                                         <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
                                                                             <ItemTemplate>
                                                                                 <a class="weui-cell weui-cell_access" 
-                                                                                    onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>'
-                                                                                        ,'<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
+                                                                                    onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                                                     <div class="weui-cell__hd">
                                                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -752,7 +751,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_02_my">
+                                            <div class="weui-cells select" id="_02_my">
                                                 <asp:Repeater runat="server" ID="list_02_my" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -828,7 +827,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_03_my">
+                                            <div class="weui-cells select" id="_03_my">
                                                 <asp:Repeater runat="server" ID="list_03_my" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -898,7 +897,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_04_my">
+                                            <div class="weui-cells select" id="_04_my">
                                                 <asp:Repeater runat="server" ID="list_04_my" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -968,7 +967,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_05_my">
+                                            <div class="weui-cells select" id="_05_my">
                                                 <asp:Repeater runat="server" ID="list_05_my" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -1038,7 +1037,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_01_my">
+                                            <div class="weui-cells select" id="_01_my">
                                                 <asp:Repeater runat="server" ID="list_01_my" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -1108,7 +1107,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_98_my">
+                                            <div class="weui-cells select" id="_98_my">
                                                 <asp:Repeater runat="server" ID="list_98_my" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -1178,7 +1177,7 @@
                                             <i class="icon icon-74"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_99_my">
+                                            <div class="weui-cells select" id="_99_my">
                                                 <asp:Repeater runat="server" ID="list_99_line_my" EnableTheming="False" OnItemDataBound="list_99_line_my_ItemDataBound">
                                                     <ItemTemplate>
                                                         <ul class="collapse">
@@ -1195,8 +1194,7 @@
                                                                         <asp:Repeater runat="server" ID="list_99_my" EnableTheming="False">
                                                                             <ItemTemplate>
                                                                                 <a class="weui-cell weui-cell_access" 
-                                                                                    onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>'
-                                                                                        ,'<%# Eval("workorder_f") %>'),'<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
+                                                                                    onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>'),'<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
                                                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                                                     <div class="weui-cell__hd">
                                                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
