@@ -19,7 +19,7 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = "二车间";  // Request.QueryString["workshop"].ToString(); // "四车间";//
-        _dh = "G1023924";// Request.QueryString["dh"].ToString();// "W0000456";
+        _dh = "G1123924";// Request.QueryString["dh"].ToString();// "W0000456";
         // lotno = "G0000301";
         //_dh = "W0000450";
 
@@ -106,10 +106,10 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
         pt_ord_mult = double.Parse(dt.Rows[0]["pt_ord_mult"].ToString());
 
 
-        DataTable dt_pgino = ds.Tables[1];
+        DataTable dt_pgino = ds.Tables[0];
         string json = JsonConvert.SerializeObject(dt_pgino);
 
-        result = "[{\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"stepvalue\":\"" + stepvalue + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\"}]";
+        result = "[{\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"stepvalue\":\"" + stepvalue + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\",\"json\":" + json + "}]";
 
         return result;
 

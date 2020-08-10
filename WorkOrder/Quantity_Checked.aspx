@@ -98,8 +98,8 @@
             sm_source();
             page_show();
            
-          Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
-           
+        //  Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+         
         });
         //$(function () {
         //    $('#btnsave').click(function () {
@@ -228,62 +228,8 @@
 
 
 
-        function Bind_WorkOrder(workorder, sourceorder) {
-            var datalist_pgino;
-            $.ajax({
-                type: "post",
-                url: "Quantity_Checked.aspx/Set_Page",
-                data: "{'workorder':'" + workorder + "','sourceorder':'" + sourceorder + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                success: function (data) {
+    
 
-                    var obj = eval(data.d);
-                    datalist_pgino = obj[0].json;
-                    //alert(datalist_pgino);
-                }
-            });
-                $("#txt_pgino").select({
-                     title: "物料号",
-                     items: datalist_pgino,
-                     onChange: function (d) {
-                        alert(d.values);
-                        pgino_change(workorder, sourceorder, d.values);
-                       
-                     },
-                     onClose: function (d) {
-                         //var obj = eval(d.data);
-                         //alert(obj.values);
-
-                     },
-                     onOpen: function () {
-                         //  console.log("open");
-                     },
-
-                 });
-                if (datalist_pgino.length == 1) {
-
-                    $("#txt_pgino").val(datalist_pgino[0].title);
-                    pgino_change(workorder, sourceorder, datalist_pgino[0].title);
-                }
-
-                  
-
-               
-                    //xmh_change();
-                    // alert($("#txt_source_sum").val());
-                    setvalue();
-                    //if ($("#txt_source_sum").val() != "") {
-                    //   // alert("m")
-                    //    if (parseFloat($("#txt_source_sum").val()) < parseFloat($("#txt_qty").val())) {
-                    //        $("#txt_qty").val($("#txt_source_sum").val());
-                    //        $("#txt_curr_qty").val(parseFloat($("#txt_source_sum").val()) - parseFloat($("#txt_off_qty").val()));
-                    //       // alert("set")
-                    //    }
-                    //}
-
-        }
 
         function pgino_change(workorder, sourceorder, pgino) {
 
@@ -296,7 +242,9 @@
                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                    success: function (data) {
                        var obj = eval(data.d);
-                    
+                       var json_pgino = obj[0].json;
+                       //$("#txt_pgino").select("update", { items: json_pgino });
+                       //sel_pgino();
                        $("#txt_pgino").val(obj[0].pgino).attr("readonly", "readonly");
                        $("#txt_pn").val(obj[0].pn).attr("readonly", "readonly");
                        $("#txt_off_qty").val(obj[0].off_qty).attr("readonly", "readonly");
@@ -428,8 +376,7 @@
                 $("#<%=btn_bind_data.ClientID%>").click();
                 //setTimeout(function () {
                      Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
-                    page_show();                    
-
+                //page_show();
                 //}, 9000)
               //  alert(3);
                 //var int = self.setTimeout(function () { alert($("#txt_source_sum").val()); }, 2000);
@@ -440,13 +387,14 @@
 
                $("#<%=btn_bind_xm.ClientID%>").click();
           }--%>
-
-        Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+  
+       
+       
     </script>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
         </asp:ScriptManager>
-        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional"><ContentTemplate>
+<%--        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional"><ContentTemplate>--%>
 
             <div class="weui-cells weui-cells_form">
 
@@ -550,7 +498,7 @@
          
 
 
-                </ContentTemplate></asp:UpdatePanel>
+<%--                </ContentTemplate></asp:UpdatePanel>--%>
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <script type="text/javascript">
@@ -558,7 +506,7 @@
 
                                 page_show();
                                 //sm_source();
-                               // Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+                                //Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
                                setvalue();
 
                             });
@@ -723,6 +671,75 @@
 
            
     </form>
+    <script>
+        $("#txt_pgino").select({
+            title: "物料号",
+            //items: datalist_pgino,
+            items: [{ title: '', value: '' }],
+            onChange: function (d) {
+                alert(d.values);
+                pgino_change($("#txt_dh").val(), $("#source_dh").val(), d.values);
+
+            },
+            onClose: function (d) {
+                //var obj = eval(d.data);
+                //alert(obj.values);
+
+            },
+            onOpen: function () {
+                //  console.log("open");
+            },
+
+        });
+        function Bind_WorkOrder(workorder, sourceorder) {
+            var datalist_pgino;
+            $.ajax({
+                type: "post",
+                url: "Quantity_Checked.aspx/Set_Page",
+                data: "{'workorder':'" + workorder + "','sourceorder':'" + sourceorder + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+
+                    var obj = eval(data.d);
+                    datalist_pgino = obj[0].json;
+                    var json_pgino = obj[0].json;
+                    $("#txt_pgino").select("update", { items: json_pgino });
+                }
+            });
+
+
+            if (datalist_pgino.length == 1) {
+
+                $("#txt_pgino").val(datalist_pgino[0].title);
+                pgino_change(workorder, sourceorder, datalist_pgino[0].title);
+            }
+
+
+
+
+
+
+
+
+
+            //xmh_change();
+            // alert($("#txt_source_sum").val());
+            setvalue();
+            //if ($("#txt_source_sum").val() != "") {
+            //   // alert("m")
+            //    if (parseFloat($("#txt_source_sum").val()) < parseFloat($("#txt_qty").val())) {
+            //        $("#txt_qty").val($("#txt_source_sum").val());
+            //        $("#txt_curr_qty").val(parseFloat($("#txt_source_sum").val()) - parseFloat($("#txt_off_qty").val()));
+            //       // alert("set")
+            //    }
+            //}
+
+        }
+
+     Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+        </script>
 </body>
 <script>
     var datad = [];
