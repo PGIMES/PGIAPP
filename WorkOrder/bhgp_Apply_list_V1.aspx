@@ -80,10 +80,19 @@
 
             $('#searchInput').bind('input propertychange', function () {
 
+                $(".lined").show("fast");
+
                 var text = $("#searchInput").val();
                 $('.weui-cell').each(function () {
                     var $self = $(this);
-                    var flag = $self.text().search(text)
+
+                    $parent = $self.parents('li');
+                    $parent.siblings().removeClass('js-show');
+                    $parent.addClass('js-show');
+                    $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                    $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+                    var flag = $self.text().search(text);
                     if (flag > -1) {
                         $self.removeClass("hide"); 
                     } else {
@@ -92,33 +101,41 @@
                     }
                 });
 
+                $(".line").css("display", "none");
+
                 showBlockCount();
             });
         });
         //显示数量
         function showBlockCount() {
-            $(".weui-form-preview>.weui-cells").each(function (i, item) {
+            $(".select").each(function (i, item) {
                 var rowcount = $(this).find("a:not(.hide)").length;
                 // debugger;
-                var obj = $(item).prev().children().last();
+                var obj = $(item).parent().prev().children().children('span');
                 $(obj).text(rowcount);
                 if (rowcount == 0) {
-                    $(obj).addClass("bg-gray").removeClass("bg-blue")
+                    $(obj).addClass("bg-gray").removeClass("bg-blue");
                 }
                 else {
-                    $(obj).addClass("bg-blue").removeClass("bg-gray")
+                    if (this.id == "_01") {
+                        $(obj).addClass("bg-red").removeClass("bg-gray");
+                    } else {
+                        $(obj).addClass("bg-blue").removeClass("bg-gray");
+                    }
                 }
             });
         }
 
         function cancel() {
             $('.weui-cell').removeClass("hide");
+            $(".lined").hide(); $(".line").css("display", "");
             showBlockCount();
         }
 
         function clear() {
             $('#searchInput').val('');
             $('.weui-cell').removeClass("hide");
+            $(".lined").hide(); $(".line").css("display", "");
             showBlockCount();
         }
         //显示折叠
@@ -215,7 +232,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_02">
+                                            <div class="weui-cells select" id="_02">
                                                 <asp:Repeater runat="server" ID="list_02" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -291,7 +308,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_03">
+                                            <div class="weui-cells select" id="_03">
                                                 <asp:Repeater runat="server" ID="list_03" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -361,7 +378,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_04">
+                                            <div class="weui-cells select" id="_04">
                                                 <asp:Repeater runat="server" ID="list_04" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -431,7 +448,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_05">
+                                            <div class="weui-cells select" id="_05">
                                                 <asp:Repeater runat="server" ID="list_05" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -501,7 +518,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_01">
+                                            <div class="weui-cells select" id="_01">
                                                 <asp:Repeater runat="server" ID="list_01" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -571,7 +588,7 @@
                                             <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_98">
+                                            <div class="weui-cells select" id="_98">
                                                 <asp:Repeater runat="server" ID="list_98" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("workorder") %>','<%# Eval("workorder_f") %>','<%# Eval("workorder_gl") %>','<%# Eval("workshop") %>')>
@@ -641,19 +658,19 @@
                                             <i class="icon icon-74"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_99">
+                                            <div class="weui-cells select" id="_99">
                                                 <asp:Repeater runat="server" ID="list_99_line" EnableTheming="False" OnItemDataBound="list_99_line_ItemDataBound">
                                                     <ItemTemplate>
                                                         <ul class="collapse">
                                                             <li>
-                                                                <div class="weui-flex js-category" onclick="showorhide(this);">
+                                                                <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                                     <div class="weui-cells__title  weui-flex__item">
                                                                         <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                                         <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                                     </div>
                                                                     <i class="icon icon-74"></i>
                                                                 </div>
-                                                                <div class="page-category js-categoryInner" style="display: none">
+                                                                <div class="page-category js-categoryInner lined" style="display: none">
                                                                     <div class="weui-cells">     
                                                                         <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
                                                                             <ItemTemplate>
