@@ -240,7 +240,7 @@
                         <i class="fa fa-archive margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>入库监视<span class="f12">（开发中）</span></p>
+                        <p>入库监视<span class="f12">（调试中）</span></p>
                     </div>
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
@@ -252,7 +252,7 @@
                         <i class="fa fa-bookmark-o margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格监视</p>
+                        <p>不合格监视<span class="f12">（调试中）</span></p>
                     </div>
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label3_V1" runat="server" Text="" style="display:none;"></asp:Label>
