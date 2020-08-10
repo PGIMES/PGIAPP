@@ -235,7 +235,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_list_ck.aspx">
+                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_list_ck.aspx?para_ck=Y">
                     <div class="weui-cell__hd">
                         <i class="fa fa-archive margin10-r"></i>
                     </div>
