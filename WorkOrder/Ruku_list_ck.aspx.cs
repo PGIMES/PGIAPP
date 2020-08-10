@@ -56,6 +56,26 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         list_99_4_line.DataBind();
 
         count_99_4 = dt_99_4.Rows.Count;
+
+        //待入库
+        BindData4();
+    }
+
+    //待入库
+    private void BindData4()
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", "02432", 4);
+        DataTable dt_data_2 = SQLHelper.Query(sql).Tables[0];
+        ViewState["dt_data_2"] = dt_data_2;
+
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "三车间", "02432", 4);
+        DataTable dt_data_3 = SQLHelper.Query(sql).Tables[0];
+        ViewState["dt_data_3"] = dt_data_3;
+
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", "02432", 4);
+        DataTable dt_data_4 = SQLHelper.Query(sql).Tables[0];
+        ViewState["dt_data_4"] = dt_data_4;
+
     }
 
     protected void list_99_2_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
