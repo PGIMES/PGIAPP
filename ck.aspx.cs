@@ -33,13 +33,6 @@ public partial class ck : System.Web.UI.Page
         int count_yl = dt_go.Rows.Count;
         Label1.Text = count_yl.ToString();
 
-        //入库监视
-        sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','9998'";
-        DataTable dt_98_bhg_rk = SQLHelper.Query(sql).Tables[0];
-        int count_bhg_rk = dt_98_bhg_rk.Rows.Count;
-
-        Label2.Text = count_bhg_rk.ToString();
-
         //不合格监视
         sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','Y'";
         DataSet ds = SQLHelper.Query(sql);
@@ -52,6 +45,51 @@ public partial class ck : System.Web.UI.Page
         Label3_V1.Text = count_bhg.ToString();
         Label3_V1_f.Text = dt_01.Rows.Count.ToString();
         Label3_V1_e.Text = dt_99.Rows.Count.ToString();
+    }
+
+    [WebMethod]
+    public static string ruku_Data()
+    {
+        string go = "0", end = "0", go_bhg = "0", end_bhg = "0";
+
+        //待入库
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", WeiXin.GetCookie("workcode"), 4);
+        DataTable dt_data_2 = SQLHelper.Query(sql).Tables[0];
+
+        sql = sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}", "三车间", WeiXin.GetCookie("workcode"), 4);
+        DataTable dt_data_3 = SQLHelper.Query(sql).Tables[0];
+
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", WeiXin.GetCookie("workcode"), 4);
+        DataTable dt_data_4 = SQLHelper.Query(sql).Tables[0];
+
+        go = (dt_data_2.Rows.Count + dt_data_3.Rows.Count + dt_data_4.Rows.Count).ToString();
+
+        //入库完成
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", WeiXin.GetCookie("workcode"), 5);
+        DataTable dt_data_end_2 = SQLHelper.Query(sql).Tables[0];
+
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "三车间", WeiXin.GetCookie("workcode"), 5);
+        DataTable dt_data_end_3 = SQLHelper.Query(sql).Tables[0];
+
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", WeiXin.GetCookie("workcode"), 5);
+        DataTable dt_data_end_4 = SQLHelper.Query(sql).Tables[0];
+
+        end = (dt_data_end_2.Rows.Count + dt_data_end_3.Rows.Count + dt_data_end_4.Rows.Count).ToString();
+
+        //不合格
+        sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','ruku'";
+        DataSet ds = SQLHelper.Query(sql);
+        DataTable dt_98_2 = ds.Tables[0]; DataTable dt_98_3 = ds.Tables[1]; DataTable dt_98_4 = ds.Tables[2];
+        DataTable dt_99_2 = ds.Tables[3]; DataTable dt_99_3 = ds.Tables[4]; DataTable dt_99_4 = ds.Tables[5];
+
+        //不合格待入库
+        go_bhg = (dt_98_2.Rows.Count + dt_98_3.Rows.Count + dt_98_4.Rows.Count).ToString();
+        //不合格已入库
+        end_bhg = (dt_99_2.Rows.Count + dt_99_3.Rows.Count + dt_99_4.Rows.Count).ToString();
+
+        string res = "[{\"go\":\"" + go + "\",\"end\":\"" + end + "\",\"go_bhg\":\"" + go_bhg + "\",\"end_bhg\":\"" + end_bhg + "\"}]";
+        return res;
+
     }
 
     [WebMethod]

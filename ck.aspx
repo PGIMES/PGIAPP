@@ -52,6 +52,7 @@
         //alert(workshop);--%>
 
         $(function () {
+            show_ruku();
             show_bcp();
             show_cp();
             //原材料标注统计 by fish 20.8.6
@@ -243,8 +244,10 @@
                         <p>入库监视<span class="f12">（调试中）</span></p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i2 = Label2.Text; Response.Write("<span class='weui-badge  bg-" + (i2 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2 + "</span>"); %> 
+                        <span class='weui-badge  bg-blue' id="rk_go" style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="rk_end"  style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  orange' id="rk_go_bhg"  style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  orange' id="rk_end_bhg"  style='margin-right: 5px;'>..</span>
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?para_ck=Y">
@@ -415,6 +418,34 @@
             signature: datad.signature,// 必填，签名，见附录1
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
+
+        function show_ruku() {
+            $.ajax({
+                url: "/ck.aspx/ruku_Data",
+                type: "Post",
+                data: "{ }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#rk_go").text(datad[0].go);
+                        $("#rk_end").text(datad[0].end);
+                        $("#rk_go_bhg").text(datad[0].go_bhg);
+                        $("#rk_end_bhg").text(datad[0].end_bhg);
+                        if (datad[0].go == 0) { $("#rk_go").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].end == 0) { $("#rk_end").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].go_bhg == 0) { $("#rk_go_bhg").removeClass("orange").addClass("lightgray"); }
+                        if (datad[0].end_bhg == 0) { $("#rk_end_bhg").removeClass("orange").addClass("lightgray"); }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
 
         function show_bcp() {
             $.ajax({
