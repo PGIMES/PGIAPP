@@ -206,18 +206,6 @@
 
         <div class="page-bd">
             <div class="weui-cells">
-                <a class="weui-cell weui-cell_access" href="/workorder/YL_list_ck.aspx">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-cubes margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>要料监视</p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> 
-                    </div>
-                </a>
                 <a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh();"><%--/workorder/CKSH.aspx--%>
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
@@ -235,6 +223,27 @@
                         <p>入库标签补打</p>
                     </div>
                     <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ckck_dh()">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-shopping-basket margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>成品出库</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/YL_list_ck.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-cubes margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>要料监视</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> 
+                    </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_list_ck.aspx?para_ck=Y">
                     <div class="weui-cell__hd">
@@ -265,15 +274,6 @@
                         <% string i3_V1_e = Label3_V1_e.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1_e == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1_e + "</span>"); %>  
                         <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>
                     </div>
-                </a>
-                <a class="weui-cell weui-cell_access" href="javascript:sm_ckck_dh()">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-shopping-basket margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>成品出库</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_ycl_list_ck.aspx">
                     <div class="weui-cell__hd">
