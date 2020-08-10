@@ -59,6 +59,8 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
 
         //待入库
         BindData4();
+        //入库完成24小时
+        BindData5();
     }
 
     //待入库
@@ -76,6 +78,21 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         DataTable dt_data_4 = SQLHelper.Query(sql).Tables[0];
         ViewState["dt_data_4"] = dt_data_4;
 
+    }
+    //入库完成
+    private void BindData5()
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", WeiXin.GetCookie("workcode"), 5);
+        DataTable dt_data_end_2 = SQLHelper.Query(sql).Tables[0];
+        ViewState["dt_data_end_2"] = dt_data_end_2;
+
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "三车间", WeiXin.GetCookie("workcode"), 5);
+        DataTable dt_data_end_3 = SQLHelper.Query(sql).Tables[0];
+        ViewState["dt_data_end_3"] = dt_data_end_3;
+
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", WeiXin.GetCookie("workcode"), 5);
+        DataTable dt_data_end_4 = SQLHelper.Query(sql).Tables[0];
+        ViewState["dt_data_end_4"] = dt_data_end_4;
     }
 
     protected void list_99_2_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
