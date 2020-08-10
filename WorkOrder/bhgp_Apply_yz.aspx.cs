@@ -217,7 +217,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
                     from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
                     where rsn_domain='{0}' and rsn_code='{1}'";
         sql = string.Format(sql, domain, rscode);
-        DataTable dt_reason = SQLHelper.Query(sql).Tables[0];
 
         if (type == "apply")
         {
@@ -227,6 +226,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         {
             sql = sql + @" and left(rsn_code,1) in('1')";
         }
+        DataTable dt_reason = SQLHelper.Query(sql).Tables[0];
 
         string title = "";
         if (dt_reason.Rows.Count == 1)

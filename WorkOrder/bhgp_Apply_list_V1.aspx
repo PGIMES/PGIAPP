@@ -64,9 +64,9 @@
                     var $self = $(this);
                     var flag = $self.text().search(text)
                     if (flag > -1) {
-                        $self.removeClass("hide"); //$self.siblings('.weui-cells__title').addClass("hide");
+                        $self.removeClass("hide"); 
                     } else {
-                        $self.addClass("hide"); //$self.siblings('.weui-cells__title').addClass("hide");
+                        $self.addClass("hide"); 
 
                     }
                 });
@@ -92,14 +92,12 @@
 
         function cancel() {
             $('.weui-cell').removeClass("hide");
-            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
             showBlockCount();
         }
 
         function clear() {
             $('#searchInput').val('');
             $('.weui-cell').removeClass("hide");
-            //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
             showBlockCount();
         }
     </script>
@@ -177,7 +175,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>检验处置
-                                    <%--<asp:Label ID="Label_02" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_02==0?"gray":"blue") %>"><% =count_02 %></span>
                                 </div>
                                 <div class="weui-cells" id="_02">
@@ -245,7 +242,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量工程师
-                                    <%--<asp:Label ID="Label_03" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_03==0?"gray":"blue") %>"><% =count_03 %></span>
                                 </div>
                                 <div class="weui-cells" id="_03">
@@ -307,7 +303,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量经理
-                                    <%--<asp:Label ID="Label_04" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_04==0?"gray":"blue") %>"><% =count_04 %></span>
                                 </div>
                                 <div class="weui-cells" id="_04">
@@ -369,7 +364,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>总经理
-                                    <%--<asp:Label ID="Label_05" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_05==0?"gray":"blue") %>"><% =count_05 %></span>
                                 </div>
                                 <div class="weui-cells" id="_05">
@@ -431,7 +425,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>需返工/挑选
-                                    <%--<asp:Label ID="Label_01" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_01==0?"gray":"red") %>"><% =count_01 %></span>
                                 </div>
                                 <div class="weui-cells" id="_01">
@@ -493,7 +486,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>待入库
-                                    <%--<asp:Label ID="Label_98" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_98==0?"gray":"blue") %>"><% =count_98 %></span>
                                 </div>
                                 <div class="weui-cells" id="_98">
@@ -555,7 +547,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>已入库(24h内)
-                                    <%--<asp:Label ID="Label_99" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_99==0?"gray":"blue") %>"><% =count_99 %></span>
                                 </div>
                                 <div class="weui-cells" id="_99">
@@ -621,7 +612,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>检验处置
-                                    <%--<asp:Label ID="Label_02_my" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_02_my==0?"gray":"blue") %>"><% =count_02_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_02_my">
@@ -689,7 +679,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量工程师
-                                    <%--<asp:Label ID="Label_03_my" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_03_my==0?"gray":"blue") %>"><% =count_03_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_03_my">
@@ -751,7 +740,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>质量经理
-                                    <%--<asp:Label ID="Label_04_my" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_04_my==0?"gray":"blue") %>"><% =count_04_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_04_my">
@@ -813,7 +801,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>总经理
-                                    <%--<asp:Label ID="Label_05_my" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_05_my==0?"gray":"blue") %>"><% =count_05_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_05_my">
@@ -875,7 +862,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>需返工/挑选
-                                    <%--<asp:Label ID="Label_01_my" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_01_my==0?"gray":"red") %>"><% =count_01_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_01_my">
@@ -937,7 +923,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>待入库
-                                    <%--<asp:Label ID="Label_98_my" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_98_my==0?"gray":"blue") %>"><% =count_98_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_98_my">
@@ -999,7 +984,6 @@
                             <div class="weui-form-preview">
                                 <div class="weui-cells__title  ">
                                     <i class="icon nav-icon icon-49"></i>已入库(24h内)
-                                    <%--<asp:Label ID="Label_99_my" runat="server" Text="Label"></asp:Label>--%>
                                     <span class="weui-badge  bg-<% =(count_99_my==0?"gray":"blue") %>"><% =count_99_my %></span>
                                 </div>
                                 <div class="weui-cells" id="_99_my">
