@@ -31,6 +31,7 @@
             padding:0px 10px 0px 10px; 
                  
         }
+        .bg-orange{background-color:orange}
         .fl{padding-left:0px;padding-right:0px;}/*color:#696969*/
     </style>
     <script src="../js/zepto.min.js"></script>
@@ -113,8 +114,9 @@
                     $(obj).addClass("bg-gray").removeClass("bg-blue");
                 }
                 else {
-                    if (this.id == "_01") {
-                        $(obj).addClass("bg-red").removeClass("bg-gray");
+                    if (this.id == "_98_2" || this.id == "_98_3" || this.id == "_98_4"
+                        || this.id == "_99_2" || this.id == "_99_3" || this.id == "_99_4") {
+                        $(obj).addClass("bg-orange").removeClass("bg-gray");
                     } else {
                         $(obj).addClass("bg-blue").removeClass("bg-gray");
                     }
@@ -498,7 +500,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 不合格 待入库
-                            <span class="weui-badge  bg-<% =(count_98_2==0?"gray":"blue") %>"><% =count_98_2 %></span>
+                            <span class="weui-badge  bg-<% =(count_98_2==0?"gray":"orange") %>"><% =count_98_2 %></span>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -568,7 +570,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 不合格 待入库
-                            <span class="weui-badge  bg-<% =(count_98_3==0?"gray":"blue") %>"><% =count_98_3 %></span>
+                            <span class="weui-badge  bg-<% =(count_98_3==0?"gray":"orange") %>"><% =count_98_3 %></span>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -638,7 +640,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 不合格 待入库
-                            <span class="weui-badge  bg-<% =(count_98_4==0?"gray":"blue") %>"><% =count_98_4 %></span>
+                            <span class="weui-badge  bg-<% =(count_98_4==0?"gray":"orange") %>"><% =count_98_4 %></span>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -1005,7 +1007,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 不合格 已入库(24h内)
-                            <span class="weui-badge  bg-<% =(count_99_2==0?"gray":"blue") %>"><% =count_99_2 %></span>
+                            <span class="weui-badge  bg-<% =(count_99_2==0?"gray":"orange") %>"><% =count_99_2 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -1094,7 +1096,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 不合格 已入库(24h内)
-                            <span class="weui-badge  bg-<% =(count_99_3==0?"gray":"blue") %>"><% =count_99_3 %></span>
+                            <span class="weui-badge  bg-<% =(count_99_3==0?"gray":"orange") %>"><% =count_99_3 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -1183,7 +1185,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 不合格 已入库(24h内)
-                            <span class="weui-badge  bg-<% =(count_99_4==0?"gray":"blue") %>"><% =count_99_4 %></span>
+                            <span class="weui-badge  bg-<% =(count_99_4==0?"gray":"orange") %>"><% =count_99_4 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>

@@ -116,7 +116,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
@@ -143,7 +143,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
@@ -170,7 +170,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
