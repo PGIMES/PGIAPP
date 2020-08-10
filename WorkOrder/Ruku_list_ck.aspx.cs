@@ -64,15 +64,15 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
     //待入库
     private void BindData4()
     {
-        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", "02432", 4);
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", WeiXin.GetCookie("workcode"), 4);
         DataTable dt_data_2 = SQLHelper.Query(sql).Tables[0];
         ViewState["dt_data_2"] = dt_data_2;
 
-        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "三车间", "02432", 4);
+        sql = sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}", "三车间", WeiXin.GetCookie("workcode"), 4);
         DataTable dt_data_3 = SQLHelper.Query(sql).Tables[0];
         ViewState["dt_data_3"] = dt_data_3;
 
-        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", "02432", 4);
+        sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", WeiXin.GetCookie("workcode"), 4);
         DataTable dt_data_4 = SQLHelper.Query(sql).Tables[0];
         ViewState["dt_data_4"] = dt_data_4;
 
