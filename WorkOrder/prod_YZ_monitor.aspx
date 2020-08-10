@@ -100,7 +100,7 @@
             });
 
             $(document.body).pullToRefresh({
-                distance: 10,
+                distance: 40,
                 onRefresh: function () {
                     //$.post("../php/page.php", { "page": 1, "pagesize": 8, ajax: 2 }, function (rs) {
                     //    $("#rank-list").html(tpl(document.getElementById('tpl').innerHTML, rs));
@@ -259,16 +259,18 @@
                                  
                                 <%
                                     System.Data.DataTable dt_line = ViewState["dt_data_1"] as System.Data.DataTable;
-                                    int rowscount = dt_line.Select("ispartof<>'部分' ").Count();
-                                    int partcount = dt_line.Select("ispartof='部分' ").Count();
+                                    int rowscount = dt_line.Select("ispartof<>'部分' and line<>'组装件'").Count();
+                                    int partcount = dt_line.Select("ispartof='部分'  and line<>'组装件'").Count();
+                                    int backcount = dt_line.Select(" isnull(workorder_wip,'') <>'' ").Count();
                                 %>
 
                                  <ul class="collapse">
                                     <li class="js-show">
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item"><i class="icon nav-icon icon-49"></i> 生 产 中                                                
-                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l"  ><% =rowscount %></span>
-                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"orange") %> "  >部<% =partcount %></span>
+                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l hide"  ><% =rowscount %></span>
+                                                <span class="weui-badge  bg-<% =(partcount==0?"gray":"orange") %> "  >部<% =partcount %></span>
+                                                <span class="weui-badge  bg-<% =(backcount==0?"gray":"red") %> "  >返<% =backcount %></span>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -278,11 +280,12 @@
                                          System.Data.DataView dataView = dt_line.DefaultView;
                                          System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "line");
                                          System.Data.DataTable dtispartof= dataView.ToTable(false, "line", "ispartof");
-                                          
+                                         System.Data.DataRow[] dtrowsback;
                                          foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                          {  %>
 
-                                         <% string line = drLine["line"].ToString();                                      
+                                         <% string line = drLine["line"].ToString();  
+                                             dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+line+"' and isnull(workorder_wip,'') <>'' ");//and line<>'组装件'                                                                          
                                             if (line == "组装件"||1==1)
                                              { %>
                                                 <ul class="collapse2 zzj">
@@ -290,8 +293,9 @@
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                            <% }%>
                                                             <div class="weui-cells__title LH weui-flex__item" id="<%=line %>LH1"><i class="icon nav-icon icon-22 color-success"></i><%= (line=="组装件"?"配件":line) %>  
-                                                                <span class="weui-badge bg-blue  margin20-l <% =line == "组装件"?"zzj_head":"" %> " ><% =dtispartof.Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>                                         
+                                                                <span class="weui-badge bg-blue  margin20-l hide <% =line == "组装件"?"zzj_head":"" %> " ><% =dtispartof.Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>                                         
                                                                 <span class="weui-badge bg-orange  <% =line == "组装件"?"zzj_head hide":"" %> "  >部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %>   <% =line == "组装件"||line == "不合格滞留Lot"?"zzj_head ":"" %> "  >返<% =dtrowsback.Count() %></span>
                                                             </div> 
                                             <%if (line == "组装件"||1==1)
                                              { %>
@@ -312,13 +316,19 @@
                                                     </div>
                                                     <div class="weui-cell__bd">
                                                         <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <span class="padding10-r"><%=dr["equip_name"]%></span>
-                                                            <span class="padding5-r"><%= dr["xmh"]%></span><span class="padding5-r"><%=dr["pn"] %></span><span class="padding5-r"><%= dr["pn_name"]%> </span>
-                                                            <span class="weui-mark-rt- weui-badge  weui-badge-tr margin20-l" style="font-size: x-small;"><%=dr["ispartof"].ToString()%></span>
+                                                            <span class="padding5-r"><%=dr["equip_name"]%></span>
+                                                            <span class="padding5-r"><%= dr["xmh"]%></span><span><%=dr["pn"] %></span><span class="padding5-r"><%= dr["pn_name"]%> </span>
+                                                            <span class="weui-mark-rt- weui-badge  weui-badge-tr margin5-l" style="font-size: x-small;"><%=dr["ispartof"].ToString()%></span>
                                                         </span>
                                                         <span style="font-size: smaller">
-                                                            <span class="">完工单号:<%=dr["workorder"] %></span>
-                                                            <span>完工数量:<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                            <span class="">完工单:<%=dr["workorder"] %></span>
+                                                            <span>下线:<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                            </span>
+                                                            <span>合格:<font class="f-blue">0</font>
+                                                            </span>
+                                                            <span>NG:<font class="f-blue">0</font>
+                                                            </span>
+                                                            <span>剩余:<font class="f-blue"><%=dr["off_qty"] %></font>
                                                             </span>
                                                         </span>
                                                         <br />
@@ -327,7 +337,7 @@
                                                                 <%=dr["Emp_Name"] %>
                                                             </span>
                                                             <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["on_date"]) %> </span>
-                                                            <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                            <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>2400?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
                                                             </span>
                                                         </span>
                                                     </div>
@@ -337,25 +347,46 @@
 
                                                 <% }
                                                     else
-                                                    {  %>                                                    
-                                                       <a class="weui-cell weui-cell_access" href="javascript:void(0);">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
-                                                    <div class="weui-cell__hd">
-                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                    </div>
-                                                    <div class="weui-cell__bd">
-                                                        <span class="weui-form-preview__value" style="font-size: smaller">
-                                                            <span class="padding10-r"><%=dr["equip_name"]%></span>  <%=dr["mojuno"] %>
-                                                            <br />
-                                                            <span class="padding5-r"><%= dr["xmh"]%></span><span class="padding5-r"><%=dr["pn"] %></span><span class="padding5-r"><%= dr["pn_name"]%> </span>
-                                                        </span>
-                                                        <span class="weui-agree__text padding10-r" style="font-size: smaller"><%=dr["emp_name"]%></span>
-                                                        <span class="weui-agree__text " style="font-size: smaller;"><%= string.Format("{0:MM-dd HH:mm}", dr["on_date"])%></span>
-                                                        
-                                                    </div>
-                                                    
-                                                </a>  
-                                                 <%  }
+                                                    {  //  %>                                                    
+                                                            <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_yz.aspx?workorder=<%=dr["workorder"] %>&workorder_f=&workshop=三车间">
+                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                                <div class="weui-cell__hd">
+                                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="weui-cell__bd">
+                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                        <span class="padding5-r"><%=dr["equip_name"]%></span>
+                                                                        <span class="padding5-r"><%= dr["xmh"]%></span><span><%=dr["pn"] %></span><span class="padding5-r"><%= dr["pn_name"]%> </span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr margin5-l" style="font-size: x-small;">不合格返线</span>
+                                                                    </span>
+                                                                    <span style="font-size: smaller">
+                                                                        <span class="">完工单:<%=dr["workorder"] %></span>
+                                                                        <span>下线:<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                                        </span>
+                                                                        <span>合格:<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                                        </span>
+                                                                        <span>NG:<font class="f-blue">0</font>
+                                                                        </span>
+                                                                        <span>剩余:<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                                        </span>
+                                                                    </span>
+                                                                    <br />
+                                                                    <span style="font-size: smaller">
+                                                                        <span class="weui-agree__text ">
+                                                                            <%=dr["Emp_Name"] %>
+                                                                        </span>
+                                                                        <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["on_date"]) %> </span>
+                                                                        <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>2400?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="weui-cell__ft">
+                                                                </div>
+                                                            </a>
+
+
+
+                                                <%  }
                                                 }%> 
                                             <%if (line == "组装件"||1==1)
                                              { %></div>
@@ -383,6 +414,7 @@
                                     dt_line = ViewState["dt_data_6"] as System.Data.DataTable;                                     
                                     rowscount = dt_line.Select("ispartof<>'部分'").Count();
                                     partcount = dt_line.Select("ispartof='部分'").Count();
+                                    backcount = dt_line.Select(" isnull(workorder_wip,'') <>'' ").Count();
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -391,6 +423,7 @@
                                                 <i class="icon nav-icon icon-49"></i>待后处理                                                
                                                 <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l"><% =rowscount %></span>
                                                 <span class="weui-badge  bg-<% =(rowscount==0?"gray":"orange") %> ">部<% =partcount %></span>
+                                                <span class="weui-badge  bg-<% =(backcount==0?"gray":"red") %> "  >返<% =backcount %></span> 
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -403,7 +436,7 @@
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {
                                                         string line = drLine["line"].ToString();
-
+                                                        dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+line+"' and isnull(workorder_wip,'') <>'' "); 
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class="js-show LH " style="margin-top: 0px; margin-bottom: 0px">
@@ -412,6 +445,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%=line %>                                                                
                                                                 <span class="weui-badge bg-blue  margin20-l "  ><% =dtispartof.Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>                                         
                                                                 <span class="weui-badge bg-orange "  >部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Count() %></span>
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
@@ -428,29 +462,37 @@
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
                                                     <div class="weui-cell__bd f-black" style="font-size: smaller">
-                                                        <span class="margin5-l">
-                                                            <%=dr["pgino"] %> 
+                                                        <span class="margin10-r">
+                                                            <%=dr["yzj_no"] %></span><span  class="margin10-r"><%=dr["pgino"] %> 
                                                         </span>
                                                         <span>
                                                             <%=dr["pn"] %>
                                                         </span>
-                                                        <span class="margin10-l">完工单：<%=dr["workorder"] %>
-                                                        </span>
+                                                        <% if (dr["loading_type"].ToString() == "99")
+                                                                            { %>
+                                                                        <span class="weui-badge  weui-badge-tr" style="font-size: x-small;">挑选</span>
+                                                                        <% }
+                                                                        else if (dr["loading_type"].ToString() == "6" && dr["workorder_wip"] != DBNull.Value)
+                                                                        { %>
+                                                                        <span class="weui-badge  weui-badge-tr" style="font-size: x-small;">不合格返线</span>
+                                                                        <%   } %>
                                                         <br />
-                                                        <span>下线数：<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                        <span >完工单:<%=dr["workorder"] %>
+                                                        </span>                                                        
+                                                        <span>下线:<font class="f-blue"><%=dr["off_qty"] %></font>
                                                         </span>
-                                                        <span>合格数：<font class="f-blue"><%=dr["solve_qty"] %></font>
+                                                        <span>合格:<font class="f-blue"><%=dr["solve_qty"] %></font>
                                                         </span>
-                                                        <span>NG数：<font class="f-blue"><%=dr["ng_qty"] %></font>
+                                                        <span>NG:<font class="f-blue"><%=dr["ng_qty"] %></font>
                                                         </span>
-                                                        <span>待处理：<font class="f-blue"><%=dr["wait_qty"] %></font>
+                                                        <span>剩余:<font class="f-blue"><%=dr["wait_qty"] %></font>
                                                         </span>
                                                         <br />
                                                         <span class="weui-agree__text span_space">
                                                             <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                         </span>
                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["on_date"]) %> </span>
-                                                        <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                        <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt32(dr["times"].ToString().Replace(":",""))>2400?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
                                                         </span>
 
                                                     </div>
@@ -466,15 +508,12 @@
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
                                                     <div class="weui-cell__bd " style="font-size: smaller">
-                                                        <span class="span_space">
-                                                            <%=dr["pgino"] %> 
+                                                        <span >
+                                                            <%=dr["yzj_no"] %> <%=dr["pgino"] %> <%=dr["pn"] %>                                                         
                                                         </span>
-                                                        <span>
-                                                            <%=dr["pn"] %>
-                                                        </span>
-                                                        <span class="weui-badge  weui-badge-tr margin20-l" style="font-size: x-small;">部分</span>
+                                                        <span class="weui-badge  weui-badge-tr " style="font-size: x-small;">部分</span>
                                                         <br />
-                                                        <span class="span_space">完工单号:<%=dr["workorder"] %>
+                                                        <span class="span_space">完工单:<%=dr["workorder"] %>
                                                         </span>
                                                         <span>已处理：<font class="f-blue"><%=dr["solve_qty"] %></font>
                                                         </span>
@@ -484,7 +523,7 @@
                                                             <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                         </span>
                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["on_date"]) %> </span>
-                                                        <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                        <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt32(dr["times"].ToString().Replace(":",""))>2400?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
                                                         </span>
                                                     </div>
                                                     <div class="weui-cell__ft">
@@ -507,8 +546,9 @@
                             <div class="weui-form-preview">
                                 <%
                                     dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
-                                    rowscount = dt_line.Select("ispartof<>'部分'").Count();
+                                    rowscount = dt_line.Select("ispartof<>'部分'  and loading_type<>'99'").Count();
                                     partcount = dt_line.Select("ispartof='部分'").Count();
+                                    backcount = dt_line.Select(" isnull(workorder_wip,'') <>'' ").Count();
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -516,7 +556,8 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i> 待 终 检
                                                 <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %>  margin20-l" ><% =rowscount %></span>
-                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"orange") %>" >部<% =partcount %></span>                                                
+                                                <span class="weui-badge  bg-<% =(partcount==0?"gray":"orange") %>" >部<% =partcount %></span>  
+                                                <span class="weui-badge  bg-<% =(backcount==0?"gray":"red") %> "  >返<% =backcount %></span>                                              
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -526,9 +567,11 @@
                                                 <%dataView = dt_line.DefaultView;
                                                     dtLineDistinct = dataView.ToTable(true, "line");
                                                     dtispartof= dataView.ToTable(false, "line", "ispartof");
+
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {
                                                         string line = drLine["line"].ToString();
+                                                        dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+line+"' and isnull(workorder_wip,'') <>'' "); 
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
@@ -537,6 +580,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%=line %>
                                                                 <span class="weui-badge bg-blue  margin20-l"><% =(ViewState["dt_data_2"] as System.Data.DataTable).Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>
                                                                 <span class="weui-badge bg-orange ">部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Count() %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
                                                         </div>
@@ -548,7 +592,7 @@
                                                                     {
                                                                         if (dr["ispartof"].ToString() == "部分" || dr["ispartof"].ToString() == "零箱返线")
                                                                         { %>
-                                                                <a class="weui-cell  weui-cell_access " propline="<%=line %>LH2" title="<%=dr["pgino"] %>" style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["qc_dh"] %>&type=0">
+                                                                <a class="weui-cell  weui-cell_access "   style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["qc_dh"] %>&type=0">
                                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                                     <div class="weui-cell__hd">
                                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -581,35 +625,43 @@
 
                                                                 <% }
                                                                     else {%>
-                                                                <a class="weui-cell  weui-cell_access " propline="<%=line %>LH2" title="<%=dr["pgino"] %>" style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["workorder"] %>&type=0&laiyuan=完工单号 %>">
+                                                                <a class="weui-cell  weui-cell_access "   style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["workorder"] %>&type=0&laiyuan=完工单号 %>">
                                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                                     <div class="weui-cell__hd">
                                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                     </div>
                                                                     <div class="weui-cell__bd " style="font-size: smaller">
-                                                                        <span class="span_space">
+                                                                        <span class="margin10-r">
                                                                             <%=dr["pgino"] %> 
                                                                         </span>
                                                                         <span>
                                                                             <%=dr["pn"] %>
                                                                         </span>
-                                                                        <span class="span_space">完工单：<%=dr["workorder"] %>
+                                                                        <span class="margin10-l">完工单：<%=dr["workorder"] %>
                                                                         </span>
+                                                                        <% if (dr["loading_type"].ToString() == "99")
+                                                                            { %>
+                                                                        <span class="weui-badge  weui-badge-tr" style="font-size: x-small;">挑选</span>
+                                                                        <% }
+                                                                        else if (dr["loading_type"].ToString() == "0" && dr["workorder_wip"] != DBNull.Value)
+                                                                        { %>
+                                                                        <span class="weui-badge  weui-badge-tr" style="font-size: x-small;">不合格返线</span>
+                                                                        <%   } %>
                                                                         <br />
-                                                                        <span>下线数：<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                                        <span>下线：<font class="f-blue"><%=dr["off_qty"] %></font>
                                                                         </span>
-                                                                        <span>合格数：<font class="f-blue"><%=dr["hege_qty"] %></font>
+                                                                        <span>合格：<font class="f-blue"><%=dr["hege_qty"] %></font>
                                                                         </span>
-                                                                        <span>NG数：<font class="f-blue"><%=dr["ng_qty"] %></font>
+                                                                        <span>NG：<font class="f-blue"><%=dr["ng_qty"] %></font>
                                                                         </span>
-                                                                        <span>待检数：<font class="f-blue"><%=dr["wait_qty"] %></font>
+                                                                        <span>待检：<font class="f-blue"><%=dr["wait_qty"] %></font>
                                                                         </span>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
                                                                             <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                                         </span>
                                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["on_date"]) %> </span>
-                                                                        <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                                        <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt32(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
                                                                         </span>
                                                                     </div>
                                                                     <div class="weui-cell__ft">
@@ -633,6 +685,7 @@
                                     dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
                                     rowscount = dt_line.Select("ispartof<>'部分'").Count();
                                     partcount = dt_line.Select("ispartof='部分'").Count();
+                                    backcount = dt_line.Select(" isnull(workorder_wip,'') <>'' ").Count();
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -640,7 +693,8 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>待 GP12                                                
                                                 <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l"><% =rowscount %></span>
-                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"orange") %> ">部<% =partcount %></span>
+                                                <span class="weui-badge  bg-<% =(partcount==0?"gray":"orange") %> ">部<% =partcount %></span>
+                                                <span class="weui-badge  bg-<% =(backcount==0?"gray":"red") %> "  >返<% =backcount %></span> 
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -654,6 +708,7 @@
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {
                                                         string line = drLine["line"].ToString();
+                                                        dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+drLine["line"]+"' and isnull(workorder_wip,'') <>'' and line<>'组装件'"); 
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
@@ -662,6 +717,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%=line %>
                                                                 <span class="weui-badge  bg-blue margin20-l "><% =(ViewState["dt_data_3"] as System.Data.DataTable).Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>
                                                                 <span class="weui-badge bg-orange ">部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Count() %></span>
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
@@ -688,7 +744,7 @@
                                                                     <br />
                                                                     <span class="span_space">检验单:<%=dr["qc_dh"] %>
                                                                     </span>
-                                                                    <span>已检数：<font class="f-blue"><%=dr["hege_qty"] %></font>
+                                                                    <span>已检：<font class="f-blue"><%=dr["hege_qty"] %></font>
                                                                     </span>
                                                                     <br />
                                                                     <span class="weui-agree__text span_space">
@@ -721,20 +777,20 @@
                                                                 ：<%=dr["workorder"] %>
                                                                     </span>
                                                                     <br />
-                                                                    <span>下线数：<font class="f-blue"><%=dr["off_qty"] %></font>
+                                                                    <span>下线：<font class="f-blue"><%=dr["off_qty"] %></font>
                                                                     </span>
-                                                                    <span>合格数：<font class="f-blue"><%=dr["hege_qty"] %></font>
+                                                                    <span>合格：<font class="f-blue"><%=dr["hege_qty"] %></font>
                                                                     </span>
-                                                                    <span>NG数：<font class="f-blue"><%=dr["ng_qty"] %></font>
+                                                                    <span>NG：<font class="f-blue"><%=dr["ng_qty"] %></font>
                                                                     </span>
-                                                                    <span>待检数：<font class="f-blue"><%=dr["wait_qty"] %></font>
+                                                                    <span>待检：<font class="f-blue"><%=dr["wait_qty"] %></font>
                                                                     </span>
                                                                     <br />
                                                                     <span class="weui-agree__text span_space">
                                                                         <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                                     </span>
                                                                     <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["on_date"]) %> </span>
-                                                                    <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
                                                                     </span>
                                                                 </div>
                                                                 <div class="weui-cell__ft">
@@ -805,12 +861,12 @@
                                                                         <span>
                                                                             <%if (dr["b_type"].ToString() == "0" || dr["b_type"].ToString() == "3")
                                                                             {%>完工<% }
-                                                                            else if (dr["b_type"].ToString() == "1")
+                                                                            else if (dr["b_type"].ToString() == "1"||dr["b_type"].ToString() == "99")
                                                                             {%>终检<%}
                                                                             else if (dr["b_type"].ToString() == "2")
                                                                             {%>GP12<%}
                                                                             else if (dr["b_type"].ToString() == "4")
-                                                                            {%>后处理<%}%>单号:
+                                                                            {%>后处理<%}%>单:
                                                                         </span><%=dr["workorder"] %> 
                                                                     </span>
                                                                     <span>
@@ -821,7 +877,7 @@
                                                                         <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                                     </span>
                                                                     <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["off_date"]) %> </span>
-                                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font></span>
+                                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt32(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font></span>
 
                                                                 </div>
                                                                 <div class="weui-cell__ft">
@@ -869,7 +925,7 @@
                                                                 System.Data.DataTable dt = ViewState["dt_data_5"] as System.Data.DataTable;
                                                                 foreach (System.Data.DataRow dr in dt.Select("line='" + line + "'"))
                                                                 { %>
-                                                            <a class="weui-cell  weui-cell_access " style="color: black" href="prod_qcc_timeline_info_v3.aspx?dh=<%=dr["dh"] %>">
+                                                            <a class="weui-cell  weui-cell_access " style="color: black" href="prod_qcc_timeline_info_yz.aspx?dh=<%=dr["dh"].ToString()==""?dr["workorder"]:dr["dh"] %>">
                                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                                 <div class="weui-cell__hd">
                                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -881,20 +937,21 @@
                                                                     <span class="margin10-r">
                                                                         <%=dr["pn"] %>
                                                                     </span>
-                                                                    <span>入库单号:<%=dr["dh"] %><br />
+                                                                    <br />
+                                                                    <span>入库单:<%=dr["dh"] %>
                                                                     </span>
                                                                     <span class="margin20-r">
                                                                         <% if (dr["b_type"].ToString() == "0")
                                                                             {%>
-                                                                        <span>完工单号:</span>
+                                                                        <span>完工单:</span>
                                                                         <%}
                                                                             else if (dr["b_type"].ToString() == "1")
                                                                             {%>
-                                                                        <span>终检单号:</span>
+                                                                        <span>终检单:</span>
                                                                         <%}
                                                                             else if (dr["b_type"].ToString() == "2")
                                                                             {%>
-                                                                        <span>GP12单号:</span>
+                                                                        <span>GP12单:</span>
                                                                         <%}%>
                                                                         <%=dr["workorder"] %>
                                                                     </span>

@@ -363,9 +363,10 @@
                                                                     <span class="padding5-r">Lot:<%= dr["workorder_wip"].ToString() == "" ? "" : dr["workorder_wip"] + "/" %>
                                                                         <%= dr["lot_no"]%>
                                                                     </span>
-                                                                    NG:<font class="f-blue padding5-r"><%=dr["ng_qty"]%></font>
-                                                                    已处理:<font class="f-blue padding5-r"><%=dr["off_qty"]%></font>                                                                    
-                                                                    待处理:<font class="f-blue "><%= Convert.ToSingle(dr["wip_qty"])%></font>
+                                                                    上料:<font class="f-blue padding5-r"><%=dr["qty"]%></font>
+                                                                    下料:<font class="f-blue padding5-r"><%=dr["off_qty"]%></font> 
+                                                                    NG:<font class="f-blue padding5-r"><%=dr["ng_qty"]%></font>                                                                                                                                       
+                                                                    在制:<font class="f-blue "><%= Convert.ToSingle(dr["wip_qty"])%></font>
                                                                 </span>
                                                                 <span class="weui-agree__text padding10-r" style="font-size: smaller"><%=dr["emp_name"]%></span>
                                                                 <span class="weui-agree__text " style="font-size: smaller;"><%= string.Format("{0:MM-dd HH:mm}", dr["on_date"])%>  时长<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":", "")) > 2400 ? "f-red" : "f-deepfont" %>"> <%= dr["times"]%></font> </span>
@@ -374,9 +375,9 @@
                                                             </div>
                                                         </a>      
 
-                                                <%}
-    else
-    {  %>                                                    
+                                                  <%}
+                                                    else
+                                                    {  %>                                                    
                                                         <a class="weui-cell weui-cell_access" href="prod_wip_detail_V1.aspx?lotno=<%=dr["lot_no"] %>&needno=<%=dr["need_no"] %>&workshop=<%=_workshop %>&para=Y">
                                                             <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                             <div class="weui-cell__hd">
@@ -426,7 +427,7 @@
                             <div class="weui-form-preview">
                                 <%
                                     dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
-                                    rowscount = dt_line.Select("ispartof<>'部分'").Count();
+                                    rowscount = dt_line.Select("ispartof<>'部分' and loading_type<>'99'").Count();
                                     partcount = dt_line.Select("ispartof='部分'").Count();
                                     backcount = dt_line.Select(" isnull(workorder_wip,'') <>'' ").Count();
                                 %>
@@ -458,7 +459,7 @@
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title weui-flex__item LH" >
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%=line %>
-                                                                <span class="weui-badge bg-blue  margin20-l"><% =(ViewState["dt_data_2"] as System.Data.DataTable).Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>
+                                                                <span class="weui-badge bg-blue  margin20-l"><% =(ViewState["dt_data_2"] as System.Data.DataTable).Select("line='" + line + "' and ispartof<>'部分'  and loading_type<>'99'").Count() %></span>
                                                                 <span class="weui-badge bg-orange ">部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
                                                                 <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Count() %></span>
                                                             </div>
