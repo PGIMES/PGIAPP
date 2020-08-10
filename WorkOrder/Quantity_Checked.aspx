@@ -229,7 +229,7 @@
 
 
         function Bind_WorkOrder(workorder, sourceorder) {
-           debugger
+            var datalist_pgino;
             $.ajax({
                 type: "post",
                 url: "Quantity_Checked.aspx/Set_Page",
@@ -238,46 +238,86 @@
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                 success: function (data) {
-                    if (data) {
-                        $.each(eval(data.d), function (i, item) {
-                             
-                            
-                            if (item.text == "Y") {
-                                alert(item.value);
-                                $("input[type='text']").val("");
-                                return;
-                            }
-                            else {
-                                $("#txt_pgino").val(item.pgino).attr("readonly", "readonly");
-                                $("#txt_pn").val(item.pn).attr("readonly", "readonly");
-                                $("#txt_off_qty").val(item.off_qty).attr("readonly", "readonly");
-                                $("#txt_qty").val(item.pt_ord_mult);
-                                $("#txt_ztsl").val(item.pt_ord_mult);
-                                $("#txt_step").val(item.stepvalue);
 
-                                $("#g2").prop("checked", item.stepvalue == "GP12" ? true : false);
-                                $("#g3").prop("checked", item.stepvalue == "入库" ? true : false);
-                                $("#txt_curr_qty").val(item.curr_qty).attr("readonly", "readonly");  //txt_step
-                                //xmh_change();
-                               // alert($("#txt_source_sum").val());
-                               setvalue();
-                                //if ($("#txt_source_sum").val() != "") {
-                                //   // alert("m")
-                                //    if (parseFloat($("#txt_source_sum").val()) < parseFloat($("#txt_qty").val())) {
-                                //        $("#txt_qty").val($("#txt_source_sum").val());
-                                //        $("#txt_curr_qty").val(parseFloat($("#txt_source_sum").val()) - parseFloat($("#txt_off_qty").val()));
-                                //       // alert("set")
-                                //    }
-                                //}
-                            }
-                        })
+                    var obj = eval(data.d);
+                    datalist_pgino = obj[0].json;
+                    //alert(datalist_pgino);
+                }
+            });
+                $("#txt_pgino").select({
+                     title: "物料号",
+                     items: datalist_pgino,
+                     onChange: function (d) {
+                        alert(d.values);
+                        pgino_change(workorder, sourceorder, d.values);
+                       
+                     },
+                     onClose: function (d) {
+                         //var obj = eval(d.data);
+                         //alert(obj.values);
 
-                    }
+                     },
+                     onOpen: function () {
+                         //  console.log("open");
+                     },
 
+                 });
+                if (datalist_pgino.length == 1) {
+
+                    $("#txt_pgino").val(datalist_pgino[0].title);
+                    pgino_change(workorder, sourceorder, datalist_pgino[0].title);
                 }
 
-            });
+                  
+
+               
+                    //xmh_change();
+                    // alert($("#txt_source_sum").val());
+                    setvalue();
+                    //if ($("#txt_source_sum").val() != "") {
+                    //   // alert("m")
+                    //    if (parseFloat($("#txt_source_sum").val()) < parseFloat($("#txt_qty").val())) {
+                    //        $("#txt_qty").val($("#txt_source_sum").val());
+                    //        $("#txt_curr_qty").val(parseFloat($("#txt_source_sum").val()) - parseFloat($("#txt_off_qty").val()));
+                    //       // alert("set")
+                    //    }
+                    //}
+
         }
+
+        function pgino_change(workorder, sourceorder, pgino) {
+
+              $.ajax({
+                   type: "post",
+                   url: "Quantity_Checked.aspx/pgino_change",
+                   data: "{'workorder': '" + workorder + "','sourceorder': '" + sourceorder + "','pgino': '" + pgino + "'}",
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                   success: function (data) {
+                       var obj = eval(data.d);
+                    
+                       $("#txt_pgino").val(obj[0].pgino).attr("readonly", "readonly");
+                       $("#txt_pn").val(obj[0].pn).attr("readonly", "readonly");
+                       $("#txt_off_qty").val(obj[0].off_qty).attr("readonly", "readonly");
+                       $("#txt_qty").val(obj[0].pt_ord_mult);
+                       $("#txt_ztsl").val(obj[0].pt_ord_mult);
+                       $("#txt_step").val(obj[0].stepvalue);
+
+                       $("#g2").prop("checked", obj[0].stepvalue == "GP12" ? true : false);
+                       $("#g3").prop("checked", obj[0].stepvalue == "入库" ? true : false);
+                       $("#txt_curr_qty").val(obj[0].curr_qty).attr("readonly", "readonly");  //txt_step
+                       if (parseFloat($("#txt_off_qty").val()) > 0) {
+                           $("#g2").attr("disabled", "disabled");
+                           $("#g3").attr("disabled", "disabled");
+                       }
+                   }
+
+              });
+              
+           }
+
+        
 
         function page_show() {
             $('.collapse .js-category').children('div').children('span').css("color", "#e0e0e0");
@@ -401,7 +441,7 @@
                $("#<%=btn_bind_xm.ClientID%>").click();
           }--%>
 
-     
+        Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
     </script>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server">
@@ -518,7 +558,7 @@
 
                                 page_show();
                                 //sm_source();
-                                Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+                               // Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
                                setvalue();
 
                             });
@@ -528,7 +568,7 @@
                          <div class="weui-cells weui-cells_form">
 
                     <ul class="collapse">
-                        <li>
+                        <li class="js-show">
                             <div class="weui-flex js-category">
                                 <div class="weui-flex__item"><span>下一步</span></div>
                                 <i class="icon icon-74"></i>
@@ -538,7 +578,7 @@
                                 <div class="weui-cells page-category-content">
                                     <div class="weui-cell__bd">
                                         <div class="weui-form-li">
-                                            <input class="weui-form-checkbox" name="step" id="g2" value="GP12" type="radio" disabled="disabled" />
+                                            <input class="weui-form-checkbox" name="step" id="g2" value="GP12" type="radio"  />
                                             <label for="g2" class="middle">
                                                 <i class="weui-icon-radio"></i>
                                                 <div class="weui-form-text">
@@ -551,7 +591,7 @@
 
                                     <div class="weui-cell__bd">
                                         <div class="weui-form-li">
-                                            <input class="weui-form-checkbox" name="step" id="g3" value="入库" type="radio" disabled="disabled"/>
+                                            <input class="weui-form-checkbox" name="step" id="g3" value="入库" type="radio" />
                                             <label for="g3" class="middle">
                                                 <i class="weui-icon-radio"></i>
                                                 <div class="weui-form-text">

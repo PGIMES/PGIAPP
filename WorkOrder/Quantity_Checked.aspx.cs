@@ -7,6 +7,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Maticsoft.DBUtility;
+using Newtonsoft.Json;
 
 public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
 {
@@ -17,12 +18,8 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //_workshop = "三车间";//  Request.QueryString["workshop"].ToString(); // "四车间";//
-        //_dh = "G0013089";// Request.QueryString["dh"].ToString();// "W0000456";
-
-        _workshop = Request.QueryString["workshop"].ToString(); // "四车间";//
-        _dh = Request.QueryString["dh"].ToString();// "W0000456";
-
+        _workshop = "二车间";  // Request.QueryString["workshop"].ToString(); // "四车间";//
+        _dh = "G1023924";// Request.QueryString["dh"].ToString();// "W0000456";
         // lotno = "G0000301";
         //_dh = "W0000450";
 
@@ -52,7 +49,7 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = "01693";//   lu.WorkCode;
+            txt_emp.Text = "02086";//  lu.WorkCode;
             txt_dh.Text = _dh;
             ViewState["STEPVALUE"] = "";
 
@@ -66,23 +63,57 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
         string result = "";
         string re_sql = "";
         DataTable re_dt;
-        //string dh = "";
-        //if (sourceorder == "")
-        //{ dh = workorder; }
-        //else { dh = sourceorder; }
-         re_sql = @"exec [usp_app_source_ver] '{0}','{1}'";
+         re_sql = @"exec [usp_app_source_ver_tz] '{0}','{1}',''";
         re_sql = string.Format(re_sql, workorder,sourceorder);
-         re_dt = SQLHelper.Query(re_sql).Tables[0];
-        //if(re_dt.Rows[0]["pgino"].ToString()!="")
-        //{ 
-        result = Newtonsoft.Json.JsonConvert.SerializeObject(re_dt);
-           
-        //}
+        DataSet ds = SQLHelper.Query(re_sql);
+        re_dt = ds.Tables[0];
+
+        DataTable dt_pgino = ds.Tables[0];
+      
+        string json = JsonConvert.SerializeObject(dt_pgino);
+
+        result = "[{\"json\":" + json + "}]";
+
         return result;
 
     }
 
 
+    [WebMethod]
+    public static string pgino_change(string workorder, string sourceorder,string pgino)
+    {
+
+        string result = "";
+        string re_sql = "";
+        DataTable re_dt;
+        string  pn = "", stepvalue = ""; double off_qty = 0, pt_ord_mult = 0, curr_qty = 0;
+        re_sql = @"exec [usp_app_source_ver_tz] '{0}','{1}','{2}'";
+        re_sql = string.Format(re_sql, workorder, sourceorder,pgino);
+        DataSet ds = SQLHelper.Query(re_sql);
+        re_dt = ds.Tables[0];
+
+
+        //result = Newtonsoft.Json.JsonConvert.SerializeObject(re_dt);
+
+        //return result;
+
+        DataTable dt = ds.Tables[1];
+       // pgino = dt.Rows[0]["pgino"].ToString();
+        pn = dt.Rows[0]["pn"].ToString();
+        stepvalue = dt.Rows[0]["stepvalue"].ToString();
+        off_qty = double.Parse(dt.Rows[0]["off_qty"].ToString());
+        curr_qty = double.Parse(dt.Rows[0]["curr_qty"].ToString());
+        pt_ord_mult = double.Parse(dt.Rows[0]["pt_ord_mult"].ToString());
+
+
+        DataTable dt_pgino = ds.Tables[1];
+        string json = JsonConvert.SerializeObject(dt_pgino);
+
+        result = "[{\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"stepvalue\":\"" + stepvalue + "\",\"off_qty\":\"" + off_qty + "\",\"curr_qty\":\"" + curr_qty + "\",\"pt_ord_mult\":\"" + pt_ord_mult + "\"}]";
+
+        return result;
+
+    }
 
 
 
@@ -328,14 +359,14 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
         if (dt.Rows.Count > 0)
         {
             _rk_dh = dt.Rows[0][0].ToString();
-            _ref= dt.Rows[0][0].ToString();
+           // _ref= dt.Rows[0][0].ToString();
         }
-        else
-        {
-            _ref = _dh_source;
-        }
-       
-        if(_tx!="")
+        //else
+        //{
+        //    _ref = _dh_source;
+        //}
+        _ref = _dh_source;
+        if (_tx!="")
         {  
             
             DataTable ldt = new DataTable();
