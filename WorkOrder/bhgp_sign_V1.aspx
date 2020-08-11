@@ -211,17 +211,24 @@
                             $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                             return false;
                         }
-                        if ($('#stepid').val() == "0001")//需返工
-                        {
-                            if ("<%=_para_ck %>"=="Y") {
+
+                        if ("<%=_para_ck %>" == "Y") {
+                            if ($('#stepid').val() == "0001")//需返工
+                            {
                                 window.location.href = "/ck.aspx";
-                            } else {
+                            }
+                            else {
+                                window.location.href = "/workorder/bhgp_Apply_list_V1.aspx?para_ck=Y";
+                            }
+
+                        } else {
+                            if ($('#stepid').val() == "0001")//需返工
+                            {
                                 window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
                             }
-                            
-                        }
-                        else {
-                            window.location.href = "/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>";
+                            else {
+                                window.location.href = "/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>";
+                            }
                         }
                         
                     }
