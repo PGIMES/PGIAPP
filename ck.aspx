@@ -259,7 +259,7 @@
                         <span class='weui-badge  orange' id="rk_end_bhg"  style='margin-right: 5px;'>..</span>
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?para_ck=Y">
+                <%--<a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?para_ck=Y">
                     <div class="weui-cell__hd">
                         <i class="fa fa-bookmark-o margin10-r"></i>
                     </div>
@@ -274,7 +274,7 @@
                         <% string i3_V1_e = Label3_V1_e.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1_e == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1_e + "</span>"); %>  
                         <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>
                     </div>
-                </a>
+                </a>--%>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_ycl_list_ck.aspx">
                     <div class="weui-cell__hd">
                         <i class="fa fa-ravelry margin10-r"></i>

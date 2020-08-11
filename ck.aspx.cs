@@ -33,6 +33,7 @@ public partial class ck : System.Web.UI.Page
         int count_yl = dt_go.Rows.Count;
         Label1.Text = count_yl.ToString();
 
+        /*
         //不合格监视
         sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','Y'";
         DataSet ds = SQLHelper.Query(sql);
@@ -45,6 +46,7 @@ public partial class ck : System.Web.UI.Page
         Label3_V1.Text = count_bhg.ToString();
         Label3_V1_f.Text = dt_01.Rows.Count.ToString();
         Label3_V1_e.Text = dt_99.Rows.Count.ToString();
+        */
     }
 
     [WebMethod]
