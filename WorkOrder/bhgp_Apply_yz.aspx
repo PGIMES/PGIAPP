@@ -297,12 +297,12 @@
                     
                     if (parseInt(_op) <= 700 || parseInt(_op) == 800) {
                         if (parseInt(_op) >= 40 && parseInt(_op) < 100) {//parseInt(_op) <= 50
-                            if ($("#b_use_routing").val() == "1") {
+                            //if ($("#b_use_routing").val() == "1") {
                                 layer.alert("请输入【压铸完成单号】.");
                                 return false;
-                            }
+                            //}
                         }else if ((parseInt(_op) >= 600 && parseInt(_op) < 700) || parseInt(_op) == 800) {
-                            if ($("#b_use_routing").val() == "1") {
+                            if ($("#b_use_routing").val() == "1" || $("#b_use_routing").val() == "2") {
                                 layer.alert("请输入【后处理完成单号】.");
                                 return false;
                             }
@@ -1230,14 +1230,14 @@
 
                     if (parseInt(d.values) <= 700 || parseInt(d.values)==800) {
                         if (parseInt(d.values) >= 40 && parseInt(d.values) < 100) {//parseInt(d.values) <= 50
-                            if ($("#b_use_routing").val() == "1") {
+                            //if ($("#b_use_routing").val() == "1") {
                                 $("#div_ref_order").show();
                                 $("#lbl_ref_order").text("压铸完成单号");
                                 $("#ref_order").val("");
                                 $("#workorder_qc_loc").val("");
-                            }
+                            //}
                         }else if ((parseInt(d.values) >= 600 && parseInt(d.values) < 700) || parseInt(d.values)==800) {
-                            if ($("#b_use_routing").val() == "1") {
+                            if ($("#b_use_routing").val() == "1" || $("#b_use_routing").val() == "2") {
                                 $("#div_ref_order").show();
                                 $("#lbl_ref_order").text("后处理完成单号");
                                 $("#ref_order").val("");
