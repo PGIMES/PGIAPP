@@ -16,7 +16,7 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop =  Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh = Request.QueryString["dh"].ToString(); //"W1497589";
+        _dh =  Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -30,7 +30,7 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text =   lu.WorkCode;
+            txt_emp.Text =  lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -41,9 +41,9 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
 
         string pgino = "";
         string yzjno = "";
-        string sql_str = @"exec usp_app_yz_hsolve_load '{0}','{1}','{2}','{3}'";
-        sql_str = string.Format(sql_str, WorkCode, _workshop, txt_dh.Text, txt_xmh.Text);
-        DataTable dt = SQLHelper.Query(sql_str).Tables[0];
+        //string sql_str = @"exec usp_app_yz_hsolve_load_v1 '{0}','{1}','{2}','{3}'";
+        //sql_str = string.Format(sql_str, WorkCode, _workshop, txt_dh.Text, txt_xmh.Text);
+        //DataTable dt = SQLHelper.Query(sql_str).Tables[0];
         //if (dt != null && dt.Rows.Count > 0)
         //{
         //    txt_xmh.DataSource = dt;
@@ -126,6 +126,7 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
             Repeater_record.DataBind();
         }
         string stepvalue = ds.Tables[3].Rows[0]["StepValue"].ToString();
+        int op = int.Parse(ds.Tables[3].Rows[0]["op"].ToString());
         g2.Checked = (stepvalue == "终检") ? true : false;
         g3.Checked = (stepvalue == "GP12") ? true : false;
         g4.Checked = (stepvalue == "入库") ? true : false;
@@ -135,7 +136,25 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
             g3.Attributes.Add("disabled", "disabled");
             g4.Attributes.Add("disabled", "disabled");
         }
+        if (op < 600)
+        {
+            lb2.Visible = false;
+            lb3.Visible = false;
+        }
+        else
+        {
+            lb2.Visible = true;
+            lb3.Visible = true;
+        }
 
+        if (op > 600)
+        {
+            lb4.Visible = false;
+        }
+        else
+        {
+            lb4.Visible = true;
+        }
     }
 
     protected void btn_bind_data_Click(object sender, EventArgs e)
@@ -273,11 +292,11 @@ public partial class WorkOrder_YZ_HSolve : System.Web.UI.Page
 
         if (_curr_qty <= 0)
         {
-            re_sql = @"exec usp_app_YZ_HSolve_Insert '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+            re_sql = @"exec usp_app_yz_hsolve_recover '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
         }
         else
         {
-            re_sql = @"exec usp_app_yz_hsolve_recover '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
+            re_sql = @"exec usp_app_YZ_HSolve_Insert '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'";
         }
 
         if (flag == "N")

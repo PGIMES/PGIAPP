@@ -58,9 +58,11 @@
                 return false;
             }
 
-            if ($("#source_dh").val() == "") {
-                alert("请输入来源单号.");
-                return false;
+            if (parseFloat($("#txt_curr_qty").val()) > 0) {
+                if ($("#source_dh").val() == "") {
+                    alert("请输入来源单号.");
+                    return false;
+                }
             }
 
         
@@ -445,7 +447,7 @@
                  <div class="weui-form-preview">
 
                      <ul class="collapse">
-                         <li>
+                         <li class="js-show">
                              <div class="weui-flex js-category">
                                  <div class="weui-flex__item"><span>下一步</span></div>
                                  <i class="icon icon-74"></i>
@@ -457,7 +459,7 @@
                                     <div class="weui-cell__bd">
                                          <div class="weui-form-li">
                                              <input class="weui-form-checkbox" name="step"  id="g2" value="终检" type="radio"   runat="server" />   
-                                             <label for="g2">
+                                             <label for="g2" id="lb2" runat="server">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
                                                      <p>终检</p>
@@ -470,7 +472,7 @@
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
                                              <input class="weui-form-checkbox" name="step"  id="g3" value="GP12" type="radio" runat="server" />  
-                                             <label for="g3" class="middle">
+                                             <label for="g3" class="middle" id="lb3" runat="server">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
                                                      <p>GP12</p>
@@ -483,7 +485,7 @@
                                      <div class="weui-cell__bd">
                                          <div class="weui-form-li">
                                              <input class="weui-form-checkbox" name="step"  id="g4" value="入库" type="radio" runat="server"  /> 
-                                             <label for="g4" class="middle">
+                                             <label for="g4" class="middle" id="lb4" runat="server">
                                                  <i class="weui-icon-radio"></i>
                                                  <div class="weui-form-text">
                                                      <p>入库</p>

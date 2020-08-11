@@ -271,11 +271,8 @@
                                                                         <%=drpgino["max_hhs"]+"h" %>
                                                                         <%}  %>--%>
 
-                                                                    <%= ","+drpgino["sum_qty"]+"件"%>
-
-                                                                     <%= ","%>
-
-                                                                     <% if (Convert.ToInt32(drpgino["min_hhs"]) == Convert.ToInt32(drpgino["max_hhs"])) {%>
+                                                                    <%= ","+drpgino["sum_qty"]+"件,"%>
+                                                                    <% if (Convert.ToInt32(drpgino["min_hhs"]) == Convert.ToInt32(drpgino["max_hhs"])) {%>
                                                                     -
                                                                         <%}  %>
                                                                     <% else if (Convert.ToInt32(drpgino["min_hhs"]) >= 120) {%>
@@ -302,15 +299,24 @@
 
                                                                     
                                                                      <%= ",可用"%>
-
                                                                     <% if (Convert.ToSingle(drpgino["day_s"]) >= 5) {%>
                                                                     <font class="f-red"><%=drpgino["day_s"]+"天" %></font>
-                                                                        <%}  %>
+                                                                    <%}  %>
                                                                     <% else if (Convert.ToSingle(drpgino["day_s"]) >= 3) {%>
                                                                     <font class="f-blue"><%=drpgino["day_s"]+"天" %></font>
                                                                         <%}  %>
                                                                     <% else {%>
                                                                         <%=drpgino["day_s"]+"天" %>
+                                                                        <%}  %>
+                                                                    <%= ","%>
+                                                                    <% if (Convert.ToSingle(drpgino["xql_day_s"]) >= 5) {%>
+                                                                    <font class="f-red"><%=drpgino["xql_day_s"]+"天" %></font>
+                                                                        <%}  %>
+                                                                    <% else if (Convert.ToSingle(drpgino["xql_day_s"]) >= 3) {%>
+                                                                    <font class="f-blue"><%=drpgino["xql_day_s"]+"天" %></font>
+                                                                        <%}  %>
+                                                                    <% else {%>
+                                                                        <%=drpgino["xql_day_s"]+"天" %>
                                                                         <%}  %>
 
                                                                     <%-- <% if (drpgino["flag_xp"].ToString() != "")

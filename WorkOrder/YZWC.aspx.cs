@@ -16,7 +16,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop =   Request.QueryString["workshop"].ToString(); // "四车间";  
-        _dh =   Request.QueryString["dh"].ToString(); //"W1497589";
+        _dh =    Request.QueryString["dh"].ToString(); //"W1497589";
 
 
         dt_append = new DataTable();
@@ -33,7 +33,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text =  lu.WorkCode;
+            txt_emp.Text =   lu.WorkCode;
             txt_dh.Text = _dh;
             ShowValue(txt_emp.Text);
 
@@ -122,6 +122,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
             Repeater_record.DataBind();
         }
         string stepvalue = ds.Tables[5].Rows[0]["StepValue"].ToString();
+        int op = int.Parse(ds.Tables[5].Rows[0]["op"].ToString());
         g1.Checked = (stepvalue == "后处理完成") ? true : false;
         g2.Checked = (stepvalue == "终检") ? true : false;
         g3.Checked = (stepvalue == "GP12") ? true : false;
@@ -133,7 +134,7 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
             g3.Attributes.Add("disabled", "disabled");
             g4.Attributes.Add("disabled", "disabled");
         }
-        if (int.Parse(ds.Tables[5].Rows[0]["op"].ToString()) < 600)
+        if (op < 600)
         {
             lb2.Visible = false;
             lb3.Visible = false;
@@ -142,6 +143,15 @@ public partial class WorkOrder_YZWC : System.Web.UI.Page
         {
             lb2.Visible = true;
             lb3.Visible = true;
+        }
+
+        if (op > 600)
+        {
+            lb4.Visible = false;
+        }
+        else
+        {
+            lb4.Visible = true;
         }
 
     }
