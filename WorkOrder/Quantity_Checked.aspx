@@ -251,6 +251,8 @@
                        $("#txt_qty").val(obj[0].pt_ord_mult);
                        $("#txt_ztsl").val(obj[0].pt_ord_mult);
                        $("#txt_step").val(obj[0].stepvalue);
+                       $("#txt_curr_qty").val(obj[0].curr_qty);
+                      // alert(obj[0].stepvalue);
 
                        $("#g2").prop("checked", obj[0].stepvalue == "GP12" ? true : false);
                        $("#g3").prop("checked", obj[0].stepvalue == "入库" ? true : false);
@@ -375,8 +377,9 @@
                 
                 $("#<%=btn_bind_data.ClientID%>").click();
                 //setTimeout(function () {
-                     Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
-                //page_show();
+                // Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+                    page_show();                    
+
                 //}, 9000)
               //  alert(3);
                 //var int = self.setTimeout(function () { alert($("#txt_source_sum").val()); }, 2000);
@@ -506,7 +509,7 @@
 
                                 page_show();
                                 //sm_source();
-                                //Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
+                               Bind_WorkOrder($("#txt_dh").val(), $("#source_dh").val());
                                setvalue();
 
                             });
@@ -672,6 +675,7 @@
            
     </form>
     <script>
+
         $("#txt_pgino").select({
             title: "物料号",
             //items: datalist_pgino,
@@ -691,6 +695,7 @@
             },
 
         });
+
         function Bind_WorkOrder(workorder, sourceorder) {
             var datalist_pgino;
             $.ajax({
@@ -709,9 +714,10 @@
                 }
             });
 
+          
+
 
             if (datalist_pgino.length == 1) {
-
                 $("#txt_pgino").val(datalist_pgino[0].title);
                 pgino_change(workorder, sourceorder, datalist_pgino[0].title);
             }

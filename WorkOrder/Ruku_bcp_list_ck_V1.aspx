@@ -220,6 +220,21 @@
                                                             <div class="weui-cells__title weui-flex__item LH" id="<%=drpgino["pgino"] %>LH5">
                                                                 <i class="icon nav-icon icon-22 color-success"></i>
                                                                 <%= drpgino["pgino"]+","+drpgino["pn"] %>
+                                                                <% if (drpgino["pc_freq_desc"].ToString()=="1W" || drpgino["pc_freq_desc"].ToString()=="2W") {%>
+                                                                <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: #10AEFF;">
+                                                                    <%=drpgino["pc_freq_desc"] %>
+                                                                </span>
+                                                                    <%}  %>
+                                                                <% else if (drpgino["pc_freq_desc"].ToString()=="3W" || drpgino["pc_freq_desc"].ToString()=="4W") {%>
+                                                                <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: orange;">
+                                                                    <%=drpgino["pc_freq_desc"] %>
+                                                                </span>
+                                                                    <%}  %>
+                                                                <% else  if (drpgino["pc_freq_desc"].ToString()=="1M+" || drpgino["pc_freq_desc"].ToString()=="3M+"){%>
+                                                                <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: red;">
+                                                                    <%=drpgino["pc_freq_desc"] %>
+                                                                </span>
+                                                                    <%}  %>
                                                                 <br />
                                                                 <span style="padding-left:20px;">
                                                                     <%--<%= drpgino["ts"]+"托,"+drpgino["sum_qty"]+"件"%>--%>

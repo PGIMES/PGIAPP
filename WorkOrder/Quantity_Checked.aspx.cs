@@ -18,8 +18,8 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _workshop = "二车间";  // Request.QueryString["workshop"].ToString(); // "四车间";//
-        _dh = "G1123924";// Request.QueryString["dh"].ToString();// "W0000456";
+        _workshop =   Request.QueryString["workshop"].ToString(); // "四车间";//
+        _dh =  Request.QueryString["dh"].ToString();// "W0000456";
         // lotno = "G0000301";
         //_dh = "W0000450";
 
@@ -49,7 +49,7 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
-            txt_emp.Text = "02086";//  lu.WorkCode;
+            txt_emp.Text =   lu.WorkCode;
             txt_dh.Text = _dh;
             ViewState["STEPVALUE"] = "";
 
@@ -187,7 +187,7 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
             sqlspend = @"SELECT * FROM (
 						   select wip.pgino,SUM(isnull(wip.qty,0)) as need_off_qty,wip.workorder,'0' loading_type   from Mes_App_WorkOrder_hege  wip where b_end=1 and routing<>'R'    
 						   GROUP BY wip.pgino,wip.workorder  UNION ALL 
-						   SELECT  pgino,off_qty-hege_qty as need_off_qty,workorder,loading_type from Mes_App_WorkOrder_QC_Wip )wip where pgino='" + txt_pgino.Text + "'";
+						   SELECT  pgino,off_qty-hege_qty as need_off_qty,workorder,loading_type from Mes_App_WorkOrder_QC_Wip )wip where 1=1";
             strsql = sqlspend;
             //txt_tiaoxuan.Text = "挑选";
         }
@@ -246,6 +246,7 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
                
                 status = dt.Rows[0]["loading_type"].ToString();
                 pgino = dt.Rows[0]["pgino"].ToString();
+            
                 if (status != dt.Rows[i]["loading_type"].ToString())
                 {
                     if (status == "9")
@@ -268,12 +269,21 @@ public partial class WorkOrder_Quantity_Checked : System.Web.UI.Page
                     ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", @"$.toptip('" + script + "',30000); $('#source_dh').val('') ", true);
                     return;
                 }
-                if (pgino != dt.Rows[i]["pgino"].ToString())
+                if (pgino != dt.Rows[i]["pgino"].ToString() && status!="99")
                 {
                     
                         script = "物料号不一致，不可一起操作！";
                     
                     
+                    ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", @"$.toptip('" + script + "',30000); $('#source_dh').val('') ", true);
+                    return;
+                }
+                else if (pgino.Substring(0,6) != dt.Rows[i]["pgino"].ToString().Substring(0, 6) && status == "99")
+                {
+
+                    script = "物料号不一致，不可一起操作！";
+
+
                     ScriptManager.RegisterStartupScript(Page, this.GetType(), "setinfo", @"$.toptip('" + script + "',30000); $('#source_dh').val('') ", true);
                     return;
                 }
