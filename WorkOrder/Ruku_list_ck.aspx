@@ -229,7 +229,7 @@
                                     string line = drLine["line"].ToString();
                             %>
                             <ul class="collapse">
-                                <li>
+                                <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line" onclick="showorhide(this);">
                                         <div class="weui-cells__title  weui-flex__item LH" id="<%=line %>LH4">
                                             <i class="icon nav-icon icon-22 color-success "></i><%=line %>
@@ -327,7 +327,7 @@
                                     string line = drLine["line"].ToString();
                             %>
                             <ul class="collapse">
-                                <li>
+                                <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line" onclick="showorhide(this);">
                                         <div class="weui-cells__title  weui-flex__item LH" id="<%=line %>LH4">
                                             <i class="icon nav-icon icon-22 color-success "></i><%=line %>
@@ -420,7 +420,7 @@
                                     string line = drLine["line"].ToString();
                             %>
                             <ul class="collapse">
-                                <li>
+                                <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line" onclick="showorhide(this);">
                                         <div class="weui-cells__title  weui-flex__item LH" id="<%=line %>LH4">
                                             <i class="icon nav-icon icon-22 color-success "></i><%=line %>
@@ -731,7 +731,7 @@
                                     string line = drLine["line"].ToString();
                             %>
                             <ul class="collapse">
-                                <li>
+                                <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line " onclick="showorhide(this);">
                                         <div class="weui-cells__title weui-flex__item LH" id="<%=line %>LH5">
                                             <i class="icon nav-icon icon-22 color-success"></i><%=line %>
@@ -829,7 +829,7 @@
                                     string line = drLine["line"].ToString();
                             %>
                             <ul class="collapse">
-                                <li>
+                                <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line " onclick="showorhide(this);">
                                         <div class="weui-cells__title weui-flex__item LH" id="<%=line %>LH5">
                                             <i class="icon nav-icon icon-22 color-success"></i><%=line %>
@@ -927,7 +927,7 @@
                                     string line = drLine["line"].ToString();
                             %>
                             <ul class="collapse">
-                                <li>
+                                <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line " onclick="showorhide(this);">
                                         <div class="weui-cells__title weui-flex__item LH" id="<%=line %>LH5">
                                             <i class="icon nav-icon icon-22 color-success"></i><%=line %>
@@ -1016,7 +1016,7 @@
                             <asp:Repeater runat="server" ID="list_99_2_line" EnableTheming="False" OnItemDataBound="list_99_2_line_ItemDataBound">
                                 <ItemTemplate>
                                     <ul class="collapse">
-                                        <li>
+                                        <li style="margin-top:0px;margin-bottom:0px">
                                             <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                 <div class="weui-cells__title  weui-flex__item">
                                                     <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -1105,7 +1105,7 @@
                             <asp:Repeater runat="server" ID="list_99_3_line" EnableTheming="False" OnItemDataBound="list_99_3_line_ItemDataBound">
                                 <ItemTemplate>
                                     <ul class="collapse">
-                                        <li>
+                                        <li style="margin-top:0px;margin-bottom:0px">
                                             <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                 <div class="weui-cells__title  weui-flex__item">
                                                     <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -1194,7 +1194,7 @@
                             <asp:Repeater runat="server" ID="list_99_4_line" EnableTheming="False" OnItemDataBound="list_99_4_line_ItemDataBound">
                                 <ItemTemplate>
                                     <ul class="collapse">
-                                        <li>
+                                        <li style="margin-top:0px;margin-bottom:0px">
                                             <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                 <div class="weui-cells__title  weui-flex__item">
                                                     <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>

@@ -218,7 +218,7 @@
                                     <asp:Repeater runat="server" ID="list_go" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                         <ItemTemplate>
                                              <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -287,7 +287,7 @@
                                     <asp:Repeater runat="server" ID="list_wc" EnableTheming="False" OnItemDataBound="list_wc_ItemDataBound">
                                         <ItemTemplate>
                                             <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -359,7 +359,7 @@
                                     <asp:Repeater runat="server" ID="list_rj" EnableTheming="False" OnItemDataBound="list_rj_ItemDataBound">
                                         <ItemTemplate>
                                             <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -431,7 +431,7 @@
                                     <asp:Repeater runat="server" ID="list_end" EnableTheming="False" OnItemDataBound="list_end_ItemDataBound">
                                         <ItemTemplate>
                                             <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -494,7 +494,7 @@
                                     <asp:Repeater runat="server" ID="list_go_my" EnableTheming="False" OnItemDataBound="list_go_my_ItemDataBound">
                                         <ItemTemplate>  
                                             <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -563,7 +563,7 @@
                                     <asp:Repeater runat="server" ID="list_wc_my" EnableTheming="False" OnItemDataBound="list_wc_my_ItemDataBound">
                                         <ItemTemplate>
                                             <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -631,7 +631,7 @@
                                     <asp:Repeater runat="server" ID="list_rj_my" EnableTheming="False" OnItemDataBound="list_rj_my_ItemDataBound">
                                         <ItemTemplate>
                                             <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -703,7 +703,7 @@
                                     <asp:Repeater runat="server" ID="list_end_my" EnableTheming="False" OnItemDataBound="list_end_my_ItemDataBound">
                                         <ItemTemplate>
                                             <ul class="collapse">
-                                                <li>
+                                                <li style="margin-top:0px;margin-bottom:0px">
                                                     <div class="weui-flex js-category">
                                                         <div class="weui-cells__title  weui-flex__item">
                                                             <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>

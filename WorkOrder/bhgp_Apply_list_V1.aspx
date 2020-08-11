@@ -662,7 +662,7 @@
                                                 <asp:Repeater runat="server" ID="list_99_line" EnableTheming="False" OnItemDataBound="list_99_line_ItemDataBound">
                                                     <ItemTemplate>
                                                         <ul class="collapse">
-                                                            <li>
+                                                            <li style="margin-top:0px;margin-bottom:0px">
                                                                 <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                                     <div class="weui-cells__title  weui-flex__item">
                                                                         <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
@@ -1181,7 +1181,7 @@
                                                 <asp:Repeater runat="server" ID="list_99_line_my" EnableTheming="False" OnItemDataBound="list_99_line_my_ItemDataBound">
                                                     <ItemTemplate>
                                                         <ul class="collapse">
-                                                            <li>
+                                                            <li style="margin-top:0px;margin-bottom:0px">
                                                                 <div class="weui-flex js-category" onclick="showorhide(this);">
                                                                     <div class="weui-cells__title  weui-flex__item">
                                                                         <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
