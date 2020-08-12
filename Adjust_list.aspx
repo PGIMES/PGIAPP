@@ -44,6 +44,7 @@
             padding:0px 10px 0px 0px; 
                  
         }
+        .fl{padding-left:0px;padding-right:0px;}/*color:#696969*/
     </style>
     <script>
          $(function () {
@@ -84,48 +85,74 @@
 
              $('#searchInput').bind('input propertychange', function () {
 
+                 $(".lined").show("fast");
+
                  var text = $("#searchInput").val();
                  $('.weui-cell').each(function () {
                      var $self = $(this);
-                     var flag = $self.text().search(text)
+
+                     $parent = $self.parents('li');
+                     $parent.siblings().removeClass('js-show');
+                     $parent.addClass('js-show');
+                     $(this).children('i').removeClass('icon-74').addClass('icon-35');
+                     $parent.siblings().find('i').removeClass('icon-35').addClass('icon-74');
+
+                     var flag = $self.text().search(text);
                      if (flag > -1) {
-                         $self.removeClass("hide"); //$self.siblings('.weui-cells__title').addClass("hide");
+                         $self.removeClass("hide");
                      } else {
-                         $self.addClass("hide"); //$self.siblings('.weui-cells__title').addClass("hide");
+                         $self.addClass("hide");
 
                      }
                  });
+
+                 $(".line").css("display", "none");
 
                  showBlockCount();
              });
          });
          //显示数量
          function showBlockCount() {
-             $(".weui-form-preview>.weui-cells").each(function (i, item) {
+             $(".select").each(function (i, item) {
                  var rowcount = $(this).find("a:not(.hide)").length;
                  // debugger;
-                 var obj = $(item).prev().children().last();
+                 var obj = $(item).parent().prev().children().children('span');
                  $(obj).text(rowcount);
                  if (rowcount == 0) {
-                     $(obj).addClass("bg-gray").removeClass("bg-blue")
+                     $(obj).addClass("bg-gray").removeClass("bg-blue");
                  }
                  else {
-                     $(obj).addClass("bg-blue").removeClass("bg-gray")
+                     if (this.id == "_01") {
+                         $(obj).addClass("bg-red").removeClass("bg-gray");
+                     } else {
+                         $(obj).addClass("bg-blue").removeClass("bg-gray");
+                     }
                  }
              });
          }
 
          function cancel() {
              $('.weui-cell').removeClass("hide");
-             //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+             $(".lined").hide(); $(".line").css("display", "");
              showBlockCount();
          }
 
          function clear() {
              $('#searchInput').val('');
              $('.weui-cell').removeClass("hide");
-             //$('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
+             $(".lined").hide(); $(".line").css("display", "");
              showBlockCount();
+         }
+         //显示折叠
+         function showorhide(obj) {
+             var divLineBody = $(obj)[0].nextElementSibling;
+             var ishide = $(divLineBody).css("display");
+             if (ishide == "none") {
+                 $(divLineBody).show("fast");
+             }
+             else {
+                 $(divLineBody).hide();
+             }
          }
     </script>
     <script>
@@ -184,148 +211,21 @@
                         <div id="tab1" class="weui-tab__content">
 
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  ">
-                                    <i class="icon nav-icon icon-49"></i>退回申请
-                                    <span class="weui-badge  bg-<% =(count_01==0?"gray":"blue") %>"><% =count_01 %></span>
-                                </div>
-                                <div class="weui-cells" id="_01">
-                                    <asp:Repeater runat="server" ID="list_01" EnableTheming="False">
-                                        <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                        <%# "单号"+Eval("formno") %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("pgino") + "," + Eval("pn")   %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
-                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
-                                                            <%#Eval("adj_result") %>
-                                                        </span>
-                                                    </span>
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
-                                                        <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                            <%# Eval("times") %>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </a>
-
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                       
-                                </div>
-                            </div>
-
-                            <div class="weui-form-preview">
-                                <div class="weui-cells__title  ">
-                                    <i class="icon nav-icon icon-49"></i>待审核
-                                    <span class="weui-badge  bg-<% =(count_02==0?"gray":"blue") %>"><% =count_02 %></span>
-                                </div>
-                                <div class="weui-cells" id="_02">
-                                    <asp:Repeater runat="server" ID="list_02" EnableTheming="False">
-                                        <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                        <%# "单号"+Eval("formno") %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("pgino") + "," + Eval("pn")   %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
-                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
-                                                            <%#Eval("adj_result") %>
-                                                        </span>
-                                                    </span>
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
-                                                        <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                            <%# Eval("times") %>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </a>
-
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                       
-                                </div>
-                            </div>
-
-                            <div class="weui-form-preview">
-                                <div class="weui-cells__title  ">
-                                    <i class="icon nav-icon icon-49"></i>待批准
-                                    <span class="weui-badge  bg-<% =(count_03==0?"gray":"blue") %>"><% =count_03 %></span>
-                                </div>
-                                <div class="weui-cells" id="_03">
-                                    <asp:Repeater runat="server" ID="list_03" EnableTheming="False">
-                                        <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                        <%# "单号"+Eval("formno") %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("pgino") + "," + Eval("pn")   %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
-                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
-                                                            <%#Eval("adj_result") %>
-                                                        </span>
-                                                    </span>
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
-                                                        <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                            <%# Eval("times") %>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </a>
-
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                       
-                                </div>
-                            </div>
-                            
-                            <div class="weui-form-preview">
-
                                 <ul class="collapse">
-                                    <li>
+                                    <li class="js-show">
                                         <div class="weui-flex js-category">
-                                            <div class="weui-cells__title  weui-flex__item">
-                                                <i class="icon nav-icon icon-49"></i>已完成(1月内)
-                                                <span class="weui-badge  bg-<% =(count_99==0?"gray":"blue") %>"><% =count_99 %></span>
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>退回申请
+                                                <span class="weui-badge  bg-<% =(count_01==0?"gray":"blue") %>"><% =count_01 %></span>
                                             </div>
-                                            <i class="icon icon-74"></i>
+                                            <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_99">
-                                                <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
+                                            <div class="weui-cells select" id="_01">
+                                                <asp:Repeater runat="server" ID="list_01" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                             <div class="weui-cell__hd">
                                                                 <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                             </div>
@@ -342,10 +242,55 @@
                                                                         style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
                                                                         <%#Eval("adj_result") %>
                                                                     </span>
-                                                                     <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                                        style="font-size: x-small; display: <%# Eval("status").ToString()=="6"?"inline-block":"none"%>;
-                                                                            color: <%# Eval("status").ToString()=="6"?"gray":"#07c160"%>; ">
-                                                                        <%# Eval("status").ToString()=="6"?"放弃申请":"" %>
+                                                                </span>
+                                                                <span class="weui-agree__text" style="font-size: smaller">
+                                                                    <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                                    <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                        <%# Eval("times") %>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+
+                                                    </ItemTemplate>
+                                                </asp:Repeater>                                       
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="weui-form-preview">
+                                <ul class="collapse">
+                                    <li class="js-show">
+                                        <div class="weui-flex js-category">
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>待审核
+                                                <span class="weui-badge  bg-<% =(count_02==0?"gray":"blue") %>"><% =count_02 %></span>
+                                            </div>
+                                             <i class="icon icon-35"></i>
+                                        </div>
+                                        <div class="page-category js-categoryInner">
+                                            <div class="weui-cells select" id="_02">
+                                                <asp:Repeater runat="server" ID="list_02" EnableTheming="False">
+                                                    <ItemTemplate>
+                                                        <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
+                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                            <div class="weui-cell__hd">
+                                                                <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div class="weui-cell__bd">
+                                                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                                    <%# "单号"+Eval("formno") %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("pgino") + "," + Eval("pn")   %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
+                                                                    <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                        style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
+                                                                        <%#Eval("adj_result") %>
                                                                     </span>
                                                                 </span>
                                                                 <span class="weui-agree__text" style="font-size: smaller">
@@ -357,6 +302,130 @@
                                                             </div>
                                                         </a>
 
+                                                    </ItemTemplate>
+                                                </asp:Repeater>                                       
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="weui-form-preview">
+                                <ul class="collapse">
+                                    <li class="js-show">
+                                        <div class="weui-flex js-category">
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>待批准
+                                                <span class="weui-badge  bg-<% =(count_03==0?"gray":"blue") %>"><% =count_03 %></span>
+                                            </div>
+                                            <i class="icon icon-35"></i>
+                                        </div>
+                                        <div class="page-category js-categoryInner">
+                                            <div class="weui-cells select" id="_03">
+                                                <asp:Repeater runat="server" ID="list_03" EnableTheming="False">
+                                                    <ItemTemplate>
+                                                        <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
+                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                            <div class="weui-cell__hd">
+                                                                <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div class="weui-cell__bd">
+                                                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                                    <%# "单号"+Eval("formno") %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("pgino") + "," + Eval("pn")   %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
+                                                                    <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                        style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
+                                                                        <%#Eval("adj_result") %>
+                                                                    </span>
+                                                                </span>
+                                                                <span class="weui-agree__text" style="font-size: smaller">
+                                                                    <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                                    <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                        <%# Eval("times") %>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+
+                                                    </ItemTemplate>
+                                                </asp:Repeater>                                       
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="weui-form-preview">
+                                <ul class="collapse">
+                                    <li>
+                                        <div class="weui-flex js-category">
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>已完成(1月内)
+                                                <span class="weui-badge  bg-<% =(count_99==0?"gray":"blue") %>"><% =count_99 %></span>
+                                            </div>
+                                            <i class="icon icon-74"></i>
+                                        </div>
+                                        <div class="page-category js-categoryInner">
+                                            <div class="weui-cells select" id="_99">
+                                                <asp:Repeater runat="server" ID="list_99_line" EnableTheming="False" OnItemDataBound="list_99_line_ItemDataBound">
+                                                    <ItemTemplate>
+                                                        <ul class="collapse">
+                                                            <li style="margin-top:0px;margin-bottom:0px">
+                                                                <div class="weui-flex js-category line" onclick="showorhide(this);">
+                                                                    <div class="weui-cells__title  weui-flex__item">
+                                                                        <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
+                                                                        <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                                                    </div>
+                                                                    <i class="icon icon-74"></i>
+                                                                </div>
+                                                                <div class="page-category js-categoryInner lined" style="display: none">
+                                                                    <div class="weui-cells">
+                                                                        <asp:Repeater runat="server" ID="list_99" EnableTheming="False">
+                                                                            <ItemTemplate>
+                                                                                <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
+                                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                                                    <div class="weui-cell__hd">
+                                                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                                                    </div>
+                                                                                    <div class="weui-cell__bd">
+                                                                                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                                                            <%# "单号"+Eval("formno") %>
+                                                                                        </span>
+                                                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                                            <%# Eval("pgino") + "," + Eval("pn")   %>
+                                                                                        </span>
+                                                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                                            <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
+                                                                                            <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                                                style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
+                                                                                                <%#Eval("adj_result") %>
+                                                                                            </span>
+                                                                                             <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                                                style="font-size: x-small; display: <%# Eval("status").ToString()=="6"?"inline-block":"none"%>;
+                                                                                                    color: <%# Eval("status").ToString()=="6"?"gray":"#07c160"%>; ">
+                                                                                                <%# Eval("status").ToString()=="6"?"放弃申请":"" %>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                                                <%# Eval("times") %>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </a>
+
+                                                                            </ItemTemplate>
+                                                                        </asp:Repeater>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
                                                     </ItemTemplate>
                                                 </asp:Repeater>
                                             </div>
@@ -371,148 +440,71 @@
                         <div id="tab2" class="weui-tab__content">
 
                             <div class="weui-form-preview">
-                                <div class="weui-cells__title  ">
-                                    <i class="icon nav-icon icon-49"></i>退回申请
-                                    <span class="weui-badge  bg-<% =(count_01_my==0?"gray":"blue") %>"><% =count_01_my %></span>
-                                </div>
-                                <div class="weui-cells" id="_01_my">
-                                    <asp:Repeater runat="server" ID="list_01_my" EnableTheming="False">
-                                        <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                        <%# "单号"+Eval("formno") %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("pgino") + "," + Eval("pn")   %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
-                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
-                                                            <%#Eval("adj_result") %>
-                                                        </span>
-                                                    </span>
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
-                                                        <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                            <%# Eval("times") %>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </a>
-
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                       
-                                </div>
-                            </div>
-
-                            <div class="weui-form-preview">
-                                <div class="weui-cells__title  ">
-                                    <i class="icon nav-icon icon-49"></i>待审核
-                                    <span class="weui-badge  bg-<% =(count_02_my==0?"gray":"blue") %>"><% =count_02_my %></span>
-                                </div>
-                                <div class="weui-cells" id="_02_my">
-                                    <asp:Repeater runat="server" ID="list_02_my" EnableTheming="False">
-                                        <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                        <%# "单号"+Eval("formno") %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("pgino") + "," + Eval("pn")   %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
-                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
-                                                            <%#Eval("adj_result") %>
-                                                        </span>
-                                                    </span>
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
-                                                        <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                            <%# Eval("times") %>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </a>
-
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                       
-                                </div>
-                            </div>
-
-                            <div class="weui-form-preview">
-                                <div class="weui-cells__title  ">
-                                    <i class="icon nav-icon icon-49"></i>待批准
-                                    <span class="weui-badge  bg-<% =(count_03_my==0?"gray":"blue") %>"><% =count_03_my %></span>
-                                </div>
-                                <div class="weui-cells" id="_03_my">
-                                    <asp:Repeater runat="server" ID="list_03_my" EnableTheming="False">
-                                        <ItemTemplate>
-                                            <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
-                                                <div class="weui-cell__hd">
-                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="weui-cell__bd">
-                                                        <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
-                                                        <%# "单号"+Eval("formno") %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("pgino") + "," + Eval("pn")   %>
-                                                    </span>
-                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                        <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
-                                                        <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                            style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
-                                                            <%#Eval("adj_result") %>
-                                                        </span>
-                                                    </span>
-                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                        <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
-                                                        <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                            <%# Eval("times") %>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </a>
-
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                       
-                                </div>
-                            </div>
-                            
-                            <div class="weui-form-preview">
-
                                 <ul class="collapse">
-                                    <li>
+                                    <li class="js-show">
                                         <div class="weui-flex js-category">
-                                            <div class="weui-cells__title  weui-flex__item">
-                                                <i class="icon nav-icon icon-49"></i>已完成(1月内)
-                                                <span class="weui-badge  bg-<% =(count_99_my==0?"gray":"blue") %>"><% =count_99_my %></span>
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>退回申请
+                                                <span class="weui-badge  bg-<% =(count_01_my==0?"gray":"blue") %>"><% =count_01_my %></span>
                                             </div>
-                                            <i class="icon icon-74"></i>
+                                            <i class="icon icon-35"></i>
                                         </div>
                                         <div class="page-category js-categoryInner">
-                                            <div class="weui-cells" id="_99_my">
-                                                <asp:Repeater runat="server" ID="list_99_my" EnableTheming="False">
+                                            <div class="weui-cells select" id="_01_my">
+                                                <asp:Repeater runat="server" ID="list_01_my" EnableTheming="False">
                                                     <ItemTemplate>
                                                         <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
-                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                            <div class="weui-cell__hd">
+                                                                <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div class="weui-cell__bd">
+                                                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                                    <%# "单号"+Eval("formno") %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("pgino") + "," + Eval("pn")   %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
+                                                                    <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                        style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
+                                                                        <%#Eval("adj_result") %>
+                                                                    </span>
+                                                                </span>
+                                                                <span class="weui-agree__text" style="font-size: smaller">
+                                                                    <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                                    <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                        <%# Eval("times") %>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+
+                                                    </ItemTemplate>
+                                                </asp:Repeater>                                       
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="weui-form-preview">
+                                <ul class="collapse">
+                                    <li class="js-show">
+                                        <div class="weui-flex js-category">
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>待审核
+                                                <span class="weui-badge  bg-<% =(count_02_my==0?"gray":"blue") %>"><% =count_02_my %></span>
+                                            </div>
+                                            <i class="icon icon-35"></i>
+                                        </div>
+                                        <div class="page-category js-categoryInner">
+                                            <div class="weui-cells select" id="_02_my">
+                                                <asp:Repeater runat="server" ID="list_02_my" EnableTheming="False">
+                                                    <ItemTemplate>
+                                                        <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
+                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
                                                             <div class="weui-cell__hd">
                                                                 <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                             </div>
@@ -545,7 +537,125 @@
                                         </div>
                                     </li>
                                 </ul>
+                            </div>
 
+                            <div class="weui-form-preview">
+                                <ul class="collapse">
+                                    <li class="js-show">
+                                        <div class="weui-flex js-category">
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>待批准
+                                                <span class="weui-badge  bg-<% =(count_03_my==0?"gray":"blue") %>"><% =count_03_my %></span>
+                                            </div>
+                                            <i class="icon icon-35"></i>
+                                        </div>
+                                        <div class="page-category js-categoryInner">
+                                            <div class="weui-cells select" id="_03_my">
+                                                <asp:Repeater runat="server" ID="list_03_my" EnableTheming="False">
+                                                    <ItemTemplate>
+                                                        <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
+                                                            <div class="weui-mark-vip"><span class="weui-mark-lt bg-warning"></span></div>
+                                                            <div class="weui-cell__hd">
+                                                                <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div class="weui-cell__bd">
+                                                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                                    <%# "单号"+Eval("formno") %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("pgino") + "," + Eval("pn")   %>
+                                                                </span>
+                                                                <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                    <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
+                                                                    <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                        style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
+                                                                        <%#Eval("adj_result") %>
+                                                                    </span>
+                                                                </span>
+                                                                <span class="weui-agree__text" style="font-size: smaller">
+                                                                    <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                                    <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                        <%# Eval("times") %>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+
+                                                    </ItemTemplate>
+                                                </asp:Repeater>                                       
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="weui-form-preview">
+                                <ul class="collapse">
+                                    <li>
+                                        <div class="weui-flex js-category">
+                                            <div class="weui-cells__title fl weui-flex__item">
+                                                <i class="icon nav-icon icon-49"></i>已完成(1月内)
+                                                <span class="weui-badge  bg-<% =(count_99_my==0?"gray":"blue") %>"><% =count_99_my %></span>
+                                            </div>
+                                            <i class="icon icon-74"></i>
+                                        </div>
+                                        <div class="page-category js-categoryInner">
+                                            <div class="weui-cells select" id="_99_my">
+                                                <asp:Repeater runat="server" ID="list_99_line_my" EnableTheming="False" OnItemDataBound="list_99_line_my_ItemDataBound">
+                                                    <ItemTemplate>
+                                                        <ul class="collapse">
+                                                            <li style="margin-top:0px;margin-bottom:0px">
+                                                                <div class="weui-flex js-category line" onclick="showorhide(this);">
+                                                                    <div class="weui-cells__title  weui-flex__item">
+                                                                        <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
+                                                                        <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                                                    </div>
+                                                                    <i class="icon icon-74"></i>
+                                                                </div>
+                                                                <div class="page-category js-categoryInner lined" style="display: none">
+                                                                    <div class="weui-cells">
+                                                                        <asp:Repeater runat="server" ID="list_99_my" EnableTheming="False">
+                                                                            <ItemTemplate>
+                                                                                <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("stepid") %>','<%# Eval("formno") %>')>
+                                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                                                    <div class="weui-cell__hd">
+                                                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                                                    </div>
+                                                                                    <div class="weui-cell__bd">
+                                                                                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller">
+                                                                                            <%# "单号"+Eval("formno") %>
+                                                                                        </span>
+                                                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                                            <%# Eval("pgino") + "," + Eval("pn")   %>
+                                                                                        </span>
+                                                                                        <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                                            <%# Eval("lot_no")+ "," + Eval("adj_qty")+"件"   %>
+                                                                                            <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                                                style="font-size: x-small; color: <%# Eval("adj_result").ToString()=="盘亏"?"red":"#07c160"%>; ">
+                                                                                                <%#Eval("adj_result") %>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                                                            <%# Eval("phone") + "" +Eval("emp_name") +"," +Eval("create_date","{0:MM-dd HH:mm}")+  ",时长:"%>   
+                                                                                            <span style="color:<%# Eval("is_chao_time").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                                                <%# Eval("times") %>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </a>
+
+                                                                            </ItemTemplate>
+                                                                        </asp:Repeater>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
 
                          </div>
