@@ -138,7 +138,8 @@
             $.ajax({
                 type: "post",
                 url: "bhgp_sign_V1.aspx/init_btn",
-                data: "{'stepid':'" + "<%= _stepid %>" + "','workshop':'" + "<%= _workshop %>" + "','pgino':'" + $("#pgino").val() + "','emp':'" + $("#emp_code_name").val() + "'}",
+                data: "{'stepid':'" + "<%= _stepid %>" + "','workshop':'" + "<%= _workshop %>" + "','pgino':'" + $("#pgino").val() + "','emp':'" + $("#emp_code_name").val()
+                    + "','workorder_f':'" + "<%= _workorder_f %>" + "','workorder':'" + "<%= _workorder %>" + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -156,6 +157,7 @@
                     if (obj[0].btn_sure == "Y" || obj[0].btn_cancel == "Y") {
                         $("#div_com").show();
                     }
+                    $("#btn_sign2").val(obj[0].btn_sure_con);
                     return;
                 }
             });

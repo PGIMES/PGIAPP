@@ -88,16 +88,17 @@ public partial class WorkOrder_bhgp_sign_yz : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string init_btn(string stepid, string workshop, string pgino,string emp)
+    public static string init_btn(string stepid, string workshop, string pgino,string emp, string workorder_f, string workorder)
     {
         string re_sql = @"exec [usp_app_bhgp_sign_init_btn_V1] '{0}', '{1}', '{2}', '{3}'";
-        re_sql = string.Format(re_sql, stepid, workshop, pgino, emp);
+        re_sql = string.Format(re_sql, stepid, workshop, pgino, emp, workorder_f, workorder);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
 
         string btn_sure = re_dt.Rows[0][0].ToString();
         string btn_cancel = re_dt.Rows[0][1].ToString();
+        string btn_sure_con = re_dt.Rows[0][2].ToString();
 
-        string result = "[{\"btn_sure\":\"" + btn_sure + "\",\"btn_cancel\":\"" + btn_cancel + "\"}]";
+        string result = "[{\"btn_sure\":\"" + btn_sure + "\",\"btn_cancel\":\"" + btn_cancel + "\",\"btn_sure_con\":\"" + btn_sure_con + "\"}]";
         return result;
 
     }
