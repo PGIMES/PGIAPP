@@ -90,7 +90,7 @@ public partial class WorkOrder_bhgp_sign_V1 : System.Web.UI.Page
     [WebMethod]
     public static string init_btn(string stepid, string workshop, string pgino,string emp, string workorder_f, string workorder)
     {
-        string re_sql = @"exec [usp_app_bhgp_sign_init_btn_V1] '{0}', '{1}', '{2}', '{3}', '{4}'";
+        string re_sql = @"exec [usp_app_bhgp_sign_init_btn_V1] '{0}', '{1}', '{2}', '{3}', '{4}', '{5}'";
         re_sql = string.Format(re_sql, stepid, workshop, pgino, emp, workorder_f, workorder);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
 
