@@ -193,26 +193,32 @@
                 layer.alert("【零件号】不可为空.");
                 return false;
             }
-
-            if ($.trim($("#adj_qty").val()) == "" || $.trim($("#adj_qty").val()) == "0") {
-                layer.alert("请输入【盈亏数量】.");
-                return false;
-            } else if (parseFloat($("#adj_qty").val()) < 0) {
-                if (parseFloat($("#from_qty").val()) + parseFloat($("#adj_qty").val())<0) {
-                    layer.alert("盘亏时，负的数量不可超过在制数量.");
-                    return false;
-                }
-            }
-
             if ($("#from_qty").val() == "") {
                 layer.alert("【数量】不可为空.<font color=red>请【放弃申请】.</font>");
                 return false;
             } else if (parseFloat($("#from_qty").val()) < 0) {
                 layer.alert("【数量】不可小于0.<font color=red>请【放弃申请】.</font>");
                 return false;
-            } else if (parseFloat($("#from_qty").val()) == 0) {
+            }
+            if ($.trim($("#adj_qty").val()) == "") {
+                layer.alert("请输入【盈亏数量】.");
+                return false;
+            } else if (parseFloat($("#adj_qty").val()) == 0) {
+                layer.alert("请输入【盈亏数量】");
+                return false;
+            }
+
+            //------------
+            if (parseFloat($("#from_qty").val()) == 0) {
                 if (parseFloat($("#adj_qty").val()) <= 0) {
                     layer.alert("【数量】为0时,【盈亏数量】不可小于等于0.");
+                    return false;
+                }
+            }
+
+            if (parseFloat($("#adj_qty").val()) < 0) {
+                if (parseFloat($("#from_qty").val()) + parseFloat($("#adj_qty").val())<0) {
+                    layer.alert("盘亏时，负的数量不可超过在制数量.");
                     return false;
                 }
             }
