@@ -210,7 +210,7 @@
             } else if (parseFloat($("#from_qty").val()) < 0) {
                 layer.alert("【数量】不可小于0.<font color=red>请【放弃申请】.</font>");
                 return false;
-            } else if (parseFloat($("#from_qty").val()) = 0) {
+            } else if (parseFloat($("#from_qty").val()) == 0) {
                 if (parseFloat($("#adj_qty").val()) <= 0) {
                     layer.alert("【数量】为0时,【盈亏数量】不可小于等于0.");
                     return false;
