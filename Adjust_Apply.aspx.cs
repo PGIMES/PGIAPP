@@ -102,7 +102,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
     {
         string flag = "N", msg = "";
         string re_sql = "";
-        if (_source == "二车间" || _source == "四车间")
+        if (_source == "二车间" || _source == "四车间" || _source == "三车间")
         {
             re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
         }
