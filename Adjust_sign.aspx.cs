@@ -41,8 +41,17 @@ public partial class Adjust_sign : System.Web.UI.Page
         sql = string.Format(sql, formno, stepid);
         DataSet ds = SQLHelper.Query(sql);
 
-        listBxInfo.DataSource = ds.Tables[0];
+        DataTable dt = ds.Tables[0];
+        listBxInfo.DataSource = dt;
         listBxInfo.DataBind();
+
+        if (dt.Rows.Count == 1)
+        {
+            lot_no.Text = dt.Rows[0]["lot_no"].ToString();
+            source.Text = dt.Rows[0]["source"].ToString();
+            flagwhere.Text = dt.Rows[0]["flagwhere"].ToString();
+            loc.Text = dt.Rows[0]["loc"].ToString();
+        }        
 
         Repeater_sg.DataSource = ds.Tables[1];
         Repeater_sg.DataBind();
@@ -65,12 +74,31 @@ public partial class Adjust_sign : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string sure2(string _emp_code_name, string _formno, string _stepid, string _sign_comment)
+    public static string sure2(string _emp_code_name, string _formno, string _stepid, string _sign_comment,string _lot_no, string _source,string _flagwhere, string _loc)
     {
         string flag = "N", msg = "";
 
-        string re_sql = @"exec [usp_app_Adjust_sign] '{0}','{1}','{2}','{3}'";
-        re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _sign_comment);
+        string from_qty_cur = "0";
+        if (_flagwhere=="QAD")
+        {
+            if (_source == "二车间" || _source == "四车间" || _source == "三车间")
+            {
+                DataTable ldt = new DataTable();
+                string sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
+                sqlStr = string.Format(sqlStr, _lot_no, _loc);
+                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+                if (ldt == null) { }
+                else if (ldt.Rows.Count <= 0) { }
+                else//QAD存在
+                {
+                    from_qty_cur = ldt.Rows[0]["ld_qty_oh"].ToString();
+                }
+            }
+        }
+        
+
+        string re_sql = @"exec [usp_app_Adjust_sign] '{0}','{1}','{2}','{3}','{4}'";
+        re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _sign_comment, from_qty_cur);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();

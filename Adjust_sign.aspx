@@ -56,7 +56,8 @@
                     url: "Adjust_sign.aspx/sure2",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val()
                         + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_sign_comment':'" + $('#sign_comment').val() 
-                        + "'}",
+                        + "','_lot_no':'" + $('#lot_no').val() + "','_source':'" + $('#source').val() + "','_flagwhere':'" + $('#flagwhere').val()
+                        + "','_loc':'" + $('#loc').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -157,6 +158,10 @@
         <asp:TextBox ID="emp_code_name" class="form-control" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
         <asp:TextBox ID="formno" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
         <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+        <asp:TextBox ID="lot_no" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+        <asp:TextBox ID="source" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+        <asp:TextBox ID="flagwhere" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
+        <asp:TextBox ID="loc" class="weui-input" ReadOnly="true" placeholder="" style="color:gray;display:none;" runat="server"></asp:TextBox>
 
         <div class="weui-cells weui-cells_form">
 
