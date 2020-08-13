@@ -41,7 +41,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
     void init_data(string formno, string stepid)
     {
-        string sql = @"exec [usp_app_Adjust_Apply_init] '{0}','{1}'";
+        string sql = @"exec [usp_app_Adjust_Apply_init_V1] '{0}','{1}'";
         sql = string.Format(sql, formno, stepid);
         DataSet ds = SQLHelper.Query(sql);
 
@@ -58,23 +58,53 @@ public partial class Adjust_Apply : System.Web.UI.Page
             comment.Value = dt.Rows[0]["remark"].ToString();
 
             //改三个字段proc重新复制喽
-            from_qty.Text = dt.Rows[0]["from_qty_cur"].ToString();
-            need_no.Text = dt.Rows[0]["need_no"].ToString();
-            flagwhere.Text = dt.Rows[0]["flagwhere"].ToString();
+            if (dt.Rows[0]["flagwhere"].ToString() != "QAD")
+            {
+                from_qty.Text = dt.Rows[0]["from_qty_cur"].ToString();
+                need_no.Text = dt.Rows[0]["need_no"].ToString();
+                flagwhere.Text = dt.Rows[0]["flagwhere"].ToString();
+                loc.Text = dt.Rows[0]["loc"].ToString();
+            }
+            else
+            {
+                DataTable ldt = new DataTable();
+                string sqlStr = "";
+
+                if (dt.Rows[0]["source"].ToString() == "二车间" || dt.Rows[0]["source"].ToString() == "四车间")
+                {
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='9000' with (nolock)";
+                }
+                if (dt.Rows[0]["source"].ToString() == "三车间")
+                {
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='4009' with (nolock)";
+                }
+                sqlStr = string.Format(sqlStr, dt.Rows[0]["lot_no"].ToString());
+                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+                if (ldt == null) { }
+                else if (ldt.Rows.Count <= 0) { }
+                else//QAD存在
+                {
+                    from_qty.Text = ldt.Rows[0]["ld_qty_oh"].ToString();
+                    flagwhere.Text = "QAD";
+                    need_no.Text = "";
+                    loc.Text = ldt.Rows[0]["ld_loc"].ToString();
+                }
+            }
         }
 
         DataTable dt_sg = ds.Tables[1];
         Repeater_sg.DataSource = dt_sg;
         Repeater_sg.DataBind();
     }
+   
 
     [WebMethod]
     public static string dh_change(string dh, string source)
     {
         string flag = "N", msg = "";
-        string pgino = "", pn = "", from_qty = "", flagwhere = "", need_no = "";
+        string pgino = "", pn = "", from_qty = "", flagwhere = "", need_no = "", loc = "";
 
-        string re_sql = @"exec [usp_app_Adjust_Apply_dh_change] '{0}','{1}'";
+        string re_sql = @"exec [usp_app_Adjust_Apply_dh_change_V1] '{0}','{1}'";
         re_sql = string.Format(re_sql, dh, source);
         DataSet ds = SQLHelper.Query(re_sql);
 
@@ -91,20 +121,99 @@ public partial class Adjust_Apply : System.Web.UI.Page
             need_no = re_dt.Rows[0]["need_no"].ToString();
         }
 
+        if (flag == "Y1")
+        {
+            //再次判断是否是QAD的参考号
+            DataTable ldt = new DataTable();
+            string sqlStr = "";
+
+            if (source == "二车间" || source == "四车间")
+            {
+                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='9000' with (nolock)";
+            }
+            if (source == "三车间")
+            {
+                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='4009' with (nolock)";
+            }
+            sqlStr = string.Format(sqlStr, dh);
+            ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            if (ldt == null)
+            {
+                flag = "Y"; msg = msg + "/QAD";
+            }
+            else if (ldt.Rows.Count <= 0)
+            {
+                flag = "Y"; msg = msg + "/QAD";
+            }
+            else//QAD存在
+            {
+                flag = "N";msg = "";
+                pgino = ldt.Rows[0]["ld_part"].ToString();
+                from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+                flagwhere = "QAD";
+                need_no = "";
+                loc = ldt.Rows[0]["ld_loc"].ToString();
+
+                //零件号
+                string sql_s = @"select pt_desc1 from [172.16.5.26].qad.dbo.qad_pt_mstr where pt_part='" + pgino + "' and pt_domain='200'";
+                DataTable dt_s = SQLHelper.Query(sql_s).Tables[0];
+                if (dt_s != null)
+                {
+                    if (dt_s.Rows.Count > 0)
+                    {
+                        pn = dt_s.Rows[0]["pt_desc1"].ToString();
+                    }
+                }
+            }
+            
+        }
+
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"from_qty\":\"" + from_qty 
-            + "\",\"flagwhere\":\"" + flagwhere + "\",\"need_no\":\"" + need_no + "\"}]";
+            + "\",\"flagwhere\":\"" + flagwhere + "\",\"need_no\":\"" + need_no + "\",\"loc\":\"" + loc + "\"}]";
         return result;
     }
 
     [WebMethod]
     public static string save2(string _emp_code_name, string _source, string _dh, string _pgino, string _pn, string _from_qty
-        , string _adj_qty, string _comment, string _flagwhere, string _need_no, string _formno, string _stepid)
+        , string _adj_qty, string _comment, string _flagwhere, string _need_no, string _formno, string _stepid, string _loc)
     {
         string flag = "N", msg = "";
         string re_sql = "";
         if (_source == "二车间" || _source == "四车间" || _source == "三车间")
         {
-            re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
+            if (_flagwhere != "QAD")
+            {
+                re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
+            }
+            else
+            {
+                DataTable ldt = new DataTable();
+                string sqlStr = "";
+
+                if (_source == "二车间" || _source == "四车间")
+                {
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='9000' with (nolock)";
+                }
+                if (_source == "三车间")
+                {
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='4009' with (nolock)";
+                }
+                sqlStr = string.Format(sqlStr, _dh);
+                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+                if (ldt == null) { }
+                else if (ldt.Rows.Count <= 0) { }
+                else//QAD存在
+                {
+                    if (_from_qty != ldt.Rows[0]["ld_qty_oh"].ToString())
+                    {
+                        flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + "【数量】发生异动.请重新打开页面申请.";
+                    }
+                    else
+                    {
+                        re_sql = @"exec usp_app_Adjust_Apply_QAD '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
+                    }
+                }
+            }
         }
         else
         {

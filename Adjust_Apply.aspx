@@ -48,8 +48,8 @@
 
                 if ($("#from_qty").val() == "") {
                     $.toptip('【数量】不可为空.<font color=red>请【放弃申请】.</font>', 2000, 'warning');
-                } else if (parseFloat($("#from_qty").val()) <= 0) {
-                    $.toptip('【数量】不可小于等于0.<font color=red>请【放弃申请】.</font>', 2000, 'warning');
+                } else if (parseFloat($("#from_qty").val()) < 0) {
+                    $.toptip('【数量】不可小于0.<font color=red>请【放弃申请】.</font>', 2000, 'warning');
                 }
             }
         });
@@ -80,7 +80,7 @@
                         + "','_source':'" + $('#source').val() + "','_dh':'" + $('#dh').val() + "','_pgino':'" + $('#pgino').val()
                         + "','_pn':'" + $('#pn').val() + "','_from_qty':'" + $('#from_qty').val() + "','_adj_qty':'" + $('#adj_qty').val()
                         + "','_comment':'" + $('#comment').val() + "','_flagwhere':'" + $('#flagwhere').val() + "','_need_no':'" + $('#need_no').val()
-                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "'}",
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_loc':'" + $('#loc').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -170,6 +170,7 @@
                     $('#from_qty').val(obj[0].from_qty);
                     $('#flagwhere').val(obj[0].flagwhere);
                     $('#need_no').val(obj[0].need_no);
+                    $('#loc').val(obj[0].loc);
                 }
 
             });
@@ -192,13 +193,6 @@
                 layer.alert("【零件号】不可为空.");
                 return false;
             }
-            if ($("#from_qty").val() == "") {
-                layer.alert("【数量】不可为空.<font color=red>请【放弃申请】.</font>");
-                return false;
-            } else if (parseFloat($("#from_qty").val()) <= 0) {
-                layer.alert("【数量】不可小于等于0.<font color=red>请【放弃申请】.</font>");
-                return false;
-            }
 
             if ($.trim($("#adj_qty").val()) == "" || $.trim($("#adj_qty").val()) == "0") {
                 layer.alert("请输入【盈亏数量】.");
@@ -208,7 +202,21 @@
                     layer.alert("盘亏时，负的数量不可超过在制数量.");
                     return false;
                 }
-            } 
+            }
+
+            if ($("#from_qty").val() == "") {
+                layer.alert("【数量】不可为空.<font color=red>请【放弃申请】.</font>");
+                return false;
+            } else if (parseFloat($("#from_qty").val()) < 0) {
+                layer.alert("【数量】不可小于0.<font color=red>请【放弃申请】.</font>");
+                return false;
+            } else if (parseFloat($("#from_qty").val()) = 0) {
+                if (parseFloat($("#adj_qty").val()) <= 0) {
+                    layer.alert("【数量】为0时,【盈亏数量】不可小于等于0.");
+                    return false;
+                }
+            }
+
             return true;
         }
 
@@ -241,6 +249,7 @@
                     </span>
                     <asp:TextBox ID="flagwhere" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
                     <asp:TextBox ID="need_no" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+                    <asp:TextBox ID="loc" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
                 </div>
             </div>
             <div class="weui-cell">
