@@ -296,7 +296,9 @@
                     var _op = ($("#op").val()).substr(0, ($("#op").val()).indexOf('-'));
                     
                     if (parseInt(_op) <= 700 || parseInt(_op) == 800) {
-                        if (parseInt(_op) >= 40 && parseInt(_op) < 100) {//parseInt(_op) <= 50
+                        //if (parseInt(_op) >= 40 && parseInt(_op) < 100) {//parseInt(_op) <= 50
+                        //40序 可以不输入压铸完成单号，按照30序的来
+                        if (parseInt(_op) > 40 && parseInt(_op) < 100) {
                             //if ($("#b_use_routing").val() == "1") {
                                 layer.alert("请输入【压铸完成单号】.");
                                 return false;
