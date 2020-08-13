@@ -72,13 +72,13 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
                 if (dt.Rows[0]["source"].ToString() == "二车间" || dt.Rows[0]["source"].ToString() == "四车间")
                 {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='9000' with (nolock)";
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
                 }
                 if (dt.Rows[0]["source"].ToString() == "三车间")
                 {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='4009' with (nolock)";
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
                 }
-                sqlStr = string.Format(sqlStr, dt.Rows[0]["lot_no"].ToString());
+                sqlStr = string.Format(sqlStr, dt.Rows[0]["lot_no"].ToString(), dt.Rows[0]["loc"].ToString());
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
                 if (ldt == null) { }
                 else if (ldt.Rows.Count <= 0) { }
@@ -129,11 +129,11 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
             if (source == "二车间" || source == "四车间")
             {
-                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='9000' with (nolock)";
+                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
             }
             if (source == "三车间")
             {
-                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='4009' with (nolock)";
+                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
             }
             sqlStr = string.Format(sqlStr, dh);
             ldt = QadOdbcHelper.GetODBCRows(sqlStr);
@@ -147,21 +147,55 @@ public partial class Adjust_Apply : System.Web.UI.Page
             }
             else//QAD存在
             {
-                flag = "N";msg = "";
-                pgino = ldt.Rows[0]["ld_part"].ToString();
-                from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
-                flagwhere = "QAD";
-                need_no = "";
-                loc = ldt.Rows[0]["ld_loc"].ToString();
-
                 //零件号
-                string sql_s = @"select pt_desc1 from [172.16.5.26].qad.dbo.qad_pt_mstr where pt_part='" + pgino + "' and pt_domain='200'";
+                string sql_s = @"select pt_desc1,pt_prod_line from [172.16.5.26].qad.dbo.qad_pt_mstr where pt_part='" + ldt.Rows[0]["ld_part"].ToString() + "' and pt_domain='200'";
                 DataTable dt_s = SQLHelper.Query(sql_s).Tables[0];
-                if (dt_s != null)
+
+                if (dt_s == null)
                 {
-                    if (dt_s.Rows.Count > 0)
+                    flag = "Y"; msg = "物料号"+ ldt.Rows[0]["ld_part"].ToString() + ",对应的零件号不存在";
+                }
+                else if (dt_s.Rows.Count <= 0)
+                {
+                    flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + "对应的零件号不存在";
+                }
+                else//QAD存在
+                {
+                    pn = dt_s.Rows[0]["pt_desc1"].ToString();
+
+                    if (source == "二车间" || source == "四车间")
                     {
-                        pn = dt_s.Rows[0]["pt_desc1"].ToString();
+                        if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
+                        {
+                            flag = "Y"; msg = "单号" + dh + ",库位不是9000";
+                        }
+                    }
+                    if (source == "三车间")
+                    {
+                        if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3"))
+                        {
+                            if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
+                            {
+                                flag = "Y"; msg = "单号" + dh + ",库位不是9000";
+                            }
+                        }
+                        if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2"))
+                        {
+                            if (ldt.Rows[0]["ld_loc"].ToString() != "4009")
+                            {
+                                flag = "Y"; msg = "单号" + dh + ",库位不是4009";
+                            }
+                        }
+                    }
+
+                    if (flag == "Y1")
+                    {
+                        flag = "N"; msg = "";
+                        pgino = ldt.Rows[0]["ld_part"].ToString();
+                        from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+                        flagwhere = "QAD";
+                        need_no = "";
+                        loc = ldt.Rows[0]["ld_loc"].ToString();
                     }
                 }
             }
@@ -192,13 +226,13 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
                 if (_source == "二车间" || _source == "四车间")
                 {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='9000' with (nolock)";
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
                 }
                 if (_source == "三车间")
                 {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='4009' with (nolock)";
+                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
                 }
-                sqlStr = string.Format(sqlStr, _dh);
+                sqlStr = string.Format(sqlStr, _dh, _loc);
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
                 if (ldt == null) { }
                 else if (ldt.Rows.Count <= 0) { }
