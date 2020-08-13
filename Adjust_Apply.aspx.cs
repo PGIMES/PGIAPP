@@ -210,7 +210,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
                     }
                     else
                     {
-                        re_sql = @"exec usp_app_Adjust_Apply_QAD '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
+                        re_sql = @"exec usp_app_Adjust_Apply_QAD '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
                     }
                 }
             }
@@ -223,7 +223,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
         if (flag == "N")
         {
             re_sql = string.Format(re_sql, _emp_code_name, _source, _dh, _pgino, _pn, _from_qty, _adj_qty
-           , _comment, _flagwhere, _need_no, _formno, _stepid);
+           , _comment, _flagwhere, _need_no, _formno, _stepid, _loc);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();
