@@ -144,7 +144,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
@@ -170,7 +170,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
@@ -248,7 +248,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
@@ -274,7 +274,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
@@ -352,7 +352,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }
@@ -378,7 +378,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-blue";
+                Label1.CssClass = "weui-badge  bg-orange";
             }
         }
     }

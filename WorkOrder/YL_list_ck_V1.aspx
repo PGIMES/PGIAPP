@@ -117,8 +117,8 @@
                     $(obj).addClass("bg-gray").removeClass("bg-blue").removeClass("bg-orange");
                 }
                 else {
-                    if (this.id == "_98_2" || this.id == "_98_3" || this.id == "_98_4"
-                        || this.id == "_99_2" || this.id == "_99_3" || this.id == "_99_4") {
+                    if (this.id == "_wc_2" || this.id == "_wc_3" || this.id == "_wc_4"
+                        || this.id == "_rj_2" || this.id == "_rj_3" || this.id == "_rj_4") {
                         $(obj).addClass("bg-orange").removeClass("bg-gray");
                     } else {
                         $(obj).addClass("bg-blue").removeClass("bg-gray");
@@ -277,7 +277,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 已送料
-                            <span class="weui-badge  bg-<% =(count_wc_2==0?"gray":"blue") %>"><% =count_wc_2 %></span>
+                            <span class="weui-badge  bg-<% =(count_wc_2==0?"gray":"orange") %>"><% =count_wc_2 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -349,7 +349,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 已退料
-                            <span class="weui-badge  bg-<% =(count_rj_2==0?"gray":"blue") %>"><% =count_rj_2 %></span>
+                            <span class="weui-badge  bg-<% =(count_rj_2==0?"gray":"orange") %>"><% =count_rj_2 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -552,7 +552,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 已送料
-                            <span class="weui-badge  bg-<% =(count_wc_3==0?"gray":"blue") %>"><% =count_wc_3 %></span>
+                            <span class="weui-badge  bg-<% =(count_wc_3==0?"gray":"orange") %>"><% =count_wc_3 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -624,7 +624,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 已退料
-                            <span class="weui-badge  bg-<% =(count_rj_3==0?"gray":"blue") %>"><% =count_rj_3 %></span>
+                            <span class="weui-badge  bg-<% =(count_rj_3==0?"gray":"orange") %>"><% =count_rj_3 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -826,7 +826,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 已送料
-                            <span class="weui-badge  bg-<% =(count_wc_4==0?"gray":"blue") %>"><% =count_wc_4 %></span>
+                            <span class="weui-badge  bg-<% =(count_wc_4==0?"gray":"orange") %>"><% =count_wc_4 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -898,7 +898,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 已退料
-                            <span class="weui-badge  bg-<% =(count_rj_4==0?"gray":"blue") %>"><% =count_rj_4 %></span>
+                            <span class="weui-badge  bg-<% =(count_rj_4==0?"gray":"orange") %>"><% =count_rj_4 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
