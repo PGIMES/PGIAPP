@@ -222,7 +222,7 @@
                                         <li style="margin-top:0px;margin-bottom:0px">
                                             <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                 <div class="weui-cells__title  weui-flex__item">
-                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
+                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line_a") %></span>
                                                     <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                 </div>
                                                 <i class="icon icon-74"></i>
@@ -497,7 +497,7 @@
                                         <li style="margin-top:0px;margin-bottom:0px">
                                             <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                 <div class="weui-cells__title  weui-flex__item">
-                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
+                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line_a") %></span>
                                                     <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                 </div>
                                                 <i class="icon icon-74"></i>
@@ -771,7 +771,7 @@
                                         <li style="margin-top:0px;margin-bottom:0px">
                                             <div class="weui-flex js-category line" onclick="showorhide(this);">
                                                 <div class="weui-cells__title  weui-flex__item">
-                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
+                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line_a") %></span>
                                                     <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                                                 </div>
                                                 <i class="icon icon-74"></i>

@@ -36,7 +36,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
         ViewState["dt_go_3"] = dt_go_3; ViewState["dt_wc_3"] = dt_wc_3; ViewState["dt_rj_3"] = dt_rj_3; ViewState["dt_end_3"] = dt_end_3;
         ViewState["dt_go_4"] = dt_go_4; ViewState["dt_wc_4"] = dt_wc_4; ViewState["dt_rj_4"] = dt_rj_4; ViewState["dt_end_4"] = dt_end_4;
 
-        DataTable rowsline_go_2 = dt_go_2.DefaultView.ToTable(true, "line");
+        DataTable rowsline_go_2 = dt_go_2.DefaultView.ToTable(true, "line_a");
         list_go_2_line.DataSource = rowsline_go_2;
         list_go_2_line.DataBind();
         count_go_2 = dt_go_2.Rows.Count;
@@ -56,7 +56,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
         list_end_2_line.DataBind();
         count_end_2 = dt_end_2.Rows.Count;
 
-        DataTable rowsline_go_3 = dt_go_3.DefaultView.ToTable(true, "line");
+        DataTable rowsline_go_3 = dt_go_3.DefaultView.ToTable(true, "line_a");
         list_go_3_line.DataSource = rowsline_go_3;
         list_go_3_line.DataBind();
         count_go_3 = dt_go_3.Rows.Count;
@@ -76,7 +76,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
         list_end_3_line.DataBind();
         count_end_3 = dt_end_3.Rows.Count;
 
-        DataTable rowsline_go_4 = dt_go_4.DefaultView.ToTable(true, "line");
+        DataTable rowsline_go_4 = dt_go_4.DefaultView.ToTable(true, "line_a");
         list_go_4_line.DataSource = rowsline_go_4;
         list_go_4_line.DataBind();
         count_go_4 = dt_go_4.Rows.Count;
@@ -106,7 +106,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_go_2"] as DataTable;
-            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+            dt_wk.DefaultView.RowFilter = "line_a='" + item["line_a"].ToString() + "'";
 
             detail.DataSource = dt_wk;
             detail.DataBind();
@@ -210,7 +210,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_go_3"] as DataTable;
-            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+            dt_wk.DefaultView.RowFilter = "line_a='" + item["line_a"].ToString() + "'";
 
             detail.DataSource = dt_wk;
             detail.DataBind();
@@ -314,7 +314,7 @@ public partial class WorkOrder_YL_list_ck_V1 : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_go_4"] as DataTable;
-            dt_wk.DefaultView.RowFilter = "line='" + item["line"].ToString() + "'";
+            dt_wk.DefaultView.RowFilter = "line_a='" + item["line_a"].ToString() + "'";
 
             detail.DataSource = dt_wk;
             detail.DataBind();
