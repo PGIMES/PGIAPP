@@ -35,6 +35,7 @@
             padding:0px 10px 0px 10px; 
                  
         }
+        .bg-orange{background-color:orange}
         .fl{padding-left:0px;padding-right:0px;}/*color:#696969*/
     </style>
     <script src="../js/zepto.min.js"></script>
