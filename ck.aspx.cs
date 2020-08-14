@@ -13,7 +13,7 @@ public partial class ck : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        bind_data();
+        //bind_data();
 
         if (!IsPostBack)
         {
@@ -24,6 +24,7 @@ public partial class ck : System.Web.UI.Page
 
     public void bind_data()
     {
+        /*
         //要料监视
         DataTable dt_go = new DataTable();
 
@@ -32,6 +33,7 @@ public partial class ck : System.Web.UI.Page
 
         int count_yl = dt_go.Rows.Count;
         Label1.Text = count_yl.ToString();
+        */
 
         /*
         //不合格监视
@@ -47,6 +49,33 @@ public partial class ck : System.Web.UI.Page
         Label3_V1_f.Text = dt_01.Rows.Count.ToString();
         Label3_V1_e.Text = dt_99.Rows.Count.ToString();
         */
+    }
+
+    [WebMethod]
+    public static string yl_Data()
+    {
+        string go = "0", end = "0", wc_rj = "0";
+
+        string sql = @"exec [usp_app_YL_list_ck_V1]";
+        DataSet ds = SQLHelper.Query(sql);
+
+        DataTable dt_go_2 = ds.Tables[0]; DataTable dt_wc_2 = ds.Tables[1]; DataTable dt_rj_2 = ds.Tables[2]; DataTable dt_end_2 = ds.Tables[3];
+        DataTable dt_go_3 = ds.Tables[4]; DataTable dt_wc_3 = ds.Tables[5]; DataTable dt_rj_3 = ds.Tables[6]; DataTable dt_end_3 = ds.Tables[7];
+        DataTable dt_go_4 = ds.Tables[8]; DataTable dt_wc_4 = ds.Tables[9]; DataTable dt_rj_4 = ds.Tables[10]; DataTable dt_end_4 = ds.Tables[11];
+
+        //要料中
+        go= (dt_go_2.Rows.Count + dt_go_3.Rows.Count + dt_go_4.Rows.Count).ToString();
+
+        //要料完成
+        end = (dt_end_2.Rows.Count + dt_end_3.Rows.Count + dt_end_4.Rows.Count).ToString();
+
+        //已送料，已退料
+        wc_rj = (dt_wc_2.Rows.Count + dt_wc_3.Rows.Count + dt_wc_4.Rows.Count
+            + dt_rj_2.Rows.Count + dt_rj_3.Rows.Count + dt_rj_4.Rows.Count).ToString();
+
+        string res = "[{\"go\":\"" + go + "\",\"end\":\"" + end + "\",\"wc_rj\":\"" + wc_rj + "\"}]";
+        return res;
+
     }
 
     [WebMethod]

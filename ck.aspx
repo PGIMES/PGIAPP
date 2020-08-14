@@ -52,6 +52,7 @@
         //alert(workshop);--%>
 
         $(function () {
+            show_yl();
             show_ruku();
             show_bcp();
             show_cp();
@@ -241,8 +242,11 @@
                         <p>要料监视<span class="f12">（调试中）</span></p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> 
+                        <%--<asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1 = Label1.Text; Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1 + "</span>"); %> --%>
+                        <span class='weui-badge  bg-blue' id="yl_go" style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="yl_end"  style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  orange' id="yl_wc_rj"  style='margin-right: 5px;'>..</span>
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Ruku_list_ck.aspx?para_ck=Y">
@@ -418,6 +422,32 @@
             signature: datad.signature,// 必填，签名，见附录1
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
+
+        function show_yl() {
+            $.ajax({
+                url: "/ck.aspx/yl_Data",
+                type: "Post",
+                data: "{ }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#yl_go").text(datad[0].go);
+                        $("#yl_end").text(datad[0].end);
+                        $("#yl_wc_rj").text(datad[0].wc_rj);
+                        if (datad[0].go == 0) { $("#yl_go").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].end == 0) { $("#yl_end").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].go_bhg == 0) { $("#yl_wc_rj").removeClass("orange").addClass("lightgray"); }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
 
         function show_ruku() {
             $.ajax({
