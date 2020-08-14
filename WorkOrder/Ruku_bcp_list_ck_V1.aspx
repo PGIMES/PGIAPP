@@ -298,7 +298,7 @@
                                                                         <%}  %>
 
                                                                     
-                                                                     <%= ",可用"%>
+                                                                     <%= ",可发"%>
                                                                     <% if (Convert.ToSingle(drpgino["day_s"]) >= 5) {%>
                                                                     <font class="f-red"><%=drpgino["day_s"]+"天" %></font>
                                                                     <%}  %>
@@ -308,15 +308,15 @@
                                                                     <% else {%>
                                                                         <%=drpgino["day_s"]+"天" %>
                                                                         <%}  %>
-                                                                    <%= ","%>
+                                                                    <%= ",生产"%>
                                                                     <% if (Convert.ToSingle(drpgino["xql_day_s"]) >= 5) {%>
-                                                                    <font class="f-red"><%=drpgino["xql_day_s"]+"天" %></font>
+                                                                    <font class="f-red"><%=drpgino["xql_day_s"]+"班" %></font>
                                                                         <%}  %>
                                                                     <% else if (Convert.ToSingle(drpgino["xql_day_s"]) >= 3) {%>
-                                                                    <font class="f-blue"><%=drpgino["xql_day_s"]+"天" %></font>
+                                                                    <font class="f-blue"><%=drpgino["xql_day_s"]+"班" %></font>
                                                                         <%}  %>
                                                                     <% else {%>
-                                                                        <%=drpgino["xql_day_s"]+"天" %>
+                                                                        <%=drpgino["xql_day_s"]+"班" %>
                                                                         <%}  %>
 
                                                                     <%-- <% if (drpgino["flag_xp"].ToString() != "")
