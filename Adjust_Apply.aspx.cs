@@ -129,11 +129,11 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
             if (source == "二车间" || source == "四车间")
             {
-                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
+                sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
             }
             if (source == "三车间")
             {
-                sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
+                sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
             }
             sqlStr = string.Format(sqlStr, dh);
             ldt = QadOdbcHelper.GetODBCRows(sqlStr);
@@ -165,9 +165,9 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
                     if (source == "二车间" || source == "四车间")
                     {
-                        if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
+                        if (ldt.Rows[0]["ld_loc"].ToString() != "9000" && ldt.Rows[0]["ld_status"].ToString().ToUpper() != "WIP")
                         {
-                            flag = "Y"; msg = "单号" + dh + ",库位不是9000";
+                            flag = "Y"; msg = "单号" + dh + ",库位不是9000、状态WIP";
                         }
                     }
                     if (source == "三车间")
@@ -234,13 +234,13 @@ public partial class Adjust_Apply : System.Web.UI.Page
                 }
                 sqlStr = string.Format(sqlStr, _dh, _loc);
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
-                if (ldt == null) { }
-                else if (ldt.Rows.Count <= 0) { }
+                if (ldt == null) { flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD不存在.请重新打开页面申请."; }
+                else if (ldt.Rows.Count <= 0) { flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD不存在.请重新打开页面申请."; }
                 else//QAD存在
                 {
                     if (_from_qty != ldt.Rows[0]["ld_qty_oh"].ToString())
                     {
-                        flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + "【数量】发生异动.请重新打开页面申请.";
+                        flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD【数量】发生异动.请重新打开页面申请.";
                     }
                     else
                     {
