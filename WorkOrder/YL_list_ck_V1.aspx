@@ -168,9 +168,9 @@
     </script>
     <script>
         function deal_rej(lot_no, need_no, reject_where, workshop) {
-            if (reject_where == "线边库") {
-                window.location.href = "Load_Material.aspx?lotno=" + lot_no + "&need_no=" + need_no + "&workshop=" + workshop + "&para=T"
-            }
+            //if (reject_where == "线边库") {
+            //    window.location.href = "Load_Material.aspx?lotno=" + lot_no + "&need_no=" + need_no + "&workshop=" + workshop + "&para=T"
+            //}
             if (reject_where == "仓库") {
                 window.location.href = "Sure_Material.aspx?lotno=" + lot_no + "&need_no=" + need_no + "&workshop=" + workshop
             }
@@ -207,13 +207,13 @@
         <%----二车间 要料中-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 要料中
                             <span class="weui-badge  bg-<% =(count_go_2==0?"gray":"blue") %>"><% =count_go_2 %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select" id="_go_2">
@@ -228,7 +228,7 @@
                                                 </div>
                                                 <i class="icon icon-74"></i>
                                             </div>
-                                            <div class="page-category js-categoryInner lined" style="display: none">
+                                            <div class="page-category js-categoryInner lined" ><%--style="display: none"--%>
                                                 <div class="weui-cells"> 
                                                     <asp:Repeater runat="server" ID="list_go_2" EnableTheming="False">
                                                         <ItemTemplate>
@@ -299,8 +299,8 @@
                                                 <div class="weui-cells"> 
                                                     <asp:Repeater runat="server" ID="list_wc_2" EnableTheming="False">
                                                         <ItemTemplate>
-                                                            <a class="weui-cell weui-cell_access" 
-                                                                href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%#Eval("workshop") %>&para=S">
+                                                            <a class="weui-cell weui-cell_access" >
+                                                                <%--href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%#Eval("workshop") %>&para=S"--%>
                                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                                 <div class="weui-cell__bd">
                                                                     <span class="weui-form-preview__value" style="font-size: smaller">
@@ -327,8 +327,8 @@
                                                                     </span>
 
                                                                 </div>
-                                                                <div class="weui-cell__ft">
-                                                                </div>
+                                                                <%--<div class="weui-cell__ft">
+                                                                </div>--%>
                                                             </a>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
@@ -403,7 +403,7 @@
                                                                     </span>
 
                                                                 </div>
-                                                                <div class="weui-cell__ft">
+                                                                <div class="weui-cell__ft" style="display:<%# Eval("reject_where").ToString()=="仓库"?"inline-block":"none"%>;">
                                                                 </div>
                                                             </a>
                                                         </ItemTemplate>
@@ -482,13 +482,13 @@
         <%----三车间 要料中-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 要料中
                             <span class="weui-badge  bg-<% =(count_go_3==0?"gray":"blue") %>"><% =count_go_3 %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select" id="_go_3">
@@ -503,7 +503,7 @@
                                                 </div>
                                                 <i class="icon icon-74"></i>
                                             </div>
-                                            <div class="page-category js-categoryInner lined" style="display: none">
+                                            <div class="page-category js-categoryInner lined"><%-- style="display: none"--%>
                                                 <div class="weui-cells"> 
                                                     <asp:Repeater runat="server" ID="list_go_3" EnableTheming="False">
                                                         <ItemTemplate>
@@ -574,8 +574,8 @@
                                                 <div class="weui-cells"> 
                                                     <asp:Repeater runat="server" ID="list_wc_3" EnableTheming="False">
                                                         <ItemTemplate>
-                                                            <a class="weui-cell weui-cell_access" 
-                                                                href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%#Eval("workshop") %>&para=S">
+                                                            <a class="weui-cell weui-cell_access" >
+                                                                <%--href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%#Eval("workshop") %>&para=S"--%>
                                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                                 <div class="weui-cell__bd">
                                                                     <span class="weui-form-preview__value" style="font-size: smaller">
@@ -602,8 +602,8 @@
                                                                     </span>
 
                                                                 </div>
-                                                                <div class="weui-cell__ft">
-                                                                </div>
+                                                                <%--<div class="weui-cell__ft">
+                                                                </div>--%>
                                                             </a>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
@@ -678,7 +678,7 @@
                                                                     </span>
 
                                                                 </div>
-                                                                <div class="weui-cell__ft">
+                                                                <div class="weui-cell__ft" style="display:<%# Eval("reject_where").ToString()=="仓库"?"inline-block":"none"%>;">
                                                                 </div>
                                                             </a>
                                                         </ItemTemplate>
@@ -756,13 +756,13 @@
         <%----四车间 要料中-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 要料中
                             <span class="weui-badge  bg-<% =(count_go_4==0?"gray":"blue") %>"><% =count_go_4 %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select" id="_go_4">
@@ -777,7 +777,7 @@
                                                 </div>
                                                 <i class="icon icon-74"></i>
                                             </div>
-                                            <div class="page-category js-categoryInner lined" style="display: none">
+                                            <div class="page-category js-categoryInner lined"> <%--style="display: none"--%>
                                                 <div class="weui-cells"> 
                                                     <asp:Repeater runat="server" ID="list_go_4" EnableTheming="False">
                                                         <ItemTemplate>
@@ -848,8 +848,8 @@
                                                 <div class="weui-cells"> 
                                                     <asp:Repeater runat="server" ID="list_wc_4" EnableTheming="False">
                                                         <ItemTemplate>
-                                                            <a class="weui-cell weui-cell_access" 
-                                                                href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%#Eval("workshop") %>&para=S">
+                                                            <a class="weui-cell weui-cell_access" >
+                                                                <%--href="Load_Material.aspx?lotno=<%#Eval("lot_no") %>&need_no=<%#Eval("need_no") %>&workshop=<%#Eval("workshop") %>&para=S"--%>
                                                                 <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
                                                                 <div class="weui-cell__bd">
                                                                     <span class="weui-form-preview__value" style="font-size: smaller">
@@ -876,8 +876,8 @@
                                                                     </span>
 
                                                                 </div>
-                                                                <div class="weui-cell__ft">
-                                                                </div>
+                                                                <%--<div class="weui-cell__ft">
+                                                                </div>--%>
                                                             </a>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
@@ -952,7 +952,7 @@
                                                                     </span>
 
                                                                 </div>
-                                                                <div class="weui-cell__ft">
+                                                                <div class="weui-cell__ft" style="display:<%# Eval("reject_where").ToString()=="仓库"?"inline-block":"none"%>;">
                                                                 </div>
                                                             </a>
                                                         </ItemTemplate>
