@@ -233,12 +233,12 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/YL_list_ck.aspx">
+                <a class="weui-cell weui-cell_access" href="/workorder/YL_list_ck_V1.aspx">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cubes margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要料监视</p>
+                        <p>要料监视<span class="f12">（调试中）</span></p>
                     </div>
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
