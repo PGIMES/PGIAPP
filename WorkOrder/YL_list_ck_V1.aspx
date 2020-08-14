@@ -204,7 +204,7 @@
 
     <form id="form1" runat="server">     
         
-        <%----二车间 要料中-----%>
+        <%----二车间 要料中、已送料、已退料-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
                 <li class="js-show">
@@ -418,68 +418,9 @@
                     </div>
                 </li>
             </ul>
-        </div>        
-
-        <div class="weui-form-preview">
-            <ul class="collapse">
-                <li>
-                    <div class="weui-flex js-category">
-                        <div class="weui-cells__title fl weui-flex__item">
-                            <i class="icon nav-icon icon-49"></i>二车间 要料完成(24h内)
-                            <span class="weui-badge  bg-<% =(count_end_2==0?"gray":"blue") %>"><% =count_end_2 %></span>
-                        </div>
-                        <i class="icon icon-74"></i>
-                    </div>
-                    <div class="page-category js-categoryInner">
-                        <div class="weui-cells select" id="_end_2">
-                            <asp:Repeater runat="server" ID="list_end_2_line" EnableTheming="False" OnItemDataBound="list_end_2_line_ItemDataBound">
-                                <ItemTemplate>
-                                    <ul class="collapse">
-                                        <li style="margin-top:0px;margin-bottom:0px">
-                                            <div class="weui-flex js-category line" onclick="showorhide(this);">
-                                                <div class="weui-cells__title  weui-flex__item">
-                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
-                                                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-                                                </div>
-                                                <i class="icon icon-74"></i>
-                                            </div>
-                                            <div class="page-category js-categoryInner lined" style="display: none">
-                                                <div class="weui-cells"> 
-                                                    <asp:Repeater runat="server" ID="list_end_2" EnableTheming="False">
-                                                        <ItemTemplate>
-                                                            <a class="weui-cell weui-cell_access" 
-                                                                href="YL_Detail_Info.aspx?need_no=<%# Eval("need_no")%>">
-                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                                <div class="weui-cell__bd">
-                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
-                                                                    </span>
-                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
-                                                                    </span>
-                                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                                        <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("b_on_m_date","{0:MM-dd HH:mm}")+ " " %>   
-                                                                    </span>
-                                                                </div>
-                                                                <div class="weui-cell__ft">
-                                                                </div>
-                                                            </a>
-                                                        </ItemTemplate>
-                                                    </asp:Repeater>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>                             
+        </div>                                         
         
-        
-        <%----三车间 要料中-----%>
+        <%----三车间 要料中、已送料、已退料-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
                 <li class="js-show">
@@ -693,67 +634,9 @@
                     </div>
                 </li>
             </ul>
-        </div>           
-
-        <div class="weui-form-preview">
-            <ul class="collapse">
-                <li>
-                    <div class="weui-flex js-category">
-                        <div class="weui-cells__title fl weui-flex__item">
-                            <i class="icon nav-icon icon-49"></i>三车间 要料完成(24h内)
-                            <span class="weui-badge  bg-<% =(count_end_3==0?"gray":"blue") %>"><% =count_end_3 %></span>
-                        </div>
-                        <i class="icon icon-74"></i>
-                    </div>
-                    <div class="page-category js-categoryInner">
-                        <div class="weui-cells select" id="_end_3">
-                            <asp:Repeater runat="server" ID="list_end_3_line" EnableTheming="False" OnItemDataBound="list_end_3_line_ItemDataBound">
-                                <ItemTemplate>
-                                    <ul class="collapse">
-                                        <li style="margin-top:0px;margin-bottom:0px">
-                                            <div class="weui-flex js-category line" onclick="showorhide(this);">
-                                                <div class="weui-cells__title  weui-flex__item">
-                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
-                                                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-                                                </div>
-                                                <i class="icon icon-74"></i>
-                                            </div>
-                                            <div class="page-category js-categoryInner lined" style="display: none">
-                                                <div class="weui-cells"> 
-                                                    <asp:Repeater runat="server" ID="list_end_3" EnableTheming="False">
-                                                        <ItemTemplate>
-                                                            <a class="weui-cell weui-cell_access" 
-                                                                href="YL_Detail_Info.aspx?need_no=<%# Eval("need_no")%>">
-                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                                <div class="weui-cell__bd">
-                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
-                                                                    </span>
-                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
-                                                                    </span>
-                                                                    <span class="weui-agree__text" style="font-size: smaller">
-                                                                        <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("b_on_m_date","{0:MM-dd HH:mm}")+ " " %>   
-                                                                    </span>
-                                                                </div>
-                                                                <div class="weui-cell__ft">
-                                                                </div>
-                                                            </a>
-                                                        </ItemTemplate>
-                                                    </asp:Repeater>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>     
+        </div>    
         
-        <%----四车间 要料中-----%>
+        <%----四车间 要料中、已送料、已退料-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
                 <li class="js-show">
@@ -968,6 +851,124 @@
                 </li>
             </ul>
         </div>             
+
+        
+         <%----要料完成:二车间、三车间、四车间-----%>
+        <div class="weui-form-preview">
+            <ul class="collapse">
+                <li>
+                    <div class="weui-flex js-category">
+                        <div class="weui-cells__title fl weui-flex__item">
+                            <i class="icon nav-icon icon-49"></i>二车间 要料完成(24h内)
+                            <span class="weui-badge  bg-<% =(count_end_2==0?"gray":"blue") %>"><% =count_end_2 %></span>
+                        </div>
+                        <i class="icon icon-74"></i>
+                    </div>
+                    <div class="page-category js-categoryInner">
+                        <div class="weui-cells select" id="_end_2">
+                            <asp:Repeater runat="server" ID="list_end_2_line" EnableTheming="False" OnItemDataBound="list_end_2_line_ItemDataBound">
+                                <ItemTemplate>
+                                    <ul class="collapse">
+                                        <li style="margin-top:0px;margin-bottom:0px">
+                                            <div class="weui-flex js-category line" onclick="showorhide(this);">
+                                                <div class="weui-cells__title  weui-flex__item">
+                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
+                                                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                                </div>
+                                                <i class="icon icon-74"></i>
+                                            </div>
+                                            <div class="page-category js-categoryInner lined" style="display: none">
+                                                <div class="weui-cells"> 
+                                                    <asp:Repeater runat="server" ID="list_end_2" EnableTheming="False">
+                                                        <ItemTemplate>
+                                                            <a class="weui-cell weui-cell_access" 
+                                                                href="YL_Detail_Info.aspx?need_no=<%# Eval("need_no")%>">
+                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                                <div class="weui-cell__bd">
+                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
+                                                                    </span>
+                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
+                                                                    </span>
+                                                                    <span class="weui-agree__text" style="font-size: smaller">
+                                                                        <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("b_on_m_date","{0:MM-dd HH:mm}")+ " " %>   
+                                                                    </span>
+                                                                </div>
+                                                                <div class="weui-cell__ft">
+                                                                </div>
+                                                            </a>
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>         
+
+        <div class="weui-form-preview">
+            <ul class="collapse">
+                <li>
+                    <div class="weui-flex js-category">
+                        <div class="weui-cells__title fl weui-flex__item">
+                            <i class="icon nav-icon icon-49"></i>三车间 要料完成(24h内)
+                            <span class="weui-badge  bg-<% =(count_end_3==0?"gray":"blue") %>"><% =count_end_3 %></span>
+                        </div>
+                        <i class="icon icon-74"></i>
+                    </div>
+                    <div class="page-category js-categoryInner">
+                        <div class="weui-cells select" id="_end_3">
+                            <asp:Repeater runat="server" ID="list_end_3_line" EnableTheming="False" OnItemDataBound="list_end_3_line_ItemDataBound">
+                                <ItemTemplate>
+                                    <ul class="collapse">
+                                        <li style="margin-top:0px;margin-bottom:0px">
+                                            <div class="weui-flex js-category line" onclick="showorhide(this);">
+                                                <div class="weui-cells__title  weui-flex__item">
+                                                    <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
+                                                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                                </div>
+                                                <i class="icon icon-74"></i>
+                                            </div>
+                                            <div class="page-category js-categoryInner lined" style="display: none">
+                                                <div class="weui-cells"> 
+                                                    <asp:Repeater runat="server" ID="list_end_3" EnableTheming="False">
+                                                        <ItemTemplate>
+                                                            <a class="weui-cell weui-cell_access" 
+                                                                href="YL_Detail_Info.aspx?need_no=<%# Eval("need_no")%>">
+                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                                <div class="weui-cell__bd">
+                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                        <%# Eval("workshop") + "/" + Eval("line") + "/" +Eval("location")  %>
+                                                                    </span>
+                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                        <%#   Eval("pgino")+","+Eval("pn")+","+Eval("act_qty") +"件" %>
+                                                                    </span>
+                                                                    <span class="weui-agree__text" style="font-size: smaller">
+                                                                        <%# Eval("phone")+" "+Eval("emp_name")+" "+Eval("b_on_m_date","{0:MM-dd HH:mm}")+ " " %>   
+                                                                    </span>
+                                                                </div>
+                                                                <div class="weui-cell__ft">
+                                                                </div>
+                                                            </a>
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>    
 
         <div class="weui-form-preview">
             <ul class="collapse">
