@@ -284,7 +284,7 @@
                         <i class="fa fa-ravelry margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>原材料库</p>
+                        <p>原材料库<font style="font-size:smaller">(调整中)</font></p>
                     </div>
                     <div class="weui-cell__ft">                        
                         <span class='weui-badge  bg-blue' id="ycl_gs" style='margin-right: 5px;'>..</span>
