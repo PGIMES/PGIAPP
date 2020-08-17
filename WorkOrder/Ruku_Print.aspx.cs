@@ -328,7 +328,8 @@ public class Ruku_Print_Class
             new SqlParameter("@pn",pn),
             new SqlParameter("@qty",qty),
             new SqlParameter("@act_qty",act_qty),
-            new SqlParameter("@comment",comment)
+            new SqlParameter("@comment",comment),
+            new SqlParameter("@ly","")
       };
         return SQLHelper.GetDataTable("usp_app_Ruku_Print_V1", param);
 
