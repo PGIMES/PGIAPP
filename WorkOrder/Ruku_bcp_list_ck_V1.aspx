@@ -309,10 +309,10 @@
                                                                         <%=drpgino["day_s"]+"天" %>
                                                                         <%}  %>
                                                                     <%= ",生产"%>
-                                                                    <% if (Convert.ToSingle(drpgino["xql_day_s"]) >= 5) {%>
+                                                                    <% if (Convert.ToSingle(drpgino["xql_day_s"]) >= 10) {%>
                                                                     <font class="f-red"><%=drpgino["xql_day_s"]+"班" %></font>
                                                                         <%}  %>
-                                                                    <% else if (Convert.ToSingle(drpgino["xql_day_s"]) >= 3) {%>
+                                                                    <% else if (Convert.ToSingle(drpgino["xql_day_s"]) >= 6) {%>
                                                                     <font class="f-blue"><%=drpgino["xql_day_s"]+"班" %></font>
                                                                         <%}  %>
                                                                     <% else {%>
