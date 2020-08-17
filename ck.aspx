@@ -239,7 +239,7 @@
                         <i class="fa fa-cubes margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>要料监视<span class="f12">（调试中）</span></p>
+                        <p>要料监视</p>
                     </div>
                     <div class="weui-cell__ft">
                         <%--<asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
@@ -254,7 +254,7 @@
                         <i class="fa fa-archive margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>入库监视<span class="f12">（调试中）</span></p>
+                        <p>入库监视</p>
                     </div>
                     <div class="weui-cell__ft">
                         <span class='weui-badge  bg-blue' id="rk_go" style='margin-right: 5px;'>..</span>

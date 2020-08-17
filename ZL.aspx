@@ -103,15 +103,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access hide" href="javascript:sm_qc_off('<%=_workshop %>');">   
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-wpexplorer margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>检验完成</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
+                
                 <a class="weui-cell weui-cell_access hide" href="/workorder/Emp_Login_list_new.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-group margin10-r"></i>
@@ -163,7 +155,15 @@
                         <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>  
                     </div>
                 </a>
-                
+                <a class="weui-cell weui-cell_access" href="javascript:sm_qc_off('<%=_workshop %>');">   
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-wpexplorer margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>检验完成<font style="font-size:smaller">(调整中)</font></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>                
                 <a class="weui-cell weui-cell_access" href="/workorder/prod_wip_list_zl.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-gears margin10-r"></i>
@@ -175,11 +175,10 @@
                         <span class="weui-badge bg-blue" id="wip" style='margin-right: 15px;'>..</span>
                         <span class="weui-badge bg-blue" id="sh" style='margin-right: 15px;'>..</span>
                         <span class="weui-badge bg-orange" id="part"  style='margin-right: 15px;'>部..</span>
-                        <span class="weui-badge bg-red" id="ng" style='margin-right: 15px;'>返..</span>
-                     
+                        <span class="weui-badge bg-red" id="ng" style='margin-right: 15px;'>返..</span>                     
                     </div>
                 </a>   
-                
+
             </div>
                <% }%>
 
@@ -350,30 +349,30 @@
 </body>
     <script>
         var datad = [];
-        //$.ajax({
-        //    url: "/getwxconfig.aspx/GetScanQRCode",
-        //    type: "Post",
-        //    data: "{ 'url': '" + location.href + "' }",
-        //    async: false,
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: function (data) {
-        //        datad = JSON.parse(data.d); //转为Json字符串
-        //    },
-        //    error: function (error) {
-        //        alert(error);
-        //    }
-        //});
-        //wx.config({
-        //    debug: false, // 开启调试模式
-        //    appId: datad.appid, // 必填，公众号的唯一标识
-        //    timestamp: datad.timestamp, // 必填，生成签名的时间戳
-        //    nonceStr: datad.noncestr, // 必填，生成签名的随机串
-        //    signature: datad.signature,// 必填，签名，见附录1
-        //    jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
-        //});
+        $.ajax({
+            url: "/getwxconfig.aspx/GetScanQRCode",
+            type: "Post",
+            data: "{ 'url': '" + location.href + "' }",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                datad = JSON.parse(data.d); //转为Json字符串
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+        wx.config({
+            debug: false, // 开启调试模式
+            appId: datad.appid, // 必填，公众号的唯一标识
+            timestamp: datad.timestamp, // 必填，生成签名的时间戳
+            nonceStr: datad.noncestr, // 必填，生成签名的随机串
+            signature: datad.signature,// 必填，签名，见附录1
+            jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
+        });
 
-        //show workshop 3 product data
+        //show workshop 2,3,4 product data
         function show_prod(){
             $.ajax({
                 url: "/zl.aspx/ProdList_Data",
