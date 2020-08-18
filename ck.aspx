@@ -249,7 +249,7 @@
                         <span class='weui-badge  orange' id="yl_wc_rj"  style='margin-right: 5px;'>..</span>
                     </div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_list_ck.aspx?para_ck=Y">
+                <a class="weui-cell weui-cell_access" href="/workorder/Ruku_list_ck.aspx">
                     <div class="weui-cell__hd">
                         <i class="fa fa-archive margin10-r"></i>
                     </div>

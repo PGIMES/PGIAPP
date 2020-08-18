@@ -14,7 +14,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
     public string _workshop = "";
     public string _workorder = "";
     public string _workorder_f = "";
-    public string _para_ck = "";
     public string _ismodify = "Y";
     public int _tab_index = 0;
 
@@ -23,7 +22,6 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         _workshop = Request.QueryString["workshop"].ToString();
         _workorder = Request.QueryString["workorder"].ToString();
         _workorder_f = Request.QueryString["workorder_f"].ToString();
-        if (Request.QueryString["para_ck"] != null) { _para_ck = Request.QueryString["para_ck"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -689,14 +687,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             if (flag == "N")
             {
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('" + msg_f + "')", true);
-                if (_para_ck == "Y")
-                {
-                    Response.Redirect("/ck.aspx");
-                }
-                else
-                {
-                    Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
-                }
+                Response.Redirect("/Cjgl1.aspx?workshop=" + _workshop);
             }
             else
             {

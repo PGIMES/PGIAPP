@@ -8,12 +8,10 @@ using System.Web.UI.WebControls;
 
 public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
 {
-    public string _para_ck = "";
     public int count_98_2, count_98_3, count_98_4, count_99_2, count_99_3, count_99_4;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["para_ck"] != null) { _para_ck = Request.QueryString["para_ck"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {

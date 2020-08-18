@@ -10,14 +10,12 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
 {
     public string _workshop = "";
     public string _workcode = "";
-    public string _para_ck = "";
     public int count_01, count_02, count_03, count_04, count_05, count_98, count_99;
     public int count_01_my, count_02_my, count_03_my, count_04_my, count_05_my, count_98_my, count_99_my;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["workshop"] != null) { _workshop = Request.QueryString["workshop"].ToString(); }
-        if (Request.QueryString["para_ck"] != null) { _para_ck = Request.QueryString["para_ck"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -35,8 +33,8 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
 
     private void GetData(string emp)
     {
-        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}','','{2}'";
-        sql = string.Format(sql, _workshop, emp, _para_ck);
+        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}','',''";
+        sql = string.Format(sql, _workshop, emp);
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];

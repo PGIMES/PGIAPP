@@ -204,11 +204,7 @@
                             $("#btnsave2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                             return false;
                         }
-                        if ("<%=_para_ck %>"=="Y") {
-                            window.location.href = "/ck.aspx";
-                        }else {
-                            window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
-                        }
+                        window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
                     }
 
                 });

@@ -10,14 +10,12 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
 {
     public string _workshop = "";
     public string _workcode = "";
-    public string _para_ck = "";
     public int count_01, count_02, count_03, count_04, count_05, count_98, count_99;
     public int count_01_my, count_02_my, count_03_my, count_04_my, count_05_my, count_98_my, count_99_my;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["workshop"] != null) { _workshop = Request.QueryString["workshop"].ToString(); }
-        if (Request.QueryString["para_ck"] != null) { _para_ck = Request.QueryString["para_ck"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -35,8 +33,8 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
 
     private void GetData(string emp)
     {
-        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}','','{2}'";
-        sql = string.Format(sql, _workshop, emp, _para_ck);
+        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '{0}','{1}','',''";
+        sql = string.Format(sql, _workshop, emp);
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
@@ -47,10 +45,18 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
         DataTable dt_04_my = ds.Tables[10]; DataTable dt_05_my = ds.Tables[11]; DataTable dt_98_my = ds.Tables[12];
         DataTable dt_99_my = ds.Tables[13];
 
-        ViewState["dt_02"] = dt_02; ViewState["dt_99"] = dt_99;
+        ViewState["dt_01"] = dt_01; ViewState["dt_02"] = dt_02; ViewState["dt_03"] = dt_03;
+        ViewState["dt_04"] = dt_04; ViewState["dt_05"] = dt_05; ViewState["dt_98"] = dt_98;
+        ViewState["dt_99"] = dt_99;
+
         ViewState["dt_02_my"] = dt_02_my; ViewState["dt_99_my"] = dt_99_my;
 
-        list_01.DataSource = dt_01; list_01.DataBind(); count_01 = dt_01.Rows.Count;
+        //list_01.DataSource = dt_01; list_01.DataBind();
+        DataTable rowsline_01 = dt_01.DefaultView.ToTable(true, "workshop");
+        list_01_line.DataSource = rowsline_01;
+        list_01_line.DataBind();
+
+        count_01 = dt_01.Rows.Count;
 
         //list_02.DataSource = dt_02; list_02.DataBind();
         DataTable rowsline_02 = dt_02.DefaultView.ToTable(true, "workshop");
@@ -60,10 +66,34 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
         count_02 = dt_02.Rows.Count;
 
 
-        list_03.DataSource = dt_03; list_03.DataBind(); count_03 = dt_03.Rows.Count;
-        list_04.DataSource = dt_04; list_04.DataBind(); count_04 = dt_04.Rows.Count;
-        list_05.DataSource = dt_05; list_05.DataBind(); count_05 = dt_05.Rows.Count;
-        list_98.DataSource = dt_98; list_98.DataBind(); count_98 = dt_98.Rows.Count;
+        //list_03.DataSource = dt_03; list_03.DataBind();
+        DataTable rowsline_03 = dt_03.DefaultView.ToTable(true, "workshop");
+        list_03_line.DataSource = rowsline_03;
+        list_03_line.DataBind();
+
+        count_03 = dt_03.Rows.Count;
+
+        //list_04.DataSource = dt_04; list_04.DataBind();
+        DataTable rowsline_04 = dt_04.DefaultView.ToTable(true, "workshop");
+        list_04_line.DataSource = rowsline_04;
+        list_04_line.DataBind();
+
+        count_04 = dt_04.Rows.Count;
+
+        //list_05.DataSource = dt_05; list_05.DataBind();
+        DataTable rowsline_05 = dt_05.DefaultView.ToTable(true, "workshop");
+        list_05_line.DataSource = rowsline_05;
+        list_05_line.DataBind();
+
+        count_05 = dt_05.Rows.Count;
+
+
+        //list_98.DataSource = dt_98; list_98.DataBind();
+        DataTable rowsline_98 = dt_98.DefaultView.ToTable(true, "workshop");
+        list_98_line.DataSource = rowsline_98;
+        list_98_line.DataBind();
+
+        count_98 = dt_98.Rows.Count;
 
         //list_99.DataSource = dt_99; list_99.DataBind();
         DataTable rowsline_99 = dt_99.DefaultView.ToTable(true, "line");
@@ -88,6 +118,32 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
 
     }
 
+    protected void list_01_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("list_01");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = ViewState["dt_01"] as DataTable;
+            dt_wk.DefaultView.RowFilter = "workshop='" + item["workshop"].ToString() + "'";
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-red";
+            }
+        }
+    }
+
     protected void list_02_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -97,6 +153,110 @@ public partial class WorkOrder_bhgp_Apply_list_V1 : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_02"] as DataTable;
+            dt_wk.DefaultView.RowFilter = "workshop='" + item["workshop"].ToString() + "'";
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
+        }
+    }
+
+    protected void list_03_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("list_03");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = ViewState["dt_03"] as DataTable;
+            dt_wk.DefaultView.RowFilter = "workshop='" + item["workshop"].ToString() + "'";
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
+        }
+    }
+
+    protected void list_04_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("list_04");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = ViewState["dt_04"] as DataTable;
+            dt_wk.DefaultView.RowFilter = "workshop='" + item["workshop"].ToString() + "'";
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
+        }
+    }
+
+    protected void list_05_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("list_05");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = ViewState["dt_05"] as DataTable;
+            dt_wk.DefaultView.RowFilter = "workshop='" + item["workshop"].ToString() + "'";
+
+            detail.DataSource = dt_wk;
+            detail.DataBind();
+
+            Label1.Text = detail.Items.Count.ToString();
+            if (Label1.Text == "0")
+            {
+                Label1.CssClass = "weui-badge  bg-gray";
+            }
+            else
+            {
+                Label1.CssClass = "weui-badge  bg-blue";
+            }
+        }
+    }
+
+    protected void list_98_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater detail = (Repeater)e.Item.FindControl("list_98");
+            Label Label1 = (Label)e.Item.FindControl("Label1");
+            DataRowView item = (DataRowView)e.Item.DataItem;
+
+            DataTable dt_wk = ViewState["dt_98"] as DataTable;
             dt_wk.DefaultView.RowFilter = "workshop='" + item["workshop"].ToString() + "'";
 
             detail.DataSource = dt_wk;

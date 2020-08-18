@@ -15,12 +15,10 @@ public partial class WorkOrder_bhgp_sign_yz : System.Web.UI.Page
     public string _workorder = "";
     public string _workorder_f = "";
     public string _stepid = "";
-    public string _para_ck = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
         _workshop = Request.QueryString["workshop"].ToString();
-        if (Request.QueryString["para_ck"] != null) { _para_ck = Request.QueryString["para_ck"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {

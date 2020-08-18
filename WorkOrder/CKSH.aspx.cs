@@ -105,6 +105,10 @@ public partial class WorkOrder_CKSH : System.Web.UI.Page
                 {
                     Response.Redirect("/ck.aspx");
                 }
+                if (_ck == "Z")//质量的
+                {
+                    Response.Redirect("/ZL.aspx");
+                }
             }
             else
             {
