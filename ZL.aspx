@@ -56,17 +56,6 @@
         <div class="page-bd">
 
             <div class="weui-cells">
-
-                <%--<a class="weui-cell weui-cell_access hide" href="/workorder/bhgp_Apply_list_ZL.aspx" id="a_div2">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-bookmark-o margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>不合格监视<font style="font-size:smaller">(调整中)</font></p>
-                    </div>
-                    <div class="weui-cell__ft"> 
-                    </div>
-                </a>--%>
                 <a class="weui-cell weui-cell_access" href="javascript:sm_qc_off('<%=_workshop %>');">   
                     <div class="weui-cell__hd">
                         <i class="fa fa-wpexplorer margin10-r"></i>
@@ -89,7 +78,17 @@
                         <span class="weui-badge bg-orange" id="part"  style='margin-right: 15px;'>部..</span>
                         <span class="weui-badge bg-red" id="ng" style='margin-right: 15px;'>返..</span>                     
                     </div>
-                </a>   
+                </a> 
+                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_ZL.aspx" id="a_div2">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-bookmark-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>不合格监视<font style="font-size:smaller">(调整中)</font></p>
+                    </div>
+                    <div class="weui-cell__ft"> 
+                    </div>
+                </a>  
 
             </div>
              
