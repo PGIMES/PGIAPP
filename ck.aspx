@@ -52,6 +52,8 @@
         //alert(workshop);--%>
 
         $(function () {
+            auth();
+
             show_yl();
             show_ruku();
             show_bcp();
@@ -59,6 +61,23 @@
             //原材料标注统计 by fish 20.8.6
             show_ycl();
         });
+
+        function auth() {
+            $.ajax({
+                type: "post",
+                url: "ck.aspx/auth",
+                data: "{'emp':'" + $("#emp_code_name").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    if (obj[0].flag == "Y") {
+                        $("#div_rk_print_aga").show();
+                    }
+                }
+            });
+        }
 
         function sm_ck_dh() {
             wx.ready(function () {
@@ -216,7 +235,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:sm_ruku_print();">
+                <a class="weui-cell weui-cell_access" href="javascript:sm_ruku_print();" id="div_rk_print_aga" style="display:none;">
                     <div class="weui-cell__hd">
                         <i class="fa fa-print margin10-r"></i>
                     </div>

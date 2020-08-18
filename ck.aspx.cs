@@ -52,6 +52,19 @@ public partial class ck : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string auth(string emp)
+    {
+        string re_sql = @"exec [usp_app_ck_auth] '{0}'";
+        re_sql = string.Format(re_sql, emp);
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+
+        string flag = re_dt.Rows[0][0].ToString();
+        string res = "[{\"flag\":\"" + flag + "\"}]";
+        return res;
+
+    }
+
+    [WebMethod]
     public static string yl_Data()
     {
         string go = "0", end = "0", wc_rj = "0";
