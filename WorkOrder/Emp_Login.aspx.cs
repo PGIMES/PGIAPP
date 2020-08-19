@@ -119,7 +119,7 @@ public partial class Emp_Login : System.Web.UI.Page
     public void sbcode_change()
     {
         string sb_code = e_code.Text;
-        //if (sb_code.Length >= 5) { sb_code = sb_code.Substring(sb_code.Length - 5); }
+        if (sb_code.Length >= 5) { sb_code = sb_code.Substring(sb_code.Length - 5); }
         string sql = @"select distinct top 1 location,workshop,line from [Mes_App_Base_Location] WHERE e_code = '{0}' ";
         sql = string.Format(sql, sb_code);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
