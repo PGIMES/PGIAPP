@@ -40,7 +40,7 @@
         $(function () {
             
            show_prod();
-            
+           show_bhg();
             
                  
         });
@@ -87,6 +87,9 @@
                         <p>不合格监视<font style="font-size:smaller">(调整中)</font></p>
                     </div>
                     <div class="weui-cell__ft"> 
+                        <span class="weui-badge bg-blue" id="bhg_go" style='margin-right: 15px;'>..</span>  
+                        <span class="weui-badge bg-blue" id="bhg_end" style='margin-right: 15px;'>..</span>  
+                        <span class="weui-badge bg-red" id="bhg_fg" style='margin-right: 15px;'>返..</span>  
                     </div>
                 </a>  
 
@@ -159,6 +162,32 @@
                 //}
             });
         }
-         
+
+
+        function show_bhg() {
+            $.ajax({
+                url: "/ZL.aspx/bhg_Data",
+                type: "Post",
+                data: "{ }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#bhg_go").text(datad[0].go);
+                        $("#bhg_end").text(datad[0].end);
+                        $("#bhg_fg").text('返' + datad[0].fg);
+                        if (datad[0].go == 0) { $("#bhg_go").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].end == 0) { $("#bhg_end").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].go_bhg == 0) { $("#bhg_fg").removeClass("bg-red").addClass("bg-gray"); }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
     </script>
 </html>

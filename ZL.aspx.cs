@@ -82,8 +82,28 @@ public partial class ZL : System.Web.UI.Page
         return res;
 
     }
-   
 
 
+    //不合格监视
+    [WebMethod]
+    public static string bhg_Data()
+    {
+        int go = 0, end = 0, fg = 0;
+
+        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','',''";
+        DataSet ds = SQLHelper.Query(sql);
+
+        DataTable dt_01 = ds.Tables[0]; DataTable dt_02 = ds.Tables[1]; DataTable dt_03 = ds.Tables[2];
+        DataTable dt_04 = ds.Tables[3]; DataTable dt_05 = ds.Tables[4]; DataTable dt_98 = ds.Tables[5];
+        DataTable dt_99 = ds.Tables[6];
+
+        go = dt_02.Rows.Count + dt_03.Rows.Count + dt_04.Rows.Count + dt_05.Rows.Count + dt_98.Rows.Count;
+        fg = dt_01.Rows.Count;
+        end = dt_99.Rows.Count;
+
+        string res = "[{\"go\":\"" + go.ToString() + "\",\"end\":\"" + end.ToString() + "\",\"fg\":\"" + fg.ToString() + "\"}]";
+        return res;
+
+    }
 
 }
