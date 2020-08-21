@@ -68,16 +68,8 @@ public partial class Adjust_Apply : System.Web.UI.Page
             else
             {
                 DataTable ldt = new DataTable();
-                string sqlStr = "";
-
-                if (dt.Rows[0]["source"].ToString() == "二车间" || dt.Rows[0]["source"].ToString() == "四车间")
-                {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
-                }
-                if (dt.Rows[0]["source"].ToString() == "三车间")
-                {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
-                }
+                string sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
+                                from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
                 sqlStr = string.Format(sqlStr, dt.Rows[0]["lot_no"].ToString(), dt.Rows[0]["loc"].ToString());
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
                 if (ldt == null) { }
@@ -96,7 +88,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
         Repeater_sg.DataSource = dt_sg;
         Repeater_sg.DataBind();
     }
-   
+
 
     [WebMethod]
     public static string dh_change(string dh, string source)
@@ -104,46 +96,121 @@ public partial class Adjust_Apply : System.Web.UI.Page
         string flag = "N", msg = "";
         string pgino = "", pn = "", from_qty = "", flagwhere = "", need_no = "", loc = "";
 
-        string re_sql = @"exec [usp_app_Adjust_Apply_dh_change_V1] '{0}','{1}'";
-        re_sql = string.Format(re_sql, dh, source);
-        DataSet ds = SQLHelper.Query(re_sql);
+        #region 车间
 
-        flag = ds.Tables[0].Rows[0][0].ToString();
-        msg = ds.Tables[0].Rows[0][1].ToString();
-
-        if (flag == "N")
+        if (source == "二车间" || source == "三车间" || source == "四车间")
         {
-            DataTable re_dt = ds.Tables[1];
-            pgino = re_dt.Rows[0]["pgino"].ToString();
-            pn = re_dt.Rows[0]["pn"].ToString();
-            from_qty = re_dt.Rows[0]["from_qty"].ToString();
-            flagwhere = re_dt.Rows[0]["flagwhere"].ToString();
-            need_no = re_dt.Rows[0]["need_no"].ToString();
-        }
+            string re_sql = @"exec [usp_app_Adjust_Apply_dh_change_V1] '{0}','{1}'";
+            re_sql = string.Format(re_sql, dh, source);
+            DataSet ds = SQLHelper.Query(re_sql);
 
-        if (flag == "Y1")
+            flag = ds.Tables[0].Rows[0][0].ToString();
+            msg = ds.Tables[0].Rows[0][1].ToString();
+
+            if (flag == "N")
+            {
+                DataTable re_dt = ds.Tables[1];
+                pgino = re_dt.Rows[0]["pgino"].ToString();
+                pn = re_dt.Rows[0]["pn"].ToString();
+                from_qty = re_dt.Rows[0]["from_qty"].ToString();
+                flagwhere = re_dt.Rows[0]["flagwhere"].ToString();
+                need_no = re_dt.Rows[0]["need_no"].ToString();
+            }
+
+            if (flag == "Y1")
+            {
+                //再次判断是否是QAD的参考号
+                DataTable ldt = new DataTable();
+                string sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
+                                from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
+                sqlStr = string.Format(sqlStr, dh);
+                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+                if (ldt == null)
+                {
+                    flag = "Y"; msg = msg + "/QAD";
+                }
+                else if (ldt.Rows.Count <= 0)
+                {
+                    flag = "Y"; msg = msg + "/QAD";
+                }
+                else//QAD存在
+                {
+                    //零件号
+                    string sql_s = @"select pt_desc1,pt_prod_line from [172.16.5.26].qad.dbo.qad_pt_mstr where pt_part='" + ldt.Rows[0]["ld_part"].ToString() + "' and pt_domain='200'";
+                    DataTable dt_s = SQLHelper.Query(sql_s).Tables[0];
+
+                    if (dt_s == null)
+                    {
+                        flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + ",对应的零件号不存在";
+                    }
+                    else if (dt_s.Rows.Count <= 0)
+                    {
+                        flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + "对应的零件号不存在";
+                    }
+                    else//QAD存在
+                    {
+                        pn = dt_s.Rows[0]["pt_desc1"].ToString();
+
+                        if (source == "二车间" || source == "四车间")
+                        {
+                            if (ldt.Rows[0]["ld_loc"].ToString() != "9000" && ldt.Rows[0]["ld_status"].ToString().ToUpper() != "WIP")
+                            {
+                                flag = "Y"; msg = "单号" + dh + ",库位不是9000、状态WIP";
+                            }
+                        }
+                        if (source == "三车间")
+                        {
+                            if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3"))
+                            {
+                                if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
+                                {
+                                    flag = "Y"; msg = "单号" + dh + ",库位不是9000";
+                                }
+                            }
+                            if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2"))
+                            {
+                                if (ldt.Rows[0]["ld_loc"].ToString() != "4009")
+                                {
+                                    flag = "Y"; msg = "单号" + dh + ",库位不是4009";
+                                }
+                            }
+                        }
+
+                        if (flag == "Y1")
+                        {
+                            flag = "N"; msg = "";
+                            pgino = ldt.Rows[0]["ld_part"].ToString();
+                            from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+                            flagwhere = "QAD";
+                            need_no = "";
+                            loc = ldt.Rows[0]["ld_loc"].ToString();
+                        }
+                    }
+                }
+
+            }
+
+        }
+        #endregion
+
+
+        #region 库内
+
+        if (source == "原材料库" || source == "成品库" || source == "半成品库")
         {
             //再次判断是否是QAD的参考号
             DataTable ldt = new DataTable();
-            string sqlStr = "";
-
-            if (source == "二车间" || source == "四车间")
-            {
-                sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
-            }
-            if (source == "三车间")
-            {
-                sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
-            }
+            string sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
+                            from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
             sqlStr = string.Format(sqlStr, dh);
             ldt = QadOdbcHelper.GetODBCRows(sqlStr);
             if (ldt == null)
             {
-                flag = "Y"; msg = msg + "/QAD";
+                flag = "Y"; msg = "单号:" + dh + ",地点:" + source + ",不存在QAD";
             }
             else if (ldt.Rows.Count <= 0)
             {
-                flag = "Y"; msg = msg + "/QAD";
+                flag = "Y"; msg = "单号:" + dh + ",地点:" + source + ",不存在QAD";
             }
             else//QAD存在
             {
@@ -153,7 +220,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
                 if (dt_s == null)
                 {
-                    flag = "Y"; msg = "物料号"+ ldt.Rows[0]["ld_part"].ToString() + ",对应的零件号不存在";
+                    flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + ",对应的零件号不存在";
                 }
                 else if (dt_s.Rows.Count <= 0)
                 {
@@ -163,32 +230,29 @@ public partial class Adjust_Apply : System.Web.UI.Page
                 {
                     pn = dt_s.Rows[0]["pt_desc1"].ToString();
 
-                    if (source == "二车间" || source == "四车间")
+                    if (source == "原材料库")
                     {
-                        if (ldt.Rows[0]["ld_loc"].ToString() != "9000" && ldt.Rows[0]["ld_status"].ToString().ToUpper() != "WIP")
+                        if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("1") == false)
                         {
-                            flag = "Y"; msg = "单号" + dh + ",库位不是9000、状态WIP";
+                            flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + "不是原材料,不能选择【原材料库】.";
                         }
                     }
-                    if (source == "三车间")
+                    if (source == "半成品库")
                     {
-                        if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3"))
+                        if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2") == false)
                         {
-                            if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
-                            {
-                                flag = "Y"; msg = "单号" + dh + ",库位不是9000";
-                            }
+                            flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + "不是半成品,不能选择【半成品库】.";
                         }
-                        if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2"))
+                    }
+                    if (source == "成品库")
+                    {
+                        if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3") == false)
                         {
-                            if (ldt.Rows[0]["ld_loc"].ToString() != "4009")
-                            {
-                                flag = "Y"; msg = "单号" + dh + ",库位不是4009";
-                            }
+                            flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + "不是成品,不能选择【成品库】.";
                         }
                     }
 
-                    if (flag == "Y1")
+                    if (flag == "N")
                     {
                         flag = "N"; msg = "";
                         pgino = ldt.Rows[0]["ld_part"].ToString();
@@ -199,10 +263,11 @@ public partial class Adjust_Apply : System.Web.UI.Page
                     }
                 }
             }
-            
         }
 
-        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"from_qty\":\"" + from_qty 
+        #endregion
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"pgino\":\"" + pgino + "\",\"pn\":\"" + pn + "\",\"from_qty\":\"" + from_qty
             + "\",\"flagwhere\":\"" + flagwhere + "\",\"need_no\":\"" + need_no + "\",\"loc\":\"" + loc + "\"}]";
         return result;
     }
@@ -213,45 +278,31 @@ public partial class Adjust_Apply : System.Web.UI.Page
     {
         string flag = "N", msg = "";
         string re_sql = "";
-        if (_source == "二车间" || _source == "四车间" || _source == "三车间")
-        {
-            if (_flagwhere != "QAD")
-            {
-                re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
-            }
-            else
-            {
-                DataTable ldt = new DataTable();
-                string sqlStr = "";
 
-                if (_source == "二车间" || _source == "四车间")
-                {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
-                }
-                if (_source == "三车间")
-                {
-                    sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
-                }
-                sqlStr = string.Format(sqlStr, _dh, _loc);
-                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
-                if (ldt == null) { flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD不存在.请重新打开页面申请."; }
-                else if (ldt.Rows.Count <= 0) { flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD不存在.请重新打开页面申请."; }
-                else//QAD存在
-                {
-                    if (_from_qty != ldt.Rows[0]["ld_qty_oh"].ToString())
-                    {
-                        flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD【数量】发生异动.请重新打开页面申请.";
-                    }
-                    else
-                    {
-                        re_sql = @"exec usp_app_Adjust_Apply_QAD '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
-                    }
-                }
-            }
+        if (_flagwhere != "QAD")
+        {
+            re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
         }
         else
         {
-            flag = "Y"; msg = "开发中.....";
+            DataTable ldt = new DataTable();
+            string sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
+                                from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
+            sqlStr = string.Format(sqlStr, _dh, _loc);
+            ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            if (ldt == null) { flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD不存在.请重新打开页面申请."; }
+            else if (ldt.Rows.Count <= 0) { flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD不存在.请重新打开页面申请."; }
+            else//QAD存在
+            {
+                if (_from_qty != ldt.Rows[0]["ld_qty_oh"].ToString())
+                {
+                    flag = "Y"; msg = "单号:" + _dh + ",地点:" + _source + ",QAD【数量】发生异动.请重新打开页面申请.";
+                }
+                else
+                {
+                    re_sql = @"exec usp_app_Adjust_Apply_QAD '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
+                }
+            }
         }
 
         if (flag == "N")

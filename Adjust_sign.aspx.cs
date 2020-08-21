@@ -83,20 +83,17 @@ public partial class Adjust_sign : System.Web.UI.Page
         string from_qty_cur = "0";
         if (_flagwhere == "QAD")
         {
-            if (_source == "二车间" || _source == "四车间" || _source == "三车间")
+            if (Convert.ToSingle(_adj_qty_abs) > 2)//签核完成才调用
             {
-                if (Convert.ToSingle(_adj_qty_abs) > 2)//签核完成才调用
+                DataTable ldt = new DataTable();
+                string sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
+                sqlStr = string.Format(sqlStr, _lot_no, _loc);
+                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+                if (ldt == null) { }
+                else if (ldt.Rows.Count <= 0) { }
+                else//QAD存在
                 {
-                    DataTable ldt = new DataTable();
-                    string sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
-                    sqlStr = string.Format(sqlStr, _lot_no, _loc);
-                    ldt = QadOdbcHelper.GetODBCRows(sqlStr);
-                    if (ldt == null) { }
-                    else if (ldt.Rows.Count <= 0) { }
-                    else//QAD存在
-                    {
-                        from_qty_cur = ldt.Rows[0]["ld_qty_oh"].ToString();
-                    }
+                    from_qty_cur = ldt.Rows[0]["ld_qty_oh"].ToString();
                 }
             }
         }

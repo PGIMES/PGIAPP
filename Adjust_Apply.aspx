@@ -329,7 +329,7 @@
     <script>
         if ("<%= _formno %>" == "") {
             var datalist_sr = [{ title: '二车间', value: '二车间' }, { title: '三车间', value: '三车间' }, { title: '四车间', value: '四车间' }
-                            , { title: '原材料', value: '原材料' }, { title: '成品库', value: '成品库' }, { title: '半成品库', value: '半成品库' }]
+                            , { title: '原材料库', value: '原材料库' }, { title: '成品库', value: '成品库' }, { title: '半成品库', value: '半成品库' }]
             $("#source").select({
                 title: "来源",
                 items: datalist_sr,
