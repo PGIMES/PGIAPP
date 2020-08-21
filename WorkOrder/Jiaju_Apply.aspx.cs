@@ -9,11 +9,13 @@ using System.Web.UI.WebControls;
 
 public partial class WorkOrder_Jiaju_Apply : System.Web.UI.Page
 {
+    public string _workshop = "";
     public string _formno = "";
     public string _stepid = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        _workshop = Request.QueryString["workshop"].ToString();
         if (Request.QueryString["formno"] != null) { _formno = Request.QueryString["formno"].ToString(); }
         if (Request.QueryString["stepid"] != null) { _stepid = Request.QueryString["stepid"].ToString(); }
 
