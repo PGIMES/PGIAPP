@@ -209,11 +209,11 @@
         <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
     </div>
      
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" style="background-color:lightgray">
         <%----待入库-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <%
                             System.Data.DataTable dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
@@ -223,7 +223,7 @@
                             <i class="icon nav-icon icon-49"></i>二车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select">
@@ -311,7 +311,7 @@
 
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <%
                            dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
@@ -321,7 +321,7 @@
                             <i class="icon nav-icon icon-49"></i>三车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select">
@@ -404,7 +404,7 @@
                 
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <%
                            dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
@@ -414,7 +414,7 @@
                             <i class="icon nav-icon icon-49"></i>四车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select">
@@ -503,13 +503,13 @@
         <%----不合格待入库-----%>
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 不合格 待入库
                             <span class="weui-badge  bg-<% =(count_98_2==0?"gray":"orange") %>"><% =count_98_2 %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select" id="_98_2">
@@ -591,13 +591,13 @@
 
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 不合格 待入库
                             <span class="weui-badge  bg-<% =(count_98_3==0?"gray":"orange") %>"><% =count_98_3 %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select" id="_98_3">
@@ -679,13 +679,13 @@
         
         <div class="weui-form-preview">
             <ul class="collapse">
-                <li>
+                <li class="js-show">
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 不合格 待入库
                             <span class="weui-badge  bg-<% =(count_98_4==0?"gray":"orange") %>"><% =count_98_4 %></span>
                         </div>
-                        <i class="icon icon-74"></i>
+                        <i class="icon icon-35"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells select" id="_98_4">
