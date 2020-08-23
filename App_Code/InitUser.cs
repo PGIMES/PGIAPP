@@ -58,7 +58,7 @@ public abstract class InitUser
         //}
 
         LoginUser model = null;
-        DataTable dt = SQLHelper.reDs(string.Format("select a.* from  [172.16.5.6].ehr_db.dbo.view_hr_emp a join wx_user b on a.employeeid=b.workcode where b.wxuserid='{0}' and a.employeeid<>''", wxuserid)).Tables[0];
+        DataTable dt = SQLHelper.reDs(string.Format("select a.* from  [172.16.5.6].ehr_db.dbo.view_hr_emp a join wx_user b on a.employeeid=b.workcode where b.wxuserid='{0}' or a.employeeid='{1}'", wxuserid,WorkCode)).Tables[0];
         if (dt.Rows.Count > 0)
         {
             DataRow dr= dt.Rows[0];
