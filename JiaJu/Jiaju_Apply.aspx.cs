@@ -8,7 +8,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class WorkOrder_Jiaju_Apply : System.Web.UI.Page
+public partial class JiaJu_Jiaju_Apply : System.Web.UI.Page
 {
     public string _workshop = "";
     public string _formno = "";
