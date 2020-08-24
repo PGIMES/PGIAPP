@@ -99,7 +99,7 @@
                             return false;
                         }
 
-                        window.location.href = "/Cjgl1.aspx.aspx?workshop=<%=_workshop %>";
+                        window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
                     }
 
                 });
