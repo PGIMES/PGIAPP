@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Jiaju_Apply.aspx.cs" Inherits="JiaJu_Jiaju_Apply" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Jiaju_Apply.aspx.cs" Inherits="Jiaju_Apply" %>
 
 <!DOCTYPE html>
 
