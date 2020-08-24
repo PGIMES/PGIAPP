@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>盘盈亏</title>
+    <title>换夹具</title>
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
     <script src="/Content/layer/layer.js"></script>
@@ -28,11 +28,13 @@
     </style>
     <script>
         $(document).ready(function () {
-            //$("#pgino").attr("readonly", "readonly");
+            $("#sb_desc").attr("readonly", "readonly"); $("#line").attr("readonly", "readonly");
+            $("#off_pgino").attr("readonly", "readonly"); $("#off_jiaju_name").attr("readonly", "readonly");
+            $("#on_pgino").attr("readonly", "readonly"); $("#on_jiaju_name").attr("readonly", "readonly");
 
-            $("#btn_save2").show(); 
+
             if ("<%= _formno %>" != "") {
-               <%-- $("#source").attr("readonly", "readonly");
+                <%-- $("#source").attr("readonly", "readonly");
                 $("#dh").attr("readonly", "readonly"); $("#img_sm_dh").hide();
 
                 if ("<%= _stepid %>" == "0001" && $('#emp_code_name').val() == $('#emp_code_name_db').val()) {
@@ -48,7 +50,7 @@
         });
 
         $(function () {
-            sm_dh();
+            sm_sb();
             
             $("#btn_save2").click(function(){
                 $("#btn_save2").attr("disabled", "disabled");
@@ -61,90 +63,153 @@
                     return false;
                 }
 
-                //$.ajax({
-                //    type: "post",
-                //    url: "Adjust_Apply.aspx/save2",
-                //    data: "{'_emp_code_name':'" + $('#emp_code_name').val() 
-                //        + "','_source':'" + $('#source').val() + "','_dh':'" + $('#dh').val() + "','_pgino':'" + $('#pgino').val()
-                //        + "','_pn':'" + $('#pn').val() + "','_from_qty':'" + $('#from_qty').val() + "','_adj_qty':'" + $('#adj_qty').val()
-                //        + "','_comment':'" + $('#comment').val() + "','_flagwhere':'" + $('#flagwhere').val() + "','_need_no':'" + $('#need_no').val()
-                //        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_loc':'" + $('#loc').val() + "'}",
-                //    contentType: "application/json; charset=utf-8",
-                //    dataType: "json",
-                //    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                //    success: function (data) {
-                //        var obj = eval(data.d);
-                //        if (obj[0].flag=="Y") {
-                //            layer.alert(obj[0].msg);
-                //            $("#btn_save2").removeAttr("disabled");
-                //            $("#btn_save2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                $.ajax({
+                    type: "post",
+                    url: "Jiaju_Apply.aspx/save2",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_workshop':'" + "<%= _workshop %>"
+                        + "','_sb_code':'" + $('#sb_code').val() + "','_sb_desc':'" + $('#sb_desc').val() + "','_line':'" + $('#line').val()
+                        + "','_off_pgino':'" + $('#off_pgino').val() + "','_off_jiaju_no':'" + $('#off_jiaju_no').val() + "','_off_jiaju_name':'" + $('#off_jiaju_name').val()
+                        + "','_on_pgino':'" + $('#on_pgino').val() + "','_on_jiaju_no':'" + $('#on_jiaju_no').val() + "','_on_jiaju_name':'" + $('#on_jiaju_name').val()
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag=="Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_save2").removeAttr("disabled");
+                            $("#btn_save2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
 
-                //            $("#btn_cancel2").removeAttr("disabled");
-                //            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-                //            return false;
-                //        }
+                            $("#btn_cancel2").removeAttr("disabled");
+                            $("#btn_cancel2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
 
-                //        window.location.href = "/workshop.aspx";
-                //    }
+                        window.location.href = "/workshop.aspx";
+                    }
 
-                //});
+                });
+            });
+
+            $("#btn_sign_0").click(function () {
+                $("#btn_sign_0").attr("disabled", "disabled");
+                $("#btn_sign_0").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $.ajax({
+                    type: "post",
+                    url: "Jiaju_Apply.aspx/sign",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val()
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_comment':'" + $('#comment_0').val()
+                        + "','_ng_ok':''}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign_0").removeAttr("disabled");
+                            $("#btn_sign_0").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+                        window.location.href = "/Jiaju_list.aspx";
+
+                    }
+
+                });
             });
         });
 
-        function sm_dh() {
-            //$('#img_sm_dh').click(function () {
-            //    wx.ready(function () {
-            //        wx.scanQRCode({
-            //            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-            //            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-            //            success: function (res) {
-            //                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-            //                // code 在这里面写上扫描二维码之后需要做的内容  
-            //                $('#dh').val(result);
-            //                dh_change();
-            //            }
-            //        });
-            //    });
-            //});
+        function sm_sb() {
+            $('#img_sm_sb').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容  
+                            $('#dh').val(result);
+                            sb_change();
+                        }
+                    });
+                });
+            });
         }
 
-        function dh_change() {
-            //$.ajax({
-            //    type: "post",
-            //    url: "Adjust_Apply.aspx/dh_change",
-            //    data: "{'dh':'" + $('#dh').val() + "','source':'" + $("#source").val() + "'}",
-            //    contentType: "application/json; charset=utf-8",
-            //    dataType: "json",
-            //    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-            //    success: function (data) {
-            //        var obj = eval(data.d);
-            //        if (obj[0].flag == "Y") {
-            //            layer.alert(obj[0].msg);
-            //        }
-            //        $('#pgino').val(obj[0].pgino);
-            //        $('#pn').val(obj[0].pn);
-            //        $('#from_qty').val(obj[0].from_qty);
-            //        $('#flagwhere').val(obj[0].flagwhere);
-            //        $('#need_no').val(obj[0].need_no);
-            //        $('#loc').val(obj[0].loc);
-            //    }
+        function sb_change() {
+            $.ajax({
+                type: "post",
+                url: "Jiaju_Apply.aspx/sb_change",
+                data: "{'sb_code':'" + $('#sb_code').val() + "','workshop':'" + "<%= _workshop %>" + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    if (obj[0].e_code == "") {
+                        layer.alert("【设备】" + $('#sb_code').val() + "不存在.");
+                    }
+                    $("#sb_code").val(obj[0].e_code);
+                    $("#sb_desc").val(obj[0].location);
+                    $("#line").val(obj[0].line);
 
-            //});
+                    $("#off_pgino").val(obj[0].off_pgino);
+                    $("#off_jiaju_no").val(obj[0].off_jiaju_no);
+                    $("#off_jiaju_name").val(obj[0].off_jiaju_name);
+                }
+
+            });
+        }
+        function pgino_change(pgino, type) {
+            $.ajax({
+                type: "post",
+                url: "Jiaju_Apply.aspx/pgino_change",
+                data: "{'pgino':'" + pgino + "','domain': '" + $("#domain").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    var json_jj = obj[0].json_jj;
+                    if (type == "off") {
+                        $("#off_jiaju_no").select("update", { items: json_jj });
+                        $('#off_jiaju_no').val('');
+                        $('#off_jiaju_name').val('');
+                    }
+                    if (type == "on") {
+                        $("#on_jiaju_no").select("update", { items: json_jj });
+                        $('#on_jiaju_no').val('');
+                        $('#on_jiaju_name').val('');
+                    }
+                    
+                }
+
+            });
         }
 
         function valid() {
-            //if ($("#source").val() == "") {
-            //    layer.alert("请输入【地点】.");
-            //    return false;
-            //}
-            //if ($("#dh").val() == "") {
-            //    layer.alert("请输入【单号】.");
-            //    return false;
-            //}
-            //if ($("#pgino").val() == "") {
-            //    layer.alert("【项目号】不可为空.");
-            //    return false;
-            //}
+            if ($("#sb_code").val() == "") {
+                layer.alert("请输入【设备】.");
+                return false;
+            }
+            if ($("#off_pgino").val() == "") {
+                layer.alert("请输入换下夹具【物料号】.");
+                return false;
+            }
+            if ($("#off_jiaju_no").val() == "") {
+                layer.alert("请输入换下夹具【夹具号】.");
+                return false;
+            }
+            if ($("#on_pgino").val() == "") {
+                layer.alert("请输入换上夹具【物料号】.");
+                return false;
+            }
+            if ($("#on_pgino_no").val() == "") {
+                layer.alert("请输入换上夹具【夹具号】.");
+                return false;
+            }
 
             return true;
         }
@@ -158,95 +223,297 @@
         </asp:ScriptManager>
     
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+        <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="formno" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
 
-        <div class="weui-cells weui-cells_form">     
+        <div class="weui-cells weui-cells_form" style="display:<%= _formno==""?"":"none"%>;">     
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">地点</label></div>
-                <asp:TextBox ID="source" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>                            
+                <div class="weui-cell__hd f-red "><label class="weui-label">设备</label></div>
+                <asp:TextBox ID="sb_code" class="weui-input" style="color:gray;width:40%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="设备" ></asp:TextBox>    
+                <asp:TextBox ID="sb_desc" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>     
+                <img id="img_sm_sb" src="../img/fdj2.png" />                                               
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">单号</label></div>
-                <div class="weui-cell__bd">
-                    <span style="float:left; width:90%">
-                        <asp:TextBox ID="dh" class="weui-input" style="color:gray" runat="server" onchange="dh_change()"></asp:TextBox>
-                    </span>
-                    <span style="float:left; width:10%">
-                        <img id="img_sm_dh" src="../img/fdj2.png" />
-                    </span>
-                    <asp:TextBox ID="flagwhere" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
-                    <asp:TextBox ID="need_no" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
-                    <asp:TextBox ID="loc" class="weui-input" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+                <div class="weui-cell__hd"><label class="weui-label">生产线</label></div> 
+                <asp:TextBox ID="line" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>                                                    
+            </div>
+            <div class="weui-cell weui-flex">
+                <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">换下夹具</label></div>
+                <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">夹具号</label></div>
+                <div class="weui-cell__hd weui-flex__item"><label class="weui-label">名称</label></div>
+            </div>
+            <div class="weui-cell weui-flex">
+                <div class="weui-cell__hd weui-flex__item">
+                    <asp:TextBox ID="off_pgino" class="weui-input" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;"  runat="server" placeholder="物料号" ></asp:TextBox>
+                </div>
+                <div class="weui-cell__hd weui-flex__item">
+                    <%--<asp:TextBox ID="off_jiaju_no_w" class="weui-input" runat="server" style="width:40%; border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox> 
+                    <asp:TextBox ID="off_jiaju_no" class="weui-input" runat="server" style="color:gray;width:50%;border-bottom:1px solid #e5e5e5;"></asp:TextBox>--%>
+                    <asp:TextBox ID="off_jiaju_no" class="weui-input" runat="server" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox>
+                </div>
+                <div class="weui-cell__hd weui-flex__item">
+                    <asp:TextBox ID="off_jiaju_name" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
                 </div>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">项目号</label></div>
-                <div class="weui-cell__bd">
-                    <asp:TextBox ID="pgino" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
+            <div class="weui-cell weui-flex">
+                <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">换上夹具</label></div>
+                <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">夹具号</label></div>
+                <div class="weui-cell__hd weui-flex__item"><label class="weui-label">名称</label></div>
+            </div>
+            <div class="weui-cell weui-flex">
+                <div class="weui-cell__hd weui-flex__item">
+                    <asp:TextBox ID="on_pgino" class="weui-input" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;"  runat="server" placeholder="物料号" ></asp:TextBox>
+                </div>
+                <div class="weui-cell__hd weui-flex__item">
+                    <%--<asp:TextBox ID="on_jiaju_no_w" class="weui-input" runat="server" style="color:gray;width:40%; border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox> 
+                    <asp:TextBox ID="on_jiaju_no" class="weui-input" runat="server" style="color:gray;width:50%;border-bottom:1px solid #e5e5e5;"></asp:TextBox>--%>
+                    <asp:TextBox ID="on_jiaju_no" class="weui-input" runat="server" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox>
+                </div>
+                <div class="weui-cell__hd weui-flex__item">
+                    <asp:TextBox ID="on_jiaju_name" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
                 </div>
             </div>
-            
 
-            <%--<div class="weui-form-preview__hd" style="display:<%= _formno!=""?"block":"none"%>;">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">签核信息</label>
-                    <label class="weui-form-preview__"></label>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <asp:Repeater runat="server" ID="Repeater_sg">
-                    <ItemTemplate>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label"><%# Eval("sign_stepname") %></label>
-                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("sign_empname") %></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">签核时间</label>
-                            <span class="weui-form-preview__value">
-                                <%# Eval("sign_time","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
-                            </span>
-                        </div> 
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">签核结果</label>
-                            <span class="weui-form-preview__value"><%# Eval("sign_result_desc") %></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">签核意见</label>
-                            <span class="weui-form-preview__value"><%# Eval("sign_comment") %></span>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </div>--%>
-
-            <div class="weui-cell">
+            <div class="weui-cell" style="display:<%= _formno==""?"":"none"%>;">
                 <input id="btn_save2" type="button" value="提交" class="weui-btn weui-btn_primary" />
             </div>
         </div>
 
+        <div class="weui-form-preview" style="display:<%= _formno!=""?"":"none"%>;">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">换夹具信息</label>
+                    <label class="weui-form-preview__">单号:<% = _formno %></label>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <asp:Repeater runat="server" ID="listBxInfo">
+                    <ItemTemplate>
+                        <%--<div class="weui-mark-vip">
+                            <span class="weui-mark-lt <%# Eval("status").ToString()=="0"?"bg-green":"bg-gray"%>""><%#Eval("status_desc") %></span>
+                        </div>--%>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">生产线</label>
+                            <span class="weui-form-preview__value"><%# Eval("line") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">设备</label>
+                            <span class="weui-form-preview__value"><%# Eval("sb_code")+""+Eval("sb_desc") %></span>
+                        </div>
+                        <div class="weui-form-preview__item weui-flex" style="text-align:left;">
+                            <label class="weui-flex__item">换下夹具</label>
+                            <label class="weui-flex__item">夹具号</label>
+                            <label class="weui-flex__item">名称</label>
+                        </div>
+                        <div class="weui-form-preview__item weui-flex" style="text-align:left;">
+                            <label class="weui-flex__item"><%# Eval("off_pgino") %></label>
+                            <label class="weui-flex__item"><%# Eval("off_jiaju_no") %></label>
+                            <label class="weui-flex__item"><%# Eval("off_jiaju_name") %></label>
+                        </div>
+                        <div class="weui-form-preview__item weui-flex" style="text-align:left;">
+                            <label class="weui-flex__item">换上夹具</label>
+                            <label class="weui-flex__item">夹具号</label>
+                            <label class="weui-flex__item">名称</label>
+                        </div>
+                        <div class="weui-form-preview__item weui-flex" style="text-align:left;">
+                            <label class="weui-flex__item"><%# Eval("on_pgino") %></label>
+                            <label class="weui-flex__item"><%# Eval("on_jiaju_no") %></label>
+                            <label class="weui-flex__item"><%# Eval("on_jiaju_name") %></label>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">换夹人</label>
+                            <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
+                        </div> 
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">开始时间</label>
+                            <span class="weui-form-preview__value">
+                                <%# Eval("create_date","{0:MM/dd HH:mm}") %>
+                            </span>
+                        </div> 
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+
+            
+            <asp:Repeater runat="server" ID="Repeater_sg">
+                <ItemTemplate>
+                    <div class="weui-form-preview__hd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"><%# Eval("type") %></label>
+                            <label class="weui-form-preview__"></label>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"><%# Eval("type_emp") %></label>
+                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"><%# Eval("type_date") %></label>
+                            <span class="weui-form-preview__value">
+                                <%# Eval("create_date","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                            </span>
+                        </div> 
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">结果</label>
+                            <span class="weui-form-preview__value"><%# Eval("ng_ok") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">说明</label>
+                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+
+        </div>
+
+        <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="0"?"":"none"%>;">   
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">送检说明</label></div>
+                <textarea id="comment_0" class="weui-textarea"  placeholder="请输入送检说明" rows="2" runat="server" value=''></textarea>
+            </div>
+            <div class="weui-cell" >
+                <input id="btn_sign_0" type="button" value="确认" class="weui-btn weui-btn_primary" />
+            </div>
+        </div>
+        
+        <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="1"?"":"none"%>;">   
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red "><label class="weui-label">检测结果</label></div> 
+                <asp:TextBox ID="ng_ok_1" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>  
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">检测说明</label></div>
+                <textarea id="comment_1" class="weui-textarea"  placeholder="请输入检测说明" rows="2" runat="server" value=''></textarea>
+            </div>
+            <div class="weui-cell" >
+                <input id="btn_sign_1" type="button" value="确认" class="weui-btn weui-btn_primary" />
+            </div>
+        </div>
+
+        <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="2"?"":"none"%>;">   
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red "><label class="weui-label">完成结果</label></div> 
+                <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>  
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">完成说明</label></div>
+                <textarea id="comment_2" class="weui-textarea"  placeholder="请输入完成说明" rows="2" runat="server" value=''></textarea>
+            </div>
+            <div class="weui-cell" >
+                <input id="btn_sign_2" type="button" value="确认" class="weui-btn weui-btn_primary" />
+            </div>
+        </div>
+            
     </form>
     <script>
         if ("<%= _formno %>" == "") {
-            //var datalist_sr = [{ title: '二车间', value: '二车间' }, { title: '三车间', value: '三车间' }, { title: '四车间', value: '四车间' }
-            //                , { title: '原材料库', value: '原材料库' }, { title: '成品库', value: '成品库' }, { title: '半成品库', value: '半成品库' }]
-            //$("#source").select({
-            //    title: "来源",
-            //    items: datalist_sr,
-            //    onChange: function (d) {
-            //        //    console.log(this, d);
-            //    },
-            //    onClose: function (d) {
-            //        var obj = eval(d.data);
-            //        //alert(obj.values);
-            //        if ($('#dh').val() != "") {
-            //            dh_change();
-            //        }
-            //    },
-            //    onOpen: function () {
-            //        //  console.log("open");
-            //    },
+            var datalist_sb, datalist_pgino;
+            $.ajax({
+                type: "post",
+                url: "Jiaju_Apply.aspx/init_sb_pgino",
+                data: "{'domain': '" + $("#domain").val() + "','workshop':'" + "<%= _workshop %>" + "','emp': '" + $("#emp_code_name").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    datalist_sb = obj[0].json_sb;
+                    datalist_pgino = obj[0].json_pgino;
+                }
+            });
 
-            //});
+            $("#sb_code").select({
+                title: "设备",
+                items: datalist_sb,
+                onChange: function (d) {
+                    //alert(d.values);
+                    sb_change();
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
+
+            });
+        
+            $("#off_pgino").select({
+                title: "物料号",
+                items: datalist_pgino,
+                onChange: function (d) {
+                    //alert(d.values);
+                    pgino_change(d.values, "off");
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+                
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
+
+            });
+
+            $("#off_jiaju_no").select({
+                title: "夹具号",
+                items: [{ title: '', value: '' }],
+                onChange: function (d) {
+                    //alert(d.values);
+                    $("#off_jiaju_name").val(d.values);
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
+
+            });
+
+            $("#on_pgino").select({
+                title: "物料号",
+                items: datalist_pgino,
+                onChange: function (d) {
+                    //alert(d.values);
+                    pgino_change(d.values, "on");
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
+
+            });
+
+            $("#on_jiaju_no").select({
+                title: "夹具号",
+                items: [{ title: '', value: '' }],
+                onChange: function (d) {
+                    //alert(d.values);
+                    $("#on_jiaju_name").val(d.values);
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                },
+
+            });
         }
         
     </script>
