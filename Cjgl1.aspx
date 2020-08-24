@@ -30,7 +30,7 @@
                      
         }
         .weui-cell{
-            padding:10px 20px;  
+            padding:7px 20px;  
         }
         i{ color:#03a9f4}
         .bg-orange{background-color:orange}
@@ -66,6 +66,15 @@
                     </div>
                     <div class="weui-cell__bd">
                         <p>上岗</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-magnet margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>换夹具<font style="font-size:smaller">(开发中)</font></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -185,16 +194,7 @@
                         <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>  
                     </div>
                 </a>
-                <%--<a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?workshop=<%=_workshop %>">--%>         
-                <%--<a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh('<%=_workshop %>');">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-random margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>仓库接收</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>--%>
+                
                 <a class="weui-cell weui-cell_access" href="/workorder/prod_wip_list_v4.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-gears margin10-r"></i>
@@ -202,47 +202,15 @@
                     <div class="weui-cell__bd">
                         <p>生产监视</p>
                     </div>
-                    <div class="weui-cell__ft">
-                       <%-- <asp:Label ID="lblPart" runat="server" Text="" style="display:none;"></asp:Label>
-                        <asp:Label ID="lblWip" runat="server" Text="" style="display:none;"></asp:Label>
-                        <asp:Label ID="lblNg" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string iPart = lblPart.Text;string iWip = lblWip.Text;string iNg = lblNg.Text; Response.Write("<span class='weui-badge  bg-" + (iWip == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + iWip + "</span><span class='weui-badge  bg-" + (iPart == "0" ? "gray" : "orange") + "' style='margin-right: 15px;'>部" + iPart + "</span><span class='weui-badge  bg-" + (iNg == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + iNg + "</span>"); %>  
-                    --%>
-                                                 
-                        <span class="weui-badge bg-blue" id="wip24" style='margin-right: 15px;'>..</span>
-                        <span class="weui-badge bg-blue" id="sh24" style='margin-right: 15px;'>..</span>
-                        <span class="weui-badge bg-orange" id="part24"  style='margin-right: 15px;'>部..</span>
+                    <div class="weui-cell__ft">                                                                        
+                        <span class="weui-badge bg-blue" id="wip24" style='margin-right: 10px;'>..</span>
+                        <span class="weui-badge bg-blue" id="sh24" style='margin-right: 10px;'>..</span>
+                        <span class="weui-badge bg-orange" id="part24"  style='margin-right: 10px;'>部..</span>
                         <span class="weui-badge bg-red" id="ng24" style='margin-right: 15px;'>返..</span>
                      
                     </div>
                 </a>   
-                <%--<a class="weui-cell weui-cell_access" href="/workorder/prod_end_list.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-list-alt margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>生产完成监视<span class="f12">（临时）</span></p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/prod_qc_list.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-reorder margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>终检完成监视<span class="f12">（临时）</span></p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>--%>
-                <%--<a class="weui-cell weui-cell_access" href="javascript:void(0);">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-bar-chart margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>报表查看<span class="f12">（未开放）</span></p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>--%>
+                
             </div>
                <% }%>
 
@@ -320,9 +288,7 @@
                     <div class="weui-cell__bd">
                         <p>上岗监视</p>
                     </div>
-                    <div class="weui-cell__ft">
-                        <%--<asp:Label ID="Label1_three" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i1_three = Label1_three.Text; Response.Write("<span class='weui-badge  bg-" + (i1_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i1_three + "</span>"); %>--%> 
+                    <div class="weui-cell__ft">                       
                         
                         <asp:Label ID="Label1_three" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label1_three_j" runat="server" Text="" style="display:none;"></asp:Label>
@@ -380,15 +346,7 @@
                         <% string i_bhg_3_f = Label_bhg_thr_f.Text;Response.Write("<span class='weui-badge  bg-" + (i_bhg_3_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i_bhg_3_f + "</span>"); %>  
                     </div>
                 </a>
-                <%--<a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh('<%=_workshop %>');">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-random margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>仓库接收<span class="f12"></span></p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>--%>
+                 
                 <a class="weui-cell weui-cell_access" href="/workorder/prod_YZ_monitor.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-gears margin10-r"></i>
@@ -397,9 +355,9 @@
                         <p>生产监视</p>                        
                     </div>
                     <div class="weui-cell__ft">                        
-                        <span class="weui-badge bg-blue" id="wip3" style='margin-right: 15px;'>..</span>
-                        <span class="weui-badge bg-blue" id="sh3" style='margin-right: 15px;'>..</span>
-                        <span class="weui-badge bg-orange" id="part3"  style='margin-right: 15px;'>部..</span>
+                        <span class="weui-badge bg-blue" id="wip3" style='margin-right: 10px;'>..</span>
+                        <span class="weui-badge bg-blue" id="sh3" style='margin-right: 10px;'>..</span>
+                        <span class="weui-badge bg-orange" id="part3"  style='margin-right: 10px;'>部..</span>
                         <span class="weui-badge bg-red" id="ng3" style='margin-right: 15px;'>返..</span>
                     </div>
                 </a>   
