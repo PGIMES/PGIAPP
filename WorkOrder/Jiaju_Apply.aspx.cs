@@ -54,40 +54,6 @@ public partial class WorkOrder_Jiaju_Apply : System.Web.UI.Page
         if (dt.Rows.Count == 1)
         {
             _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
-            //    emp_code_name_db.Text = dt.Rows[0]["emp_code"].ToString() + dt.Rows[0]["emp_name"].ToString();
-            //    source.Text = dt.Rows[0]["source"].ToString();
-            //    dh.Text = dt.Rows[0]["lot_no"].ToString();
-            //    pgino.Text = dt.Rows[0]["pgino"].ToString();
-            //    pn.Text = dt.Rows[0]["pn"].ToString();
-            //    from_qty_db.Text = "原数量" + dt.Rows[0]["from_qty"].ToString(); from_qty_db.Visible = true;
-            //    adj_qty.Text = dt.Rows[0]["adj_qty"].ToString();
-            //    comment.Value = dt.Rows[0]["remark"].ToString();
-
-            //    //改三个字段proc重新复制喽
-            //    if (dt.Rows[0]["flagwhere"].ToString() != "QAD")
-            //    {
-            //        from_qty.Text = dt.Rows[0]["from_qty_cur"].ToString();
-            //        need_no.Text = dt.Rows[0]["need_no"].ToString();
-            //        flagwhere.Text = dt.Rows[0]["flagwhere"].ToString();
-            //        loc.Text = dt.Rows[0]["loc"].ToString();
-            //    }
-            //    else
-            //    {
-            //        DataTable ldt = new DataTable();
-            //        string sqlStr = @"select ld_part,ld_loc,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
-            //                        from pub.ld_det where ld_ref='{0}' and ld_domain='200' and ld_loc='{1}' with (nolock)";
-            //        sqlStr = string.Format(sqlStr, dt.Rows[0]["lot_no"].ToString(), dt.Rows[0]["loc"].ToString());
-            //        ldt = QadOdbcHelper.GetODBCRows(sqlStr);
-            //        if (ldt == null) { }
-            //        else if (ldt.Rows.Count <= 0) { }
-            //        else//QAD存在
-            //        {
-            //            from_qty.Text = ldt.Rows[0]["ld_qty_oh"].ToString();
-            //            flagwhere.Text = "QAD";
-            //            need_no.Text = "";
-            //            loc.Text = ldt.Rows[0]["ld_loc"].ToString();
-            //        }
-            //    }
             listBxInfo.DataSource = dt;
             listBxInfo.DataBind();
         }
@@ -187,5 +153,19 @@ public partial class WorkOrder_Jiaju_Apply : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string sign(string _emp_code_name, string _formno, string _stepid, string _comment, string _ng_ok, string _type)
+    {
+        string flag = "N", msg = "";
+        string re_sql = re_sql = @"exec usp_app_Jiaju_sign '{0}','{1}','{2}','{3}','{4}','{5}'";
+        re_sql = string.Format(re_sql, _emp_code_name, _formno, _stepid, _comment, _ng_ok, _type);
 
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
 }

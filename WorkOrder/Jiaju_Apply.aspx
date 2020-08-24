@@ -99,9 +99,8 @@
                 $.ajax({
                     type: "post",
                     url: "Jiaju_Apply.aspx/sign",
-                    data: "{'_emp_code_name':'" + $('#emp_code_name').val()
-                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "','_comment':'" + $('#comment_0').val()
-                        + "','_ng_ok':''}",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_comment':'" + $('#comment_0').val() + "','_ng_ok':'','_type':'送检说明'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -113,12 +112,83 @@
                             $("#btn_sign_0").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                             return false;
                         }
-                        window.location.href = "/Jiaju_list.aspx";
+                        window.location.href = "/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>";
 
                     }
 
                 });
             });
+
+            $("#btn_sign_1").click(function () {
+                $("#btn_sign_1").attr("disabled", "disabled");
+                $("#btn_sign_1").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if ($("#ng_ok_1").val() == "") {
+                    $("#btn_sign_1").removeAttr("disabled");
+                    $("#btn_sign_1").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    layer.alert("请输入【检测结果】.");
+                    return false;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "Jiaju_Apply.aspx/sign",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_comment':'" + $('#comment_1').val() + "','_ng_ok':'" + $('#ng_ok_1').val() + "','_type':'检测说明'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign_1").removeAttr("disabled");
+                            $("#btn_sign_1").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+                        window.location.href = "/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>";
+
+                    }
+
+                });
+            });
+            
+            $("#btn_sign_2").click(function () {
+                $("#btn_sign_2").attr("disabled", "disabled");
+                $("#btn_sign_2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if ($("#ng_ok_2").val() == "") {
+                    $("#btn_sign_2").removeAttr("disabled");
+                    $("#btn_sign_2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    layer.alert("请输入【完成结果】.");
+                    return false;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "Jiaju_Apply.aspx/sign",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_comment':'" + $('#comment_2').val() + "','_ng_ok':'" + $('#ng_ok_2').val() + "','_type':'换夹完成说明'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign_2").removeAttr("disabled");
+                            $("#btn_sign_2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+                        window.location.href = "/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>";
+
+                    }
+
+                });
+            });
+
         });
 
         function sm_sb() {
@@ -338,31 +408,25 @@
             
             <asp:Repeater runat="server" ID="Repeater_sg">
                 <ItemTemplate>
-                    <div class="weui-form-preview__hd">
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label"><%# Eval("type") %></label>
-                            <label class="weui-form-preview__"></label>
+                    <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
+                        <div class="weui-form-preview__item" style="display:<%# Eval("ng_ok").ToString()!=""?"":"none"%>; ">
+                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>结果</label>
+                            <span class="weui-form-preview__value"><%# Eval("ng_ok") %></span>
                         </div>
-                    </div>
-                    <div class="weui-form-preview__bd">
                         <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label"><%# Eval("type_emp") %></label>
+                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
+                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>人</label>
                             <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
                         </div>
                         <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label"><%# Eval("type_date") %></label>
+                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>时间</label>
                             <span class="weui-form-preview__value">
                                 <%# Eval("create_date","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                             </span>
                         </div> 
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">结果</label>
-                            <span class="weui-form-preview__value"><%# Eval("ng_ok") %></span>
-                        </div>
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">说明</label>
-                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
-                        </div>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
@@ -382,7 +446,7 @@
         <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="1"?"":"none"%>;">   
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red "><label class="weui-label">检测结果</label></div> 
-                <asp:TextBox ID="ng_ok_1" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>  
+                <asp:TextBox ID="ng_ok_1" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结果"></asp:TextBox>  
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">检测说明</label></div>
@@ -396,7 +460,7 @@
         <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="2"?"":"none"%>;">   
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red "><label class="weui-label">完成结果</label></div> 
-                <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>  
+                <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server" placeholder="请输入完成结果"></asp:TextBox>  
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">完成说明</label></div>
@@ -514,6 +578,43 @@
                 },
 
             });
+        } else {
+            var datalist_sr = [{ title: 'NG', value: 'NG' }, { title: 'OK', value: 'OK' }];
+
+            if ("<%= _stepid %>" == "1") {
+                $("#ng_ok_1").select({
+                    title: "结果",
+                    items: datalist_sr,
+                    onChange: function (d) {
+                        //    console.log(this, d);
+                    },
+                    onClose: function (d) {
+                        var obj = eval(d.data);
+                        //alert(obj.values);
+                    },
+                    onOpen: function () {
+                        //  console.log("open");
+                    },
+
+                });
+            }
+            if ("<%= _stepid %>" == "2") {
+                $("#ng_ok_2").select({
+                    title: "结果",
+                    items: datalist_sr,
+                    onChange: function (d) {
+                        //    console.log(this, d);
+                    },
+                    onClose: function (d) {
+                        var obj = eval(d.data);
+                        //alert(obj.values);
+                    },
+                    onOpen: function () {
+                        //  console.log("open");
+                    },
+
+                });
+            }
         }
         
     </script>
