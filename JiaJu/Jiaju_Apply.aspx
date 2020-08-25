@@ -261,11 +261,21 @@
                         $("#off_jiaju_no").select("update", { items: json_jj });
                         $('#off_jiaju_no').val('');
                         $('#off_jiaju_name').val('');
+
+                        if (json_jj.length == 1) {
+                            $('#off_jiaju_no').val(json_jj[0].title);
+                            $('#off_jiaju_name').val(json_jj[0].value);
+                        }
                     }
                     if (type == "on") {
                         $("#on_jiaju_no").select("update", { items: json_jj });
                         $('#on_jiaju_no').val('');
                         $('#on_jiaju_name').val('');
+
+                        if (json_jj.length == 1) {
+                            $('#on_jiaju_no').val(json_jj[0].title);
+                            $('#on_jiaju_name').val(json_jj[0].value);
+                        }
                     }
                     
                 }
@@ -339,7 +349,7 @@
                 </div>
             </div>--%>
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red"><label class="weui-label">换下夹具</label></div>
+                <div class="weui-cell__hd"><label class="weui-label">换下夹具</label></div>
                 <asp:TextBox ID="off_pgino" class="weui-input" style="color:gray;width:55%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="物料号" ></asp:TextBox>    
                 <asp:TextBox ID="off_pn" class="weui-input" style="color:gray;font-size:13px;" runat="server"></asp:TextBox> 
             </div>
