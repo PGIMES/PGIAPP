@@ -530,7 +530,7 @@
                 </li>
             </ul>
 
-            <ul class="collapse" style="display:<%= ViewState["dt_sg"].ToString()!="0"?"":"none"%>;">
+            <ul class="collapse" style="display:<%= (ViewState["dt_sg"]!=null && ViewState["dt_sg"].ToString()!="0")?"":"none"%>;">
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
