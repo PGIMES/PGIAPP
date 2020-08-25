@@ -17,7 +17,7 @@
     <script src="/js/zepto.weui.js"></script>
     <style>
         .weui-cell{
-            padding:4px 15px;
+            padding:4px 15px; 
         }
         .f_gray{
             color:gray;
@@ -321,7 +321,7 @@
                 <div class="weui-cell__hd"><label class="weui-label">生产线</label></div> 
                 <asp:TextBox ID="line" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>                                                    
             </div>
-            <div class="weui-cell weui-flex">
+            <%--<div class="weui-cell weui-flex">
                 <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">换下夹具</label></div>
                 <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">夹具号</label></div>
                 <div class="weui-cell__hd weui-flex__item"><label class="weui-label">名称</label></div>
@@ -331,15 +331,23 @@
                     <asp:TextBox ID="off_pgino" class="weui-input" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;"  runat="server" placeholder="物料号" ></asp:TextBox>
                 </div>
                 <div class="weui-cell__hd weui-flex__item">
-                    <%--<asp:TextBox ID="off_jiaju_no_w" class="weui-input" runat="server" style="width:40%; border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox> 
-                    <asp:TextBox ID="off_jiaju_no" class="weui-input" runat="server" style="color:gray;width:50%;border-bottom:1px solid #e5e5e5;"></asp:TextBox>--%>
                     <asp:TextBox ID="off_jiaju_no" class="weui-input" runat="server" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox>
                 </div>
                 <div class="weui-cell__hd weui-flex__item">
                     <asp:TextBox ID="off_jiaju_name" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
                 </div>
+            </div>--%>
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">换下夹具</label></div>
+                <asp:TextBox ID="off_pgino" class="weui-input" style="color:gray;width:55%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="物料号" ></asp:TextBox>    
+                <asp:TextBox ID="off_pn" class="weui-input" style="color:gray;font-size:13px;" runat="server"></asp:TextBox> 
             </div>
-            <div class="weui-cell weui-flex">
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label"></label></div>    
+                <asp:TextBox ID="off_jiaju_no" class="weui-input" style="color:gray;width:55%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="夹具号" ></asp:TextBox>    
+                <asp:TextBox ID="off_jiaju_name" class="weui-input" style="color:gray;font-size:13px;" runat="server"></asp:TextBox>                                           
+            </div>
+            <%--<div class="weui-cell weui-flex">
                 <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">换上夹具</label></div>
                 <div class="weui-cell__hd weui-flex__item f-red"><label class="weui-label">夹具号</label></div>
                 <div class="weui-cell__hd weui-flex__item"><label class="weui-label">名称</label></div>
@@ -349,13 +357,21 @@
                     <asp:TextBox ID="on_pgino" class="weui-input" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;"  runat="server" placeholder="物料号" ></asp:TextBox>
                 </div>
                 <div class="weui-cell__hd weui-flex__item">
-                    <%--<asp:TextBox ID="on_jiaju_no_w" class="weui-input" runat="server" style="color:gray;width:40%; border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox> 
-                    <asp:TextBox ID="on_jiaju_no" class="weui-input" runat="server" style="color:gray;width:50%;border-bottom:1px solid #e5e5e5;"></asp:TextBox>--%>
                     <asp:TextBox ID="on_jiaju_no" class="weui-input" runat="server" style="color:gray;width:90%;border-bottom:1px solid #e5e5e5;" placeholder="夹具号" ></asp:TextBox>
                 </div>
                 <div class="weui-cell__hd weui-flex__item">
                     <asp:TextBox ID="on_jiaju_name" class="weui-input" style="color:gray"  runat="server"></asp:TextBox>
                 </div>
+            </div>--%>
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">换上夹具</label></div>
+                <asp:TextBox ID="on_pgino" class="weui-input" style="color:gray;width:55%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="物料号" ></asp:TextBox>    
+                <asp:TextBox ID="on_pn" class="weui-input" style="color:gray;font-size:13px;" runat="server"></asp:TextBox> 
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label"></label></div>    
+                <asp:TextBox ID="on_jiaju_no" class="weui-input" style="color:gray;width:55%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="夹具号" ></asp:TextBox>    
+                <asp:TextBox ID="on_jiaju_name" class="weui-input" style="color:gray;font-size:13px;" runat="server"></asp:TextBox>                                           
             </div>
 
             <div class="weui-cell" style="display:<%= _formno==""?"":"none"%>;">
@@ -382,9 +398,9 @@
                         </div>
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">设备</label>
-                            <span class="weui-form-preview__value"><%# Eval("sb_code")+""+Eval("sb_desc") %></span>
+                            <span class="weui-form-preview__value"><%# Eval("sb_code")+","+Eval("sb_desc") %></span>
                         </div>
-                        <div class="weui-form-preview__item weui-flex" style="text-align:left;">
+                        <%--<div class="weui-form-preview__item weui-flex" style="text-align:left;">
                             <label class="weui-flex__item">换下夹具</label>
                             <label class="weui-flex__item">夹具号</label>
                             <label class="weui-flex__item">名称</label>
@@ -403,6 +419,22 @@
                             <label class="weui-flex__item"><%# Eval("on_pgino") %></label>
                             <label class="weui-flex__item"><%# Eval("on_jiaju_no") %></label>
                             <label class="weui-flex__item"><%# Eval("on_jiaju_name") %></label>
+                        </div>--%>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">换下夹具</label>
+                            <span class="weui-form-preview__value"><%# Eval("off_pgino")+","+Eval("off_pn") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"></label>
+                            <span class="weui-form-preview__value"><%# Eval("off_jiaju_no")+","+Eval("off_jiaju_name") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">换上夹具</label>
+                            <span class="weui-form-preview__value"><%# Eval("on_pgino")+","+Eval("on_pn") %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label"></label>
+                            <span class="weui-form-preview__value"><%# Eval("on_jiaju_no")+","+Eval("on_jiaju_name") %></span>
                         </div>
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">换夹人</label>
@@ -525,6 +557,7 @@
                 items: datalist_pgino,
                 onChange: function (d) {
                     //alert(d.values);
+                    $("#off_pn").val(d.values);
                     pgino_change(d.values, "off");
                 },
                 onClose: function (d) {
@@ -561,6 +594,7 @@
                 items: datalist_pgino,
                 onChange: function (d) {
                     //alert(d.values);
+                    $("#on_pn").val(d.values);
                     pgino_change(d.values, "on");
                 },
                 onClose: function (d) {
