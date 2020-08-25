@@ -82,7 +82,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             string sqlStr = ""; string ldt_source = "";
             if (pgino_yn == "Y")
             {
-                sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{1}' with (nolock)";
+                sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_ref='{1}' and ld_qty_oh>0 with (nolock)";
                 sqlStr = string.Format(sqlStr, pgino, lotno);
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
 
@@ -93,7 +93,7 @@ public partial class WorkOrder_SL : System.Web.UI.Page
             if (ldt.Rows.Count == 0)
             {
                 //sqlStr = @"select ld_loc,ld_qty_oh from pub.ld_det where ld_status='WIP' and ld_part='" + pgino + "' and ld_ref='" + lotno + "' and ld_loc='" + loc_to + "' with (nolock)";
-                sqlStr = @"select ld_loc,ld_qty_oh,ld_part,ld_status from pub.ld_det where ld_ref='" + lotno + "' with (nolock)";
+                sqlStr = @"select ld_loc,ld_qty_oh,ld_part,ld_status from pub.ld_det where ld_ref='" + lotno + "' and ld_qty_oh>0 with (nolock)";
                 ldt = QadOdbcHelper.GetODBCRows(sqlStr);
 
                 ldt_source = "2";
