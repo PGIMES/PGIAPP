@@ -13,6 +13,7 @@ public partial class Jiaju_Apply : System.Web.UI.Page
     public string _workshop = "";
     public string _formno = "";
     public string _stepid = "";
+    public string _times_t = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -54,6 +55,7 @@ public partial class Jiaju_Apply : System.Web.UI.Page
         if (dt.Rows.Count == 1)
         {
             _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
+            _times_t= dt.Rows[0]["times_t"].ToString();
             listBxInfo.DataSource = dt;
             listBxInfo.DataBind();
         }

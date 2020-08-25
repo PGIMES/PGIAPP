@@ -25,6 +25,12 @@
         .weui-btn + .weui-btn{
             margin-top:0px;
         }
+        .weui-cells:after{
+            border:none;
+        }
+        .weui-form-preview:after{
+            border:none;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -593,6 +599,14 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <div class="weui-form-preview__bd" style="padding:0px 15px;">
+                                <div class="weui-form-preview__item" style="display:<%= _stepid=="9"?"":"none"%>;">
+                                    <label class="weui-form-preview__label"></label>
+                                    <span class="weui-form-preview__value">
+                                        总时长: <font class='f-blue'><%= _times_t %></font> 
+                                    </span>
+                                </div> 
+                            </div>
                         </div>
                     </div>
                 </li>
