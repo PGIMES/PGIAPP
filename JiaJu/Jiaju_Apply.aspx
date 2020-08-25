@@ -83,6 +83,7 @@
                         + "','_sb_code':'" + $('#sb_code').val() + "','_sb_desc':'" + $('#sb_desc').val() + "','_line':'" + $('#line').val()
                         + "','_off_pgino':'" + $('#off_pgino').val() + "','_off_pn':'" + $('#off_pn').val() + "','_off_jiaju_no':'" + $('#off_jiaju_no').val() + "','_off_jiaju_name':'" + $('#off_jiaju_name').val()
                         + "','_on_pgino':'" + $('#on_pgino').val() + "','_on_pn':'" + $('#on_pn').val() + "','_on_jiaju_no':'" + $('#on_jiaju_no').val() + "','_on_jiaju_name':'" + $('#on_jiaju_name').val()
+                        + "','_comment':'" + $('#comment').val()
                         + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -277,14 +278,14 @@
                 layer.alert("请输入【设备】.");
                 return false;
             }
-            if ($("#off_pgino").val() == "") {
-                layer.alert("请输入换下夹具【物料号】.");
-                return false;
-            }
-            if ($("#off_jiaju_no").val() == "") {
-                layer.alert("请输入换下夹具【夹具号】.");
-                return false;
-            }
+            //if ($("#off_pgino").val() == "") {
+            //    layer.alert("请输入换下夹具【物料号】.");
+            //    return false;
+            //}
+            //if ($("#off_jiaju_no").val() == "") {
+            //    layer.alert("请输入换下夹具【夹具号】.");
+            //    return false;
+            //}
             if ($("#on_pgino").val() == "") {
                 layer.alert("请输入换上夹具【物料号】.");
                 return false;
@@ -372,6 +373,10 @@
                 <div class="weui-cell__hd f-red"><label class="weui-label"></label></div>    
                 <asp:TextBox ID="on_jiaju_no" class="weui-input" style="color:gray;width:55%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="夹具号" ></asp:TextBox>    
                 <asp:TextBox ID="on_jiaju_name" class="weui-input" style="color:gray;font-size:13px;" runat="server"></asp:TextBox>                                           
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                <textarea id="comment" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
             </div>
 
             <div class="weui-cell" style="display:<%= _formno==""?"":"none"%>;">
