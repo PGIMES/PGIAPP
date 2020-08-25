@@ -351,7 +351,7 @@
                                                             <%=dr["sb_desc"] %>
                                                         </span><% if (Convert.ToInt16(dr["ng_count"]) >= 1)
                                                                    { %>
-                                                        <span class="weui-mark-rt- weui-badge  bg-orange  margin10-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
                                                         <%} %>
                                                         <br />
                                                         <span class=""><%=dr["on_pgino"] %></span>
@@ -421,7 +421,7 @@
                                                             <%=dr["sb_desc"] %>
                                                         </span><% if (Convert.ToInt16(dr["ng_count"]) >= 1)
                                                                    { %>
-                                                        <span class="weui-mark-rt- weui-badge  margin20-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
                                                         <%} %>
                                                         <br />
                                                         <span class=""><%=dr["on_pgino"] %></span>
@@ -486,7 +486,7 @@
                                                             <%=dr["sb_desc"] %>
                                                         </span><% if (Convert.ToInt16(dr["ng_count"]) >= 1)
                                                                    { %>
-                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr margin20-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
+                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
                                                         <%} %>
                                                         <br />
                                                         <span class=""><%=dr["on_pgino"] %></span>
@@ -568,7 +568,7 @@
                                                                         <%=dr["sb_desc"] %>
                                                                     </span><% if (Convert.ToInt16(dr["ng_count"]) >= 1)
                                                                                { %>
-                                                                    <span class="weui-mark-rt- weui-badge  weui-badge-tr margin20-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
+                                                                    <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;"><%=Convert.ToInt16(dr["ng_count"])+1%></span>
                                                                     <%} %>
                                                                     <br />
                                                                     <span class=""><%=dr["on_pgino"] %></span>
