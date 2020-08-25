@@ -314,7 +314,7 @@
         <div class="weui-cells weui-cells_form" style="display:<%= _formno==""?"":"none"%>;">     
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red "><label class="weui-label">设备</label></div>
-                <asp:TextBox ID="sb_code" class="weui-input" style="color:gray;width:40%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="设备" ></asp:TextBox>    
+                <asp:TextBox ID="sb_code" class="weui-input" style="color:gray;width:40%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="设备号" ></asp:TextBox>    
                 <asp:TextBox ID="sb_desc" class="weui-input" style="color:gray;" runat="server"></asp:TextBox>     
                 <img id="img_sm_sb" src="../img/fdj2.png" />                                               
             </div>
@@ -499,11 +499,17 @@
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">设备</label>
-                                            <span class="weui-form-preview__value"><%# Eval("sb_code")+","+Eval("sb_desc") %></span>
+                                            <span class="weui-form-preview__value">
+                                                <font style="font-weight:800;"><%# Eval("sb_code") %></font>
+                                                <%# ","+Eval("sb_desc") %>
+                                            </span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">换下夹具</label>
-                                            <span class="weui-form-preview__value"><%# Eval("off_pgino")+","+Eval("off_pn") %></span>
+                                            <span class="weui-form-preview__value">
+                                                <font style="font-weight:800;"><%# Eval("off_pgino") %></font>
+                                                <%# ","+Eval("off_pn") %>
+                                            </span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label"></label>
@@ -511,7 +517,10 @@
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">换上夹具</label>
-                                            <span class="weui-form-preview__value"><%# Eval("on_pgino")+","+Eval("on_pn") %></span>
+                                            <span class="weui-form-preview__value">
+                                                <font style="font-weight:800;"><%# Eval("on_pgino") %></font>
+                                                <%# ","+Eval("on_pn") %>
+                                            </span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label"></label>
@@ -520,6 +529,10 @@
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">换夹人</label>
                                             <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
+                                        </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">说明</label>
+                                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
                                         </div> 
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">开始时间</label>
@@ -606,12 +619,12 @@
 
         <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="2"?"":"none"%>;">   
             <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">完成结果</label></div> 
-                <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server" placeholder="请输入完成结果"></asp:TextBox>  
+                <div class="weui-cell__hd f-red "><label class="weui-label">检测结果确认</label></div> 
+                <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结果确认"></asp:TextBox>  
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">完成说明</label></div>
-                <textarea id="comment_2" class="weui-textarea"  placeholder="请输入完成说明" rows="2" runat="server" value=''></textarea>
+                <div class="weui-cell__hd"><label class="weui-label">换夹完成说明</label></div>
+                <textarea id="comment_2" class="weui-textarea"  placeholder="请输入换夹完成说明" rows="2" runat="server" value=''></textarea>
             </div>
             <div class="weui-cell" >
                 <input id="btn_sign_2" type="button" value="确认" class="weui-btn weui-btn_primary" />
