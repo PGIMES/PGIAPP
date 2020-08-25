@@ -31,6 +31,12 @@
         .weui-form-preview:after{
             border:none;
         }
+        #div_op .weui-cell:before{
+            border-top:none;
+        }
+        #div_op .weui-cells:before{
+            border-top:none;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -613,49 +619,47 @@
                 </li>
             </ul>
 
-            
-            
-
         </div>
 
-        <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="0"?"":"none"%>;">   
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">送检说明</label></div>
-                <textarea id="comment_0" class="weui-textarea"  placeholder="请输入送检说明" rows="2" runat="server" value=''></textarea>
+        <div id="div_op">
+            <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="0"?"":"none"%>;">   
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">送检说明</label></div>
+                    <textarea id="comment_0" class="weui-textarea"  placeholder="请输入送检说明" rows="2" runat="server" value=''></textarea>
+                </div>
+                <div class="weui-cell" >
+                    <input id="btn_sign_0" type="button" value="确认" class="weui-btn weui-btn_primary" />
+                </div>
             </div>
-            <div class="weui-cell" >
-                <input id="btn_sign_0" type="button" value="确认" class="weui-btn weui-btn_primary" />
-            </div>
-        </div>
         
-        <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="1"?"":"none"%>;">   
-            <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">检测结果</label></div> 
-                <asp:TextBox ID="ng_ok_1" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结果"></asp:TextBox>  
+            <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="1"?"":"none"%>;">   
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">检测结果</label></div> 
+                    <asp:TextBox ID="ng_ok_1" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结果"></asp:TextBox>  
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">检测说明</label></div>
+                    <textarea id="comment_1" class="weui-textarea"  placeholder="请输入检测说明" rows="2" runat="server" value=''></textarea>
+                </div>
+                <div class="weui-cell" >
+                    <input id="btn_sign_1" type="button" value="确认" class="weui-btn weui-btn_primary" />
+                </div>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">检测说明</label></div>
-                <textarea id="comment_1" class="weui-textarea"  placeholder="请输入检测说明" rows="2" runat="server" value=''></textarea>
-            </div>
-            <div class="weui-cell" >
-                <input id="btn_sign_1" type="button" value="确认" class="weui-btn weui-btn_primary" />
-            </div>
-        </div>
 
-        <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="2"?"":"none"%>;">   
-            <div class="weui-cell">
-                <div class="weui-cell__hd f-red "><label class="weui-label">检测结果确认</label></div> 
-                <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结果确认"></asp:TextBox>  
+            <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="2"?"":"none"%>;">   
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">检测结果确认</label></div> 
+                    <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结果确认"></asp:TextBox>  
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">换夹完成说明</label></div>
+                    <textarea id="comment_2" class="weui-textarea"  placeholder="请输入换夹完成说明" rows="2" runat="server" value=''></textarea>
+                </div>
+                <div class="weui-cell" >
+                    <input id="btn_sign_2" type="button" value="确认" class="weui-btn weui-btn_primary" />
+                </div>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">换夹完成说明</label></div>
-                <textarea id="comment_2" class="weui-textarea"  placeholder="请输入换夹完成说明" rows="2" runat="server" value=''></textarea>
-            </div>
-            <div class="weui-cell" >
-                <input id="btn_sign_2" type="button" value="确认" class="weui-btn weui-btn_primary" />
-            </div>
-        </div>
-            
+        </div>   
     </form>
     <script>
         if ("<%= _formno %>" == "") {
