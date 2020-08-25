@@ -185,7 +185,7 @@ public class SQLHelper
 
                     cmd.Parameters.AddRange(Parms);
                     conn.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     dt.Load(dr);
                     conn.Close();
 
