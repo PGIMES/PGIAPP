@@ -35,8 +35,8 @@
     <script>
         $(document).ready(function () {
             $("#sb_desc").attr("readonly", "readonly"); $("#line").attr("readonly", "readonly");
-            $("#off_pgino").attr("readonly", "readonly"); $("#off_jiaju_name").attr("readonly", "readonly");
-            $("#on_pgino").attr("readonly", "readonly"); $("#on_jiaju_name").attr("readonly", "readonly");
+            $("#off_pgino").attr("readonly", "readonly"); $("#off_pn").attr("readonly", "readonly"); $("#off_jiaju_name").attr("readonly", "readonly");
+            $("#on_pgino").attr("readonly", "readonly"); $("#on_pn").attr("readonly", "readonly"); $("#on_jiaju_name").attr("readonly", "readonly");
 
 
             if ("<%= _formno %>" != "") {
@@ -698,7 +698,7 @@
                 onChange: function (d) {
                     //alert(d.values);
                     $("#off_pn").val(d.values);
-                    pgino_change(d.values, "off");
+                    pgino_change(d.titles, "off");
                 },
                 onClose: function (d) {
                     //var obj = eval(d.data);
@@ -735,7 +735,7 @@
                 onChange: function (d) {
                     //alert(d.values);
                     $("#on_pn").val(d.values);
-                    pgino_change(d.values, "on");
+                    pgino_change(d.titles, "on");
                 },
                 onClose: function (d) {
                     //var obj = eval(d.data);
