@@ -109,19 +109,20 @@ public partial class Jiaju_Apply : System.Web.UI.Page
         }
 
         //换下夹具默认最后一次的换上夹具
-        string off_pgino = "", off_jiaju_no = "", off_jiaju_name = "";
-        sql = @"select top 1 on_pgino,on_jiaju_no,on_jiaju_name from Mes_App_Jiaju  where status=9 and  workshop='{0}' and sb_code='{1}' order by complete_date desc";
+        string off_pgino = "", off_pn = "", off_jiaju_no = "", off_jiaju_name = "";
+        sql = @"select top 1 on_pgino,on_pn,on_jiaju_no,on_jiaju_name from Mes_App_Jiaju  where status=9 and  workshop='{0}' and sb_code='{1}' order by complete_date desc";
         sql = string.Format(sql, workshop, sb_code);
         DataTable dt_pgino = SQLHelper.Query(sql).Tables[0];
         if (dt_pgino.Rows.Count == 1)
         {
             off_pgino = dt_pgino.Rows[0]["on_pgino"].ToString();
+            off_pn = dt_pgino.Rows[0]["on_pn"].ToString();
             off_jiaju_no = dt_pgino.Rows[0]["on_jiaju_no"].ToString();
             off_jiaju_name = dt_pgino.Rows[0]["on_jiaju_name"].ToString();
         }
 
         result = "[{\"e_code\":\"" + e_code + "\",\"location\":\"" + location + "\",\"line\":\"" + line 
-            + "\",\"off_pgino\":\"" + off_pgino + "\",\"off_jiaju_no\":\"" + off_jiaju_no + "\",\"off_jiaju_name\":\"" + off_jiaju_name + "\"}]";
+            + "\",\"off_pgino\":\"" + off_pgino + "\",\"off_pn\":\"" + off_pn + "\",\"off_jiaju_no\":\"" + off_jiaju_no + "\",\"off_jiaju_name\":\"" + off_jiaju_name + "\"}]";
         return result;
     }
 

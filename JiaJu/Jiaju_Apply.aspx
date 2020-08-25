@@ -246,6 +246,7 @@
                     $("#line").val(obj[0].line);
 
                     $("#off_pgino").val(obj[0].off_pgino);
+                    $("#off_pn").val(obj[0].off_pn);
                     $("#off_jiaju_no").val(obj[0].off_jiaju_no);
                     $("#off_jiaju_name").val(obj[0].off_jiaju_name);
                 }
