@@ -380,7 +380,7 @@
         </div>
 
         <div class="weui-form-preview" style="display:<%= _formno!=""?"":"none"%>;">
-            <div class="weui-form-preview__hd">
+            <%--<div class="weui-form-preview__hd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">换夹具信息</label>
                     <label class="weui-form-preview__">单号:<% = _formno %></label>
@@ -389,9 +389,9 @@
             <div class="weui-form-preview__bd">
                 <asp:Repeater runat="server" ID="listBxInfo">
                     <ItemTemplate>
-                        <%--<div class="weui-mark-vip">
+                        <div class="weui-mark-vip">
                             <span class="weui-mark-lt <%# Eval("status").ToString()=="0"?"bg-green":"bg-gray"%>""><%#Eval("status_desc") %></span>
-                        </div>--%>
+                        </div>
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">生产线</label>
                             <span class="weui-form-preview__value"><%# Eval("line") %></span>
@@ -400,7 +400,7 @@
                             <label class="weui-form-preview__label">设备</label>
                             <span class="weui-form-preview__value"><%# Eval("sb_code")+","+Eval("sb_desc") %></span>
                         </div>
-                        <%--<div class="weui-form-preview__item weui-flex" style="text-align:left;">
+                        <div class="weui-form-preview__item weui-flex" style="text-align:left;">
                             <label class="weui-flex__item">换下夹具</label>
                             <label class="weui-flex__item">夹具号</label>
                             <label class="weui-flex__item">名称</label>
@@ -419,7 +419,7 @@
                             <label class="weui-flex__item"><%# Eval("on_pgino") %></label>
                             <label class="weui-flex__item"><%# Eval("on_jiaju_no") %></label>
                             <label class="weui-flex__item"><%# Eval("on_jiaju_name") %></label>
-                        </div>--%>
+                        </div>
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">换下夹具</label>
                             <span class="weui-form-preview__value"><%# Eval("off_pgino")+","+Eval("off_pn") %></span>
@@ -449,8 +449,6 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
-
-            
             <asp:Repeater runat="server" ID="Repeater_sg">
                 <ItemTemplate>
                     <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
@@ -474,7 +472,106 @@
                         </div> 
                     </div>
                 </ItemTemplate>
-            </asp:Repeater>
+            </asp:Repeater>--%>
+
+            <ul class="collapse" >
+                <li>
+                    <div class="weui-flex js-category">
+                        <div class="weui-flex__item" >
+                            <label class="weui-form-preview__label">换夹具信息</label>
+                        </div>
+                        <label class="weui-form-preview__label"><% = _formno %></label>
+                        <i class="icon icon-74"></i>
+                    </div>
+                    <div class="page-category js-categoryInner">
+                        <div class="weui-cells page-category-content">
+                            <div class="weui-form-preview__bd">
+                                <asp:Repeater runat="server" ID="listBxInfo">
+                                    <ItemTemplate>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">生产线</label>
+                                            <span class="weui-form-preview__value"><%# Eval("line") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">设备</label>
+                                            <span class="weui-form-preview__value"><%# Eval("sb_code")+","+Eval("sb_desc") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">换下夹具</label>
+                                            <span class="weui-form-preview__value"><%# Eval("off_pgino")+","+Eval("off_pn") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"></label>
+                                            <span class="weui-form-preview__value"><%# Eval("off_jiaju_no")+","+Eval("off_jiaju_name") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">换上夹具</label>
+                                            <span class="weui-form-preview__value"><%# Eval("on_pgino")+","+Eval("on_pn") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"></label>
+                                            <span class="weui-form-preview__value"><%# Eval("on_jiaju_no")+","+Eval("on_jiaju_name") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">换夹人</label>
+                                            <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
+                                        </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">开始时间</label>
+                                            <span class="weui-form-preview__value">
+                                                <%# Eval("create_date","{0:MM/dd HH:mm}") %>
+                                            </span>
+                                        </div> 
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="collapse" style="display:<%= ViewState["dt_sg"].ToString()!="0"?"":"none"%>;">
+                <li>
+                    <div class="weui-flex js-category">
+                        <div class="weui-flex__item" >
+                            <label class="weui-form-preview__label">操作信息</label>
+                        </div>
+                        <label class="weui-form-preview__label"></label>
+                        <i class="icon icon-74"></i>
+                    </div>
+                    <div class="page-category js-categoryInner">
+                        <div class="weui-cells page-category-content">
+                            <asp:Repeater runat="server" ID="Repeater_sg">
+                                <ItemTemplate>
+                                    <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
+                                        <div class="weui-form-preview__item" style="display:<%# Eval("ng_ok").ToString()!=""?"":"none"%>; ">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>结果</label>
+                                            <span class="weui-form-preview__value"><%# Eval("ng_ok") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
+                                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>人</label>
+                                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>时间</label>
+                                            <span class="weui-form-preview__value">
+                                                <%# Eval("create_date","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                            </span>
+                                        </div> 
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            
+            
 
         </div>
 

@@ -61,6 +61,8 @@ public partial class Jiaju_Apply : System.Web.UI.Page
         DataTable dt_sg = ds.Tables[1];
         Repeater_sg.DataSource = dt_sg;
         Repeater_sg.DataBind();
+
+        ViewState["dt_sg"] = dt_sg.Rows.Count.ToString();
     }
 
     [WebMethod]
