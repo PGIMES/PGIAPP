@@ -579,7 +579,7 @@
                                                                         <%=dr["Emp_Name"] %>
                                                                     </span>
                                                                     <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["create_date"]) %> </span>
-                                                                    <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                                    <span class="weui-agree__text">时长:<font class="<%=Convert.ToInt16(dr["timesMinute"])>120?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font>
                                                                     </span>
                                                                 </div>
                                                                 <div class="weui-cell__ft">

@@ -610,7 +610,7 @@
                                 <div class="weui-form-preview__item" style="display:<%= _stepid=="9"?"":"none"%>;">
                                     <label class="weui-form-preview__label"></label>
                                     <span class="weui-form-preview__value">
-                                        总时长: <font class='f-blue'><%= _times_t %></font> 
+                                        总时长: <font class="<%=_times_t_YN=="Y"?"f-red":"f-blue" %>"><%= _times_t %></font> 
                                     </span>
                                 </div> 
                             </div>
