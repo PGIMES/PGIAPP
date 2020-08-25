@@ -544,12 +544,12 @@
                                             <span class="weui-form-preview__value"><%# Eval("on_jiaju_no")+","+Eval("on_jiaju_name") %></span>
                                         </div>
                                         <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label">换夹人</label>
-                                            <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
-                                        </div> 
-                                        <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">说明</label>
                                             <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                                        </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">换夹人</label>
+                                            <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
                                         </div> 
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">开始时间</label>
