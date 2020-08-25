@@ -406,7 +406,7 @@
                                                     foreach (System.Data.DataRow dr in dt_line.Rows)
                                                     {%>
                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -471,7 +471,7 @@
                                                     foreach (System.Data.DataRow dr in dt_line.Rows)
                                                     { %>
                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -553,7 +553,7 @@
                                                                 foreach (System.Data.DataRow dr in dt_line.Select("line='" + line + "'"))
                                                                 {%>
                                                             <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
                                                                 <div class="weui-cell__hd">
                                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                 </div>
