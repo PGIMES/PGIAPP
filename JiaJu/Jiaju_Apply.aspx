@@ -106,7 +106,7 @@
                             return false;
                         }
 
-                        window.location.href = "/Cjgl1.aspx?workshop=<%=_workshop %>";
+                        window.location.href = "/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>";
                     }
 
                 });
