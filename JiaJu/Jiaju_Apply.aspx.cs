@@ -131,17 +131,17 @@ public partial class Jiaju_Apply : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string save2(string _emp_code_name, string _workshop, string _sb_code, string _sb_desc, string _line, string _off_pgino, string _off_jiaju_no
-        , string _off_jiaju_name, string _on_pgino, string _on_jiaju_no, string _on_jiaju_name, string _formno, string _stepid)
+    public static string save2(string _emp_code_name, string _workshop, string _sb_code, string _sb_desc, string _line, string _off_pgino, string _off_pn, string _off_jiaju_no
+        , string _off_jiaju_name, string _on_pgino, string _on_pn, string _on_jiaju_no, string _on_jiaju_name, string _formno, string _stepid)
     {
         string flag = "N", msg = "";
         string re_sql = @"";
 
         if (_formno == "")
         {
-            re_sql = @"exec usp_app_Jiaju_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'";
-            re_sql = string.Format(re_sql, _emp_code_name, _workshop, _sb_code, _sb_desc, _line, _off_pgino, _off_jiaju_no, _off_jiaju_name
-                , _on_pgino, _on_jiaju_no, _on_jiaju_name);
+            re_sql = @"exec usp_app_Jiaju_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}'";
+            re_sql = string.Format(re_sql, _emp_code_name, _workshop, _sb_code, _sb_desc, _line, _off_pgino, _off_pn, _off_jiaju_no, _off_jiaju_name
+                , _on_pgino, _on_pn, _on_jiaju_no, _on_jiaju_name);
         }
         
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];

@@ -81,8 +81,8 @@
                     url: "Jiaju_Apply.aspx/save2",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_workshop':'" + "<%= _workshop %>"
                         + "','_sb_code':'" + $('#sb_code').val() + "','_sb_desc':'" + $('#sb_desc').val() + "','_line':'" + $('#line').val()
-                        + "','_off_pgino':'" + $('#off_pgino').val() + "','_off_jiaju_no':'" + $('#off_jiaju_no').val() + "','_off_jiaju_name':'" + $('#off_jiaju_name').val()
-                        + "','_on_pgino':'" + $('#on_pgino').val() + "','_on_jiaju_no':'" + $('#on_jiaju_no').val() + "','_on_jiaju_name':'" + $('#on_jiaju_name').val()
+                        + "','_off_pgino':'" + $('#off_pgino').val() + "','_off_pn':'" + $('#off_pn').val() + "','_off_jiaju_no':'" + $('#off_jiaju_no').val() + "','_off_jiaju_name':'" + $('#off_jiaju_name').val()
+                        + "','_on_pgino':'" + $('#on_pgino').val() + "','_on_pn':'" + $('#on_pn').val() + "','_on_jiaju_no':'" + $('#on_jiaju_no').val() + "','_on_jiaju_name':'" + $('#on_jiaju_name').val()
                         + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
