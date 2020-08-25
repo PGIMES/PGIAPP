@@ -58,6 +58,11 @@ public partial class Jiaju_Apply : System.Web.UI.Page
             _times_t= dt.Rows[0]["times_t"].ToString();
             listBxInfo.DataSource = dt;
             listBxInfo.DataBind();
+
+            if (_stepid == "2")//检测结果确认，默认带出，上一步的 检测结果
+            {
+                ng_ok_2.Text = ds.Tables[1].Rows[ds.Tables[1].Rows.Count - 1]["ng_ok"].ToString();
+            }
         }
 
         DataTable dt_sg = ds.Tables[1];
