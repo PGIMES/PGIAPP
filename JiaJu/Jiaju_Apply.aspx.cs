@@ -13,7 +13,7 @@ public partial class Jiaju_Apply : System.Web.UI.Page
     public string _workshop = "";
     public string _formno = "";
     public string _stepid = "";
-    public string _times_t = ""; public string _times_t_YN = "";
+    public string _times_t = ""; public string _times_t_YN = "";public string _sign_2_YN = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -47,8 +47,8 @@ public partial class Jiaju_Apply : System.Web.UI.Page
 
     void init_data(string formno)
     {
-        string sql = @"exec [usp_app_Jiaju_Apply_init] '{0}'";
-        sql = string.Format(sql, formno);
+        string sql = @"exec [usp_app_Jiaju_Apply_init] '{0}','{1}'";
+        sql = string.Format(sql, formno, emp_code_name.Text);
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt = ds.Tables[0];
@@ -62,6 +62,7 @@ public partial class Jiaju_Apply : System.Web.UI.Page
             if (_stepid == "2")//检测结果确认，默认带出，上一步的 检测结果
             {
                 ng_ok_2.Text = ds.Tables[1].Rows[ds.Tables[1].Rows.Count - 1]["ng_ok"].ToString();
+                _sign_2_YN = dt.Rows[0]["sign_2_YN"].ToString();
             }
         }
 

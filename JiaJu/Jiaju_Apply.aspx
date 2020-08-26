@@ -44,21 +44,6 @@
             $("#off_pgino").attr("readonly", "readonly"); $("#off_pn").attr("readonly", "readonly"); $("#off_jiaju_name").attr("readonly", "readonly");
             $("#on_pgino").attr("readonly", "readonly"); $("#on_pn").attr("readonly", "readonly"); $("#on_jiaju_name").attr("readonly", "readonly");
 
-
-            if ("<%= _formno %>" != "") {
-                <%-- $("#source").attr("readonly", "readonly");
-                $("#dh").attr("readonly", "readonly"); $("#img_sm_dh").hide();
-
-                if ("<%= _stepid %>" == "0001" && $('#emp_code_name').val() == $('#emp_code_name_db').val()) {
-                    $("#btn_save2").show(); 
-                } else {
-                    $("#btn_save2").hide();
-
-                    $("#adj_qty").attr("readonly", "readonly");
-                    $("#comment").attr("readonly", "readonly");
-                }--%>
-
-            }
         });
 
         $(function () {
@@ -646,7 +631,7 @@
                 </div>
             </div>
 
-            <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="2"?"":"none"%>;">   
+            <div class="weui-cells weui-cells_form" style="display:<%= _formno!="" && _stepid=="2" && _sign_2_YN=="Y"?"":"none"%>;">   
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">检测结果确认</label></div> 
                     <asp:TextBox ID="ng_ok_2" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结果确认"></asp:TextBox>  
