@@ -521,10 +521,12 @@
                                             <%
                                                 dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
                                                 rowscount = dt_line.Rows.Count;
+                                                int rowsTwo = dt_line.Select("ng_count>0").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>换夹完成（30天内）                                                 
-                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
+                                                <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin10-l " ><% =rowscount %></span>
+                                                <span class="weui-badge  bg-<% =(rowsTwo==0?"gray":"orange") %> margin10-l " ><% =rowsTwo %></span>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
