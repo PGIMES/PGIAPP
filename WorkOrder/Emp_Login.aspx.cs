@@ -206,7 +206,15 @@ public partial class Emp_Login : System.Web.UI.Page
         {
             //Response.Redirect("/Cjgl1.aspx");
             //Response.Write("<script>location.replace(\"/Cjgl1.aspx\");</script>");
-            Response.Write("<script>window.location.href = '/Cjgl1.aspx?workshop=" + _workshop + "';</script>");
+            if (_workshop == "仓库")
+            {
+                Response.Write("<script>window.location.href = '/ck.aspx';</script>");
+            }
+            else
+            {
+                Response.Write("<script>window.location.href = '/Cjgl1.aspx?workshop=" + _workshop + "';</script>");
+            }
+
         }
         else
         {

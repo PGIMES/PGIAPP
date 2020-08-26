@@ -13,7 +13,7 @@ public partial class ck : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //bind_data();
+        bind_data();
 
         if (!IsPostBack)
         {
@@ -24,6 +24,23 @@ public partial class ck : System.Web.UI.Page
 
     public void bind_data()
     {
+        //上岗监视
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
+                            where workshop='仓库' and e_code like 'WH%')";
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+
+        Label1.Text = re_dt.Rows[0][0].ToString();
+
+        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
+                        where workshop='仓库'  and (e_code like 'J%' or e_code like 'Q%'))";
+        DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
+
+        Label1_j.Text = re_dt_j.Rows[0][0].ToString();
+
         /*
         //要料监视
         DataTable dt_go = new DataTable();

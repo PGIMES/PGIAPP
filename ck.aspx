@@ -226,6 +226,15 @@
 
         <div class="page-bd">
             <div class="weui-cells">
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login.aspx?workshop=仓库">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-user-circle-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
                 <a class="weui-cell weui-cell_access" href="javascript:sm_ck_dh();"><%--/workorder/CKSH.aspx--%>
                     <div class="weui-cell__hd">
                         <i class="fa fa-random margin10-r"></i>
@@ -252,6 +261,23 @@
                         <p>成品出库</p>
                     </div>
                     <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login_list_new.aspx?workshop=仓库">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-group margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗监视</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <asp:Label ID="Label1_j" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1 = Label1.Text; 
+                            Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>仓" + i1 + "</span>");
+                        %>   
+                        <% string i1_j = Label1_j.Text;
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> 
+                    </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/YL_list_ck_V1.aspx">
                     <div class="weui-cell__hd">
