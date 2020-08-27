@@ -156,6 +156,13 @@ public partial class Emp_Login : System.Web.UI.Page
             }
         }
 
+        //add 2020.8.27 09:46 只允许一个岗位
+        if (dt.Rows.Count == 1)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "showsuccess", "layer.alert('只允许登一个岗位')", true);
+            return;
+        }
+
         DataRow dr = dt.NewRow();
         dr["id"] = dt.Rows.Count <= 0 ? 1 : Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["id"]) + 1;
         dr["e_code"] = sb_code;
@@ -209,6 +216,10 @@ public partial class Emp_Login : System.Web.UI.Page
             if (_workshop == "仓库")
             {
                 Response.Write("<script>window.location.href = '/ck.aspx';</script>");
+            }
+            else if (_workshop == "质量")
+            {
+                Response.Write("<script>window.location.href = '/zl.aspx';</script>");
             }
             else
             {

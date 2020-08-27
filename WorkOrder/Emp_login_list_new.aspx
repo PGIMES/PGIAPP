@@ -118,7 +118,9 @@
                                                             style="display:<%= _workshop=="仓库"?"":"none"%>;">
                                                             仓<%# Eval("count_ck") %>
                                                         </span>
-                                                        <span class='weui-badge' style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;">
+                                                        <span class='weui-badge' 
+                                                            style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;
+                                                                display:<%= _workshop!="仓库"?"":"none"%>;">
                                                             质<%# Eval("count_zl") %>
                                                         </span>
                                                     </div>
