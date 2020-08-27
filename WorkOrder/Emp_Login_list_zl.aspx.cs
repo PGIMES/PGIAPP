@@ -89,8 +89,8 @@ public partial class WorkOrder_Emp_Login_list_zl : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = new DataTable();
-            string sql = @"exec [usp_app_emp_login_list_dv] '{0}','{1}'";
-            sql = string.Format(sql, _workshop, item["line"].ToString());
+            string sql = @"exec [usp_app_emp_login_list_dv] '{0}','{1}','{2}'";
+            sql = string.Format(sql, item["workshop"].ToString(), item["line"].ToString(),_workshop);
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
             detail.DataSource = dt_wk;
