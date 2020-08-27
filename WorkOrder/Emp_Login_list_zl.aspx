@@ -31,6 +31,7 @@
             padding:0px 10px 0px 10px; 
                  
         }
+        .fl{padding-left:0px;padding-right:0px;}/*color:#696969*/
     </style>
     <script src="../js/zepto.min.js"></script>
     <script src="../js/zepto.weui.js"></script>
@@ -73,7 +74,19 @@
                 }
             });
 
-        })
+        });
+
+        //显示折叠
+        function showorhide(obj) {
+            var divLineBody = $(obj)[0].nextElementSibling;
+            var ishide = $(divLineBody).css("display");
+            if (ishide == "none") {
+                $(divLineBody).show("fast");
+            }
+            else {
+                $(divLineBody).hide();
+            }
+        }
     </script>
 
 </head>
@@ -102,14 +115,14 @@
                     <div class="weui-tab__panel" style="background-color:#e5e5e5">
                         <%--=======上岗监视-----%>
                         <div id="tab1" class="weui-tab__content">
-                            <asp:Repeater ID="list_go" runat="server" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
+                            <asp:Repeater ID="list_go_workshop" runat="server" EnableTheming="False" OnItemDataBound="list_go_workshop_ItemDataBound">
                                 <ItemTemplate>
                                     <div class="weui-form-preview">
-                                        
                                         <ul class="collapse">
                                             <li>
                                                 <div class="weui-flex js-category">
-                                                    <div class="weui-cells__title  weui-flex__item"><i class="icon nav-icon icon-49"></i><%# Eval("line") %>
+                                                    <div class="weui-cells__title fl weui-flex__item">
+                                                        <i class="icon nav-icon icon-49"></i><%# Eval("workshop") %>
                                                         <span class='weui-badge' 
                                                             style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;">
                                                             质<%# Eval("count_zl") %>
@@ -119,37 +132,56 @@
                                                 </div>
                                                 <div class="page-category js-categoryInner">
                                                     <div class="weui-cells" id="YLZ">
-                                                        <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
+                                                        <asp:Repeater ID="list_go" runat="server" EnableTheming="False" OnItemDataBound="list_go_ItemDataBound">
                                                             <ItemTemplate>
-                                                                <a class="weui-cell weui-cell_access">
-                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
-                                                                    <div class="weui-cell__hd">
-                                                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                                                    </div>
-                                                                    <div class="weui-cell__bd">
-                                                                        <span class="weui-form-preview__value" style="font-size: smaller">
-                                                                            <%# Eval("location") + "," + Eval("phone") + "," +Eval("emp_name")  %>
-                                                                        </span>
-                                                                         <span class="weui-agree__text" style="font-size: smaller">
-                                                                             <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: " %>  
-                                                                             <span style="color:<%# Eval("times_type").ToString()=="Y"?"red":"#10AEFF" %>;">
-                                                                                <%# Eval("times") %>
-                                                                             </span>
-                                                                         </span>
-                                                                    </div>
-                                                                </a>
-
+                                                                    <ul class="collapse">
+                                                                        <li style="margin-top:0px;margin-bottom:0px">
+                                                                            <div class="weui-flex js-category" onclick="showorhide(this);">
+                                                                                <div class="weui-cells__title  weui-flex__item">
+                                                                                    <i class="icon nav-icon icon-22 color-success"></i><%# Eval("line") %>
+                                                                                    <span class='weui-badge' 
+                                                                                        style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;">
+                                                                                        质<%# Eval("count_zl") %>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <i class="icon icon-74"></i>
+                                                                            </div>
+                                                                            <div class="page-category js-categoryInner" style="display: none">
+                                                                                <div class="weui-cells" id="YLZ">
+                                                                                    <asp:Repeater runat="server" ID="re_go" EnableTheming="False">
+                                                                                        <ItemTemplate>
+                                                                                            <a class="weui-cell weui-cell_access">
+                                                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                                                                <div class="weui-cell__hd">
+                                                                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                                                                </div>
+                                                                                                <div class="weui-cell__bd">
+                                                                                                    <span class="weui-form-preview__value" style="font-size: smaller">
+                                                                                                        <%# Eval("location") + "," + Eval("phone") + "," +Eval("emp_name")  %>
+                                                                                                    </span>
+                                                                                                        <span class="weui-agree__text" style="font-size: smaller">
+                                                                                                            <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: " %>  
+                                                                                                            <span style="color:<%# Eval("times_type").ToString()=="Y"?"red":"#10AEFF" %>;">
+                                                                                                            <%# Eval("times") %>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                </div>
+                                                                                            </a>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:Repeater>                                       
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
                                                             </ItemTemplate>
-                                                        </asp:Repeater>                                       
+                                                        </asp:Repeater>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
-
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
-                           
                         </div>
                         <%--=======我的上岗-----%>
                         <div id="tab2" class="weui-tab__content">
