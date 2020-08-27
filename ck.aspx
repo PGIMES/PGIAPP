@@ -275,8 +275,6 @@
                         <% string i1 = Label1.Text; 
                             Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>仓" + i1 + "</span>");
                         %>   
-                        <% string i1_j = Label1_j.Text;
-                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> 
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/YL_list_ck_V1.aspx">

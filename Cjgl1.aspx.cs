@@ -276,7 +276,27 @@ public partial class Cjgl1 : System.Web.UI.Page
         return res;
 
     }
+    //夹具监视
+    [WebMethod]
+    public static string JiaJu_Data(string workshop)
+    {
+        //夹具监视
+        int  iOne = 0, iTwo = 0, iF = 0,i2H=0; //iOne 一次在处理，iTwo:ng_count >0 ;  iF  30天完成数 ;i2H 大于2Hour
+        // 调整中
+        string sql = string.Format(@"select formno,ng_count from [Mes_App_Jiaju] where status<>9 and workshop='{0}'", workshop);
+        DataTable dt_data_go = SQLHelper.Query(sql).Tables[0];
+        iOne = iOne + dt_data_go.Rows.Count;      
+        
+        //30天完成
+        sql = string.Format(@"select formno,ng_count,datediff(mi,create_date,complete_date) as timesMinute from [Mes_App_Jiaju] where status=9 and workshop='{0}' and complete_date>dateadd(day,-30,getdate())", workshop);
+        dt_data_go = SQLHelper.Query(sql).Tables[0];
+        iF = iF + dt_data_go.Rows.Count;         
+        iTwo = iTwo + dt_data_go.Select("ng_count>0").Count();
+        i2H = i2H + dt_data_go.Select("timesMinute>120").Count();
+        string res = "[{\"iOne\":\"" + iOne.ToString() + "\",\"iTwo\":\"" + iTwo.ToString() + "\",\"iF\":\"" + iF.ToString() + "\",\"i2H\":\"" + i2H.ToString() + "\",\"msg\":\"ok\"}]";
+        return res;
 
+    }
 
     [WebMethod]
     public static string lotno_change(string result)

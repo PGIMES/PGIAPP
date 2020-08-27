@@ -42,6 +42,7 @@
             if (_wrokshop == "三车间") {
                 show_prod_3(_wrokshop);
             } else {
+                show_jj(_wrokshop);
                 show_prod_24(_wrokshop);
             };
                  
@@ -68,16 +69,7 @@
                         <p>上岗</p>
                     </div>
                     <div class="weui-cell__ft"></div>
-                </a>
-                <a class="weui-cell weui-cell_access" href="/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-magnet margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>换夹具<font style="font-size:smaller">(开发中)</font></p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
+                </a>                
                 <a class="weui-cell weui-cell_access" href="/workorder/YL.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cube margin10-r"></i>
@@ -142,6 +134,20 @@
                             Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> 
                     </div>
                 </a>
+                <a class="weui-cell weui-cell_access" href="/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-magnet margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>换夹具</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <span class="weui-badge bg-blue margin15-r" id="iOne" >..</span>
+                        <span class="weui-badge bg-blue margin15-r" id="iF"  >..</span>
+                        <span class="weui-badge bg-orange margin15-r" id="iTwo" >多..</span>
+                        <span class="weui-badge bg-orange margin15-r" id="i2H"  >超..</span>
+                    </div>
+                </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/YL_list_new.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-cubes margin10-r"></i>
@@ -156,28 +162,7 @@
                         <asp:Label ID="Label2_end" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2_end = Label2_end.Text; Response.Write("<span class='weui-badge  bg-" + (i2_end == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_end + "</span>"); %>   
                     </div>
-                </a>                
-                <%--<a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-edit margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>不合格申请</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list.aspx?workshop=<%=_workshop %>">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-bookmark-o margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>不合格监视</p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <asp:Label ID="Label3" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i3 = Label3.Text; Response.Write("<span class='weui-badge  bg-" + (i3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3 + "</span>"); %>   
-                    </div>
-                </a>--%>
                 <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>" id="a_div2">
                     <div class="weui-cell__hd">
                         <i class="fa fa-bookmark-o margin10-r"></i>
@@ -374,39 +359,7 @@
         </div>
 
     </form>
-
-    <%--<div id="div_2" style="display:none;">
-        <div class="weui-cells">
-          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_Print.aspx?dh=&workshop=<%=_workshop %>&ck=N">
-            <div class="weui-cell__bd">
-              <p>生成入库单</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-          </a>
-          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_hege.aspx?dh=&workshop=<%=_workshop %>&ck=N">
-            <div class="weui-cell__bd">
-              <p>合格品入库</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-          </a>
-          <a class="weui-cell weui-cell_access" href="/workorder/CKSH.aspx?dh=&workshop=<%=_workshop %>&ck=N">
-            <div class="weui-cell__bd">
-              <p>废品接收</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-          </a>
-          <a class="weui-cell weui-cell_access" href="/workorder/Ruku_bcp_hege.aspx?dh=&workshop=<%=_workshop %>&ck=N">
-            <div class="weui-cell__bd">
-              <p>半成品入库</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-          </a>
-        </div>
-    </div>--%>
+    
 
 </body>
     <script>
@@ -482,6 +435,34 @@
                         if (datad[0].sh == 0) { $("#sh24").addClass("bg-gray") }
                         if (datad[0].part == 0) { $("#part24").addClass("bg-gray") }
                         if (datad[0].wip == 0) { $("#wip24").addClass("bg-gray") }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
+        //夹具统计
+        function show_jj(_workshop) {
+            $.ajax({
+                url: "/Cjgl1.aspx/JiaJu_Data",
+                type: "Post",
+                data: "{ 'workshop': '" + _workshop + "' }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#iOne").text(datad[0].iOne);
+                        $("#iTwo").text("多"+datad[0].iTwo);
+                        $("#iF").text(datad[0].iF);
+                        $("#i2H").text("超"+datad[0].i2H);
+                        if (datad[0].iOne == 0) { $("#iOne").addClass("bg-gray") }
+                        if (datad[0].iTwo == 0) { $("#iTwo").addClass("bg-gray").removeClass("bg-orange") }
+                        if (datad[0].iF == 0) { $("#iF").addClass("bg-gray") }
+                        if (datad[0].i2H == 0) { $("#i2H").addClass("bg-gray").removeClass("bg-orange") }
                     }
 
                 }//,
