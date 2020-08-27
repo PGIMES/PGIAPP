@@ -15,11 +15,27 @@ public partial class ZL : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        bind_data();
+
         if (!IsPostBack)
         {
             LoginUser lu = (LoginUser)WeiXin.GetJsonCookie();
             emp_code_name.Text = lu.WorkCode + lu.UserName;
         }
+    }
+
+
+    public void bind_data()
+    {
+        //上岗监视
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
+                        where (e_code like 'J%' or e_code like 'Q%'))";
+        DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
+
+        Label1_j.Text = re_dt_j.Rows[0][0].ToString();
+
     }
 
     //检验监视

@@ -56,6 +56,15 @@
         <div class="page-bd">
 
             <div class="weui-cells">
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login.aspx?workshop=质量">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-user-circle-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
                 <a class="weui-cell weui-cell_access" href="javascript:sm_qc_off('<%=_workshop %>');">   
                     <div class="weui-cell__hd">
                         <i class="fa fa-wpexplorer margin10-r"></i>
@@ -64,7 +73,20 @@
                         <p>检验完成</p>
                     </div>
                     <div class="weui-cell__ft"></div>
-                </a>                
+                </a>   
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login_list_zl.aspx?workshop=质量">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-group margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗监视</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label1_j" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1_j = Label1_j.Text;
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> 
+                    </div>
+                </a>             
                 <a class="weui-cell weui-cell_access" href="/workorder/prod_wip_list_zl.aspx?workshop=<%=_workshop %>">
                     <div class="weui-cell__hd">
                         <i class="fa fa-gears margin10-r"></i>
