@@ -6,7 +6,7 @@
 <head runat="server">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>车间</title>
+	<title>生产管理</title>
     <link href="/css/weui.css" rel="stylesheet" />
     <link href="/css/weuix.css" rel="stylesheet" />
     <script src="/js/jquery-3.0.0.min.js"></script>
@@ -76,15 +76,7 @@
     <form id="form1" runat="server">
         <div class="page-bd">
             <div class="weui-cells">
-                <%--<a class="weui-cell weui-cell_access" href="#">
-                    <div class="weui-cell__hd">
-                        <i class="fa fa-cog margin10-r"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>一车间<span class="f12">（未开放）</span></p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>--%>
+                 
                 <a class="weui-cell weui-cell_access" href="/Cjgl1.aspx?workshop=二车间">
                     <div class="weui-cell__hd">
                         <i class="fa fa-gears margin10-r"></i>
@@ -127,6 +119,24 @@
                     </div>
                     <div class="weui-cell__bd">
                         <p>质量</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/SB.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-medium margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>设备<font style="font-size:smaller">(调整中)</font></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/Moju/mjindex.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-puzzle-piece margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>模具<font style="font-size:smaller">(调整中)</font></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
