@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>上岗监视</title>
+    <title><%=Request["workshop"] %>上岗监视</title>
      <link rel="stylesheet" href="../css/weui.css" />
     <link rel="stylesheet" href="../css/weuix.css" />
     <style>
