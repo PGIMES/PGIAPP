@@ -110,17 +110,8 @@
                                             <li>
                                                 <div class="weui-flex js-category">
                                                     <div class="weui-cells__title  weui-flex__item"><i class="icon nav-icon icon-49"></i><%# Eval("line") %>
-                                                        <span class="weui-badge  bg-<%# Eval("count_sc").ToString()=="0"?"gray":"blue" %>" 
-                                                            style="display:<%= _workshop!="仓库"?"":"none"%>;">
-                                                            生<%# Eval("count_sc") %>
-                                                        </span>
-                                                        <span class="weui-badge  bg-<%# Eval("count_ck").ToString()=="0"?"gray":"blue" %>" 
-                                                            style="display:<%= _workshop=="仓库"?"":"none"%>;">
-                                                            仓<%# Eval("count_ck") %>
-                                                        </span>
                                                         <span class='weui-badge' 
-                                                            style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;
-                                                                display:<%= _workshop!="仓库"?"":"none"%>;">
+                                                            style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;">
                                                             质<%# Eval("count_zl") %>
                                                         </span>
                                                     </div>
@@ -138,17 +129,8 @@
                                                                     <div class="weui-cell__bd">
                                                                         <span class="weui-form-preview__value" style="font-size: smaller">
                                                                             <%# Eval("location") + "," + Eval("phone") + "," +Eval("emp_name")  %>
-                                                            
-                                                                            <span class="weui-mark-rt- weui-badge" 
-                                                                                style="background-color: <%# Eval("dp").ToString()=="质"?"orange":"#10AEFF"%>;
-                                                                                    font-size: x-small; color: white; 
-                                                                                    display:<%# (Eval("dp").ToString()=="质")?"inline-block":"none"%>;">
-                                                                                <%#Eval("dp") %>
-                                                                            </span>
-
                                                                         </span>
                                                                          <span class="weui-agree__text" style="font-size: smaller">
-                                                                             <%--<%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: <font class='f-blue'>"+Eval("times")+"</font>"%>  --%> 
                                                                              <%# Eval("on_date","{0:MM-dd HH:mm}")+  " 时长: " %>  
                                                                              <span style="color:<%# Eval("times_type").ToString()=="Y"?"red":"#10AEFF" %>;">
                                                                                 <%# Eval("times") %>
