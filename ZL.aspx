@@ -74,7 +74,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>   
-                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login_list_zl.aspx?workshop=质量">
+                <a class="weui-cell weui-cell_access hide" href="/workorder/Emp_Login_list_zl.aspx?workshop=质量">
                     <div class="weui-cell__hd">
                         <i class="fa fa-group margin10-r"></i>
                     </div>
