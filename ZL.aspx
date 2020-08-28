@@ -106,7 +106,7 @@
                         <i class="fa fa-bookmark-o margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>不合格监视<font style="font-size:smaller">(调整中)</font></p>
+                        <p>不合格监视<%--<font style="font-size:smaller">(调整中)</font>--%></p>
                     </div>
                     <div class="weui-cell__ft"> 
                         <span class="weui-badge bg-blue" id="bhg_go" style='margin-right: 15px;'>..</span>  
