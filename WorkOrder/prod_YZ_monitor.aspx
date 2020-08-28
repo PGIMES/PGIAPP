@@ -134,7 +134,7 @@
 
 
                 showBlockCount();
-
+                $(".maxHour").addClass("hide");//隐藏
                 $(".a_body").css("display", "");
             });
 
@@ -199,6 +199,7 @@
 
             $('ul li ul li').children(".js-category2").css("display", "")
             showBlockCount();
+            $(".maxHour").removeClass("hide");//隐藏
         }
 
         function clear() {
@@ -207,6 +208,7 @@
             $('.weui-cell').siblings('.weui-cells__title').removeClass("hide");
             $('ul li ul li').children(".js-category2").css("display", "")
             showBlockCount();
+            $(".maxHour").removeClass("hide");//隐藏
         }
 
         //显示折叠
@@ -946,7 +948,7 @@
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>待 入 库                                                 
                                                 <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
-                                                <span class="weui-badge  <% = bgcolor %> margin20-l " style="margin-right: 15px;"><% =maxHour %>H</span>
+                                                <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>H</div>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -967,7 +969,7 @@
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title  weui-flex__item LH" ><i class="icon nav-icon icon-22 color-success "></i><%=line %>
                                                                 <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_4"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span>
-                                                                <span class="weui-badge <%=bgcolor_line %> margin20-l " style="margin-right: 15px;"><% =drLine["timesHours"] %>H</span>
+                                                                <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>H</div>
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
