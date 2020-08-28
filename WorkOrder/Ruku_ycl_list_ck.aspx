@@ -36,9 +36,9 @@
         }
 
         .weui-badge-tr {
-            border: 1px solid orange;
+            border: 1px solid ;
             background-color: transparent;
-            color: orange;
+            /*color: orange;*/
         }
 
         .f-deepfont {
@@ -221,6 +221,21 @@
                                                             <div class="weui-cells__title weui-flex__item LH" id="<%=drpgino["pgino"] %>LH5">
                                                                 <i class="icon nav-icon icon-22 color-success"></i>
                                                                 <%= drpgino["pgino"]+","+drpgino["pn"] %>
+                                                                 <% if (drpgino["marks"].ToString()=="1W" || drpgino["marks"].ToString()=="2W") {%>
+                                                                <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: #10AEFF;">
+                                                                    <%=drpgino["marks"] %>
+                                                                </span>
+                                                                    <%}  %>
+                                                                <% else if (drpgino["marks"].ToString()=="3W" || drpgino["marks"].ToString()=="4W") {%>
+                                                                <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: orange;">
+                                                                    <%=drpgino["marks"] %>
+                                                                </span>
+                                                                    <%}  %>
+                                                                <% else  if (drpgino["marks"].ToString()=="1M+" || drpgino["marks"].ToString()=="3M+"){%>
+                                                                <span class="weui-mark-rt- weui-badge weui-badge-tr" style="font-size: x-small; color: red;">
+                                                                    <%=drpgino["marks"] %>
+                                                                </span>
+                                                                    <%}  %>
                                                                 <br />
                                                                 <span style="padding-left:20px;">
                                                                    
@@ -260,11 +275,13 @@
                                                                     <% else {%>
                                                                         <%=drpgino["max_hhs"]+"h" %>
                                                                         <%}  %>                                                                    
-                                                                     <%= ",可用"%>                                                                    
+                                                                     <%= ",可发"%>                                                                    
                                                                     <font class="<% if (Convert.ToSingle(drpgino["day_s"]) >= 5) { Response.Write("f-red"); }
                                                                         else if (Convert.ToSingle(drpgino["day_s"]) >= 3) { Response.Write("f-blue"); }
-                                                                         %>"><%=Convert.ToSingle(drpgino["day_s"]).ToString()+"天" %></font>
-                                                                   
+                                                                         %>"><%=Convert.ToSingle(drpgino["day_s"]).ToString()+"天" %></font>,生产<font class="<% if (Convert.ToSingle(drpgino["xql_day_s"]) >= 10) { Response.Write("f-red"); }
+                                                                        else if (Convert.ToSingle(drpgino["xql_day_s"]) >= 6) { Response.Write("f-blue"); }
+                                                                         %>"><%=drpgino["xql_day_s"]%>班</font>
+                                                                    
                                                                 </span>
                                                                 
                                                             </div>

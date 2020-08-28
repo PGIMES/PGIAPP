@@ -108,7 +108,7 @@
                                 {%>
                                 <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;">
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "来自<a href='prod_qcc_part_detail.aspx?dh="+dr_["workorder"]+"'>"+dr_["workorder"] + "</a>,"+dr_["wk_ly"]+"完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                                        <%= "来自<a href='"+dr_["href"]+"'>"+dr_["workorder"] + "</a>,"+dr_["wk_ly"]+"完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= dr_["pgino"] + "," + dr_["pn"] %>
@@ -165,12 +165,12 @@
                         </div>
                         <div class="page-category js-categoryInner"> 
                             <div class="weui-cells page-category-content">
-                                <% foreach (System.Data.DataRow dr_ in dtQC_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='" 
-                                       + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))
-                                {%>
+                                <% foreach (System.Data.DataRow dr_ in dtQC_dtl.Select("qc_dh='" + dr["qc_dh"].ToString() + "' and emp_name='"
+                                         + dr_m_["emp_name"].ToString() + "' and on_date_str='" + dr_m_["on_date_str"].ToString() + "'"))                                       
+                                    { %>
                                 <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "来自<a href='prod_qcc_part_detail.aspx?dh="+dr_["workorder"]+"'>"+dr_["workorder"] + "</a>,"+dr_["wk_ly"]+"完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
+                                        <%= "来自<a href='"+dr_["href"]+"'>"+dr_["workorder"] + "</a>,"+dr_["wk_ly"]+"完成数" + dr_["off_qty"] + ",已检数" +dr_["hege_qty"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= dr_["pgino"] + "," + dr_["pn"] %>
@@ -229,18 +229,41 @@
                                 <% foreach (System.Data.DataRow dr_ in dtProd_dtl.Select("workorder='" + dr["workorder"].ToString() + "' and emp_name='" 
                                        + dr_m_["emp_name"].ToString() + "' and off_date_str='" + dr_m_["off_date_str"].ToString() + "'"))
                                 {%>
-                                <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
-                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "Lot:<a href='prod_wip_detail_V1.aspx?lotno="+(dr_["lot_no"].ToString().IndexOf("/")>0?dr_["lot_no"].ToString().Substring(0,dr_["lot_no"].ToString().IndexOf("/")):dr_["lot_no"].ToString())+"&para=N'>"+dr_["lot_no"] + "</a>,上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
-                                    </span>
+                                <%if (dr_["title"].ToString()=="压铸下料完成") {%>
+                                <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;">
+                                    
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= dr_["sku"] + "," + dr_["sku_descr"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" %> <%--+ dr_["shichang"]--%>
-                                        <span class="f-blue"> <%=dr_["shichang"].ToString() %></span>  
+                                        <%= "下料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"])  %>                                          
                                     </span>
                                 </div>
+
+                                   <% }
+                                       else { //生产下料                                            
+                                           string href="prod_wip_detail_V1.aspx?lotno="+(dr_["lot_no"].ToString().IndexOf("/")>0?dr_["lot_no"].ToString().Substring(0,dr_["lot_no"].ToString().IndexOf("/")):dr_["lot_no"].ToString())+"&para=N";
+                                           //如果虚拟过程
+                                           if (dr_["lot_no"].ToString()!=""&&dr_["workorder"].ToString().Contains(dr_["lot_no"].ToString().Substring(1))) { href = "/workorder/prod_qcc_part_detail.aspx?dh="+dr_["lot_no"].ToString(); }
+                                           %>
+                                        <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;">
+                                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                                <%= "Lot:<a href='"+href+"'>"+dr_["lot_no"] + "</a>,上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
+                                            </span>
+                                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                                <%= dr_["sku"] + "," + dr_["sku_descr"] %>
+                                            </span>
+                                            <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                                <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" %> 
+                                                <span class="f-blue"> <%=dr_["shichang"].ToString() %></span>  
+                                            </span>
+                                        </div>
+
+                                   <% } %>
+
+
+
+
                                 <%} %>
                             </div>
                         </div>               
@@ -250,78 +273,9 @@
 
                 <% } %>
 
+                 
 
 
-
-                <%--   <div class="weui-tab">
-                </div>
-                <div class="weui-form-preview">
-                    <div class="weui-form-preview__hd">
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">检验单号</label>
-                            <label class="weui-form-preview__"><% ="<font class='tag'/>"+Request["dh"] %></label>
-                        </div>
-                    </div>
-                    <div class="weui-form-preview__bd">
-                        <asp:Repeater runat="server" ID="dtMain">
-                            <ItemTemplate>
-                                <div class="weui-mark-vip"><span class="weui-mark-lt <%# Request["type"].ToString()=="workorder"?"bg-gray":"bg-yellow"%>"></span></div>
-
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">项目号</label>
-                                    <span class="weui-form-preview__value"><%# Eval("pgino") %></span>
-                                </div>
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">零件号</label>
-                                    <span class="weui-form-preview__value"><%# Eval("pn") %> </span>
-                                </div>
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">已检数量</label>
-                                    <span class="weui-form-preview__value"><%# Eval("qty") %> </span>
-                                </div>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </div>
-                    <div class="weui-form-preview__bd ">
-                    </div>
-                </div>
-                <div class="weui-form-preview">
-                    <div class="weui-cells__title ">
-                         <i class="icon nav-icon icon-49 hide"></i> 
-                        <asp:Label ID="Label1" runat="server" Text="已检明细"></asp:Label>
-                    </div>
-                    <div class="weui-cells">
-                        <asp:Repeater ID="DataList1" runat="server">
-                            <ItemTemplate>
-                                <a class="weui-cell " href="javascript:void(0)">
-                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-<% =Request["type"] == "workorder" ? "gray" : "yellow" %>"></span></div>
-                                    <div class="weui-cell__hd">
-                                        <i class="fa fa-thermometer-full" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="weui-cell__bd f-black" style="font-size: smaller">
-                                        <span class="span_space">
-                                            <font color="blue"><%# DataBinder.Eval(Container.DataItem, "pgino") %></font>
-                                        </span>
-                                        <span>
-                                            <%# DataBinder.Eval(Container.DataItem, "pn") %>
-                                        </span>                                                                                 
-                                        </span>                                         
-                                        <span class="margin20-l">已检数:<font class="f-blue"><%# DataBinder.Eval(Container.DataItem, "hege_qty") %></font></span>
-                                        <br />
-                                        <span class="weui-agree__text span_space">
-                                            <%# DataBinder.Eval(Container.DataItem, "Emp_Name") %>
-                                        </span>
-                                        <span class="weui-agree__text">检验时间：<%# DataBinder.Eval(Container.DataItem, "on_date","{0:MM-dd HH:mm}") %> </span>
-                                        
-                                        
-                                    </div>
-                                    <div class="weui-cell__ft">
-                                    </div>
-                                </a>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </div>
-                </div>--%>
             </div>
         </div>
 

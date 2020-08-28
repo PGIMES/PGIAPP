@@ -109,7 +109,7 @@
                                         <%= "Lot:<a href='prod_wip_detail_V1.aspx?lotno="+(dr_["new_lot"].ToString().IndexOf("/") < 0 ? dr_["new_lot"].ToString():dr_["new_lot"].ToString().Substring(0,dr_["new_lot"].ToString().IndexOf("/")))+"&para=N'>"+dr_["new_lot"] + "</a>,上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= dr_["sku"] + "," + dr_["sku_descr"] %>
+                                        <%= dr_["sku"] + "," + dr_["sku_descr"]+ (dr_["prod_line"].ToString()=="1090"?"(配件)":"") %>
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
                                         <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" %> <%--+ dr_["shichang"]--%>
@@ -127,9 +127,8 @@
 
 
                 <%--不使用--%>
-                <div class="weui-form-preview hide">
-                    <div class="weui-cells__title ">
-                       <%-- <i class="icon nav-icon icon-49"></i>--%>
+               <%-- <div class="weui-form-preview hide">
+                    <div class="weui-cells__title ">                       
                         <asp:Label ID="Label1" runat="server" Text="用料明细"></asp:Label>
                     </div>
                     <div class="weui-cells">
@@ -147,8 +146,7 @@
                                         <span>
                                             <%# DataBinder.Eval(Container.DataItem, "sku_descr") %>
                                         </span>
-                                        <br />
-                                        <%--<span class="span_space">完工单号:<%# DataBinder.Eval(Container.DataItem, "workorder_part") %>--%>
+                                        <br />                                         
                                         </span>
                                         <span>Lot:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "new_lot") %></font></span>
                                         <span>上料数:<font color="blue"><%# DataBinder.Eval(Container.DataItem, "qty") %></font></span>
@@ -159,7 +157,7 @@
                                         </span>
                                         <span class="weui-agree__text">上料时间：<%# DataBinder.Eval(Container.DataItem, "on_date","{0:MM-dd HH:mm}") %> </span>
                                         <span class="weui-agree__text">下料时间：<%# DataBinder.Eval(Container.DataItem, "off_date","{0:MM-dd HH:mm}") %> </span>
-                                        <%--<span class="weui-agree__text">时长:<font class="f-blue"> <%# DataBinder.Eval(Container.DataItem, "times") %></font>--%>
+                                        
                                         </span>
                                     </div>
                                     <div class="weui-cell__ft">
@@ -168,7 +166,7 @@
                             </ItemTemplate>
                         </asp:Repeater>
                     </div>
-                </div>
+                </div>--%>
 
 
             </div>

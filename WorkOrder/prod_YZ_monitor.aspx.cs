@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,29 +20,39 @@ public partial class prod_YZ_monitor : System.Web.UI.Page
             return;
         }
         //生产中
-        BindData1();
+         BindData1();      
         //待后处理
         BindData6();
-
+        //生产完成24小时
+        BindData24();
         //待终检
         BindData2();
         //待GP12
         BindData3();
-        //待入库
+       //待入库
         BindData4();
-        //入库完成24小时
-        BindData5();
+        ////入库完成24小时
+        //BindData5();
+          
     }
     //生产中
     private void BindData1()
     {
-        string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 1 );
+        string sql = string.Format(@"exec [usp_app_YZ_monitor_] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 1 );
         DataSet ds= SQLHelper.Query(sql);        
         DataTable dt_data = ds.Tables[0];
         ViewState["dt_data_1"] = dt_data;
         
     }
-    //零箱返线
+    private void BindData24()
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_prod_End] '{0}','{1}'", Request["workshop"], WeiXin.GetCookie("workcode"));
+        DataSet ds = SQLHelper.Query(sql);
+        DataTable dt_data = ds.Tables[0];
+        ViewState["dt_data_24"] = dt_data;
+
+    }
+    //待后处理
     private void BindData6()
     {
         string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}", Request["workshop"], WeiXin.GetCookie("workcode"), 6 );
@@ -54,7 +65,7 @@ public partial class prod_YZ_monitor : System.Web.UI.Page
     //待终检
     private void BindData2()
     {
-        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 2 );
+        string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 2 );
         DataSet ds = SQLHelper.Query(sql);
         //DataTable dt_line = ds.Tables[0];
         DataTable dt_data = ds.Tables[0];

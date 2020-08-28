@@ -51,7 +51,7 @@ public partial class prod_wip_detail_V1 : System.Web.UI.Page
             _btn = "Y";
         }
 
-        string sql = string.Format(@"exec [usp_app_prod_wip_detail_V1] '{0}'", _lotno);
+        string sql = string.Format(@"exec [usp_app_prod_wip_" + (_workshop == "三车间" ? "YZ_" : "") + "detail_V1] '{0}'", _lotno);
         DataSet ds  = SQLHelper.Query(sql);
 
         dtMain.DataSource = ds.Tables[0];

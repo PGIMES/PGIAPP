@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="prod_qcc_timeline_info_v3.aspx.cs" Inherits="prod_qcc_timeline_info_v3" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="prod_qcc_timeline_info_yz.aspx.cs" Inherits="prod_qcc_timeline_info_yz" %>
 
 <!DOCTYPE html>
 
@@ -226,7 +226,66 @@
                 <%} %>
                 <% } %>
 
-              
+                <%--=======后处理完成========================================--%>
+                <%  i = 0;
+                    foreach (System.Data.DataRow dr in dtHsolve.Rows)
+                    {
+                        //if (i == 0)
+                        //{%>
+                    <div class="weui-flex" style="height:28px; padding-top:2px; padding-bottom:2px;">
+                        <div class="weui-flex__item margin10-l"><% =dr["title"] %></div>
+                        <div class="margin20-r"><% =dr["workorder"] %></div>
+                    </div>
+                    <div class="weui-form-preview__bd " style="border-top:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5;">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">项目号</label>
+                            <span class="weui-form-preview__value"><%=dr["pgino"] %></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">零件号</label>
+                            <span class="weui-form-preview__value"><%=dr["pn"] %> </span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">已后处理</label>
+                            <span class="weui-form-preview__value"><%=dr["qty"] %></span>
+                        </div>  
+                    </div>     
+
+                <% //}
+                    i++; %>
+                 <% foreach (System.Data.DataRow dr_m_ in dtHsolve_m.Rows)
+                    {%>
+                <ul class="collapse">
+                    <li class="js-show">                
+                        <div class="weui-flex js-category">
+                            <div class="weui-flex__item"><%=dr_m_["off_date_str"] +" "+dr_m_["emp_name"] + " 下料数:"+ dr_m_["qty"] %></div>
+                            <i class="icon icon-35 padding10-l"></i>
+                        </div>                    
+                        <div class="page-category js-categoryInner "> 
+                            <div class="weui-cells page-category-content">
+                                <% foreach (System.Data.DataRow dr_ in dtHsolve_dtl.Select(" emp_name='"  + dr_m_["emp_name"].ToString() + "' and off_date_str='" + dr_m_["off_date_str"].ToString() + "'"))
+                                {%>
+                                <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;">
+                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">                                       
+
+                                        来自:<a href="prod_qcc_part_detail.aspx?dh=<%=dr_["source_dh"] %>&para=N"><%= dr_["source_dh"] %></a>
+                                        <%= ",上料数" + dr_["qty"] + ",下料数" +dr_["hege_qty"] %>
+                                    </span>
+                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                        <%= dr_["pgino"] + "," + dr_["pn"] %>
+                                    </span>
+                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                        <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" %> 
+                                        <span class="f-blue"> <%=dr_["shichang"].ToString() %></span>  
+                                    </span>
+                                </div>
+                                <%} %>
+                            </div>
+                        </div>               
+                    </li>
+                </ul> 
+                <%} %>
+                <% } %>
 
 
                 <%--====下料完成======================================--%>
@@ -267,19 +326,14 @@
                             <div class="weui-cells page-category-content">
                                 <% foreach (System.Data.DataRow dr_ in dtProd_dtl.Select("workorder='" + dr["workorder"].ToString() + "' and emp_name='" 
                                        + dr_m_["emp_name"].ToString() + "' and off_date_str='" + dr_m_["off_date_str"].ToString() + "'"))
-                                {   string href="prod_wip_detail_V1.aspx?lotno="+(dr_["lot_no"].ToString().IndexOf("/")>0?dr_["lot_no"].ToString().Substring(0,dr_["lot_no"].ToString().IndexOf("/")):dr_["lot_no"].ToString())+"&para=N";
-                                           //如果虚拟过程
-                                    if (dr_["workorder"].ToString().Contains(dr_["lot_no"].ToString().Substring(1))) { href = "/workorder/prod_qcc_part_detail.aspx?dh="+dr_["lot_no"].ToString(); }%>
-                                <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"> 
-                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">                                      
-                                        Lot:<a href="<%=href %>"><%= dr_["lot_no"] %></a>
-                                        <%= ",上料数" + dr_["qty"] + ",下料数" +dr_["off_qty"]+" --> "+dr_["par_qty"] %>
+                                {%>
+                                <div class="weui-cell__bd" style="padding-left:15px;margin-bottom:5px;"><%-- border-bottom:1px solid #e5e5e5;--%>
+                                    
+                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
+                                        <%= dr_["pgino"] + "," + dr_["pn"] %>  
                                     </span>
                                     <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= dr_["sku"] + "," + dr_["sku_descr"] %>
-                                    </span>
-                                    <span class="weui-form-preview__value" style="color:#999999;font-size: smaller;line-height:2">
-                                        <%= "上料时间"+string.Format("{0:MM-dd HH:mm}",dr_["on_date"]) + ",时长" %> 
+                                        <%= "下料时间"+string.Format("{0:MM-dd HH:mm}",dr_["off_date"])   %>  
                                         <span class="f-blue"> <%=dr_["shichang"].ToString() %></span>  
                                     </span>
                                 </div>

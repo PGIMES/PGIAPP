@@ -21,7 +21,8 @@ public partial class prod_wip_list_v4 : System.Web.UI.Page
         }
         //生产中
         BindData1();
-     
+        //生产完成24小时
+        BindData24();
         //待终检
         BindData2();
         //待GP12
@@ -29,7 +30,7 @@ public partial class prod_wip_list_v4 : System.Web.UI.Page
         //待入库
         BindData4();
         //入库完成24小时
-        BindData5();
+       // BindData5();
     }
     //生产中
     private void BindData1()
@@ -43,6 +44,14 @@ public partial class prod_wip_list_v4 : System.Web.UI.Page
 
        // DataList1_line.DataSource = rowsline1;
        // DataList1_line.DataBind();
+    }
+    private void BindData24()
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_prod_End] '{0}','{1}'", Request["workshop"], WeiXin.GetCookie("workcode"));
+        DataSet ds = SQLHelper.Query(sql);        
+        DataTable dt_data = ds.Tables[0];
+        ViewState["dt_data_24"] = dt_data;
+         
     }
     //零箱返线
     private void BindData6()
@@ -103,10 +112,7 @@ public partial class prod_wip_list_v4 : System.Web.UI.Page
        // DataTable dt_line = ds.Tables[0];
         DataTable dt_data = ds.Tables[0];
         ViewState["dt_data_5"] = dt_data;
-        //var rowsline1 = dt_data.AsEnumerable().Select(r => ((string)r["line"]).ToString()).Distinct();
-
-        //DataList5_line.DataSource = rowsline1;
-        //DataList5_line.DataBind();
+         
     }
    
     protected void BindInnerRepeat(RepeaterItemEventArgs e, string innerRepeatId, string viewstateDataTable)

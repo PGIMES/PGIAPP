@@ -277,7 +277,7 @@
                                  
                                 <%
                                     System.Data.DataTable dt_line = ViewState["dt_data_1"] as System.Data.DataTable;
-                                    int rowscount = dt_line.Select("ispartof<>'部分' and line<>'组装件'").Count();
+                                    int rowscount = dt_line.Select("ispartof<>'部分' and line<>'组装件' and isnull(workorder_wip,'') =''  ").Count();
                                     int partcount = dt_line.Select("ispartof='部分' and line<>'组装件'").Count();
                                     int backcount = dt_line.Select(" isnull(workorder_wip,'') <>'' ").Count();//and line<>'组装件'
                                 %>
@@ -298,12 +298,16 @@
                                          System.Data.DataView dataView = dt_line.DefaultView;
                                          System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "line");
                                          System.Data.DataTable dtispartof= dataView.ToTable(false, "line", "ispartof");
+                                         System.Data.DataRow[] dtrowswip;
+                                         System.Data.DataRow[] dtrowspart;
                                          System.Data.DataRow[] dtrowsback;
                                          foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                          {  %>
 
                                          <% string line = drLine["line"].ToString();
-                                            dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+line+"' and isnull(workorder_wip,'') <>'' ");//and line<>'组装件'                                      
+                                            dtrowsback= dt_line.Select("line='"+line+"' and isnull(workorder_wip,'') <>'' ");//and line<>'组装件' 
+                                            dtrowswip= dt_line.Select("line='"+line+"' and ispartof<>'部分' and isnull(workorder_wip,'') ='' ");
+                                            dtrowspart = dt_line.Select("line='"+line+"' and ispartof='部分' ");                                     
                                             if (line == "组装件"||1==1)
                                              { %>
                                                 <ul class="collapse2 zzj ">
@@ -311,8 +315,8 @@
                                                         <div class="weui-flex js-category2 <%=line=="组装件"?"peijian":"" %>" onclick="showorhide(this);">
                                            <% }%>
                                                             <div class="weui-cells__title LH weui-flex__item" id="<%=line %>LH1"><i class="icon nav-icon icon-22 color-success"></i><%= (line=="组装件"?"配件":line) %>  
-                                                                <span class="weui-badge bg-blue  margin20-l <% =line == "组装件"?"zzj_head":"" %> " ><% =dtispartof.Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>                                         
-                                                                <span class="weui-badge bg-orange  <% =line == "组装件"||line == "不合格滞留Lot"?"zzj_head hide":"" %> "  >部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowswip.Length==0?"gray":"blue") %>  margin20-l <% =line == "组装件"?"zzj_head":"" %> " ><% =dtrowswip.Length %></span>                                         
+                                                                <span class="weui-badge bg-<% =(dtrowspart.Length==0?"gray":"orange") %>  <% =line == "组装件"||line == "不合格滞留Lot"?"zzj_head hide":"" %> "  >部<% =dtrowspart.Length %></span>
                                                                 <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %>   <% =line == "组装件"||line == "不合格滞留Lot"?"zzj_head ":"" %> "  >返<% =dtrowsback.Count() %></span>
                                                             </div> 
                                             <%if (line == "组装件"||1==1)
@@ -323,7 +327,7 @@
                                            <% }%>
                                                <%                                                  
                                                    System.Data.DataTable dt = ViewState["dt_data_1"] as System.Data.DataTable;
-                                                   foreach (System.Data.DataRow dr in dt.Select("line='" + line + "'"))
+                                                   foreach (System.Data.DataRow dr in dt.Select("line='" + line + "'","ispartof desc,usetimes desc"))
                                                    {
                                                        if (dr["ispartof"].ToString() == "部分" || dr["ispartof"].ToString() == "零箱返线")
                                                        { %> 
@@ -433,6 +437,77 @@
                             </div> 
 
 
+                            <%----生产完成(24小时)----- -----%>
+                            <div class="weui-form-preview ">
+                                <%
+                                    dt_line = ViewState["dt_data_24"] as System.Data.DataTable;
+                                    rowscount = dt_line.Rows.Count;
+                                %>
+                                <ul class="collapse">
+                                    <li>
+                                        <div class="weui-flex js-category">
+                                            <div class="weui-cells__title weui-flex__item"><i class="icon nav-icon icon-49"></i>生产完成(24小时内)<span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span></div>
+                                            <i class="icon icon-74"></i>
+                                        </div>
+                                        <div class="page-category js-categoryInner">
+                                            <div class="weui-cells">
+                                                <%                                          
+                                                    dataView = dt_line.DefaultView;
+                                                    dtLineDistinct = dataView.ToTable(true, "line");
+                                                    foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
+                                                    {
+                                                        string line = drLine["line"].ToString();
+                                                %>
+                                                <ul class="collapse2 ">
+                                                    <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
+                                                        <div class="weui-flex js-category2 " onclick="showorhide(this);">
+                                                            <div class="weui-cells__title weui-flex__item LH" ><i class="icon nav-icon icon-22 color-success"></i><%=line %><span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_24"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span></div>
+                                                            <i class="icon icon-74 right"></i>
+                                                        </div>
+                                                        <div class="page-category js-categoryInner a_body" style="display: none">
+                                                            <%                                                  
+                                                                System.Data.DataTable dt = ViewState["dt_data_24"] as System.Data.DataTable;
+                                                                foreach (System.Data.DataRow dr in dt.Select("line='" + line + "'"))
+                                                                { %>
+                                                            <a class="weui-cell  weui-cell_access " style="color: black" href="prod_qcc_part_detail.aspx?dh=<%=dr["workorder"] %>">
+                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                                <div class="weui-cell__hd">
+                                                                    <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="weui-cell__bd " style="font-size: smaller">
+                                                                    <span class="margin20-r">
+                                                                        <%=dr["pgino"] %> 
+                                                                    </span>
+                                                                    <span class="margin10-r">
+                                                                        <%=dr["pn"] %>
+                                                                    </span>
+                                                                    <br />                                                                     
+                                                                    <span class="margin20-r">完工单: <%=dr["workorder"] %></span>                                                                   
+                                                                    <span>数量: <font class="f-blue"><%=dr["qty"] %></font></span>                                                                                                                                        
+                                                                    <br />
+                                                                    <span class="weui-agree__text span_space">
+                                                                        <%=dr["Emp_Name"] %>
+                                                                    </span>
+                                                                    <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["off_date"]) %> </span>
+                                                                    <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font></span>
+
+                                                                </div>
+                                                                <div class="weui-cell__ft">
+                                                                </div>
+                                                            </a>
+                                                            <% }%>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <% 
+                                                    }%>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+
                             <%----待终检-----%>
                             <div class="weui-form-preview">
                                 <%
@@ -462,16 +537,19 @@
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {                                                         
                                                         string line = drLine["line"].ToString();
+                                                        dtrowswip= dt_line.Select("line='"+line+"' and ispartof<>'部分' and isnull(workorder_wip,'') ='' ");
+                                                        dtrowspart= dt_line.Select("line='"+line+"' and ispartof='部分'   ");
                                                         dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+line+"' and isnull(workorder_wip,'') <>'' "); 
+
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class="js-show LH " style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title weui-flex__item LH" >
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%=line %>
-                                                                <span class="weui-badge bg-blue  margin20-l"><% =(ViewState["dt_data_2"] as System.Data.DataTable).Select("line='" + line + "' and ispartof<>'部分'  and loading_type<>'99'").Count() %></span>
-                                                                <span class="weui-badge bg-orange ">部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
-                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Count() %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowswip.Length==0?"gray":"blue") %>  margin20-l"><% =dtrowswip.Length %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowspart.Length==0?"gray":"orange") %> ">部<% =dtrowspart.Length %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Length %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
                                                         </div>
@@ -574,7 +652,7 @@
                             <div class="weui-form-preview">
                                 <%
                                     dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
-                                    rowscount = dt_line.Select("ispartof<>'部分'").Count();
+                                    rowscount = dt_line.Select("ispartof<>'部分'  and isnull(workorder_wip,'') =''").Count();
                                     partcount = dt_line.Select("ispartof='部分'").Count();
                                     backcount = dt_line.Select(" isnull(workorder_wip,'') <>'' ").Count();
                                 %>
@@ -600,16 +678,18 @@
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {
                                                         string line = drLine["line"].ToString();
-                                                        dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+drLine["line"]+"' and isnull(workorder_wip,'') <>'' and line<>'组装件'"); 
+                                                        dtrowswip= dt_line.Select("line='"+line+"' and ispartof<>'部分' and isnull(workorder_wip,'') ='' ");
+                                                        dtrowspart= dt_line.Select("line='"+line+"' and ispartof='部分'   ");
+                                                        dtrowsback= dataView.ToTable(false, "line", "workorder_wip").Select("line='"+drLine["line"]+"' and isnull(workorder_wip,'') <>''  "); 
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title  weui-flex__item LH" id="<%=line %>LH3">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%=line %>
-                                                                <span class="weui-badge  bg-blue margin20-l "><% =(ViewState["dt_data_3"] as System.Data.DataTable).Select("line='" + line + "' and ispartof<>'部分'").Count() %></span>
-                                                                <span class="weui-badge bg-orange ">部<% =dtispartof.Select("line='" + line + "' and ispartof='部分'").Count() %></span>
-                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Count() %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowswip.Length==0?"gray":"blue") %>  margin20-l"><% =dtrowswip.Length %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowspart.Length==0?"gray":"orange") %> ">部<% =dtrowspart.Length %></span>
+                                                                <span class="weui-badge bg-<% =(dtrowsback.Length==0?"gray":"red") %> "  >返<% =dtrowsback.Length %></span>
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
@@ -701,6 +781,8 @@
                                     </li>
                                 </ul>
                             </div>
+
+
                             <%----待入库-----%>
                             <div class="weui-form-preview">
                                 <ul class="collapse">
@@ -750,8 +832,7 @@
                                                                     </span>
                                                                     <span class="weui-badge   margin20-l  <%=dr["is_print"].ToString()=="未打印"?"weui-badge-tr":"hide"   %> " style="font-size: x-small;"><%=dr["is_print"] %></span>
                                                                     <br />
-                                                                    <span class="span_space">
-                                                                        <%--完工单号--%>
+                                                                    <span class="span_space">                                                                         
                                                                         <% if (dr["b_type"].ToString() == "0")
                                                                             {%>
                                                                         <span>完工单:</span>
@@ -791,8 +872,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <%----入库完成(24小时)----- -----%>
-                            <div class="weui-form-preview">
+
+                            <%-- 入库完成(24小时)  -----%>
+                            <%--<div class="weui-form-preview hide">
                                 <%
                                     dt_line = ViewState["dt_data_5"] as System.Data.DataTable;
                                     rowscount = dt_line.Rows.Count;
@@ -875,7 +957,7 @@
                                     </li>
                                 </ul>
 
-                            </div>
+                            </div> --%>
                             
 
                         </div>                         
