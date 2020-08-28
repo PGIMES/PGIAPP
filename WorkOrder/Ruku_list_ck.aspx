@@ -219,10 +219,13 @@
                     <div class="weui-flex js-category">
                         <%
                             System.Data.DataTable dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
-                            int rowscount = dt_line.Rows.Count;         
+                            int rowscount = dt_line.Rows.Count;
                             object maxHour = dt_line.Compute("max(timesHours)", "");
                             string bgcolor = "";
-                            if(maxHour == null){ bgcolor = "bg-gray"; }else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; } else { bgcolor = "bg-orange"; }                                                                                    
+                            if(maxHour == null){ bgcolor = "bg-gray"; }
+                            else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            //else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; }
+                            else { bgcolor = "bg-orange"; }
                         %>
                         <div class="weui-cells__title fl  weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 待入库                                                 
@@ -241,7 +244,10 @@
                                 {
                                     string line = drLine["line"].ToString();
                                     string bgcolor_line = "";
-                                    if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; } else { bgcolor_line = "bg-orange"; }
+                                    //if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; }
+                                    if (drLine["timesHours"] == null) { bgcolor_line = "bg-gray"; }
+                                    else if (Convert.ToSingle(drLine["timesHours"]) == 0) { bgcolor_line = "bg-gray"; }
+                                    else { bgcolor_line = "bg-orange"; }
                             %>
                             <ul class="collapse">
                                 <li style="margin-top:0px;margin-bottom:0px">
@@ -327,7 +333,10 @@
                             rowscount = dt_line.Rows.Count;        
                             maxHour = dt_line.Compute("max(timesHours)", "");
                             bgcolor = "";
-                            if(maxHour == null){ bgcolor = "bg-gray"; }else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; } else { bgcolor = "bg-orange"; }                                              
+                            if(maxHour == null){ bgcolor = "bg-gray"; }
+                            else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            //else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; }
+                            else { bgcolor = "bg-orange"; }                                              
                         %>
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 待入库                                                 
@@ -346,7 +355,10 @@
                                 {
                                     string line = drLine["line"].ToString();
                                     string bgcolor_line = "";
-                                    if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; } else { bgcolor_line = "bg-orange"; }
+                                    //if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; }
+                                    if (drLine["timesHours"] == null) { bgcolor_line = "bg-gray"; }
+                                    else if (Convert.ToSingle(drLine["timesHours"]) == 0) { bgcolor_line = "bg-gray"; }
+                                    else { bgcolor_line = "bg-orange"; }
                             %>
                             <ul class="collapse">
                                 <li style="margin-top:0px;margin-bottom:0px">
@@ -427,7 +439,10 @@
                             rowscount = dt_line.Rows.Count;    
                             maxHour = dt_line.Compute("max(timesHours)", "");
                             bgcolor = "";
-                            if(maxHour == null){ bgcolor = "bg-gray"; }else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; } else { bgcolor = "bg-orange"; }                                                  
+                            if(maxHour == null){ bgcolor = "bg-gray"; }
+                            else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            //else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; }
+                            else { bgcolor = "bg-orange"; }                                                 
                         %>
                         <div class="weui-cells__title fl  weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 待入库                                                 
@@ -446,7 +461,10 @@
                                 {
                                     string line = drLine["line"].ToString();
                                     string bgcolor_line = "";
-                                    if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; } else { bgcolor_line = "bg-orange"; }
+                                    //if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; }
+                                    if (drLine["timesHours"] == null) { bgcolor_line = "bg-gray"; }
+                                    else if (Convert.ToSingle(drLine["timesHours"]) == 0) { bgcolor_line = "bg-gray"; }
+                                    else { bgcolor_line = "bg-orange"; }
                             %>
                             <ul class="collapse">
                                 <li style="margin-top:0px;margin-bottom:0px">
@@ -530,8 +548,11 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 不合格 待入库
-                            <span class="weui-badge  bg-<% =(count_98_2==0?"gray":"orange") %>"><% =count_98_2 %></span>
-                            <div class="weui-badge  bg-<% =(maxHour_98_2<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_2 %>H</div>
+                            <span class="weui-badge  bg-<% =(count_98_2==0?"gray":"orange") %> margin20-l" style="margin-right: 15px;"><% =count_98_2 %></span>
+                            <%--<div class="weui-badge  bg-<% =(maxHour_98_2<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_2 %>H</div>--%>
+                            <div class="weui-badge  bg-<% =(maxHour_98_2==0?"gray":"orange") %> margin20-l maxHour" style="margin-right: 15px;">
+                                <% =maxHour_98_2 %>H
+                            </div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -620,8 +641,11 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 不合格 待入库
-                            <span class="weui-badge  bg-<% =(count_98_3==0?"gray":"orange") %>"><% =count_98_3 %></span>
-                            <div class="weui-badge  bg-<% =(maxHour_98_3<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_3 %>H</div>
+                            <span class="weui-badge  bg-<% =(count_98_3==0?"gray":"orange") %> margin20-l" style="margin-right: 15px;"><% =count_98_3 %></span>
+                            <%--<div class="weui-badge  bg-<% =(maxHour_98_3<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_3 %>H</div>--%>                            
+                            <div class="weui-badge  bg-<% =(maxHour_98_3==0?"gray":"orange") %> margin20-l maxHour" style="margin-right: 15px;">
+                                <% =maxHour_98_3 %>H
+                            </div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -710,8 +734,11 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 不合格 待入库
-                            <span class="weui-badge  bg-<% =(count_98_4==0?"gray":"orange") %>"><% =count_98_4 %></span>
-                            <div class="weui-badge  bg-<% =(maxHour_98_4<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_4 %>H</div>
+                            <span class="weui-badge  bg-<% =(count_98_4==0?"gray":"orange") %> margin20-l" style="margin-right: 15px;"><% =count_98_4 %></span>
+                            <%--<div class="weui-badge  bg-<% =(maxHour_98_4<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_4 %>H</div>--%>                            
+                            <div class="weui-badge  bg-<% =(maxHour_98_4==0?"gray":"orange") %> margin20-l maxHour" style="margin-right: 15px;">
+                                <% =maxHour_98_4 %>H
+                            </div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>

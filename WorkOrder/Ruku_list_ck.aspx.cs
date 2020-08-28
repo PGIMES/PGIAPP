@@ -125,23 +125,31 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             Label1.Text = detail.Items.Count.ToString();
             if (Label1.Text == "0")
             {
-                Label1.CssClass = "weui-badge  bg-gray";
+                Label1.CssClass = "weui-badge  bg-gray margin20-l margin15-r";
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-orange";
+                Label1.CssClass = "weui-badge  bg-orange margin20-l margin15-r";
             }
 
             Label2.Text = "0";
             DataTable dt_wk_line = dt_wk.DefaultView.ToTable(true, "line", "timesHours");
             if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk_line.Compute("max(timesHours)", "").ToString(); }
-            if (Convert.ToDouble(Label2.Text) < 4)
+            //if (Convert.ToDouble(Label2.Text) < 4)
+            //{
+            //    Label2.CssClass = "weui-badge  bg-orange";
+            //}
+            //else
+            //{
+            //    Label2.CssClass = "weui-badge  bg-red";
+            //}
+            if (Convert.ToDouble(Label2.Text) == 0)
             {
-                Label2.CssClass = "weui-badge  bg-orange";
+                Label2.CssClass = "weui-badge  bg-gray margin20-l maxHour";//margin15-r
             }
             else
             {
-                Label2.CssClass = "weui-badge  bg-red";
+                Label2.CssClass = "weui-badge  bg-orange margin20-l maxHour";
             }
             Label2.Text = Label2.Text + "H";
         }
@@ -165,23 +173,31 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             Label1.Text = detail.Items.Count.ToString();
             if (Label1.Text == "0")
             {
-                Label1.CssClass = "weui-badge  bg-gray";
+                Label1.CssClass = "weui-badge  bg-gray margin20-l margin15-r";
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-orange";
+                Label1.CssClass = "weui-badge  bg-orange margin20-l margin15-r";
             }
 
             Label2.Text = "0";
             DataTable dt_wk_line = dt_wk.DefaultView.ToTable(true, "line", "timesHours");
             if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk_line.Compute("max(timesHours)", "").ToString(); }
-            if (Convert.ToDouble(Label2.Text) < 4)
+            //if (Convert.ToDouble(Label2.Text) < 4)
+            //{
+            //    Label2.CssClass = "weui-badge  bg-orange";
+            //}
+            //else
+            //{
+            //    Label2.CssClass = "weui-badge  bg-red";
+            //}
+            if (Convert.ToDouble(Label2.Text) == 0)
             {
-                Label2.CssClass = "weui-badge  bg-orange";
+                Label2.CssClass = "weui-badge  bg-gray margin20-l maxHour";
             }
             else
             {
-                Label2.CssClass = "weui-badge  bg-red";
+                Label2.CssClass = "weui-badge  bg-orange margin20-l maxHour";
             }
             Label2.Text = Label2.Text + "H";
         }
@@ -205,23 +221,31 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             Label1.Text = detail.Items.Count.ToString();
             if (Label1.Text == "0")
             {
-                Label1.CssClass = "weui-badge  bg-gray";
+                Label1.CssClass = "weui-badge  bg-gray margin20-l margin15-r";
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-orange";
+                Label1.CssClass = "weui-badge  bg-orange margin20-l margin15-r";
             }
 
             Label2.Text = "0";
             DataTable dt_wk_line = dt_wk.DefaultView.ToTable(true, "line", "timesHours");
             if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk_line.Compute("max(timesHours)", "").ToString(); }
-            if (Convert.ToDouble(Label2.Text) < 4)
+            //if (Convert.ToDouble(Label2.Text) < 4)
+            //{
+            //    Label2.CssClass = "weui-badge  bg-orange";
+            //}
+            //else
+            //{
+            //    Label2.CssClass = "weui-badge  bg-red";
+            //}
+            if (Convert.ToDouble(Label2.Text) == 0)
             {
-                Label2.CssClass = "weui-badge  bg-orange";
+                Label2.CssClass = "weui-badge  bg-gray margin20-l maxHour";
             }
             else
             {
-                Label2.CssClass = "weui-badge  bg-red";
+                Label2.CssClass = "weui-badge  bg-orange margin20-l maxHour";
             }
             Label2.Text = Label2.Text + "H";
         }
