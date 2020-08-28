@@ -217,11 +217,15 @@
                     <div class="weui-flex js-category">
                         <%
                             System.Data.DataTable dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
-                            int rowscount = dt_line.Rows.Count;                                                 
+                            int rowscount = dt_line.Rows.Count;         
+                            object maxHour = dt_line.Compute("max(timesHours)", "");
+                            string bgcolor = "";
+                            if(maxHour == null){ bgcolor = "bg-gray"; }else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; } else { bgcolor = "bg-orange"; }                                                                                    
                         %>
                         <div class="weui-cells__title fl  weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
+                            <span class="weui-badge  <% = bgcolor %> margin20-l " style="margin-right: 15px;"><% =maxHour %>H</span>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -229,20 +233,23 @@
                         <div class="weui-cells select">
                             <%                                          
                                 System.Data.DataView dataView = dt_line.DefaultView;
-                                System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "line");
+                                System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "line","timesHours");
 
                                 foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                 {
                                     string line = drLine["line"].ToString();
+                                    string bgcolor_line = "";
+                                    if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; } else { bgcolor_line = "bg-orange"; }
                             %>
                             <ul class="collapse">
                                 <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line" onclick="showorhide(this);">
-                                        <div class="weui-cells__title  weui-flex__item LH" id="<%=line %>LH4">
+                                        <div class="weui-cells__title  weui-flex__item LH">
                                             <i class="icon nav-icon icon-22 color-success "></i><%=line %>
                                             <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
                                                 <% =(ViewState["dt_data_2"] as System.Data.DataTable).Select("line='" + line + "'").Count() %>
                                             </span>
+                                            <span class="weui-badge <%=bgcolor_line %> margin20-l " style="margin-right: 15px;"><% =drLine["timesHours"] %>H</span>
                                         </div>
                                         <i class="icon icon-74 right"></i>
                                     </div>
@@ -315,11 +322,15 @@
                     <div class="weui-flex js-category">
                         <%
                            dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
-                            rowscount = dt_line.Rows.Count;                                                 
+                            rowscount = dt_line.Rows.Count;        
+                            maxHour = dt_line.Compute("max(timesHours)", "");
+                            bgcolor = "";
+                            if(maxHour == null){ bgcolor = "bg-gray"; }else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; } else { bgcolor = "bg-orange"; }                                              
                         %>
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
+                            <span class="weui-badge  <% = bgcolor %> margin20-l " style="margin-right: 15px;"><% =maxHour %>H</span>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -327,20 +338,23 @@
                         <div class="weui-cells select">
                             <%                                          
                                 dataView = dt_line.DefaultView;
-                                dtLineDistinct = dataView.ToTable(true, "line");
+                                dtLineDistinct = dataView.ToTable(true, "line","timesHours");
 
                                 foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                 {
                                     string line = drLine["line"].ToString();
+                                    string bgcolor_line = "";
+                                    if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; } else { bgcolor_line = "bg-orange"; }
                             %>
                             <ul class="collapse">
                                 <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line" onclick="showorhide(this);">
-                                        <div class="weui-cells__title  weui-flex__item LH" id="<%=line %>LH4">
+                                        <div class="weui-cells__title  weui-flex__item LH">
                                             <i class="icon nav-icon icon-22 color-success "></i><%=line %>
                                             <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
                                                 <% =(ViewState["dt_data_3"] as System.Data.DataTable).Select("line='" + line + "'").Count() %>
                                             </span>
+                                            <span class="weui-badge <%=bgcolor_line %> margin20-l " style="margin-right: 15px;"><% =drLine["timesHours"] %>H</span>
                                         </div>
                                         <i class="icon icon-74 right"></i>
                                     </div>
@@ -408,11 +422,15 @@
                     <div class="weui-flex js-category">
                         <%
                            dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
-                            rowscount = dt_line.Rows.Count;                                                 
+                            rowscount = dt_line.Rows.Count;    
+                            maxHour = dt_line.Compute("max(timesHours)", "");
+                            bgcolor = "";
+                            if(maxHour == null){ bgcolor = "bg-gray"; }else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; } else { bgcolor = "bg-orange"; }                                                  
                         %>
                         <div class="weui-cells__title fl  weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
+                            <span class="weui-badge  <% = bgcolor %> margin20-l " style="margin-right: 15px;"><% =maxHour %>H</span>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -420,20 +438,23 @@
                         <div class="weui-cells select">
                             <%                                          
                                 dataView = dt_line.DefaultView;
-                                dtLineDistinct = dataView.ToTable(true, "line");
+                                dtLineDistinct = dataView.ToTable(true, "line","timesHours");
 
                                 foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                 {
                                     string line = drLine["line"].ToString();
+                                    string bgcolor_line = "";
+                                    if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; } else { bgcolor_line = "bg-orange"; }
                             %>
                             <ul class="collapse">
                                 <li style="margin-top:0px;margin-bottom:0px">
                                     <div class="weui-flex js-category line" onclick="showorhide(this);">
-                                        <div class="weui-cells__title  weui-flex__item LH" id="<%=line %>LH4">
+                                        <div class="weui-cells__title  weui-flex__item LH">
                                             <i class="icon nav-icon icon-22 color-success "></i><%=line %>
                                             <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
                                                 <% =(ViewState["dt_data_4"] as System.Data.DataTable).Select("line='" + line + "'").Count() %>
                                             </span>
+                                            <span class="weui-badge <%=bgcolor_line %> margin20-l " style="margin-right: 15px;"><% =drLine["timesHours"] %>H</span>
                                         </div>
                                         <i class="icon icon-74 right"></i>
                                     </div>
