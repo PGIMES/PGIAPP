@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
 {
     public int count_98_2, count_98_3, count_98_4, count_99_2, count_99_3, count_99_4;
+    public double maxHour_98_2 = 0.0, maxHour_98_3 = 0.0, maxHour_98_4 = 0.0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -37,16 +38,19 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         list_98_2_line.DataSource = rowsline_98_2;
         list_98_2_line.DataBind();
         count_98_2 = dt_98_2.Rows.Count;
+        if (dt_98_2.Rows.Count > 0) { maxHour_98_2 = Convert.ToDouble(dt_98_2.Compute("max(timesHours)", "")); }
 
         DataTable rowsline_98_3 = dt_98_3.DefaultView.ToTable(true, "line");
         list_98_3_line.DataSource = rowsline_98_3;
         list_98_3_line.DataBind();
         count_98_3 = dt_98_3.Rows.Count;
+        if (dt_98_3.Rows.Count > 0) { maxHour_98_3 = Convert.ToDouble(dt_98_3.Compute("max(timesHours)", "")); }
 
         DataTable rowsline_98_4 = dt_98_4.DefaultView.ToTable(true, "line");
         list_98_4_line.DataSource = rowsline_98_4;
         list_98_4_line.DataBind();
         count_98_4 = dt_98_4.Rows.Count;
+        if (dt_98_4.Rows.Count > 0) { maxHour_98_4 = Convert.ToDouble(dt_98_4.Compute("max(timesHours)", "")); }
 
         DataTable rowsline_99_2 = dt_99_2.DefaultView.ToTable(true, "line");
         list_99_2_line.DataSource = rowsline_99_2;
@@ -109,6 +113,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_98_2");
             Label Label1 = (Label)e.Item.FindControl("Label1");
+            Label Label2 = (Label)e.Item.FindControl("Label2");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_98_2"] as DataTable;
@@ -126,6 +131,18 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             {
                 Label1.CssClass = "weui-badge  bg-orange";
             }
+
+            Label2.Text = "0";
+            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk.Compute("max(timesHours)", "").ToString(); }
+            if (Convert.ToDouble(Label2.Text) < 4)
+            {
+                Label2.CssClass = "weui-badge  bg-orange";
+            }
+            else
+            {
+                Label2.CssClass = "weui-badge  bg-red";
+            }
+            Label2.Text = Label2.Text + "H";
         }
     }
 
@@ -135,6 +152,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_98_3");
             Label Label1 = (Label)e.Item.FindControl("Label1");
+            Label Label2 = (Label)e.Item.FindControl("Label2");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_98_3"] as DataTable;
@@ -152,6 +170,18 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             {
                 Label1.CssClass = "weui-badge  bg-orange";
             }
+
+            Label2.Text = "0";
+            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk.Compute("max(timesHours)", "").ToString(); }
+            if (Convert.ToDouble(Label2.Text) < 4)
+            {
+                Label2.CssClass = "weui-badge  bg-orange";
+            }
+            else
+            {
+                Label2.CssClass = "weui-badge  bg-red";
+            }
+            Label2.Text = Label2.Text + "H";
         }
     }
 
@@ -161,6 +191,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_98_4");
             Label Label1 = (Label)e.Item.FindControl("Label1");
+            Label Label2 = (Label)e.Item.FindControl("Label2");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_98_4"] as DataTable;
@@ -178,6 +209,18 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             {
                 Label1.CssClass = "weui-badge  bg-orange";
             }
+
+            Label2.Text = "0";
+            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk.Compute("max(timesHours)", "").ToString(); }
+            if (Convert.ToDouble(Label2.Text) < 4)
+            {
+                Label2.CssClass = "weui-badge  bg-orange";
+            }
+            else
+            {
+                Label2.CssClass = "weui-badge  bg-red";
+            }
+            Label2.Text = Label2.Text + "H";
         }
     }
 
@@ -187,6 +230,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         {
             Repeater detail = (Repeater)e.Item.FindControl("list_99_2");
             Label Label1 = (Label)e.Item.FindControl("Label1");
+            Label Label2 = (Label)e.Item.FindControl("Label2");
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = ViewState["dt_99_2"] as DataTable;

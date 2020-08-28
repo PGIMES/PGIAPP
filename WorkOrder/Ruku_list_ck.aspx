@@ -531,6 +531,7 @@
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 不合格 待入库
                             <span class="weui-badge  bg-<% =(count_98_2==0?"gray":"orange") %>"><% =count_98_2 %></span>
+                            <div class="weui-badge  bg-<% =(maxHour_98_2<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_2 %>H</div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -544,6 +545,7 @@
                                                 <div class="weui-cells__title  weui-flex__item">
                                                     <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                     <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                                    <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
                                                 </div>
                                                 <i class="icon icon-74"></i>
                                             </div>
@@ -619,6 +621,7 @@
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 不合格 待入库
                             <span class="weui-badge  bg-<% =(count_98_3==0?"gray":"orange") %>"><% =count_98_3 %></span>
+                            <div class="weui-badge  bg-<% =(maxHour_98_3<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_3 %>H</div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -632,6 +635,7 @@
                                                 <div class="weui-cells__title  weui-flex__item">
                                                     <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                     <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                                    <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
                                                 </div>
                                                 <i class="icon icon-74"></i>
                                             </div>
@@ -707,6 +711,7 @@
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 不合格 待入库
                             <span class="weui-badge  bg-<% =(count_98_4==0?"gray":"orange") %>"><% =count_98_4 %></span>
+                            <div class="weui-badge  bg-<% =(maxHour_98_4<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_4 %>H</div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -720,6 +725,7 @@
                                                 <div class="weui-cells__title  weui-flex__item">
                                                     <i class="icon nav-icon icon-22 color-success"></i><span id="line_s"><%# Eval("line") %></span>
                                                     <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                                    <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
                                                 </div>
                                                 <i class="icon icon-74"></i>
                                             </div>
