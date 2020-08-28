@@ -133,7 +133,8 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             }
 
             Label2.Text = "0";
-            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk.Compute("max(timesHours)", "").ToString(); }
+            DataTable dt_wk_line = dt_wk.DefaultView.ToTable(true, "line", "timesHours");
+            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk_line.Compute("max(timesHours)", "").ToString(); }
             if (Convert.ToDouble(Label2.Text) < 4)
             {
                 Label2.CssClass = "weui-badge  bg-orange";
@@ -172,7 +173,8 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             }
 
             Label2.Text = "0";
-            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk.Compute("max(timesHours)", "").ToString(); }
+            DataTable dt_wk_line = dt_wk.DefaultView.ToTable(true, "line", "timesHours");
+            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk_line.Compute("max(timesHours)", "").ToString(); }
             if (Convert.ToDouble(Label2.Text) < 4)
             {
                 Label2.CssClass = "weui-badge  bg-orange";
@@ -211,7 +213,8 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             }
 
             Label2.Text = "0";
-            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk.Compute("max(timesHours)", "").ToString(); }
+            DataTable dt_wk_line = dt_wk.DefaultView.ToTable(true, "line", "timesHours");
+            if (dt_wk.Rows.Count > 0) { Label2.Text = dt_wk_line.Compute("max(timesHours)", "").ToString(); }
             if (Convert.ToDouble(Label2.Text) < 4)
             {
                 Label2.CssClass = "weui-badge  bg-orange";
