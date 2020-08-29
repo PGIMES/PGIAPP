@@ -794,12 +794,11 @@
                                                 dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
                                                 rowscount = dt_line.Rows.Count;  
                                                 object maxHour = dt_line.Compute("max(timesHours)", "");
-                                                string bgcolor = "";
-                                                if(maxHour == null){ bgcolor = "bg-gray"; }else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; } else { bgcolor = "bg-orange"; }                                               
+                                                                                              
                                             %>
                                             <div class="weui-cells__title  weui-flex__item"><i class="icon nav-icon icon-49"></i> 待 入 库                                                 
                                                 <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
-                                                <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>H</div>
+                                                <div class="weui-badge  bg-orange margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>H</div>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -812,15 +811,14 @@
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {
                                                         string line = drLine["line"].ToString();
-                                                        string bgcolor_line = "";
-                                                        if (Convert.ToSingle(drLine["timesHours"])>2) { bgcolor_line = "bg-red"; } else { bgcolor_line = "bg-orange"; }
+                                                        
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title  weui-flex__item LH" ><i class="icon nav-icon icon-22 color-success "></i><%=line %>
                                                                 <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_4"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span>
-                                                                <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>H</div>
+                                                                <div class="weui-badge bg-orange margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>H</div>
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
