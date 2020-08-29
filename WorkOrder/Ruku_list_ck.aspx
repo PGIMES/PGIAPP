@@ -220,11 +220,13 @@
                         <%
                             System.Data.DataTable dt_line = ViewState["dt_data_2"] as System.Data.DataTable;
                             int rowscount = dt_line.Rows.Count;
-                            object maxHour = dt_line.Compute("max(timesHours)", "");
+                            string maxHour = dt_line.Compute("max(timesHours)", "").ToString();
+                            if (maxHour == "") { maxHour = "0"; }
                             string bgcolor = "";
-                            if(maxHour == null){ bgcolor = "bg-gray"; }
-                            else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            //if(maxHour == null){ bgcolor = "bg-gray"; }
+                            //else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
                             //else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; }
+                            if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
                             else { bgcolor = "bg-orange"; }
                         %>
                         <div class="weui-cells__title fl  weui-flex__item">
@@ -329,14 +331,16 @@
                 <li class="js-show">
                     <div class="weui-flex js-category">
                         <%
-                           dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
-                            rowscount = dt_line.Rows.Count;        
-                            maxHour = dt_line.Compute("max(timesHours)", "");
+                            dt_line = ViewState["dt_data_3"] as System.Data.DataTable;
+                            rowscount = dt_line.Rows.Count;
+                            maxHour = dt_line.Compute("max(timesHours)", "").ToString();
+                            if (maxHour == "") { maxHour = "0"; }
                             bgcolor = "";
-                            if(maxHour == null){ bgcolor = "bg-gray"; }
-                            else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            //if(maxHour == null){ bgcolor = "bg-gray"; }
+                            //else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
                             //else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; }
-                            else { bgcolor = "bg-orange"; }                                              
+                            if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            else { bgcolor = "bg-orange"; }
                         %>
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 待入库                                                 
@@ -435,14 +439,16 @@
                 <li class="js-show">
                     <div class="weui-flex js-category">
                         <%
-                           dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
-                            rowscount = dt_line.Rows.Count;    
-                            maxHour = dt_line.Compute("max(timesHours)", "");
+                            dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
+                            rowscount = dt_line.Rows.Count;
+                            maxHour = dt_line.Compute("max(timesHours)", "").ToString();
+                            if (maxHour == "") { maxHour = "0"; }
                             bgcolor = "";
-                            if(maxHour == null){ bgcolor = "bg-gray"; }
-                            else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            //if(maxHour == null){ bgcolor = "bg-gray"; }
+                            //else if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
                             //else if (Convert.ToSingle(maxHour)>2) { bgcolor = "bg-red"; }
-                            else { bgcolor = "bg-orange"; }                                                 
+                            if (Convert.ToSingle(maxHour) == 0) { bgcolor = "bg-gray"; }
+                            else { bgcolor = "bg-orange"; }
                         %>
                         <div class="weui-cells__title fl  weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 待入库                                                 
