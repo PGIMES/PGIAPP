@@ -750,7 +750,7 @@ public partial class bhgp_Apply_V1 : System.Web.UI.Page
                 re_sql = string.Format(re_sql, workorder.Text, dt.Rows[0]["result"].ToString(), emp_code_name.Text);
                 DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
                 flag = re_dt.Rows[0][0].ToString();
-                msg = re_dt.Rows[0][1].ToString();
+                msg_f = re_dt.Rows[0][1].ToString();
             }
             else
             {

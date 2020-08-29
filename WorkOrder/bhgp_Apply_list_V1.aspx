@@ -267,15 +267,15 @@
                                                                     </span>
                                                                     <span class="weui-mark-rt- weui-badge weui-badge-tr" 
                                                                         style="
-                                                                            font-size: x-small; color: <%# Eval("result").ToString()=="无法判定"?"#F7CF07":"#10AEFF"%>; 
-                                                                            display:<%# (Eval("result").ToString()=="无法判定")?"inline-block":"none"%>; ">
+                                                                            font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
+                                                                            display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                                         <%#Eval("result") %>
                                                                     </span>
                                                                     <span class="weui-mark-rt- weui-badge weui-badge-tr" 
                                                                         style="
-                                                                            font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
-                                                                            display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
-                                                                        <%#Eval("result") %>
+                                                                            font-size: x-small; color: <%# Eval("result_rs").ToString()=="无法判定"?"#F7CF07":"#10AEFF"%>; 
+                                                                            display:<%# (Eval("result_rs").ToString()=="无法判定")?"inline-block":"none"%>; ">
+                                                                        <%#Eval("result_rs") %>
                                                                     </span>
                                                                 </span>
                                                                     <span class="weui-agree__text" style="font-size: smaller">
@@ -783,18 +783,18 @@
                                                                             font-size: x-small; color: <%# Eval("type").ToString()=="部分"?"#F7CF07":"#10AEFF"%>; 
                                                                             display:<%# Eval("type").ToString()=="部分"?"inline-block":"none"%>; ">
                                                                         <%#Eval("type") %>
-                                                                    </span>                                                        
-                                                                    <span class="weui-mark-rt- weui-badge weui-badge-tr" 
-                                                                        style="
-                                                                            font-size: x-small; color: <%# Eval("result").ToString()=="无法判定"?"#F7CF07":"#10AEFF"%>; 
-                                                                            display:<%# (Eval("result").ToString()=="无法判定")?"inline-block":"none"%>; ">
-                                                                        <%#Eval("result") %>
-                                                                    </span>
+                                                                    </span>  
                                                                     <span class="weui-mark-rt- weui-badge weui-badge-tr" 
                                                                         style="
                                                                             font-size: x-small; color: <%# Eval("result").ToString()=="返工"?"red":"#10AEFF"%>; 
                                                                             display:<%# (Eval("result").ToString()=="返工" || Eval("result").ToString()=="分选")?"inline-block":"none"%>; ">
                                                                         <%#Eval("result") %>
+                                                                    </span>                                                      
+                                                                    <span class="weui-mark-rt- weui-badge weui-badge-tr" 
+                                                                        style="
+                                                                            font-size: x-small; color: <%# Eval("result_rs").ToString()=="无法判定"?"#F7CF07":"#10AEFF"%>; 
+                                                                            display:<%# (Eval("result_rs").ToString()=="无法判定")?"inline-block":"none"%>; ">
+                                                                        <%#Eval("result_rs") %>
                                                                     </span>
                                                                 </span>
                                                                     <span class="weui-agree__text" style="font-size: smaller">
