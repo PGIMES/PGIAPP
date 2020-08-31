@@ -53,6 +53,10 @@
         }
         .bg-orange{background-color:orange}
         .weui-cells__title{padding-left:0px;padding-right:0px;color:#696969}
+        .weui-popup__modal {
+            bottom:auto;
+            height:auto;
+        }
     </style>
 
     <script src="../js/zepto.min.js"></script>
@@ -174,10 +178,28 @@
         </form>
         <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
     </div>
+    <div id="full" class="weui-popup__container " style="opacity: 1; display: none;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class=" margin10-l margin10-r">
+                【生产线行数量说明】
+                    <br />
+                (~个):产线使用原材料数；<br />
+                (~拖)产线剩余原材料拖数；<br />
+                (~天)原材料平均使用天数。<br />
+                【原材料行说明】<br />
+                (~h,~h)该料在库最短时数，在库最长时数;<br />
+                (可发~天)该料可发生产天数;<br />
+                (生产~班)该料可生产班数
+                <div class="tcenter"><a href="javascript:;" class="weui-btn  weui-btn_mini bg-blue close-popup">关闭</a></div>
+            </div>
 
+        </div>
+    </div>
     <form id="form1" runat="server">
+       <script>var note = "<div class='tleft'>【生产线行数量说明】 <br> (~个):产线使用原材料数；<br> (~拖)产线剩余原材料拖数；<br> (~天)原材料平均使用天数。<br>【原材料行说明】<br> (~h,~h)该料最小可生产时数，最大可生产时数;<br> (可发~天)该料可发生产天数;<br> (生产~班)该料可生产班数</span>";</script>
         <div class="page">
-            
+            <div class="weui-cells__title tright"><span class="icon icon-40 f-blue  margin20-r open-popup" data-target="#full"  >说明</span></div>
             <div class="page__bd" id="t2" style="height: 100%;">
                 <div class="weui-tab">
                     
@@ -335,9 +357,7 @@
         </div>
         
 
-        <%--<div class="weui-footer weui-footer_fixed-bottom">
-            <p class="weui-footer__text"><%=WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %></p>
-        </div>--%>
+         
         <script>
             $(function () {
                 $('.weui-navbar__item').on('click', function () {
@@ -346,6 +366,6 @@
                 });
 
             });</script>
-    </form>
+    </form>        
 </body>
 </html>
