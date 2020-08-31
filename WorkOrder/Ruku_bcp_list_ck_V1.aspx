@@ -52,6 +52,10 @@
         }
         .bg-orange{background-color:orange}
         .weui-cells__title{padding-left:0px;padding-right:0px;color:#696969}
+        .weui-popup__modal {
+            bottom:auto;
+            height:auto;
+        }
     </style>
 
     <script src="../js/zepto.min.js"></script>
@@ -173,10 +177,28 @@
         </form>
         <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
     </div>
+    
+    <div id="full" class="weui-popup__container " style="opacity: 1; display: none;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class=" margin10-l margin10-r">
+                【生产线行数量说明】
+                    <br />
+                (~个):产线使用半成品数;<br />
+                (~拖)产线剩余半成品拖数;<br />
+                (~h)产线平均最长在库时数<br />
+                【半成品行说明】<br />
+                (~h,~h)该料最短在库时数，最长在库时数;<br />
+                (可发~天)该料可发生产天数;<br />
+                (生产~班)该料可生产班数
+                <div class="tcenter"><a href="javascript:;" class="weui-btn  weui-btn_mini bg-blue close-popup">关闭</a></div>
+            </div>
 
+        </div>
+    </div>
     <form id="form1" runat="server">
         <div class="page">
-            
+            <div class="weui-cells__title tright"><span class="icon icon-40 f-blue  margin20-r open-popup" data-target="#full"  >说明</span></div>            
             <div class="page__bd" id="t2" style="height: 100%;">
                 <div class="weui-tab">
                     
