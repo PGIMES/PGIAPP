@@ -190,8 +190,8 @@
                 (~天)产线平均在库最长天数<br />
                 【成品行说明】<br />
                 (~h,~h)该料在库最短时数，在库最长时数;<br />
-                (可用~天)该料可发生产天数;<br />
-                (~天)该料可生产天数
+                (可用~天)当前库存除以(最近30天发货量(不含当天)除以21);<br />
+                (~天)当前库存除以(客户未来5周的需求量除以25);
                 <div class="tcenter"><a href="javascript:;" class="weui-btn  weui-btn_mini bg-blue close-popup">关闭</a></div>
             </div>
 

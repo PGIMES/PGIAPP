@@ -189,8 +189,8 @@
                 (~h)产线平均在库最长时数<br />
                 【半成品行说明】<br />
                 (~h,~h)该料在库最短时数，在库最长时数;<br />
-                (可发~天)该料可发生产天数;<br />
-                (生产~班)该料可生产班数
+                (可发~天)当前库存除以(最近30天消耗量(不含当天)除以21);<br />
+                (生产~班)当前库存除以(成品排产频次1W,2W对应的班产量)
                 <div class="tcenter"><a href="javascript:;" class="weui-btn  weui-btn_mini bg-blue close-popup">关闭</a></div>
             </div>
 
