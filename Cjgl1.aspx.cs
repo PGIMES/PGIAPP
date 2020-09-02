@@ -283,7 +283,7 @@ public partial class Cjgl1 : System.Web.UI.Page
         //夹具监视
         int  iOne = 0, iTwo = 0, iF = 0,i2H=0; //iOne 一次在处理，iTwo:ng_count >0 ;  iF  30天完成数 ;i2H 大于2Hour
         // 调整中
-        string sql = string.Format(@"select formno,ng_count from [Mes_App_Jiaju] where status<>9 and workshop='{0}'", workshop);
+        string sql = string.Format(@"select formno,ng_count from [Mes_App_Jiaju]  with(readpast)  where status<>9 and workshop='{0}'", workshop);
         DataTable dt_data_go = SQLHelper.Query(sql).Tables[0];
         iOne = iOne + dt_data_go.Rows.Count;      
         
