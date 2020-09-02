@@ -29,7 +29,7 @@ public partial class YL : System.Web.UI.Page
             domain.Text = lu.Domain;
 
             //登入岗位的域
-            string strsql_d = "select * from [Mes_App_EmployeeLogin] where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
+            string strsql_d = "select * from [Mes_App_EmployeeLogin] with(readpast) where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
             var value_login = SQLHelper.reDs(strsql_d).Tables[0];
             if (value_login != null && value_login.Rows.Count > 0)
             {
@@ -42,7 +42,7 @@ public partial class YL : System.Web.UI.Page
             lbl_emp.Text = lu.Telephone + lu.UserName;
             if (string.IsNullOrEmpty( lu.Telephone))//增加手机号的获取，因为cookIE里的手机号有可能会是空值
             {
-                string strsql = "select * from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where employeeid = '" + lu.WorkCode + "'";
+                string strsql = "select * from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where employeeid = '" + lu.WorkCode + "'";
                 var value_rout = SQLHelper.reDs(strsql).Tables[0];
                 if (value_rout != null && value_rout.Rows.Count > 0)
                 {
@@ -65,7 +65,7 @@ public partial class YL : System.Web.UI.Page
     public void ShowValue(string WorkCode)
     {
         //取当前登录者
-        string sql = @"select id,domain from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
+        string sql = @"select id,domain from [dbo].[Mes_App_EmployeeLogin] with(readpast) where emp_code='{0}' and off_date is null";
         sql = string.Format(sql, WorkCode);
         var value = SQLHelper.reDs(sql).Tables[0];
         if (value != null && value.Rows.Count > 0)
@@ -76,7 +76,7 @@ public partial class YL : System.Web.UI.Page
                 domain.Text = value.Rows[0]["domain"].ToString();
             }
 
-            string strsql = "select distinct workshop,area,line,op from [dbo].Mes_App_EmployeeLogin_Location where login_id = '{0}'";
+            string strsql = "select distinct workshop,area,line,op from [dbo].Mes_App_EmployeeLogin_Location with(nolock) where login_id = '{0}'";
             strsql = string.Format(strsql, id);
             var value_rout = SQLHelper.reDs(strsql).Tables[0];
 
