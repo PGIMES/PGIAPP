@@ -69,10 +69,29 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         list_99_4_line.DataBind();
         count_99_4 = dt_99_4.Rows.Count;
 
-        //待入库
-        BindData4();
-        //入库完成24小时
-        BindData5();
+        ////待入库
+        //BindData4();
+        ////入库完成24小时
+        //BindData5();
+
+
+        string workorder = WeiXin.GetCookie("workcode");
+        string sql_a = @"exec [usp_app_wip_list_Qcc] '二车间','" + workorder + "',4;";
+        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',4;";
+        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workorder + "',4;";
+
+        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '二车间','" + workorder + "',5;";
+        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',5;";
+        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workorder + "',5;";
+        DataSet ds_hg = SQLHelper.Query(sql_a);
+
+        ViewState["dt_data_2"] = ds_hg.Tables[0];
+        ViewState["dt_data_3"] = ds_hg.Tables[1];
+        ViewState["dt_data_4"] = ds_hg.Tables[2];
+
+        ViewState["dt_data_end_2"] = ds_hg.Tables[3];
+        ViewState["dt_data_end_3"] = ds_hg.Tables[4];
+        ViewState["dt_data_end_4"] = ds_hg.Tables[5];
     }
 
     //待入库

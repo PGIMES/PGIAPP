@@ -308,7 +308,7 @@
                                                         <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                     </span>
                                                     <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["off_date"]) %> </span>
-                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font></span>
+                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt32(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font></span>
 
                                                 </div>
                                                 <div class="weui-cell__ft">
@@ -529,7 +529,7 @@
                                                         <%=dr["cellphone"] %><%=dr["Emp_Name"] %>
                                                     </span>
                                                     <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}",dr["off_date"]) %> </span>
-                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt16(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font></span>
+                                                    <span class="weui-agree__text">时长:<font class="<%= Convert.ToInt32(dr["times"].ToString().Replace(":",""))>200?"f-red":"f-deepfont" %>"> <%=dr["times"] %></font></span>
 
                                                 </div>
                                                 <div class="weui-cell__ft">
