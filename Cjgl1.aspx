@@ -40,8 +40,12 @@
         $(function () {
             var _wrokshop = "<%=Request["workshop"]%>";
             if (_wrokshop == "三车间") {
+                show_yl(_wrokshop);
+                show_bhg(_wrokshop);
                 show_prod_3(_wrokshop);
             } else {
+                show_yl(_wrokshop);
+                show_bhg(_wrokshop);
                 show_jj(_wrokshop);
                 show_prod_24(_wrokshop);
             };
@@ -126,11 +130,9 @@
                         <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label1_j" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i1 = Label1.Text;
-                            //Response.Write("<span style='background-color: #fff;font-size:12px;color:#10aeff;'>生</span>"); 
                             Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>生" + i1 + "</span>");
                         %>   
-                        <% string i1_j = Label1_j.Text;
-                            //Response.Write("<span style='background-color: #fff;font-size:12px;color:orange;'>质</span>"); 
+                        <% string i1_j = Label1_j.Text; 
                             Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> 
                     </div>
                 </a>
@@ -156,11 +158,13 @@
                         <p>要料监视</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label2" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2 = Label2.Text; Response.Write("<span class='weui-badge  bg-" + (i2 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2 + "</span>"); %>   
                         
                         <asp:Label ID="Label2_end" runat="server" Text="" style="display:none;"></asp:Label>
-                        <% string i2_end = Label2_end.Text; Response.Write("<span class='weui-badge  bg-" + (i2_end == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_end + "</span>"); %>   
+                        <% string i2_end = Label2_end.Text; Response.Write("<span class='weui-badge  bg-" + (i2_end == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_end + "</span>"); %> --%>
+                        <span class='weui-badge  bg-blue' id="yl_go" style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="yl_end"  style='margin-right: 5px;'>..</span>  
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/bhgp_Apply_list_V1.aspx?workshop=<%=_workshop %>" id="a_div2">
@@ -171,12 +175,15 @@
                         <p>不合格监视</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label3_V1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label3_V1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3_V1_f" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label3_V1_e" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i3_V1 = Label3_V1.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1 + "</span>"); %>  
                         <% string i3_V1_e = Label3_V1_e.Text; Response.Write("<span class='weui-badge  bg-" + (i3_V1_e == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i3_V1_e + "</span>"); %>  
-                        <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>  
+                        <% string i3_V1_f = Label3_V1_f.Text;Response.Write("<span class='weui-badge  bg-" + (i3_V1_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i3_V1_f + "</span>"); %>  --%>                        
+                        <span class="weui-badge bg-blue" id="bhg_go" style='margin-right: 15px;'>..</span>  
+                        <span class="weui-badge bg-blue" id="bhg_end" style='margin-right: 15px;'>..</span>  
+                        <span class="weui-badge bg-red" id="bhg_fg" style='margin-right: 15px;'>返..</span> 
                     </div>
                 </a>
                 
@@ -293,12 +300,14 @@
                         <p>要料监视</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label2_three" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label2_three" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2_three = Label2_three.Text; Response.Write("<span class='weui-badge  bg-" + (i2_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_three + "</span>"); %>  
                         
                         <asp:Label ID="Label2_three_end" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i2_three_end = Label2_three_end.Text;
-                            Response.Write("<span class='weui-badge  bg-" + (i2_three_end == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_three_end + "</span>"); %>   
+                            Response.Write("<span class='weui-badge  bg-" + (i2_three_end == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i2_three_end + "</span>"); %>   --%>
+                        <span class='weui-badge  bg-blue' id="yl_go_three" style='margin-right: 5px;'>..</span>
+                        <span class='weui-badge  bg-blue' id="yl_end_three"  style='margin-right: 5px;'>..</span> 
                     </div>
                 </a>   
                 <a class="weui-cell weui-cell_access" href="/workorder/YT_list.aspx?workshop=<%=_workshop %>">
@@ -323,12 +332,15 @@
                         <p>不合格监视<span class="f12"></span></p>
                     </div>
                     <div class="weui-cell__ft"> 
-                        <asp:Label ID="Label_bhg_thr" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label_bhg_thr" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label_bhg_thr_f" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label_bhg_thr_e" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i_bhg_3 = Label_bhg_thr.Text; Response.Write("<span class='weui-badge  bg-" + (i_bhg_3 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i_bhg_3 + "</span>"); %> 
                         <% string i_bhg_3_e = Label_bhg_thr_e.Text;Response.Write("<span class='weui-badge  bg-" + (i_bhg_3_e == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>" + i_bhg_3_e + "</span>"); %>   
-                        <% string i_bhg_3_f = Label_bhg_thr_f.Text;Response.Write("<span class='weui-badge  bg-" + (i_bhg_3_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i_bhg_3_f + "</span>"); %>  
+                        <% string i_bhg_3_f = Label_bhg_thr_f.Text;Response.Write("<span class='weui-badge  bg-" + (i_bhg_3_f == "0" ? "gray" : "red") + "' style='margin-right: 15px;'>返" + i_bhg_3_f + "</span>"); %> --%> 
+                        <span class="weui-badge bg-blue" id="bhg_go_thr" style='margin-right: 15px;'>..</span>  
+                        <span class="weui-badge bg-blue" id="bhg_end_thr" style='margin-right: 15px;'>..</span>  
+                        <span class="weui-badge bg-red" id="bhg_fg_thr" style='margin-right: 15px;'>返..</span> 
                     </div>
                 </a>
                  
@@ -386,6 +398,75 @@
             signature: datad.signature,// 必填，签名，见附录1
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
+
+
+        function show_yl(_workshop) {
+            $.ajax({
+                url: "/Cjgl1.aspx/yl_Data",
+                type: "Post",
+                data: "{'_workshop': '" + _workshop + "' }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+
+                        if (_workshop == "三车间") {
+                            $("#yl_go_three").text(datad[0].go);
+                            $("#yl_end_three").text(datad[0].end);
+                            if (datad[0].go == 0) { $("#yl_go_three").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].end == 0) { $("#yl_end_three").removeClass("bg-blue").addClass("bg-gray"); }
+                        } else {
+                            $("#yl_go").text(datad[0].go);
+                            $("#yl_end").text(datad[0].end);
+                            if (datad[0].go == 0) { $("#yl_go").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].end == 0) { $("#yl_end").removeClass("bg-blue").addClass("bg-gray"); }
+                        }
+
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
+
+        function show_bhg(_workshop) {
+            $.ajax({
+                url: "/Cjgl1.aspx/bhg_Data",
+                type: "Post",
+                data: "{ '_workshop': '" + _workshop + "'}",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        if (_workshop == "三车间") {
+                            $("#bhg_go_thr").text(datad[0].go);
+                            $("#bhg_end_thr").text(datad[0].end);
+                            $("#bhg_fg_thr").text('返' + datad[0].fg);
+                            if (datad[0].go == 0) { $("#bhg_go_thr").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].end == 0) { $("#bhg_end_thr").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].go_bhg == 0) { $("#bhg_fg_thr").removeClass("bg-red").addClass("bg-gray"); }
+                        } else {
+                            $("#bhg_go").text(datad[0].go);
+                            $("#bhg_end").text(datad[0].end);
+                            $("#bhg_fg").text('返' + datad[0].fg);
+                            if (datad[0].go == 0) { $("#bhg_go").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].end == 0) { $("#bhg_end").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].go_bhg == 0) { $("#bhg_fg").removeClass("bg-red").addClass("bg-gray"); }
+                        }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
 
         //show workshop 3 product data
         function show_prod_3(_workshop){
