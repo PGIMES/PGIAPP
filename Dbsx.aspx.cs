@@ -18,7 +18,7 @@ public partial class Dbsx : PageMain
     public static string init()
     {
 
-        string sql = @"select count(1) app_ng from Mes_App_WorkOrder_Ng where status<>1";
+        string sql = @"select count(1) app_ng from Mes_App_WorkOrder_Ng with(nolock) where status<>1";
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         string appp_ng = re_dt.Rows[0]["app_ng"].ToString();
 

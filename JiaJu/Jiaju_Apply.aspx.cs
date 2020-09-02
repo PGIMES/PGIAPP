@@ -96,7 +96,7 @@ public partial class Jiaju_Apply : System.Web.UI.Page
     {
         string result = "";
         string sql = @"select distinct e_code,location,line
-	                from Mes_App_Base_Location 
+	                from Mes_App_Base_Location with(nolock) 
 	                where workshop='{0}' and e_code like 'M%' and e_code='{1}'";
         sql = string.Format(sql, workshop, sb_code);
         DataTable dt = SQLHelper.Query(sql).Tables[0];
@@ -111,7 +111,7 @@ public partial class Jiaju_Apply : System.Web.UI.Page
 
         //换下夹具默认最后一次的换上夹具
         string off_pgino = "", off_pn = "", off_jiaju_no = "", off_jiaju_name = "";
-        sql = @"select top 1 on_pgino,on_pn,on_jiaju_no,on_jiaju_name from Mes_App_Jiaju  where status=9 and  workshop='{0}' and sb_code='{1}' order by complete_date desc";
+        sql = @"select top 1 on_pgino,on_pn,on_jiaju_no,on_jiaju_name from Mes_App_Jiaju with(nolock)  where status=9 and  workshop='{0}' and sb_code='{1}' order by complete_date desc";
         sql = string.Format(sql, workshop, sb_code);
         DataTable dt_pgino = SQLHelper.Query(sql).Tables[0];
         if (dt_pgino.Rows.Count == 1)
@@ -131,7 +131,7 @@ public partial class Jiaju_Apply : System.Web.UI.Page
     public static string pgino_change(string pgino, string domain)
     {
         string result = "";
-        string sql = @"select jiajuno title,type value from [172.16.5.26].mes.dbo.JiaJu_List where isnull(status,'')<>'封存' and comp='{0}' and pn like '%{1}%'";
+        string sql = @"select jiajuno title,type value from [172.16.5.26].mes.dbo.JiaJu_List with(nolock) where isnull(status,'')<>'封存' and comp='{0}' and pn like '%{1}%'";
         sql = string.Format(sql, domain, pgino.Substring(2, 3));//"P0599BA"->"599"
         DataTable dt_jj = SQLHelper.Query(sql).Tables[0];
         string json_jj = JsonConvert.SerializeObject(dt_jj);

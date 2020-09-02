@@ -36,7 +36,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             domain.Text = lu.Domain;
 
             //登入岗位的域
-            string strsql_d = "select * from [Mes_App_EmployeeLogin] where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
+            string strsql_d = "select * from [Mes_App_EmployeeLogin] with(nolock) where emp_code='" + lu.WorkCode + "' and on_date is not null and off_date is null";
             var value_login = SQLHelper.reDs(strsql_d).Tables[0];
             string location = "";
             if (value_login != null && value_login.Rows.Count > 0)
@@ -97,7 +97,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
         
 
         //是否可以修改数量:申请人本人，且申请数量=剩余数量
-        string sql_wk = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder='"+ workorder + "'";
+        string sql_wk = @"select * from Mes_App_WorkOrder_Ng_deal_Detail with(nolock) where workorder='" + workorder + "'";
         DataTable dt_wk = SQLHelper.Query(sql_wk).Tables[0];
 
         if (dt.Rows.Count <= 0)
@@ -194,7 +194,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
     {
         string result = "";
         string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
-                    from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
+                    from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] with(nolock) 
                     where left(rsn_code,1) in('1') and rsn_domain='{0}' order by rsn_code";
         sql = string.Format(sql, domain);
         DataSet ds = SQLHelper.Query(sql);
@@ -212,7 +212,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
     {
         string result = "";
         string sql = @"select rsn_code+'-'+rsn_desc as title ,rsn_code value 
-                    from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] 
+                    from [172.16.5.26].[qad].[dbo].[qad_rsn_ref] with(nolock) 
                     where rsn_domain='{0}' and rsn_code='{1}'";
         sql = string.Format(sql, domain, rscode);
 
@@ -301,7 +301,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
             DataRowView item = (DataRowView)e.Item.DataItem;
 
             DataTable dt_wk = new DataTable();
-            string sql = @"select id,lot_no,qty,workorder from Mes_App_WorkOrder_Ng_Detail where workorder='{0}' order by id";
+            string sql = @"select id,lot_no,qty,workorder from Mes_App_WorkOrder_Ng_Detail with(nolock) where workorder='{0}' order by id";
             sql = string.Format(sql, item["workorder"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
@@ -318,7 +318,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
             Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_one_dt");
             DataTable dt_wk = new DataTable();
-            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail with(nolock) where workorder_f='{0}' order by num";
             sql = string.Format(sql, item["workorder_f"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
@@ -347,7 +347,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
             Repeater detail = (Repeater)e.Item.FindControl("Repeater_fg_dt");
             DataTable dt_wk = new DataTable();
-            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail with(nolock) where workorder_f='{0}' order by num";
             sql = string.Format(sql, item["workorder_f"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
@@ -373,7 +373,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
             Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_again_dt");
             DataTable dt_wk = new DataTable();
-            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail with(nolock) where workorder_f='{0}' order by num";
             sql = string.Format(sql, item["workorder_f"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
@@ -402,7 +402,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
             Repeater detail = (Repeater)e.Item.FindControl("Repeater_fx_dt");
             DataTable dt_wk = new DataTable();
-            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail with(nolock) where workorder_f='{0}' order by num";
             sql = string.Format(sql, item["workorder_f"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 
@@ -428,7 +428,7 @@ public partial class bhgp_Apply_yz : System.Web.UI.Page
 
             Repeater detail = (Repeater)e.Item.FindControl("Repeater_cz_fx_again_dt");
             DataTable dt_wk = new DataTable();
-            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail where workorder_f='{0}' order by num";
+            string sql = @"select * from Mes_App_WorkOrder_Ng_deal_Detail with(nolock) where workorder_f='{0}' order by num";
             sql = string.Format(sql, item["workorder_f"].ToString());
             dt_wk = SQLHelper.Query(sql).Tables[0];
 

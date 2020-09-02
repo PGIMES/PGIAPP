@@ -28,9 +28,9 @@ public partial class ZL : System.Web.UI.Page
     public void bind_data()
     {
         //上岗监视
-        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
                         where (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
         DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
 
