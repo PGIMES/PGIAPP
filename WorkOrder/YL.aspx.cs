@@ -136,7 +136,7 @@ public partial class YL : System.Web.UI.Page
         */
 
         string sqlStr = @"select ld_ref title,cast(cast(ld_qty_oh as numeric(18,4)) as float) value
-                    from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0 with(nolock)";
+                    from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0";
 
         if (pt_prod_line != "1090")
         {
