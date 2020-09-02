@@ -30,11 +30,11 @@ public partial class YL : System.Web.UI.Page
             lbl_emp.Text = lu.Telephone + lu.UserName;
             if (string.IsNullOrEmpty( lu.Telephone))//增加手机号的获取，因为cookIE里的手机号有可能会是空值
             {
-                string strsql = "select * from [172.16.5.6].[eHR_DB].[dbo].[View_HR_Emp] where employeeid = '" + lu.WorkCode + "'";
+                string strsql = "select * from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where employeeid = '" + lu.WorkCode + "'";
                 var value_rout = SQLHelper.reDs(strsql).Tables[0];
                 if (value_rout != null && value_rout.Rows.Count > 0)
                 {
-                    lbl_emp.Text = value_rout.Rows[0]["cellphone"].ToString() + lu.UserName;
+                    lbl_emp.Text = value_rout.Rows[0]["tel"].ToString() + lu.UserName;
                 }
             }
            
@@ -53,7 +53,7 @@ public partial class YL : System.Web.UI.Page
     public void ShowValue(string WorkCode)
     {
         //取当前登录者
-        string sql = @"select id,domain from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
+        string sql = @"select id,domain from [dbo].[Mes_App_EmployeeLogin] with(readpast) where emp_code='{0}' and off_date is null";
         sql = string.Format(sql, WorkCode);
         var value = SQLHelper.reDs(sql).Tables[0];
         if (value != null && value.Rows.Count > 0)
@@ -64,7 +64,7 @@ public partial class YL : System.Web.UI.Page
                 domain.Text = value.Rows[0]["domain"].ToString();
             }
 
-            string strsql = "select * from [dbo].Mes_App_EmployeeLogin_Location where login_id = '{0}'";
+            string strsql = "select * from [dbo].Mes_App_EmployeeLogin_Location with(nolock) where login_id = '{0}'";
             strsql = string.Format(strsql, id);
             var value_rout = SQLHelper.reDs(strsql).Tables[0];
 
@@ -136,7 +136,7 @@ public partial class YL : System.Web.UI.Page
         */
 
         string sqlStr = @"select ld_ref title,cast(cast(ld_qty_oh as numeric(18,4)) as float) value
-                    from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0";
+                    from pub.ld_det where ld_status in('FG-ZONE','RM-ZONE') and ld_part='{0}' and ld_qty_oh>0 with(nolock)";
 
         if (pt_prod_line != "1090")
         {

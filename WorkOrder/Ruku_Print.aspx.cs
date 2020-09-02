@@ -182,7 +182,7 @@ public partial class WorkOrder_Ruku_Print : System.Web.UI.Page
         }
 
         //--验证唯一性
-        string re_sql = "select * from Mes_APP_WorkOrder_CKSH_Hege_Detail where pgino='{0}' and serialno='{1}'";
+        string re_sql = "select * from Mes_APP_WorkOrder_CKSH_Hege_Detail with(nolock) where pgino='{0}' and serialno='{1}'";
         re_sql = string.Format(re_sql, _pgino, _serialno);
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
         if (re_dt.Rows.Count > 0)

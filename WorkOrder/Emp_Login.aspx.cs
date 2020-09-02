@@ -42,7 +42,7 @@ public partial class Emp_Login : System.Web.UI.Page
     {
         //取当前登录者工号
         string sql = @"select *, cast(datediff(mi,on_date,getdate())/60 as varchar)+':'+right('00'+cast(datediff(mi,on_date,getdate())%60  as varchar),2) as times 
-                    from Mes_App_EmployeeLogin WHERE emp_code = '{0}' AND on_date is not null and off_date IS NULL";
+                    from Mes_App_EmployeeLogin with(readpast) WHERE emp_code = '{0}' AND on_date is not null and off_date IS NULL";
         sql = string.Format(sql, txt_emp.Text.Substring(0, 5));
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
@@ -60,7 +60,7 @@ public partial class Emp_Login : System.Web.UI.Page
             //Response.Write("<script>layer.alert('程序异常，员工上岗记录多笔！');window.history.back();location.reload();</script>");
 
             sql = @"delete Mes_App_EmployeeLogin_Location where login_id in(select id from [Mes_App_EmployeeLogin] where emp_code=LEFT('{0}',5) and on_date is not null and off_date is null);
-                 delete[Mes_App_EmployeeLogin] where emp_code = LEFT('{0}', 5) and on_date is not null and off_date is null";
+                 delete[Mes_App_EmployeeLogin] with(readpast) where emp_code = LEFT('{0}', 5) and on_date is not null and off_date is null";
 
             sql = string.Format(sql, txt_emp.Text);
             SQLHelper.ExSql(sql);
@@ -120,7 +120,7 @@ public partial class Emp_Login : System.Web.UI.Page
     {
         string sb_code = e_code.Text;
         if (sb_code.Length >= 5) { sb_code = sb_code.Substring(sb_code.Length - 5); }
-        string sql = @"select distinct top 1 location,workshop,line from [Mes_App_Base_Location] WHERE e_code = '{0}' ";
+        string sql = @"select distinct top 1 location,workshop,line from [Mes_App_Base_Location] with(nolock) WHERE e_code = '{0}' ";
         sql = string.Format(sql, sb_code);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         if (re_dt.Rows.Count <= 0)

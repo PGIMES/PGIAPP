@@ -44,9 +44,9 @@ public partial class Load_Material : System.Web.UI.Page
 
     void load_data()
     {
-        string sql = @"select count(1) from [dbo].[Mes_App_EmployeeLogin] a 
-                        inner join [Mes_App_EmployeeLogin_Location] b on a.id=b.login_id 
-	                    inner join [172.16.5.26].[Production].[dbo].[Hrm_Emp] c on a.emp_code=c.EMPLOYEEID
+        string sql = @"select count(1) from [dbo].[Mes_App_EmployeeLogin] a with(readpast) 
+                        inner join [Mes_App_EmployeeLogin_Location] b with(readpast) on a.id=b.login_id 
+	                    inner join [172.16.5.26].[Production].[dbo].[Hrm_Emp] c with(readpast) on a.emp_code=c.EMPLOYEEID
                     where emp_code='" + emp_code_name.Text + "' and off_date is null and (b.e_code like 'G%' or c.dept_name='IT部')";
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         if (Convert.ToInt32(re_dt.Rows[0][0].ToString()) > 0)
@@ -102,7 +102,7 @@ public partial class Load_Material : System.Web.UI.Page
         string result = "";
         string flag = "", msg = "";
 
-        string sqlstr = @"select emp_code+emp_name,pgino,location,id from [dbo].[Mes_App_EmployeeLogin] where emp_code='{0}' and off_date is null";
+        string sqlstr = @"select emp_code+emp_name,pgino,location,id from [dbo].[Mes_App_EmployeeLogin] with(readpast) where emp_code='{0}' and off_date is null";
         sqlstr = string.Format(sqlstr, emp);
         var dt = SQLHelper.reDs(sqlstr).Tables[0];
         if (dt.Rows.Count <= 0)
