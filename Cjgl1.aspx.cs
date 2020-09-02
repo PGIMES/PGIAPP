@@ -17,14 +17,14 @@ public partial class Cjgl1 : System.Web.UI.Page
     {
         _workshop = Request.QueryString["workshop"].ToString();
 
-        if (_workshop == "二车间" || _workshop == "四车间")
-        {
-            bind_data();
-        }
-        else if (_workshop == "三车间")
-        {
-            bind_data_three();
-        }
+        //if (_workshop == "二车间" || _workshop == "四车间")
+        //{
+        //    bind_data();
+        //}
+        //else if (_workshop == "三车间")
+        //{
+        //    bind_data_three();
+        //}
 
         if (!IsPostBack)
         {
@@ -35,22 +35,22 @@ public partial class Cjgl1 : System.Web.UI.Page
 
     public void bind_data()
     {
-        //上岗监视
-        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
-                            where workshop='" + _workshop + "' and (e_code not like 'J%' and e_code not like 'Q%' or e_code like 'C%'))";
-        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        ////上岗监视
+        //string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+        //    where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+        //        and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
+        //                    where workshop='" + _workshop + "' and (e_code not like 'J%' and e_code not like 'Q%' or e_code like 'C%'))";
+        //DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
-        Label1.Text = re_dt.Rows[0][0].ToString();
+        //Label1.Text = re_dt.Rows[0][0].ToString();
 
-        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
-                        where workshop='" + _workshop + "'  and (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
-        DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
+        //sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+        //    where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+        //        and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
+        //                where workshop='" + _workshop + "'  and (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
+        //DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
 
-        Label1_j.Text = re_dt_j.Rows[0][0].ToString();
+        //Label1_j.Text = re_dt_j.Rows[0][0].ToString();
 
         ////要料监视
         //DataTable dt_go = new DataTable();
@@ -131,22 +131,22 @@ public partial class Cjgl1 : System.Web.UI.Page
 
     public void bind_data_three()
     {
-        //上岗监视
-        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock)
-                            where workshop='" + _workshop + "' and (e_code not like 'J%' and e_code not like 'Q%' or e_code like 'C%'))";
-        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        ////上岗监视
+        //string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+        //    where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+        //        and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock)
+        //                    where workshop='" + _workshop + "' and (e_code not like 'J%' and e_code not like 'Q%' or e_code like 'C%'))";
+        //DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
-        Label1_three.Text = re_dt.Rows[0][0].ToString();
+        //Label1_three.Text = re_dt.Rows[0][0].ToString();
 
-        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
-                        where workshop='" + _workshop + "' and (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
-        DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
+        //sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+        //    where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+        //        and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
+        //                where workshop='" + _workshop + "' and (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
+        //DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
 
-        Label1_three_j.Text = re_dt_j.Rows[0][0].ToString();
+        //Label1_three_j.Text = re_dt_j.Rows[0][0].ToString();
 
         ////要料监视
         //DataTable dt_go = new DataTable();
@@ -165,10 +165,10 @@ public partial class Cjgl1 : System.Web.UI.Page
         //Label2_three_end.Text = dt_end.Rows.Count.ToString();
 
         //要汤监视
-        sql = @"exec [usp_app_YT_list] '{0}','{1}'";
-        sql = string.Format(sql, _workshop, "");
-        DataTable dt_YT_go = SQLHelper.Query(sql).Tables[0];
-        Label_YT.Text = dt_YT_go.Rows.Count.ToString();
+        //sql = @"exec [usp_app_YT_list] '{0}','{1}'";
+        //sql = string.Format(sql, _workshop, "");
+        //DataTable dt_YT_go = SQLHelper.Query(sql).Tables[0];
+        //Label_YT.Text = dt_YT_go.Rows.Count.ToString();
 
 
         //不合格监视
@@ -185,12 +185,40 @@ public partial class Cjgl1 : System.Web.UI.Page
         //Label_bhg_thr_e.Text = dt_99.Rows.Count.ToString();
     }
 
+    //上岗监视
+    [WebMethod]
+    public static string login_Data(string _workshop)
+    {
+        string sc = "0", zl = "0";
+
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
+                            where workshop='" + _workshop + "' and (e_code not like 'J%' and e_code not like 'Q%' or e_code like 'C%'))";
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+
+        sc = re_dt.Rows[0][0].ToString();
+
+        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
+                        where workshop='" + _workshop + "'  and (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
+        DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
+
+        zl = re_dt_j.Rows[0][0].ToString();
+
+
+        string res = "[{\"sc\":\"" + sc + "\",\"zl\":\"" + zl + "\"}]";
+        return res;
+
+    }
+
+    //要料监视
     [WebMethod]
     public static string yl_Data(string _workshop)
     {
         string go = "0", end = "0";
 
-        //要料监视
         DataTable dt_go = new DataTable();
         DataTable dt_wc = new DataTable();
         DataTable dt_rj = new DataTable();

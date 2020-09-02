@@ -40,10 +40,12 @@
         $(function () {
             var _wrokshop = "<%=Request["workshop"]%>";
             if (_wrokshop == "三车间") {
+                show_login(_wrokshop);
                 show_yl(_wrokshop);
                 show_bhg(_wrokshop);
                 show_prod_3(_wrokshop);
             } else {
+                show_login(_wrokshop);
                 show_yl(_wrokshop);
                 show_bhg(_wrokshop);
                 show_jj(_wrokshop);
@@ -127,13 +129,15 @@
                         <p>上岗监视</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label1_j" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i1 = Label1.Text;
                             Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>生" + i1 + "</span>");
                         %>   
                         <% string i1_j = Label1_j.Text; 
-                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> 
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> --%>
+                        <span class='weui-badge  bg-blue' id="sc" style='margin-right: 5px;'>生..</span>
+                        <span class='weui-badge  bg-orange' id="zl"  style='margin-right: 5px;'>质..</span>  
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/JiaJu/jiaju_monitor.aspx?workshop=<%=_workshop %>">
@@ -282,14 +286,16 @@
                     </div>
                     <div class="weui-cell__ft">                       
                         
-                        <asp:Label ID="Label1_three" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<asp:Label ID="Label1_three" runat="server" Text="" style="display:none;"></asp:Label>
                         <asp:Label ID="Label1_three_j" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i1_three = Label1_three.Text;
                             Response.Write("<span class='weui-badge  bg-" + (i1_three == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>生" + i1_three + "</span>");
                         %>   
                         <% string i1_three_j = Label1_three_j.Text;
-                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_three_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_three_j + "</span>"); %> 
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_three_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_three_j + "</span>"); %> --%>
                           
+                        <span class='weui-badge  bg-blue' id="sc_three" style='margin-right: 5px;'>生..</span>
+                        <span class='weui-badge  bg-orange' id="zl_three"  style='margin-right: 5px;'>质..</span>  
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/YL_list_new.aspx?workshop=<%=_workshop %>">
@@ -399,6 +405,38 @@
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
 
+        function show_login(_workshop) {
+            $.ajax({
+                url: "/Cjgl1.aspx/login_Data",
+                type: "Post",
+                data: "{'_workshop': '" + _workshop + "' }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+
+                        if (_workshop == "三车间") {
+                            $("#sc_three").text('生' + datad[0].sc);
+                            $("#zl_three").text('质' + datad[0].zl);
+                            if (datad[0].go == 0) { $("#sc_three").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].end == 0) { $("#zl_three").removeClass("bg-orange").addClass("bg-gray"); }
+                        } else {
+                            $("#sc").text('生' + datad[0].sc);
+                            $("#zl").text('质' + datad[0].zl);
+                            if (datad[0].go == 0) { $("#sc").removeClass("bg-blue").addClass("bg-gray"); }
+                            if (datad[0].end == 0) { $("#zl").removeClass("bg-orange").addClass("bg-gray"); }
+                        }
+
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
 
         function show_yl(_workshop) {
             $.ajax({
