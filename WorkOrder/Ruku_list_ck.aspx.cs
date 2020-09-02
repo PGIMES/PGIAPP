@@ -24,7 +24,8 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
     }
     private void GetData()
     {
-        string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','ruku'";
+        //string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','ruku'";
+        string sql = @"exec [usp_app_bhgp_Apply_list_dv_ZL]";
         DataSet ds = SQLHelper.Query(sql);
 
         DataTable dt_98_2 = ds.Tables[0]; DataTable dt_98_3 = ds.Tables[1]; DataTable dt_98_4 = ds.Tables[2];
