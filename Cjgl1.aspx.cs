@@ -36,17 +36,17 @@ public partial class Cjgl1 : System.Web.UI.Page
     public void bind_data()
     {
         //上岗监视
-        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
                             where workshop='" + _workshop + "' and (e_code not like 'J%' and e_code not like 'Q%' or e_code like 'C%'))";
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
         Label1.Text = re_dt.Rows[0][0].ToString();
 
-        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
+        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
                         where workshop='" + _workshop + "'  and (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
         DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
 
@@ -132,17 +132,17 @@ public partial class Cjgl1 : System.Web.UI.Page
     public void bind_data_three()
     {
         //上岗监视
-        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock)
                             where workshop='" + _workshop + "' and (e_code not like 'J%' and e_code not like 'Q%' or e_code like 'C%'))";
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
 
         Label1_three.Text = re_dt.Rows[0][0].ToString();
 
-        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] 
-            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] where dept_name='IT部' )
-                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location 
+        sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
                         where workshop='" + _workshop + "' and (e_code like 'J%' or e_code like 'Q%' or e_code like 'C%'))";
         DataTable re_dt_j = SQLHelper.Query(sql).Tables[0];
 
@@ -288,7 +288,7 @@ public partial class Cjgl1 : System.Web.UI.Page
         iOne = iOne + dt_data_go.Rows.Count;      
         
         //30天完成
-        sql = string.Format(@"select formno,ng_count,datediff(mi,create_date,complete_date) as timesMinute from [Mes_App_Jiaju] where status=9 and workshop='{0}' and complete_date>dateadd(day,-30,getdate())", workshop);
+        sql = string.Format(@"select formno,ng_count,datediff(mi,create_date,complete_date) as timesMinute from [Mes_App_Jiaju] with(nolock) where status=9 and workshop='{0}' and complete_date>dateadd(day,-30,getdate())", workshop);
         dt_data_go = SQLHelper.Query(sql).Tables[0];
         iF = iF + dt_data_go.Rows.Count;         
         iTwo = iTwo + dt_data_go.Select("ng_count>0").Count();
