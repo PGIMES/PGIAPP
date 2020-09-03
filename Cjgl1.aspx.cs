@@ -17,14 +17,14 @@ public partial class Cjgl1 : System.Web.UI.Page
     {
         _workshop = Request.QueryString["workshop"].ToString();
 
-        //if (_workshop == "二车间" || _workshop == "四车间")
-        //{
-        //    bind_data();
-        //}
-        //else if (_workshop == "三车间")
-        //{
-        //    bind_data_three();
-        //}
+        if (_workshop == "二车间" || _workshop == "四车间")
+        {
+            //bind_data();
+        }
+        else if (_workshop == "三车间")
+        {
+            bind_data_three();
+        }
 
         if (!IsPostBack)
         {
@@ -165,10 +165,10 @@ public partial class Cjgl1 : System.Web.UI.Page
         //Label2_three_end.Text = dt_end.Rows.Count.ToString();
 
         //要汤监视
-        //sql = @"exec [usp_app_YT_list] '{0}','{1}'";
-        //sql = string.Format(sql, _workshop, "");
-        //DataTable dt_YT_go = SQLHelper.Query(sql).Tables[0];
-        //Label_YT.Text = dt_YT_go.Rows.Count.ToString();
+        string sql = @"exec [usp_app_YT_list] '{0}','{1}'";
+        sql = string.Format(sql, _workshop, "");
+        DataTable dt_YT_go = SQLHelper.Query(sql).Tables[0];
+        Label_YT.Text = dt_YT_go.Rows.Count.ToString();
 
 
         //不合格监视
