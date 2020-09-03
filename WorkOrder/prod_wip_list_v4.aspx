@@ -265,7 +265,7 @@
         <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color:#09bb07" id="searchCancel">取消</a>
     </div>
 
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" enableviewstate="False">
         <div class="page">
             
             <div class="page__bd" id="t2" style="height: 100%;">
