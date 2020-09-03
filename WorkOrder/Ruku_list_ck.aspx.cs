@@ -24,53 +24,13 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         GetData();
     }
 
-    DataSet GetdtData()
-    {
-        //string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','ruku'";
-        string sql = @"exec [usp_app_bhgp_Apply_list_dv_ZL]";
-        DataSet ds = SQLHelper.Query(sql);
-        return ds;
-    }
-
-    DataSet GetdtData_hg(string workorder)
-    {
-        string sql_a = @"exec [usp_app_wip_list_Qcc] '二车间','" + workorder + "',4;";
-        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',4;";
-        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workorder + "',4;";
-
-        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '二车间','" + workorder + "',5;";
-        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',5;";
-        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workorder + "',5;";
-        DataSet ds_hg = SQLHelper.Query(sql_a);
-
-        return ds_hg;
-    }
-
-
     private void GetData()
     {
-        string _workcode = WeiXin.GetCookie("workcode");
-        Task<DataSet> task = new Task<DataSet>(() =>
-        {
-            return GetdtData();
-        });
-        task.Start();
 
-        ////2.Task.Factory.StartNew(Func func)创建和启动一个Task
-        Task<DataSet> task_hg = Task.Factory.StartNew<DataSet>(() =>
-        {
-            return GetdtData_hg(_workcode);
-        });
-
-        DataSet ds = task.Result;
-        DataSet ds_hg = task_hg.Result;
-
-
-        /*
         //string sql = @"exec [usp_app_bhgp_Apply_list_dv_V1_New] '','','','ruku'";
         string sql = @"exec [usp_app_bhgp_Apply_list_dv_ZL]";
         DataSet ds = SQLHelper.Query(sql);
-        */
+
 
         DataTable dt_98_2 = ds.Tables[0]; DataTable dt_98_3 = ds.Tables[1]; DataTable dt_98_4 = ds.Tables[2];
         DataTable dt_99_2 = ds.Tables[3]; DataTable dt_99_3 = ds.Tables[4]; DataTable dt_99_4 = ds.Tables[5];
@@ -118,7 +78,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         ////入库完成24小时
         //BindData5();
 
-        /*
+
         string workorder = WeiXin.GetCookie("workcode");
         string sql_a = @"exec [usp_app_wip_list_Qcc] '二车间','" + workorder + "',4;";
         sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',4;";
@@ -128,7 +88,6 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',5;";
         sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workorder + "',5;";
         DataSet ds_hg = SQLHelper.Query(sql_a);
-        */
 
 
         ViewState["dt_data_2"] = ds_hg.Tables[0];
