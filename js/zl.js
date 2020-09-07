@@ -13,11 +13,11 @@ function sm_jc() {
                     layer.alert("【检测单号】必须是C开头，长度为8位.请重新扫描.");
                 }
                 else {
-                    window.location.href = "/workorder/JC_Apply.aspx?dh=" + result;
+                    window.location.href = "/JianCe/JC_Apply.aspx?dh=" + result;
                 }
 
             }, cancel: function () {
-                window.location.href = "/workorder/JC_Apply.aspx?dh=";
+                window.location.href = "/JianCe/JC_Apply.aspx?dh=";
             }
         });
     });

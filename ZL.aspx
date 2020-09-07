@@ -19,7 +19,7 @@
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
     <script src="/js/cjgl.js?ver=20200709001"></script>
-    <script src="/js/zl.js?ver=20200907001"></script>
+    <script src="/js/zl.js?ver=20200907002"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
