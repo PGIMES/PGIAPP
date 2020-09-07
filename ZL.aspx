@@ -19,6 +19,7 @@
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
     <script src="/js/cjgl.js?ver=20200709001"></script>
+    <script src="/js/zl.js?ver=20200907001"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -74,6 +75,15 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>   
+                <a class="weui-cell weui-cell_access" href="javascript:sm_jc();">   
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-filter margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>检测申请<font style="font-size:smaller">(调整中)</font></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a> 
                 <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login_list_zl.aspx?workshop=质量">
                     <div class="weui-cell__hd">
                         <i class="fa fa-group margin10-r"></i>
