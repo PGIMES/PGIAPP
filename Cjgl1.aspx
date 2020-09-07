@@ -488,14 +488,14 @@
                             $("#bhg_fg_thr").text('返' + datad[0].fg);
                             if (datad[0].go == 0) { $("#bhg_go_thr").removeClass("bg-blue").addClass("bg-gray"); }
                             if (datad[0].end == 0) { $("#bhg_end_thr").removeClass("bg-blue").addClass("bg-gray"); }
-                            if (datad[0].go_bhg == 0) { $("#bhg_fg_thr").removeClass("bg-red").addClass("bg-gray"); }
+                            if (datad[0].fg == 0) { $("#bhg_fg_thr").removeClass("bg-red").addClass("bg-gray"); }
                         } else {
                             $("#bhg_go").text(datad[0].go);
                             $("#bhg_end").text(datad[0].end);
                             $("#bhg_fg").text('返' + datad[0].fg);
                             if (datad[0].go == 0) { $("#bhg_go").removeClass("bg-blue").addClass("bg-gray"); }
                             if (datad[0].end == 0) { $("#bhg_end").removeClass("bg-blue").addClass("bg-gray"); }
-                            if (datad[0].go_bhg == 0) { $("#bhg_fg").removeClass("bg-red").addClass("bg-gray"); }
+                            if (datad[0].fg == 0) { $("#bhg_fg").removeClass("bg-red").addClass("bg-gray"); }
                         }
                     }
 

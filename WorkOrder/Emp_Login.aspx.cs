@@ -59,8 +59,8 @@ public partial class Emp_Login : System.Web.UI.Page
         {
             //Response.Write("<script>layer.alert('程序异常，员工上岗记录多笔！');window.history.back();location.reload();</script>");
 
-            sql = @"delete Mes_App_EmployeeLogin_Location where login_id in(select id from [Mes_App_EmployeeLogin] where emp_code=LEFT('{0}',5) and on_date is not null and off_date is null);
-                 delete[Mes_App_EmployeeLogin] with(readpast) where emp_code = LEFT('{0}', 5) and on_date is not null and off_date is null";
+            sql = @"delete Mes_App_EmployeeLogin_Location where login_id in(select id from [Mes_App_EmployeeLogin] with(readpast) where emp_code=LEFT('{0}',5) and on_date is not null and off_date is null);
+                 delete [Mes_App_EmployeeLogin] where emp_code = LEFT('{0}', 5) and on_date is not null and off_date is null";
 
             sql = string.Format(sql, txt_emp.Text);
             SQLHelper.ExSql(sql);
