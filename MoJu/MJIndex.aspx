@@ -94,6 +94,7 @@
                         <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i1 = Label1.Text; 
                             Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>设" + i1 + "</span>");
+                                %>
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/MoJu/Mj_use_list.aspx">

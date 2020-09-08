@@ -111,12 +111,12 @@
                                                 <div class="weui-flex js-category">
                                                     <div class="weui-cells__title  weui-flex__item"><i class="icon nav-icon icon-49"></i><%# Eval("line") %>
                                                         <span class="weui-badge  bg-<%# Eval("count_sc").ToString()=="0"?"gray":"blue" %>" 
-                                                            style="display:<%= _workshop!="仓库"?"":"none"%>;">
+                                                            style="display:<%= (_workshop!="仓库" && _workshop!="设备" && _workshop!="模修")?"":"none"%>;">
                                                             生<%# Eval("count_sc") %>
                                                         </span>
                                                         <span class='weui-badge' 
                                                             style="background-color:<%# Eval("count_zl").ToString()=="0"?"lightgray":"orange" %>; color:white;
-                                                                display:<%= _workshop!="仓库"?"":"none"%>;">
+                                                                display:<%= (_workshop!="仓库" && _workshop!="设备" && _workshop!="模修")?"":"none"%>;">
                                                             质<%# Eval("count_zl") %>
                                                         </span>
                                                         <span class="weui-badge  bg-<%# Eval("count_ck").ToString()=="0"?"gray":"blue" %>" 
@@ -125,11 +125,11 @@
                                                         </span>
                                                         <span class="weui-badge  bg-<%# Eval("count_sb").ToString()=="0"?"gray":"blue" %>" 
                                                             style="display:<%= _workshop=="设备"?"":"none"%>;">
-                                                            设<%# Eval("count_ck") %>
+                                                            设<%# Eval("count_sb") %>
                                                         </span>
                                                         <span class="weui-badge  bg-<%# Eval("count_mx").ToString()=="0"?"gray":"blue" %>" 
                                                             style="display:<%= _workshop=="模修"?"":"none"%>;">
-                                                            模<%# Eval("count_ck") %>
+                                                            模<%# Eval("count_mx") %>
                                                         </span>
                                                     </div>
                                                     <i class="icon icon-74"></i>
