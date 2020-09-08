@@ -220,6 +220,14 @@ public partial class Emp_Login : System.Web.UI.Page
             {
                 Response.Write("<script>window.location.href = '/ck.aspx';</script>");
             }
+            else if(_workshop == "模修")
+            {
+                Response.Write("<script>window.location.href = '/MoJu/MJIndex.aspx.aspx';</script>");
+            }
+            else if (_workshop == "设备")
+            {
+                Response.Write("<script>window.location.href = '/SB.aspx';</script>");
+            }
             else if (_workshop == "质量")
             {
                 Response.Write("<script>window.location.href = '/zl.aspx';</script>");

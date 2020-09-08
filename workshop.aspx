@@ -177,12 +177,15 @@
                     </div>
                     <%--<div class="weui-cell__ft"></div>--%>
                 </div>
+                
             </div>
         </div>
         <div id="err--msg"class="f14"></div>  
         <div class="weui-footer weui-footer_fixed-bottom">
-            <p class="weui-footer__text">
-                <% =WeiXin.GetCookie("workcode")==""?"获取信息失败":WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %>
+            <p class="weui-footer__text">                  
+             
+                        <p><% =WeiXin.GetCookie("workcode")==""?"获取信息失败":WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %><a  href="/ClearCookie.aspx">.</a></p>                                     
+                                
             </p>
         </div>
     </form>
