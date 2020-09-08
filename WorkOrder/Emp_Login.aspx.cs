@@ -222,7 +222,7 @@ public partial class Emp_Login : System.Web.UI.Page
             }
             else if(_workshop == "模修")
             {
-                Response.Write("<script>window.location.href = '/MoJu/MJIndex.aspx.aspx';</script>");
+                Response.Write("<script>window.location.href = '/MoJu/MJIndex.aspx';</script>");
             }
             else if (_workshop == "设备")
             {
