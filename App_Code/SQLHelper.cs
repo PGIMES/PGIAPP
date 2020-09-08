@@ -52,11 +52,11 @@ public class SQLHelper
           
         }
         catch 
-        {
-           
+        {          
 
             return (SqlDataReader)null;
         }
+         
 
         
     }
@@ -257,6 +257,11 @@ public class SQLHelper
         SqlConnection conn = new SqlConnection(ConnectionString);
         return conn;
     }
+    public static SqlConnection GetCon(string connString)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        return conn;
+    }
     public static SqlConnection GetCon_HR()
     {
         SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["connstringMoJu"]);
@@ -278,6 +283,7 @@ public class SQLHelper
         }
         finally
         {
+            con.Close();
             con.Dispose();
         }
     }
@@ -294,7 +300,20 @@ public class SQLHelper
         SqlConnection con = SQLHelper.GetCon_HR();//连接上数据库
         SqlDataAdapter da = new SqlDataAdapter(sql, con);
         DataSet ds = new DataSet();
-        da.Fill(ds);
+        try
+        {
+            da.Fill(ds);
+        }
+        catch (Exception)
+        {
+                         
+        }
+        finally
+        {
+            if (con.State == ConnectionState.Open)
+            { con.Close(); }
+        }
+        
         return ds;//返回DataSet对象
     }
 
@@ -310,6 +329,27 @@ public class SQLHelper
                 SqlDataAdapter command = new SqlDataAdapter(SQLString, connection);
                 command.SelectCommand.CommandTimeout = 0;
                 command.Fill(ds, "ds");
+                connection.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return ds;
+        }
+    }
+    public static DataSet Query(string SQLString,string connectionString)
+    {
+        using (SqlConnection connection = SQLHelper.GetCon(connectionString))
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                connection.Open();
+                SqlDataAdapter command = new SqlDataAdapter(SQLString, connection);
+                command.SelectCommand.CommandTimeout = 0;
+                command.Fill(ds, "ds");
+                connection.Close();
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
