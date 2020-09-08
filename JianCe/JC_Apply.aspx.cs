@@ -83,7 +83,10 @@ public partial class JC_Apply : System.Web.UI.Page
         DataTable dt_sj_type = ds.Tables[1];
         string json_sj_type = JsonConvert.SerializeObject(dt_sj_type);
 
-        result = "[{\"json_pgino\":" + json_pgino + ",\"json_sj_type\":" + json_sj_type + "}]";
+        DataTable dt_jcnr = ds.Tables[2];
+        string json_jcnr = JsonConvert.SerializeObject(dt_jcnr);
+
+        result = "[{\"json_pgino\":" + json_pgino + ",\"json_sj_type\":" + json_sj_type + ",\"json_jcnr\":" + json_jcnr + "}]";
         return result;
 
     }
@@ -110,5 +113,18 @@ public partial class JC_Apply : System.Web.UI.Page
         return result;
 
     }
+    [WebMethod]
+    public static string op_change(string pgino, string sj_type, string op, string domain)
+    {
+        string result = "";
+        string sql = @" exec [usp_app_JC_Apply_op_change] '" + domain + "','" + pgino + "','" + sj_type + "','" + op + "'";
+        DataSet ds = SQLHelper.Query(sql, connString);
 
+        DataTable dt_jcnr = ds.Tables[0];
+        string json_jcnr = JsonConvert.SerializeObject(dt_jcnr);
+
+        result = "[{\"json_jcnr\":" + json_jcnr + "}]";
+        return result;
+
+    }
 }

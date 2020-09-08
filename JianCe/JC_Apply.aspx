@@ -15,6 +15,8 @@
     <link href="/css/weuix.css" rel="stylesheet" />
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
+    <link href="/css/multiple-select.css" rel="stylesheet" />
+    <script src="/js/multiple-select.js"></script>
     <style>
         .weui-cell{
             padding:4px 15px; 
@@ -45,6 +47,17 @@
         });
 
         $(function () {
+            $('#checkedLevel').multipleSelect({
+                addTitle: true, //鼠标点悬停在下拉框时是否显示被选中的值
+                selectAll: false, //是否显示全部复选框，默认显示
+                name: "检测内容",
+                selectAllText: "选择全部", //选择全部的复选框的text值
+                allSelected: "全部", //全部选中后显示的值
+                //delimiter: ', ', //多个值直接的间隔符，默认是逗号
+                placeholder: "检测内容" //不选择时下拉框显示的内容
+            });
+
+
             sm_dh();
             sm_lot();
             sm_prod_machine();
@@ -155,7 +168,7 @@
                     var json_op = obj[0].json_op;
                     $("#txt_op").select("update", { items: json_op });
                     $('#txt_op').val('');
-                    $('#txt_jcnr').val('');
+                    $("select[id='checkedLevel']").multipleSelect('setSelects', []);
 
                     if (json_op.length == 1) {
                         $('#txt_op').val(json_op[0].title);
@@ -169,7 +182,30 @@
         }
 
         function op_change() {
+            $.ajax({
+                type: "post",
+                url: "JC_Apply.aspx/op_change",
+                data: "{'pgino':'" + $("#txt_xmh").val() + "','sj_type':'" + $("#txt_sj_type").val() + "','op':'" + $("#txt_op").val() + "','domain': '" + $("#domain").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
 
+                    var json_op = obj[0].json_jcnr;
+                    //$('#txt_jcnr').val('');
+                    $("select[id='checkedLevel']").multipleSelect('setSelects', []);
+
+                    // 设置默认选中
+                    var arrayObj = new Array();　//创建一个数组 
+                    $.each(json_op, function (index, item) {
+                        arrayObj.push(item.jcsd);
+                    });
+                   
+                    $("select[id='checkedLevel']").multipleSelect('setSelects', arrayObj);
+                }
+
+            });
         }
 
         function sm_prod_machine() {
@@ -258,18 +294,18 @@
                 <div class="weui-cell__hd f-red"><label class="weui-label">送检数量</label></div> 
                 <asp:TextBox ID="txt_sj_qty" class="weui-input" runat="server" placeholder="送检数量"></asp:TextBox>      
             </div>  
-            <div class="weui-cell">
+            <div class="weui-cell weui-flex">
                 <div class="weui-cell__hd f-red"><label class="weui-label">优先级</label></div>
-                <div class="weui-cells_radio">
+                <div class="weui-flex__item weui-cells_radio">
                     <label class="weui-cell weui-check__label" for="x11">
                         <div class="weui-cell__bd">
-                          <p>紧急</p>
+                            <p>紧急</p>
                         </div>
                         <div class="weui-cell__ft">
-                          <input type="radio" class="weui-check" name="priority" id="x11">
-                          <span class="weui-icon-checked"></span>
+                            <input type="radio" class="weui-check" name="priority" id="x11">
+                            <span class="weui-icon-checked"></span>
                         </div>
-                      </label>
+                        </label>
                     <label class="weui-cell weui-check__label" for="x12">
 
                     <div class="weui-cell__bd">
@@ -281,11 +317,16 @@
                     </div>
                     </label>
                 </div> 
-            </div>   
-            <div class="weui-cell">
+            </div>    
+            <div class="weui-cell weui-flex">
                 <div class="weui-cell__hd f-red"><label class="weui-label">检测内容</label></div> 
-                <asp:TextBox ID="txt_jcnr" class="weui-input" runat="server" ></asp:TextBox>      
-            </div> 
+                <div class="weui-flex__item ">
+                    <select id='checkedLevel' style="width:90%;height:28px;" multiple="multiple">
+　　                </select>
+                </div>
+                 
+            </div>
+
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
                 <textarea id="txt_remark" class="weui-textarea"  placeholder="请输入说明" rows="3"  runat="server"></textarea>
@@ -302,7 +343,7 @@
     </form>
     <script>
         if ("<%= _dh %>" == "") {
-            var datalist_pgino, datalist_sj_type;
+            var datalist_pgino, datalist_sj_type, datalist_jcnr;
             $.ajax({
                 type: "post",
                 url: "JC_Apply.aspx/init_data_js",
@@ -314,8 +355,15 @@
                     var obj = eval(data.d);
                     datalist_pgino = obj[0].json_pgino;
                     datalist_sj_type = obj[0].json_sj_type;
+                    datalist_jcnr = obj[0].json_jcnr;
+
+                    $.each(datalist_jcnr, function (index, item) {
+                        $("#checkedLevel").append("<option value='" + item.jcitem + "'>" + item.jcitem_desc + "</option>");
+                    });
                 }
             });
+
+            
 
             $("#txt_xmh").select({
                 title: "物料号",
