@@ -91,9 +91,9 @@
                         <p>上岗监视<span style="font-size:smaller">(调整中)</span></p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label1_j" runat="server" Text="" style="display:none;"></asp:Label>
-                        <%--<% string i1_j = Label1_j.Text;
-                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> --%>
+                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1 = Label1.Text; 
+                            Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>设" + i1 + "</span>");
                     </div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/MoJu/Mj_use_list.aspx">

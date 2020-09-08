@@ -82,9 +82,10 @@
                         <p>上岗监视<span style="font-size:smaller">(调整中)</span></p>
                     </div>
                     <div class="weui-cell__ft">
-                        <asp:Label ID="Label1_j" runat="server" Text="" style="display:none;"></asp:Label>
-                        <%--<% string i1_j = Label1_j.Text;
-                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> --%>
+                        <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
+                        <% string i1 = Label1.Text; 
+                            Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>设" + i1 + "</span>");
+                                %>
                     </div>
                 </a>             
                 <a class="weui-cell weui-cell_access" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww3912fa18e2d1ff24&redirect_uri=http%3A%2F%2Fapi.pgi.cn%2FwechatRepairPower%2Flist&response_type=code&scope=snsapi_base&state=1#wechat_redirect">

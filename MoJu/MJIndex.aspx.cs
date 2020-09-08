@@ -12,11 +12,26 @@ public partial class MJIndex : PageMain
     private static string connReport = System.Configuration.ConfigurationManager.AppSettings["connReport"]; //webconfig中连线字串
     protected void Page_Load(object sender, EventArgs e)
     {
+        bind_data();
         if (!Page.IsPostBack)
         {
              
         }
          
+    }
+
+    public void bind_data()
+    {
+        //上岗监视
+        string sql = @"select count(1) app_emp from [Mes_App_EmployeeLogin] with(nolock) 
+            where off_date is null and on_date is not null and emp_code not in(select EMPLOYEEID from [172.16.5.26].[Production].[dbo].[Hrm_Emp] with(nolock) where dept_name='IT部' )
+                and id in (select distinct login_id from Mes_App_EmployeeLogin_Location with(nolock) 
+                            where workshop='模修' and e_code like 'D%')";
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+
+        Label1.Text = re_dt.Rows[0][0].ToString();
+
+
     }
 
     //[WebMethod]
