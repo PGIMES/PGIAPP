@@ -4,25 +4,27 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	
-
- <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
-<script type="text/javascript" src="js/jquery.form.min.js"></script>
-<script type="text/javascript" src="js/json2.min.js"></script>
-<script type="text/javascript" src="js/jweixin-1.2.0.js"></script>
-<script id="commonJsScript" type="text/javascript" src="js/common.js?v=201810311922" ></script>
-<script type="text/javascript" src="js/jquery.weixintools.js?v=201809201357"></script>
-
- 
-
-<link href="/css/global.css?v=201802091428" rel="stylesheet" type="text/css">
-<link href="/css/iconfont.css?v=201802091429" rel="stylesheet" type="text/css">
-<link href="/css/login.css?v=201802091428" rel="stylesheet" type="text/css">
-<link href="/css/comm.css?v=201802091429" rel="stylesheet" type="text/css">
-<link href="/css/theme.css?v=201805162207" rel="stylesheet" type="text/css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <link href="../css/weuix.css" rel="stylesheet" />
+    <script src="../js/jquery-3.0.0.min.js"></script>
+    <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        .weui-cells {
+            margin-top: 0px;
+            line-height: 2.5;
+        }
+        .weui-cell:before {
+            left: 0px;
+                     
+        }
+        .weui-cell{
+            padding:10px 20px;  
+        }
+        i{ color:orangered}
+    </style>
+    
     <script>
         $(document).ready(function () {
             //$.ajax({
@@ -42,38 +44,100 @@
             //    }
 
             //});
+            //$(document).append
+
         });
+         //WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName
 
     </script>
-    <meta name="layout" content="main"/>
+     
 </head>
 <body>
-    <form id="form1" runat="server">
-    <div class="resume-setting-page normal-page-wrap"> 
-        <div id="allContainer" class="menus-normal">
-        <dl class="menus-module" style=""> 
-       
-            <%--<dt class="menus-title" style="background-color:#155097;height:35px">
-                <div  style="float:left;width:49%;border:0px solid #F00;">模修监视</div> 
-                <div style="float:left;width:49%;border:0px solid #000; text-align:right;"><%--<a href="Index.aspx"><img src="img/home.png" width="22px" height="22px" style="text-align:right;"></a>
-            </div> 
-            </dt> 
-           --%>
-            <dd id="btn1" class="menus-item"  > 
-                <a href="/MoJu/MoJu_BX_APP.aspx"> <span class="mi-info logo"></span> <span id="span_ng" class="mi-info txt">模具报修</span> <span class="mi-info check txt"></span> </a> 
-            </dd> 
-            <dd id="btn2" class="menus-item"  > 
-                <a href="/MoJu/BXMonitor.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">模修监视</span> <span class="mi-info check txt"></span> </a> 
-            </dd> 
-            <%--<dd id="btn3" class="menus-item"  > 
-                <a href="javascript:void(0);"> <span class="mi-info logo"></span> <span class="mi-info txt">报修查询</span> <span class="mi-info check txt"></span> </a> 
-            </dd> --%>
-            <dd id="btn3" class="menus-item"  > 
-                <a href="MJ_WXSC_APP.aspx"> <span class="mi-info logo"></span> <span class="mi-info txt">模修统计</span> <span class="mi-info check txt"></span> </a> 
-            </dd> 
-        </dl>
-        </div> 
-    </div>
+    <form id="form1" runat="server">         
+        <div class="page-bd">
+            <div class="weui-cells">
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login.aspx?workshop=模修">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-user-circle-o margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗<span style="font-size:smaller">(调整中)</span></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/MoJu/Mj_use_apply.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-edit margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上模申请</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/MoJu/MoJu_BX_APP.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-wrench margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>模具报修</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/Emp_Login_list_zl.aspx?workshop=模具">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-group margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上岗监视<span style="font-size:smaller">(调整中)</span></p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <asp:Label ID="Label1_j" runat="server" Text="" style="display:none;"></asp:Label>
+                        <%--<% string i1_j = Label1_j.Text;
+                            Response.Write("<span class='weui-badge' style='background-color:" + (i1_j == "0" ? "lightgray" : "orange") + ";color: white;margin-right: 15px;'>质" + i1_j + "</span>"); %> --%>
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/MoJu/Mj_use_list.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-life-bouy margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>上模监视</p>
+                    </div>
+                    <div class="weui-cell__ft"><% string i = MJIndex.getSMCount(); Response.Write("<span class='weui-badge  bg-"+(i=="0"?"gray":"red")+"' style='margin-right: 15px;'>"+i+"</span>"); %></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/MoJu/BXMonitor.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-tasks margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>模修监视</p>
+                    </div>
+                    <div class="weui-cell__ft"><% string j = MJIndex.getMoXiuCount(); Response.Write("<span class='weui-badge  bg-"+(j=="0"?"gray":"red")+"' style='margin-right: 15px;'>"+j+"</span>"); %></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/MoJu/MJ_WXSC_APP.aspx">
+                    <div class="weui-cell__hd"><i class="fa fa-bar-chart-o margin10-r"></i></div>
+                    <div class="weui-cell__bd">
+                        <p>模修统计</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/MoJu/MJ_maintaince_list.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-desktop margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>保养监视</p>
+                    </div>
+                    <div class="weui-cell__ft"><% string k = MJIndex.getBYCount(); Response.Write("<span class='weui-badge  bg-"+(k=="0"?"gray":"red")+"' style='margin-right: 15px;'>"+k+"</span>"); %></div>
+                </a>
+            </div>
+        </div>
+        <div id="errmsg"class="f14"></div>  
+        <div class="weui-footer weui-footer_fixed-bottom">
+            <p class="weui-footer__text">
+                <% =WeiXin.GetCookie("workcode")==""?"获取信息失败":WeiXin.GetCookie("workcode") +((LoginUser)WeiXin.GetJsonCookie()).UserName %>
+            </p>
+        </div>
     </form>
 </body>
 </html>
