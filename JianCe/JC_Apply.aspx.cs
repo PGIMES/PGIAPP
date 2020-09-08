@@ -51,6 +51,7 @@ public partial class JC_Apply : System.Web.UI.Page
         //DataTable dt = ds.Tables[0];
         //if (dt.Rows.Count == 1)
         //{
+        //    id.Text = dt.Rows[0]["id"].ToString();
         //    _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
         //    _times_t = dt.Rows[0]["times_t"].ToString(); _times_t_YN = dt.Rows[0]["times_t_YN"].ToString();
         //    listBxInfo.DataSource = dt;

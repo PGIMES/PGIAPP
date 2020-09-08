@@ -75,9 +75,50 @@
                 }
             });
             
-            //$("#btn_save2").click(function(){
-                
-            //});
+            $("#btn_zancun").click(function () {
+                $("#btn_zancun").attr("disabled", "disabled");
+                $("#btn_zancun").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+                $("#btn_apply").attr("disabled", "disabled");
+                $("#btn_apply").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if(!valid()){
+                    $("#btn_zancun").removeAttr("disabled");
+                    $("#btn_zancun").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    $("#btn_apply").removeAttr("disabled");
+                    $("#btn_apply").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    return false;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "JC_Apply.aspx/zancun",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
+                        + "','_dh':'" + $('#txt_dh').val() + "','_source_lot':'" + $('#txt_source_lot').val() + "','_xmh':'" + $('#txt_xmh').val()
+                        + "','_off_pgino':'" + $('#off_pgino').val() + "','_off_pn':'" + $('#off_pn').val() + "','_off_jiaju_no':'" + $('#off_jiaju_no').val() + "','_off_jiaju_name':'" + $('#off_jiaju_name').val()
+                        + "','_on_pgino':'" + $('#on_pgino').val() + "','_on_pn':'" + $('#on_pn').val() + "','_on_jiaju_no':'" + $('#on_jiaju_no').val() + "','_on_jiaju_name':'" + $('#on_jiaju_name').val()
+                        + "','_comment':'" + $('#comment').val()
+                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag=="Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_zancun").removeAttr("disabled");
+                            $("#btn_zancun").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_apply").removeAttr("disabled");
+                            $("#btn_apply").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+
+                        window.location.href = "/JianCe/JiaJu_Monitor.aspx";
+                    }
+
+                });
+            });
 
             //$("#btn_sign_0").click(function () {
             //});
@@ -225,18 +266,18 @@
         }
 
         function valid() {
-            //if ($("#sb_code").val() == "") {
-            //    layer.alert("请输入【设备】.");
-            //    return false;
-            //}
-            //if ($("#on_pgino").val() == "") {
-            //    layer.alert("请输入换上夹具【物料号】.");
-            //    return false;
-            //}
-            //if ($("#on_pgino_no").val() == "") {
-            //    layer.alert("请输入换上夹具【夹具号】.");
-            //    return false;
-            //}
+            if ($("#sb_code").val() == "") {
+                layer.alert("请输入【设备】.");
+                return false;
+            }
+            if ($("#on_pgino").val() == "") {
+                layer.alert("请输入换上夹具【物料号】.");
+                return false;
+            }
+            if ($("#on_pgino_no").val() == "") {
+                layer.alert("请输入换上夹具【夹具号】.");
+                return false;
+            }
 
             return true;
         }
@@ -250,6 +291,7 @@
     </asp:ScriptManager>
         <asp:TextBox ID="emp_code_name" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="domain" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
+        <asp:TextBox ID="id" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="dh" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         <asp:TextBox ID="stepid" class="weui-input" ReadOnly="true" placeholder="" runat="server" style="display:none;"></asp:TextBox>
         
