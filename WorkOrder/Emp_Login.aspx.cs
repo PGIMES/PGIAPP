@@ -207,9 +207,12 @@ public partial class Emp_Login : System.Web.UI.Page
         string sql = @"exec usp_app_emp_login_new '{0}','{1}','{2}','{3}','{4}'";
         sql = string.Format(sql, Inlogin, txt_emp.Text, e_codes, location, domain.Text);
 
-        bool i = SQLHelper.ExSql(sql);
+        //bool i = SQLHelper.ExSql(sql);
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        string flag = re_dt.Rows[0][0].ToString();
+        string msg = re_dt.Rows[0][1].ToString();
 
-        if (i == true)
+        if (flag == "N")//i == true
         {
             //Response.Redirect("/Cjgl1.aspx");
             //Response.Write("<script>location.replace(\"/Cjgl1.aspx\");</script>");
@@ -229,7 +232,7 @@ public partial class Emp_Login : System.Web.UI.Page
         }
         else
         {
-            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('操作失败')", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "showsuccess", "layer.alert('"+ msg + "')", true);
         }
     }
 
