@@ -13,9 +13,9 @@ public partial class JC_Apply : System.Web.UI.Page
     public static string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DBJianCe"].ConnectionString;
 
     public string _id = "";
-    public string _dh = ""; public string _priority = ""; public string _jcnr = "";
+    public string _dh = "", _priority = "", _jcnr = "", _jcnr_sy = "";
     public string _stepid = "";
-    public string _times_t = ""; public string _times_t_YN = "";
+    public string _times_t = ""; public string _times_t_YN = ""; public string _stp_cur = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -54,6 +54,8 @@ public partial class JC_Apply : System.Web.UI.Page
         {
             _dh = dt.Rows[0]["dh"].ToString();dh.Text = _dh;
             _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
+            _stp_cur = dt.Rows[0]["stp_cur"].ToString();//1:还存在没检测完成的内容；2已全部检测完毕，等待判断结论
+            _jcnr_sy = dt.Rows[0]["jcnr_sy"].ToString();
             if (_stepid == "0")
             {
                 txt_dh.Text = _dh; txt_source_lot.Text = dt.Rows[0]["source_lot"].ToString();
@@ -189,6 +191,21 @@ public partial class JC_Apply : System.Web.UI.Page
         string re_sql = @"exec usp_app_JC_Apply '{0}','{1}',{2},'{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}','{14}','{15}'";
         re_sql = string.Format(re_sql, _option, _emp_code_name, Convert.ToInt32(_id), _dh, _source_lot, _xmh, _ljh, _line, _workshop
                 , _sj_type, _op, _prod_machine, _sj_qty, _priority, _jcnr, _remark);
+
+        DataTable re_dt = SQLHelper.Query(re_sql,connString).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+    [WebMethod]
+    public static string sign(string _emp_code_name, string _id, string _stepid, string _jcnr, string _jcsb, string _comment, string _result, string _type)
+    {
+        string flag = "N", msg = "";
+        string re_sql = re_sql = @"exec usp_app_JC_sign '{0}',{1},'{2}','{3}','{4}','{5}','{6}','{7}'";
+        re_sql = string.Format(re_sql, _emp_code_name, Convert.ToInt32(_id), _stepid, _jcnr, _jcsb, _comment, _result, _type);
 
         DataTable re_dt = SQLHelper.Query(re_sql,connString).Tables[0];
         flag = re_dt.Rows[0][0].ToString();

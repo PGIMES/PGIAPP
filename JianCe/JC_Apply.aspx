@@ -59,9 +59,21 @@
             });
 
 
+            $('#checkedLevel_sg').multipleSelect({
+                height: "100px", //宽度
+                addTitle: true, //鼠标点悬停在下拉框时是否显示被选中的值
+                selectAll: false, //是否显示全部复选框，默认显示
+                name: "检测内容",
+                selectAllText: "选择全部", //选择全部的复选框的text值
+                allSelected: "全部", //全部选中后显示的值
+                //delimiter: ', ', //多个值直接的间隔符，默认是逗号
+                placeholder: "检测内容" //不选择时下拉框显示的内容
+            });
+
             sm_dh();
             sm_lot();
             sm_prod_machine();
+            sm_jcsb();
 
             $('.collapse .js-category').click(function () {
                 $parent = $(this).parent('li');
@@ -188,19 +200,26 @@
                 $("#btn_sign_0").attr("disabled", "disabled");
                 $("#btn_sign_0").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
-                //if (!valid_sgin("zancun")) {
-                //    $("#btn_sign_0").removeAttr("disabled");
-                //    $("#btn_sign_0").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                if (!valid_sgin()) {
+                    $("#btn_sign_0").removeAttr("disabled");
+                    $("#btn_sign_0").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
 
-                //    return false;
-                //}
+                    return false;
+                }
 
+
+                var selectValue = "";
+                $("#checkedLevel_sg").find("option:selected").each(function () {
+                    selectValue += $(this).text() + ","
+                });
+                if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
 
                 $.ajax({
                     type: "post",
-                    url: "JC_Apply.aspx/sign_0",
-                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
-                        + "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
+                    url: "JC_Apply.aspx/sign",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_jcnr':'" + selectValue + "','_jcsb':'" + $('#jcsb').val() + "','_comment':'" + $('#comment_0').val()
+                        + "','_result':'','_type':'检测'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -210,6 +229,42 @@
                             layer.alert(obj[0].msg);
                             $("#btn_sign_0").removeAttr("disabled");
                             $("#btn_sign_0").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            return false;
+                        }
+
+                        window.location.href = "/JianCe/JianCe_Monitor.aspx";
+                    }
+
+                });
+            });
+
+            $("#btn_sign_1").click(function () {
+                $("#btn_sign_1").attr("disabled", "disabled");
+                $("#btn_sign_1").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if (!valid_sgin_1()) {
+                    $("#btn_sign_1").removeAttr("disabled");
+                    $("#btn_sign_1").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    return false;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "JC_Apply.aspx/sign",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_jcnr':'','_jcsb':'','_comment':'" + $('#comment_1').val()
+                        + "','_result':'" + $('#txt_result').val() + "','_type':'检测结论'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign_1").removeAttr("disabled");
+                            $("#btn_sign_1").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
 
                             return false;
                         }
@@ -364,6 +419,22 @@
             });
         }
 
+        function sm_jcsb() {
+            $('#img_sm_jcsb').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容
+                            $('#txt_jcsb').val(result);
+                        }
+                    });
+                });
+            });
+        }
+
         function valid(para) {
             if ($("#txt_xmh").val() == "") {
                 layer.alert("请输入【项目号】.");
@@ -413,6 +484,33 @@
             return true;
         }
 
+        function valid_sgin() {
+            var selectValue = "";
+            $("#checkedLevel_sg").find("option:selected").each(function () {
+                selectValue += $(this).text() + ","
+            });
+            if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
+            if (selectValue == "") {
+                layer.alert("请勾选【检测内容】.");
+                return false;
+            } else if (selectValue.indexOf(',')>0) {
+                layer.alert("【检测内容】只能勾选一个.");
+                return false;
+            }
+
+            if ($("#txt_jcsb").val() == "") {
+                layer.alert("请输入【检测设备】.");
+                return false;
+            }
+        }
+
+        function valid_sgin_1() {            
+            if ($("#txt_result").val() == "") {
+                layer.alert("请输入【检测结论】.");
+                return false;
+            }
+            //卡检测报告？
+        }
     </script>
 </head>
 <body>
@@ -654,7 +752,43 @@
         </div>
         
         <div id="div_op">
-
+             <div class="weui-cells weui-cells_form" style="display:<%= _stp_cur=="1"?"":"none"%>;">      
+                <div class="weui-cell weui-flex">
+                    <div class="weui-cell__hd f-red"><label class="weui-label">检测内容</label></div> 
+                    <div class="weui-flex__item ">
+                        <select id='checkedLevel_sg' multiple="multiple"></select>
+                    </div>
+                </div> 
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red"><label class="weui-label">检测设备</label></div> 
+                    <asp:TextBox ID="txt_jcsb" class="weui-input" runat="server" placeholder="检测设备"></asp:TextBox> 
+                    <img id="img_sm_jcsb" src="/img/fdj2.png" />                                                     
+                </div> 
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                    <textarea id="comment_0" class="weui-textarea"  placeholder="请输入说明" rows="2" runat="server" value=''></textarea>
+                </div>
+                <div class="weui-cell" >
+                    <input id="btn_sign_0" type="button" value="确认" class="weui-btn weui-btn_primary" />
+                </div>
+            </div>
+             <div class="weui-cells weui-cells_form" style="display:<%= _stp_cur=="2"?"":"none"%>;">   
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">检测结论</label></div> 
+                    <asp:TextBox ID="txt_result" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结论"></asp:TextBox>  
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">检测报告</label></div> 
+                     
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                    <textarea id="comment_1" class="weui-textarea"  placeholder="请输入说明" rows="2" runat="server" value=''></textarea>
+                </div>
+                <div class="weui-cell" >
+                    <input id="btn_sign_1" type="button" value="确认" class="weui-btn weui-btn_primary" />
+                </div>
+            </div>
         </div>
     </form>
     <script>
@@ -749,17 +883,39 @@
                             this.selected = true;
                         }
                     });
-
-                    //设置选中值后，需要刷新select控件
-                    //$("select[id='checkedLevel']").multipleSelect('refresh');
-
-                    //$("select[id='checkedLevel']").multipleSelect('setSelects', db_jcnr_arr);
                 }
-               
             }
 
         } else {
+            if ("<%= _stp_cur %>" == "1") {
 
+                var db_jcnr_sy = "<%= _jcnr_sy %>";
+                var db_jcnr_sy_arr = db_jcnr_sy.split(",");
+
+                for (var i in db_jcnr_sy_arr) {
+                    $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[i] + "'>" + db_jcnr_sy_arr[i] + "</option>");
+                }
+            }
+
+            if ("<%= _stp_cur %>" == "2") {
+
+                var datalist_sr = [{ title: 'NG', value: 'NG' }, { title: '合格', value: '合格' }];
+                $("#txt_result").select({
+                    title: "结果",
+                    items: datalist_sr,
+                    onChange: function (d) {
+                        //    console.log(this, d);
+                    },
+                    onClose: function (d) {
+                        var obj = eval(d.data);
+                        //alert(obj.values);
+                    },
+                    onOpen: function () {
+                        //  console.log("open");
+                    },
+
+                });
+            }
         }
     </script>
 </body>
