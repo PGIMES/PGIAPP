@@ -274,6 +274,35 @@
 
                 });
             });
+
+            $("#btn_sign_2").click(function () {
+                $("#btn_sign_2").attr("disabled", "disabled");
+                $("#btn_sign_2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                $.ajax({
+                    type: "post",
+                    url: "JC_Apply.aspx/sign",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
+                        + "','_jcnr':'','_jcsb':'','_comment':'" + $('#comment_1').val()
+                        + "','_result':'','_type':'取回'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign_2").removeAttr("disabled");
+                            $("#btn_sign_2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            return false;
+                        }
+
+                        window.location.href = "/JianCe/JianCe_Monitor.aspx";
+                    }
+
+                });
+            });
             
         });
 
@@ -774,7 +803,7 @@
                     <input id="btn_sign_0" type="button" value="确认" class="weui-btn weui-btn_primary" />
                 </div>
             </div>
-             <div class="weui-cells weui-cells_form" style="display:<%= _stp_cur=="2"?"":"none"%>;">   
+            <div class="weui-cells weui-cells_form" style="display:<%= _stp_cur=="2"?"":"none"%>;">   
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">检测结论</label></div> 
                     <asp:TextBox ID="txt_result" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结论"></asp:TextBox>  
@@ -789,6 +818,15 @@
                 </div>
                 <div class="weui-cell" >
                     <input id="btn_sign_1" type="button" value="确认" class="weui-btn weui-btn_primary" />
+                </div>
+            </div>
+            <div class="weui-cells weui-cells_form" style="display:<%= _stepid=="3"?"":"none"%>;"> 
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
+                    <textarea id="comment_2" class="weui-textarea"  placeholder="请输入说明" rows="2" runat="server" value=''></textarea>
+                </div>
+                <div class="weui-cell" >
+                    <input id="btn_sign_2" type="button" value="确认" class="weui-btn weui-btn_primary" />
                 </div>
             </div>
         </div>
