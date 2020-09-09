@@ -80,7 +80,7 @@
                         <i class="fa fa-filter margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>检测申请<font style="font-size:smaller">(调整中)</font></p>
+                        <p>检测申请<font style="font-size:smaller">(开发中)</font></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a> 
@@ -124,7 +124,19 @@
                         <span class="weui-badge bg-red" id="bhg_fg" style='margin-right: 15px;'>返..</span>  
                     </div>
                 </a>  
-
+                <a class="weui-cell weui-cell_access" href="/JianCe/JianCe_Monitor.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-gears margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>检测监视<font style="font-size:smaller">(开发中)</font></p>
+                    </div>
+                    <div class="weui-cell__ft">                                                
+                        <%--<span class="weui-badge bg-blue" id="wip" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-blue" id="sh" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-orange" id="part"  style='margin-right: 15px;'>..</span> --%>                                           
+                    </div>
+                </a>
             </div>
              
 
