@@ -571,6 +571,22 @@
                                             <label class="weui-form-preview__label">说明</label>
                                             <span class="weui-form-preview__value"><%# Eval("remark") %></span>
                                         </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">申请人</label>
+                                            <span class="weui-form-preview__value"><%# Eval("phone") %><%# Eval("emp_name") %></span>
+                                        </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">暂存时间</label>
+                                            <span class="weui-form-preview__value">
+                                                <%# Eval("create_date","{0:MM/dd HH:mm}") %>
+                                            </span>
+                                        </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">申请时间</label>
+                                            <span class="weui-form-preview__value">
+                                                <%# Eval("apply_date","{0:MM/dd HH:mm}") %>
+                                            </span>
+                                        </div> 
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </div>
