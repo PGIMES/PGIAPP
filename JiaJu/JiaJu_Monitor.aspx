@@ -166,40 +166,40 @@
         //显示数量
         function showBlockCount() {
             $(".weui-form-preview .weui-cells").each(function (i, item) {
-                var rowcount = $(this).find("a:not(.hide)").length;
-                var ipart = $(this).find("a:not(.hide) :contains('部分')").length;
-                var iNg = $(this).find("a:not(.hide) :contains('不合格返线')").length + $(this).find("a:not(.hide) :contains('挑选')").length;
-                var iWip = rowcount - ipart - iNg;
+                var rowcount = $(this).find("a:not(.hide)").length;                 
+                var iDuoci = $(this).find("a:not(.hide).duoci").length;
+                var i2H = $(this).find("a:not(.hide).chaoshi").length;
+                 
                 var obj = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
-                var objpart = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
-                var objNg = $(this).closest('li').children(".js-category").find("span").eq(2); //红标题span
+                var objDuo = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
+                var objChao = $(this).closest('li').children(".js-category").find("span").eq(2); //第三个
 
-                $(obj).text(iWip);
-                $(objpart).text("部" + ipart);
-                $(objNg).text("返" + iNg);
+                $(obj).text(rowcount);
+                $(objDuo).text("多" + iDuoci);
+                $(objChao).text("超" + i2H);
 
-                if (iWip == 0) {
+                if (rowcount == 0) {
                     $(obj).addClass("bg-gray").removeClass("bg-blue")
                 }
                 else {
                     $(obj).addClass("bg-blue").removeClass("bg-gray")
                 }
-                //部分
-                if (ipart == 0) {
-                    $(objpart).addClass("bg-gray").removeClass("bg-orange")
+                //多次
+                if (iDuoci == 0) {
+                    $(objDuo).addClass("bg-gray").removeClass("bg-orange")
                 }
                 else {
-                    $(objpart).addClass("bg-orange").removeClass("bg-gray")
+                    $(objDuo).addClass("bg-orange").removeClass("bg-gray")
                 }
-                //不合格返线
-                if (iNg == 0) {
-                    $(objNg).addClass("bg-gray").removeClass("bg-red")
+                //超时
+                if (i2H == 0) {
+                    $(objChao).addClass("bg-gray").removeClass("bg-orange")
                 }
                 else {
-                    $(objNg).addClass("bg-red").removeClass("bg-gray")
+                    $(objChao).addClass("bg-orange").removeClass("bg-gray")
                 }
             });
-            //组装件数量
+             
 
 
         }
@@ -266,7 +266,7 @@
             </div>
             <label class="weui-search-bar__label" id="searchText">
                 <i class="weui-icon-search"></i>
-                <span>请输入查看的关键字</span>
+                <span>请输入查看的关键字、多次、超时</span>
             </label>
         </form>
         <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" style="color: #09bb07" id="searchCancel">取消</a>
@@ -336,7 +336,7 @@
                                                     foreach (System.Data.DataRow dr in dt_line.Rows)
                                                     {%>
                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"><%=(Convert.ToInt16(dr["ng_count"])>0?"多次":"")%> <%=Convert.ToInt16(dr["timesMinute"])>120?"超时":"" %></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -406,7 +406,7 @@
                                                     foreach (System.Data.DataRow dr in dt_line.Rows)
                                                     {%>
                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-yellow"><%=(Convert.ToInt16(dr["ng_count"])>0?"多次":"")%> <%=Convert.ToInt16(dr["timesMinute"])>120?"超时":"" %></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -471,7 +471,7 @@
                                                     foreach (System.Data.DataRow dr in dt_line.Rows)
                                                     { %>
                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"><%=(Convert.ToInt16(dr["ng_count"])>0?"多次":"")%> <%=Convert.ToInt16(dr["timesMinute"])>120?"超时":"" %></span></div>
                                                     <div class="weui-cell__hd">
                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                     </div>
@@ -522,11 +522,13 @@
                                                 dt_line = ViewState["dt_data_4"] as System.Data.DataTable;
                                                 rowscount = dt_line.Rows.Count;
                                                 int rowsTwo = dt_line.Select("ng_count>0").Length;
+                                                int rows2H = dt_line.Select("timesMinute>120").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>换夹完成（30天内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin10-l " ><% =rowscount %></span>
-                                                <span class="weui-badge  bg-<% =(rowsTwo==0?"gray":"orange") %> margin10-l " ><% =rowsTwo %></span>
+                                                <span class="weui-badge  bg-<% =(rowsTwo==0?"gray":"orange") %> margin10-l " >多<% =rowsTwo %></span>
+                                                <span class="weui-badge  bg-<% =(rows2H==0?"gray":"orange") %> margin10-l " >超<% =rows2H %></span>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -539,13 +541,18 @@
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {
                                                         line = drLine["line"].ToString();
+                                                        int intblue = dt_line.Select("line='" + line + "'").Count();
+                                                        int intorange = dt_line.Select("line='" + line + "' and ng_count>0").Count();
+                                                        int intred = dt_line.Select("line='" + line + "' and timesMinute>120").Count();
                                                 %>
                                                 <ul class="collapse2 ">
                                                     <li class=" LH " style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category2 " onclick="showorhide(this);">
                                                             <div class="weui-cells__title  weui-flex__item LH">
                                                                 <i class="icon nav-icon icon-22 color-success "></i><%=line %>
-                                                                <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;"><% =(ViewState["dt_data_4"] as System.Data.DataTable).Select("line='" + line + "'").Count() %></span>
+                                                                <span class="weui-badge <% =(intblue==0?"bg-gray":"bg-blue") %> margin20-l " ><% =intblue %></span>
+                                                                <span class="weui-badge <% =(intorange==0?"bg-gray":"bg-orange") %> margin20-l " >多<% =intorange %></span>
+                                                                <span class="weui-badge <% =(intred==0?"bg-gray":"bg-orange") %> margin20-l " >超<% =intred %></span>
                                                             </div>
                                                             <i class="icon icon-74 right"></i>
                                                         </div>
@@ -554,8 +561,8 @@
 
                                                                 foreach (System.Data.DataRow dr in dt_line.Select("line='" + line + "'"))
                                                                 {%>
-                                                            <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                            <a class="weui-cell  weui-cell_access <%=(Convert.ToInt16(dr["ng_count"])>0?"duoci":"")%> <%=Convert.ToInt16(dr["timesMinute"])>120?"chaoshi":"" %>" href="<%=dr["href"] %>">
+                                                                <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"><%=(Convert.ToInt16(dr["ng_count"])>0?"多次":"")%> <%=Convert.ToInt16(dr["timesMinute"])>120?"超时":"" %></span></div>
                                                                 <div class="weui-cell__hd">
                                                                     <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                 </div>
