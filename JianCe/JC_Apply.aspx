@@ -105,7 +105,8 @@
                         + "','_dh':'" + $('#txt_dh').val() + "','_source_lot':'" + $('#txt_source_lot').val() + "','_xmh':'" + $('#txt_xmh').val()
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
                         + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $('#txt_prod_machine').val()
-                        + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
+                        + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
+                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
                         + "'}",
                         //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
@@ -158,7 +159,8 @@
                         + "','_dh':'" + $('#txt_dh').val() + "','_source_lot':'" + $('#txt_source_lot').val() + "','_xmh':'" + $('#txt_xmh').val()
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
                         + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $('#txt_prod_machine').val()
-                        + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
+                        + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
+                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
                         + "'}",
                         //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
@@ -467,7 +469,7 @@
                             <p>紧急</p>
                         </div>
                         <div class="weui-cell__ft">
-                            <input type="radio" class="weui-check" name="priority" id="x11">
+                            <input type="radio" class="weui-check" name="priority" id="x11" value="紧急">
                             <span class="weui-icon-checked"></span>
                         </div>
                         </label>
@@ -477,7 +479,7 @@
                         <p>一般</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <input type="radio" class="weui-check" name="priority" id="x12" checked="checked">
+                        <input type="radio" class="weui-check" name="priority" id="x12" value="一般" checked="checked">
                         <span class="weui-icon-checked"></span>
                     </div>
                     </label>
