@@ -502,6 +502,7 @@
                 layer.alert("请输入【检测设备】.");
                 return false;
             }
+            return true;
         }
 
         function valid_sgin_1() {            
@@ -510,6 +511,7 @@
                 return false;
             }
             //卡检测报告？
+            return true;
         }
     </script>
 </head>
