@@ -22,7 +22,7 @@
         .weui-cell{
             padding:10px 20px;  
         }
-        i{ color:orangered}
+        i{ color:#03a9f4}
     </style>
     
     <script>
@@ -93,7 +93,7 @@
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
                         <% string i1 = Label1.Text; 
-                            Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>设" + i1 + "</span>");
+                            Response.Write("<span class='weui-badge  bg-" + (i1 == "0" ? "gray" : "blue") + "' style='margin-right: 15px;'>模" + i1 + "</span>");
                                 %>
                     </div>
                 </a>
@@ -104,7 +104,7 @@
                     <div class="weui-cell__bd">
                         <p>上模监视</p>
                     </div>
-                    <div class="weui-cell__ft"><% string i = MJIndex.getSMCount(); Response.Write("<span class='weui-badge  bg-"+(i=="0"?"gray":"red")+"' style='margin-right: 15px;'>"+i+"</span>"); %></div>
+                    <div class="weui-cell__ft"><% string i = MJIndex.getSMCount(); Response.Write("<span class='weui-badge  bg-"+(i=="0"?"gray":"blue")+"' style='margin-right: 15px;'>"+i+"</span>"); %></div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/MoJu/BXMonitor.aspx">
                     <div class="weui-cell__hd">
@@ -113,7 +113,7 @@
                     <div class="weui-cell__bd">
                         <p>模修监视</p>
                     </div>
-                    <div class="weui-cell__ft"><% string j = MJIndex.getMoXiuCount(); Response.Write("<span class='weui-badge  bg-"+(j=="0"?"gray":"red")+"' style='margin-right: 15px;'>"+j+"</span>"); %></div>
+                    <div class="weui-cell__ft"><% string j = MJIndex.getMoXiuCount(); Response.Write("<span class='weui-badge  bg-"+(j=="0"?"gray":"blue")+"' style='margin-right: 15px;'>"+j+"</span>"); %></div>
                 </a>
                 <a class="weui-cell weui-cell_access" href="/MoJu/MJ_WXSC_APP.aspx">
                     <div class="weui-cell__hd"><i class="fa fa-bar-chart-o margin10-r"></i></div>
@@ -129,7 +129,7 @@
                     <div class="weui-cell__bd">
                         <p>保养监视</p>
                     </div>
-                    <div class="weui-cell__ft"><% string k = MJIndex.getBYCount(); Response.Write("<span class='weui-badge  bg-"+(k=="0"?"gray":"red")+"' style='margin-right: 15px;'>"+k+"</span>"); %></div>
+                    <div class="weui-cell__ft"><% string k = MJIndex.getBYCount(); Response.Write("<span class='weui-badge  bg-"+(k=="0"?"gray":"blue")+"' style='margin-right: 15px;'>"+k+"</span>"); %></div>
                 </a>
             </div>
         </div>
