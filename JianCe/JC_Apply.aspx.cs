@@ -128,4 +128,33 @@ public partial class JC_Apply : System.Web.UI.Page
         return result;
 
     }
+    [WebMethod]
+    public static string save(string _option, string _emp_code_name, string _id, string _dh, string _source_lot, string _xmh
+        , string _ljh, string _line, string _workshop , string _sj_type, string _op, string _prod_machine, string _sj_qty
+        , string _jcnr, string _remark)
+    {
+        string flag = "N", msg = "";
+        string re_sql = @"";
+
+        //if (_option == "zancun")
+        //{
+        //    re_sql = @"exec usp_app_JC_Zancun '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}'";
+        //}else if (_option == "apply")
+        //{
+        //    re_sql = @"exec usp_app_JC_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}'";
+        //}
+
+        re_sql = @"exec usp_app_JC_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}'";
+        re_sql = string.Format(re_sql, _option, _emp_code_name, _id, _dh, _source_lot, _xmh, _ljh, _line, _workshop
+                , _sj_type, _op, _prod_machine, _sj_qty, _jcnr, _remark);
+
+
+        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
 }

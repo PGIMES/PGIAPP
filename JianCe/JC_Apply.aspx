@@ -48,6 +48,7 @@
 
         $(function () {
             $('#checkedLevel').multipleSelect({
+                height: "100px", //宽度
                 addTitle: true, //鼠标点悬停在下拉框时是否显示被选中的值
                 selectAll: false, //是否显示全部复选框，默认显示
                 name: "检测内容",
@@ -81,7 +82,7 @@
                 $("#btn_apply").attr("disabled", "disabled");
                 $("#btn_apply").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
-                if(!valid()){
+                if(!valid("zancun")){
                     $("#btn_zancun").removeAttr("disabled");
                     $("#btn_zancun").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
                     $("#btn_apply").removeAttr("disabled");
@@ -90,15 +91,23 @@
                     return false;
                 }
 
+                var selectValue = "";
+                $("#checkedLevel").find("option:selected").each(function () {
+                    selectValue += $(this).text() + ","
+                });
+                if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
+
+
                 $.ajax({
                     type: "post",
-                    url: "JC_Apply.aspx/zancun",
-                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
+                    url: "JC_Apply.aspx/save",
+                    data: "{'_option':'zancun','_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
                         + "','_dh':'" + $('#txt_dh').val() + "','_source_lot':'" + $('#txt_source_lot').val() + "','_xmh':'" + $('#txt_xmh').val()
-                        + "','_off_pgino':'" + $('#off_pgino').val() + "','_off_pn':'" + $('#off_pn').val() + "','_off_jiaju_no':'" + $('#off_jiaju_no').val() + "','_off_jiaju_name':'" + $('#off_jiaju_name').val()
-                        + "','_on_pgino':'" + $('#on_pgino').val() + "','_on_pn':'" + $('#on_pn').val() + "','_on_jiaju_no':'" + $('#on_jiaju_no').val() + "','_on_jiaju_name':'" + $('#on_jiaju_name').val()
-                        + "','_comment':'" + $('#comment').val()
-                        + "','_formno':'" + $('#formno').val() + "','_stepid':'" + $('#stepid').val() + "'}",
+                        + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
+                        + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $('#txt_prod_machine').val()
+                        + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
+                        + "'}",
+                        //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -120,8 +129,94 @@
                 });
             });
 
-            //$("#btn_sign_0").click(function () {
-            //});
+            $("#btn_apply").click(function () {
+                $("#btn_zancun").attr("disabled", "disabled");
+                $("#btn_zancun").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+                $("#btn_apply").attr("disabled", "disabled");
+                $("#btn_apply").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                if (!valid("apply")) {
+                    $("#btn_zancun").removeAttr("disabled");
+                    $("#btn_zancun").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    $("#btn_apply").removeAttr("disabled");
+                    $("#btn_apply").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                    return false;
+                }
+
+                var selectValue = "";
+                $("#checkedLevel").find("option:selected").each(function () {
+                    selectValue += $(this).text() + ","
+                });
+                if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
+
+
+                $.ajax({
+                    type: "post",
+                    url: "JC_Apply.aspx/save",
+                    data: "{'_option':'apply','_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
+                        + "','_dh':'" + $('#txt_dh').val() + "','_source_lot':'" + $('#txt_source_lot').val() + "','_xmh':'" + $('#txt_xmh').val()
+                        + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
+                        + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $('#txt_prod_machine').val()
+                        + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
+                        + "'}",
+                        //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_zancun").removeAttr("disabled");
+                            $("#btn_zancun").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            $("#btn_apply").removeAttr("disabled");
+                            $("#btn_apply").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                            return false;
+                        }
+
+                        window.location.href = "/JianCe/JiaJu_Monitor.aspx";
+                    }
+
+                });
+            });
+
+            $("#btn_sign_0").click(function () {
+                $("#btn_sign_0").attr("disabled", "disabled");
+                $("#btn_sign_0").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+
+                //if (!valid_sgin("zancun")) {
+                //    $("#btn_sign_0").removeAttr("disabled");
+                //    $("#btn_sign_0").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                //    return false;
+                //}
+
+
+                $.ajax({
+                    type: "post",
+                    url: "JC_Apply.aspx/sign_0",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
+                        + "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btn_sign_0").removeAttr("disabled");
+                            $("#btn_sign_0").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+
+                            return false;
+                        }
+
+                        window.location.href = "/JianCe/JiaJu_Monitor.aspx";
+                    }
+
+                });
+            });
             
         });
 
@@ -265,18 +360,46 @@
             });
         }
 
-        function valid() {
-            if ($("#sb_code").val() == "") {
-                layer.alert("请输入【设备】.");
+        function valid(para) {
+            if ($("#txt_xmh").val() == "") {
+                layer.alert("请输入【项目号】.");
                 return false;
             }
-            if ($("#on_pgino").val() == "") {
-                layer.alert("请输入换上夹具【物料号】.");
+            if ($("#txt_sj_type").val() == "") {
+                layer.alert("请输入【送检类别】.");
                 return false;
             }
-            if ($("#on_pgino_no").val() == "") {
-                layer.alert("请输入换上夹具【夹具号】.");
+            if ($("#txt_op").val() == "") {
+                layer.alert("请输入【工序】.");
                 return false;
+            }
+            if ($("#txt_prod_machine").val() == "") {
+                layer.alert("请输入【生产设备】.");
+                return false;
+            }
+            if ($.trim($("#txt_sj_qty").val()) == "" || $.trim($("#txt_sj_qty").val()) == "0") {
+                layer.alert("请输入【送检数量】.");
+                return false;
+            } else if (parseFloat($("#txt_sj_qty").val()) <= 0) {
+                layer.alert("【送检数量】不可小于等于0.");
+                return false;
+            }
+
+            var selectValue = "";
+            $("#checkedLevel").find("option:selected").each(function () {
+                selectValue += $(this).text() + ","
+            });
+            if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
+            if (selectValue=="") {
+                layer.alert("请勾选【检测内容】.");
+                return false;
+            }
+
+            if (para == "apply") {
+                if ($("#txt_dh").val() == "") {
+                    layer.alert("请输入【检测单号】.");
+                    return false;
+                }
             }
 
             return true;
@@ -363,8 +486,7 @@
             <div class="weui-cell weui-flex">
                 <div class="weui-cell__hd f-red"><label class="weui-label">检测内容</label></div> 
                 <div class="weui-flex__item ">
-                    <select id='checkedLevel' style="width:90%;height:28px;" multiple="multiple">
-　　                </select>
+                    <select id='checkedLevel' multiple="multiple"></select>
                 </div>
                  
             </div>
