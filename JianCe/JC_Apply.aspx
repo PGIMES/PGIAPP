@@ -218,7 +218,7 @@
                     type: "post",
                     url: "JC_Apply.aspx/sign",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
-                        + "','_jcnr':'" + selectValue + "','_jcsb':'" + $('#jcsb').val() + "','_comment':'" + $('#comment_0').val()
+                        + "','_jcnr':'" + selectValue + "','_jcsb':'" + $('#txt_jcsb').val() + "','_comment':'" + $('#comment_0').val()
                         + "','_result':'','_type':'检测'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -732,7 +732,7 @@
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label"><%# Eval("type_dd") %>时间</label>
                                             <span class="weui-form-preview__value">
-                                                <%# Eval("create_date","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                                <%# Eval("startdate","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
                                             </span>
                                         </div> 
                                     </div>
