@@ -269,26 +269,28 @@
         function lot_change() {
             $.ajax({
                 type: "post",
-                url: "Jiaju_Apply.aspx/sb_change",
-                data: "{'lot':'" + $('#txt_source_lot').val() + "'}",
+                url: "JC_Apply.aspx/lot_change",
+                data: "{'lot':'" + $('#txt_source_lot').val() + "','domain': '" + $("#domain").val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                 success: function (data) {
                     var obj = eval(data.d);
-                    if (obj[0].e_code == "") {
+                    if (obj[0].xmh == "") {
                         layer.alert("【来源于Lot】" + $('#txt_source_lot').val() + "不存在.");
                     }
                     $("#txt_xmh").val(obj[0].xmh);
                     $("#txt_ljh").val(obj[0].ljh);
                     $("#txt_workshop").val(obj[0].workshop);
                     $("#txt_line").val(obj[0].line);
+
+                    pgino_change();
                 }
 
             });
         }
 
-        function pgino_change(pgino) {
+        function pgino_change() {
             $.ajax({
                 type: "post",
                 url: "JC_Apply.aspx/pgino_change",
@@ -365,6 +367,10 @@
         function valid(para) {
             if ($("#txt_xmh").val() == "") {
                 layer.alert("请输入【项目号】.");
+                return false;
+            }
+            if ($("#txt_ljh").val() == "") {
+                layer.alert("请输入【零件号】.");
                 return false;
             }
             if ($("#txt_sj_type").val() == "") {

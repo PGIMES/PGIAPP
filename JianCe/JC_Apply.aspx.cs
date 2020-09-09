@@ -91,6 +91,44 @@ public partial class JC_Apply : System.Web.UI.Page
         return result;
 
     }
+
+    [WebMethod]
+    public static string lot_change(string lot, string domain)
+    {
+        string result = "";
+        string sql = @" exec [usp_app_JC_Apply_lot_change] '" + domain + "','" + lot + "'";
+        DataSet ds = SQLHelper.Query(sql, connString);
+
+        string xmh = "", ljh = "", line = "", workshop = "";
+        DataTable dt = ds.Tables[0];
+        if (dt.Rows.Count > 0)
+        {
+            xmh = dt.Rows[0]["xmh"].ToString();
+            ljh = dt.Rows[0]["pt_desc1"].ToString();
+            line = dt.Rows[0]["scx"].ToString();
+            workshop = dt.Rows[0]["scx_workshop"].ToString();
+        }
+
+        if (xmh == "")
+        {
+            DataTable ldt = new DataTable();
+            string sqlStr = @"select ld_part from pub.ld_det where ld_ref='{0}' and ld_qty_oh>0 with (nolock)";
+            sqlStr = string.Format(sqlStr, lot);
+            ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+            if (ldt != null)
+            {
+                if (ldt.Rows.Count > 0)
+                {
+                    xmh = ldt.Rows[0]["ld_part"].ToString();
+                }
+            }
+        }
+
+        result = "[{\"xmh\":\"" + xmh + "\",\"ljh\":\"" + ljh + "\",\"line\":\"" + line + "\",\"workshop\":\"" + workshop + "\"}]";
+        return result;
+
+    }
+
     [WebMethod]
     public static string pgino_change(string pgino, string sj_type, string domain)
     {
@@ -114,6 +152,7 @@ public partial class JC_Apply : System.Web.UI.Page
         return result;
 
     }
+
     [WebMethod]
     public static string op_change(string pgino, string sj_type, string op, string domain)
     {
@@ -128,6 +167,7 @@ public partial class JC_Apply : System.Web.UI.Page
         return result;
 
     }
+
     [WebMethod]
     public static string save(string _option, string _emp_code_name, string _id, string _dh, string _source_lot, string _xmh
         , string _ljh, string _line, string _workshop, string _sj_type, string _op, string _prod_machine, string _sj_qty
