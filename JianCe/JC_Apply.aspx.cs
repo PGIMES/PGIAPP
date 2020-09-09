@@ -180,7 +180,7 @@ public partial class JC_Apply : System.Web.UI.Page
         re_sql = string.Format(re_sql, _option, _emp_code_name, Convert.ToInt32(_id), _dh, _source_lot, _xmh, _ljh, _line, _workshop
                 , _sj_type, _op, _prod_machine, _sj_qty, _priority, _jcnr, _remark);
 
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+        DataTable re_dt = SQLHelper.Query(re_sql,connString).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();
 

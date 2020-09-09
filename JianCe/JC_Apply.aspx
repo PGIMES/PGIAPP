@@ -124,7 +124,7 @@
                             return false;
                         }
 
-                        window.location.href = "/JianCe/JiaJu_Monitor.aspx";
+                        window.location.href = "/JianCe/JianCe_Monitor.aspx";
                     }
 
                 });
@@ -178,7 +178,7 @@
                             return false;
                         }
 
-                        window.location.href = "/JianCe/JiaJu_Monitor.aspx";
+                        window.location.href = "/JianCe/JianCe_Monitor.aspx";
                     }
 
                 });
@@ -214,7 +214,7 @@
                             return false;
                         }
 
-                        window.location.href = "/JianCe/JiaJu_Monitor.aspx";
+                        window.location.href = "/JianCe/JianCe_Monitor.aspx";
                     }
 
                 });
