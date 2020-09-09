@@ -339,7 +339,7 @@
                     // 设置默认选中
                     var arrayObj = new Array();　//创建一个数组 
                     $.each(json_op, function (index, item) {
-                        arrayObj.push(item.jcsd);
+                        arrayObj.push(item.jcsd_desc);
                     });
                    
                     $("select[id='checkedLevel']").multipleSelect('setSelects', arrayObj);
@@ -658,7 +658,7 @@
                     datalist_jcnr = obj[0].json_jcnr;
 
                     $.each(datalist_jcnr, function (index, item) {
-                        $("#checkedLevel").append("<option value='" + item.jcitem + "'>" + item.jcitem_desc + "</option>");
+                        $("#checkedLevel").append("<option value='" + item.jcitem_desc + "'>" + item.jcitem_desc + "</option>");
                     });
                 }
             });
@@ -716,6 +716,31 @@
                     //  console.log("open");
                 }
             });
+
+            //赋初始值
+            if ("<%= _stepid %>" == "0") {
+                
+                if ("<%= _priority %>" != "") {
+                    $("input[name='priority'][value='<%= _priority %>']").attr("checked", true);
+                }
+
+                if ("<%= _jcnr %>" != "") {
+                    var db_jcnr = "<%= _jcnr %>";
+                    var db_jcnr_arr = db_jcnr.split(",");
+
+                    $('#checkedLevel option').each(function (i, content) {
+                        if ($.inArray($.trim(content.value), db_jcnr_arr) >= 0) {
+                            this.selected = true;
+                        }
+                    });
+
+                    //设置选中值后，需要刷新select控件
+                    //$("select[id='checkedLevel']").multipleSelect('refresh');
+
+                    //$("select[id='checkedLevel']").multipleSelect('setSelects', db_jcnr_arr);
+                }
+               
+            }
 
         } else {
 

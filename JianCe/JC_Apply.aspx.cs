@@ -13,7 +13,7 @@ public partial class JC_Apply : System.Web.UI.Page
     public static string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DBJianCe"].ConnectionString;
 
     public string _id = "";
-    public string _dh = "";
+    public string _dh = ""; public string _priority = ""; public string _jcnr = "";
     public string _stepid = "";
     public string _times_t = ""; public string _times_t_YN = "";
 
@@ -52,9 +52,23 @@ public partial class JC_Apply : System.Web.UI.Page
         DataTable dt = ds.Tables[0];
         if (dt.Rows.Count == 1)
         {
-            _dh = dt.Rows[0]["dh"].ToString();
+            _dh = dt.Rows[0]["dh"].ToString();dh.Text = _dh;
             _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
-            _times_t = dt.Rows[0]["times_t"].ToString(); _times_t_YN = dt.Rows[0]["times_t_YN"].ToString();
+            if (_stepid == "0")
+            {
+                txt_dh.Text = _dh; txt_source_lot.Text = dt.Rows[0]["source_lot"].ToString();
+                txt_xmh.Text = dt.Rows[0]["xmh"].ToString(); txt_ljh.Text = dt.Rows[0]["ljh"].ToString();
+                txt_workshop.Text = dt.Rows[0]["workshop"].ToString(); txt_line.Text = dt.Rows[0]["line"].ToString();
+                txt_sj_type.Text = dt.Rows[0]["sj_type"].ToString(); txt_op.Text = dt.Rows[0]["op"].ToString();
+                txt_prod_machine.Text = dt.Rows[0]["prod_machine"].ToString(); txt_sj_qty.Text = dt.Rows[0]["sj_qty"].ToString();
+                txt_remark.Value = dt.Rows[0]["remark"].ToString();
+                txt_dh.Text = _dh; txt_source_lot.Text = dt.Rows[0]["source_lot"].ToString();
+                _priority = dt.Rows[0]["priority"].ToString(); _jcnr = dt.Rows[0]["jcnr"].ToString();
+            }
+            else
+            {
+                _times_t = dt.Rows[0]["times_t"].ToString(); _times_t_YN = dt.Rows[0]["times_t_YN"].ToString();
+            }
 
             listBxInfo.DataSource = dt;
             listBxInfo.DataBind();
