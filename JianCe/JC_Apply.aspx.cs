@@ -12,12 +12,14 @@ public partial class JC_Apply : System.Web.UI.Page
 {
     public static string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DBJianCe"].ConnectionString;
 
+    public string _id = "";
     public string _dh = "";
     public string _stepid = "";
+    public string _times_t = ""; public string _times_t_YN = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["dh"] != null) { _dh = Request.QueryString["dh"].ToString(); }
+        if (Request.QueryString["id"] != null) { _id = Request.QueryString["id"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -32,43 +34,37 @@ public partial class JC_Apply : System.Web.UI.Page
             //emp_code_name.Text = "02432何桂勤";
             domain.Text = "200";
 
-            dh.Text = _dh;
-
-            if (_dh != "")
+            id.Text = _id;
+            if (_id != "")
             {
-                init_data(_dh,connString);
+                init_data(_id, connString);
             }
 
         }
     }
 
-    void init_data(string dh, string connString)
+    void init_data(string id, string connString)
     {
-        //string sql = @"exec [usp_app_Jiaju_Apply_init] '{0}','{1}'";
-        //sql = string.Format(sql, dh, emp_code_name.Text);
-        //DataSet ds = SQLHelper.Query(sql,connString);
+        string sql = @"exec [usp_app_JC_Apply_init] '{0}','{1}'";
+        sql = string.Format(sql, Convert.ToInt32(id), emp_code_name.Text);
+        DataSet ds = SQLHelper.Query(sql, connString);
 
-        //DataTable dt = ds.Tables[0];
-        //if (dt.Rows.Count == 1)
-        //{
-        //    id.Text = dt.Rows[0]["id"].ToString();
-        //    _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
-        //    _times_t = dt.Rows[0]["times_t"].ToString(); _times_t_YN = dt.Rows[0]["times_t_YN"].ToString();
-        //    listBxInfo.DataSource = dt;
-        //    listBxInfo.DataBind();
+        DataTable dt = ds.Tables[0];
+        if (dt.Rows.Count == 1)
+        {
+            _dh = dt.Rows[0]["dh"].ToString();
+            _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
+            _times_t = dt.Rows[0]["times_t"].ToString(); _times_t_YN = dt.Rows[0]["times_t_YN"].ToString();
 
-        //    if (_stepid == "2")//检测结果确认，默认带出，上一步的 检测结果
-        //    {
-        //        ng_ok_2.Text = ds.Tables[1].Rows[ds.Tables[1].Rows.Count - 1]["ng_ok"].ToString();
-        //        _sign_2_YN = dt.Rows[0]["sign_2_YN"].ToString();
-        //    }
-        //}
+            listBxInfo.DataSource = dt;
+            listBxInfo.DataBind();
+        }
 
-        //DataTable dt_sg = ds.Tables[1];
-        //Repeater_sg.DataSource = dt_sg;
-        //Repeater_sg.DataBind();
+        DataTable dt_sg = ds.Tables[1];
+        Repeater_sg.DataSource = dt_sg;
+        Repeater_sg.DataBind();
 
-        //ViewState["dt_sg"] = dt_sg.Rows.Count.ToString();
+        ViewState["dt_sg"] = dt_sg.Rows.Count.ToString();
     }
 
     [WebMethod]
