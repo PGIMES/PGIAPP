@@ -39,6 +39,9 @@
         #div_op .weui-cells:before{
             border-top:none;
         }
+        .ms-choice{
+            border:0px;
+        }
     </style>
     <script>
         $(document).ready(function () {
