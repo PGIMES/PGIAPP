@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pdf文件预览</title>    
+    <script src="../../scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+            $(function () {
+                var url = getPdfPreviewUrl(); //获取pdf预览地址
+                $("#pdfContainer").attr("src", "../web/viewer.html?file="+url+"#page=1");
+            });
+            function getPdfPreviewUrl() {
+                return "%2Ffile%2Fseason1.pdf";
+            }
+    </script>
+</head>
+<body>
+    <div id="showPdf">
+        <iframe id="pdfContainer" src="" width="100%" height="600" frameborder="0"></iframe>
+    </div>
+</body>
+</html> 
