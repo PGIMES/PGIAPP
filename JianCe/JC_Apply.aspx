@@ -547,7 +547,7 @@
         }
 
         function show_rtp(){
-                //window.location.href = "/JianCe/JianCe_Rpt.aspx?id="+<% = _id %>;
+                window.location.href = "/JianCe/JianCe_Rpt.aspx?id="+<% = _id %>;
         }
     </script>
 </head>
@@ -942,9 +942,13 @@
 
                 var db_jcnr_sy = "<%= _jcnr_sy %>";
                 var db_jcnr_sy_arr = db_jcnr_sy.split(",");
-
-                for (var i in db_jcnr_sy_arr) {
-                    $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[i] + "'>" + db_jcnr_sy_arr[i] + "</option>");
+                
+                if(db_jcnr_sy_arr.length==1){                
+                    $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[0] + "' selected>" + db_jcnr_sy_arr[0] + "</option>");
+                }else {
+                    for (var i in db_jcnr_sy_arr) {
+                        $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[i] + "'>" + db_jcnr_sy_arr[i] + "</option>");
+                    }
                 }
             }
 

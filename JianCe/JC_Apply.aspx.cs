@@ -14,7 +14,7 @@ public partial class JC_Apply : System.Web.UI.Page
     public static string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DBJianCe"].ConnectionString;
     public static string file = "";
 
-    public string _id = "";
+    public string _id = "0";
     public string _dh = "", _priority = "", _jcnr = "", _jcnr_sy = "";
     public string _stepid = "";
     public string _times_t = ""; public string _times_t_YN = ""; public string _stp_cur = ""; public string _file_cur = "";
@@ -56,7 +56,7 @@ public partial class JC_Apply : System.Web.UI.Page
 
     void init_data(string id, string dh_para, string connString)
     {
-        string sql = @"exec [usp_app_JC_Apply_init] '{0}','{1}','{2}'";
+        string sql = @"exec [usp_app_JC_Apply_init] {0},'{1}','{2}'";
         sql = string.Format(sql, Convert.ToInt32(id), dh_para, emp_code_name.Text);
         DataSet ds = SQLHelper.Query(sql, connString);
 

@@ -34,7 +34,8 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
                     FileInfo fi = new FileInfo(itemFilePath);
 
                     DataRow dr = dt_rpt.NewRow();
-
+                    dr["filename"] = fi.Name;
+                    dt_rpt.Rows.Add(dr);
 
                     //创建时间    fi.CreationTime;   
                     //获取上次访问当前目录时间 fi.LastAccessTime   
@@ -52,6 +53,9 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
                 }
             }
         }
+
+        listBxInfo.DataSource = dt_rpt;
+        listBxInfo.DataBind();
 
     }
 }
