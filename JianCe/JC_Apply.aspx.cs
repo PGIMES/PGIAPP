@@ -28,6 +28,7 @@ public partial class JC_Apply : System.Web.UI.Page
         file = Server.MapPath(@"/file/" + year + @"/" + month + @"月/" + month + "-" + day + @"白班/");
 
         if (Request.QueryString["id"] != null) { _id = Request.QueryString["id"].ToString(); }
+        if (Request.QueryString["dh"] != null) { _dh = Request.QueryString["dh"].ToString(); }//扫码进来的
 
         if (WeiXin.GetCookie("workcode") == null)
         {
@@ -41,6 +42,8 @@ public partial class JC_Apply : System.Web.UI.Page
             domain.Text = lu.Domain;
             //emp_code_name.Text = "02432何桂勤";
             domain.Text = "200";
+
+            txt_dh.Text = _dh;
 
             id.Text = _id;
             if (_id != "")
