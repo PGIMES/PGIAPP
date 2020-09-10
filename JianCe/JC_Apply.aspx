@@ -719,6 +719,10 @@
                                                 <%# Eval("apply_date","{0:MM/dd HH:mm}") %>
                                             </span>
                                         </div> 
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">报告路径</label>
+                                            <span class="weui-form-preview__value"><%# Eval("filepath") %></span>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </div>
