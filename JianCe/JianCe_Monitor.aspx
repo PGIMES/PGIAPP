@@ -315,7 +315,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>申 请 中                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"orange") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -338,7 +338,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"orange") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -369,7 +369,7 @@
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString()%></span>件
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -411,7 +411,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>待 检 中
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"orange") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -434,7 +434,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"orange") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -466,7 +466,7 @@
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString()+"" %></span>件
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -506,7 +506,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>检 测 中                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"orange") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
 
                                             </div>
@@ -530,7 +530,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"orange") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -562,7 +562,7 @@
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString() %></span>件
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -601,7 +601,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>待 取 回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"orange") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
 
                                             </div>
@@ -625,7 +625,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"orange") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -657,7 +657,7 @@
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString() %></span>件
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -696,7 +696,7 @@
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>检测完成（20小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"orange") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -719,7 +719,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"orange") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -751,7 +751,7 @@
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString()%></span>件
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr   margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red  margin10-l" style="font-size: x-small;">紧急</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
