@@ -15,11 +15,14 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
     {
         string id = Request.QueryString["id"].ToString();
 
+        DataTable dt_rpt = new DataTable();
+        dt_rpt.Columns.Add("filename", typeof(string));
+
         string sql = @"select * from App_JC with(nolock) where id={0}";
         sql = string.Format(sql, Convert.ToInt32(id));
         DataTable dt = SQLHelper.Query(sql, connString).Tables[0];
 
-        if (dt.Rows.Count==1)
+        if (dt.Rows.Count == 1)
         {
             string filepath = dt.Rows[0]["filepath"].ToString();
             string folderPath = Server.MapPath(filepath);
@@ -29,6 +32,9 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
                 foreach (string itemFilePath in Directory.GetFiles(folderPath))
                 {
                     FileInfo fi = new FileInfo(itemFilePath);
+
+                    DataRow dr = dt_rpt.NewRow();
+
 
                     //创建时间    fi.CreationTime;   
                     //获取上次访问当前目录时间 fi.LastAccessTime   

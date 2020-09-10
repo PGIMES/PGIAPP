@@ -53,7 +53,7 @@
                       <div class="weui-cell">
                         <div class="weui-cell__hd"><img src=""></div>
                         <div class="weui-cell__bd">
-                          <p>标题文字</p>
+                          <p><%# Eval("filename") %></p>
                         </div>
                         <div class="weui-cell__ft">说明文字</div>
                       </div>

@@ -46,18 +46,18 @@ public partial class JC_Apply : System.Web.UI.Page
             txt_dh.Text = _dh;
 
             id.Text = _id;
-            if (_id != "")
+            if (_id != "" || _dh!="")
             {
-                init_data(_id, connString);
+                init_data(_id, _dh, connString);
             }
 
         }
     }
 
-    void init_data(string id, string connString)
+    void init_data(string id, string dh_para, string connString)
     {
-        string sql = @"exec [usp_app_JC_Apply_init] '{0}','{1}'";
-        sql = string.Format(sql, Convert.ToInt32(id), emp_code_name.Text);
+        string sql = @"exec [usp_app_JC_Apply_init] '{0}','{1}','{2}'";
+        sql = string.Format(sql, Convert.ToInt32(id), dh_para, emp_code_name.Text);
         DataSet ds = SQLHelper.Query(sql, connString);
 
         DataTable dt = ds.Tables[0];

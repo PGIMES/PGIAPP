@@ -19,7 +19,7 @@
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.weui.js"></script>
     <script src="/js/cjgl.js?ver=20200709001"></script>
-    <script src="/js/zl.js?ver=20200907002"></script>
+    <script src="/js/zl.js?ver=20200910001"></script>
     <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         .weui-cells {
@@ -42,7 +42,7 @@
             
            show_prod();
            show_bhg();
-            
+           show_JianCe()
                  
         });
                 
@@ -132,9 +132,10 @@
                         <p>检测监视<font style="font-size:smaller">(开发中)</font></p>
                     </div>
                     <div class="weui-cell__ft">                                                
-                        <%--<span class="weui-badge bg-blue" id="wip" style='margin-right: 15px;'>..</span>
-                        <span class="weui-badge bg-blue" id="sh" style='margin-right: 15px;'>..</span>
-                        <span class="weui-badge bg-orange" id="part"  style='margin-right: 15px;'>..</span> --%>                                           
+                        <span class="weui-badge bg-blue" id="Cnt1" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-blue" id="Cnt4"  style='margin-right: 15px;'>..</span> 
+                        <span class="weui-badge bg-red" id="Cnt2" style='margin-right: 15px;'>急..</span>
+                                                                   
                     </div>
                 </a>
             </div>
@@ -225,6 +226,32 @@
                         if (datad[0].go == 0) { $("#bhg_go").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].end == 0) { $("#bhg_end").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].go_bhg == 0) { $("#bhg_fg").removeClass("bg-red").addClass("bg-gray"); }
+                    }
+
+                }//,
+                //error: function (error) {
+                //    alert(error);
+                //}
+            });
+        }
+        //检测
+        function show_JianCe() {
+            $.ajax({
+                url: "/ZL.aspx/JianCe_Data",
+                type: "Post",
+                data: "{ }",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    datad = JSON.parse(data.d); //转为Json字符串
+                    if (datad.length > 0) {
+                        $("#Cnt1").text(datad[0].iCnt1);
+                        $("#Cnt2").text("急"+datad[0].iCnt2);
+                        $("#Cnt4").text(datad[0].iCnt4);
+                        if (datad[0].iCnt1 == 0) { $("#Cnt1").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].iCnt2 == 0) { $("#Cnt2").removeClass("bg-orange").addClass("bg-gray"); }
+                        if (datad[0].iCnt4 == 0) { $("#Cnt4").removeClass("bg-blue").addClass("bg-gray"); }
                     }
 
                 }//,

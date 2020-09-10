@@ -329,8 +329,8 @@
         function dh_change() {
             var result = $('#txt_dh').val();
             var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-            if (bj != "C" || result.length != 8) {
-                layer.alert("【检测单号】" + result + "必须是C开头，长度为8位.");
+            if (bj != "C" || result.length != 10) {
+                layer.alert("【检测单号】" + result + "必须是C开头，长度为10位.");
                 $('#txt_dh').val("");
                 return;
             }
@@ -547,7 +547,7 @@
         }
 
         function show_rtp(){
-            window.location.href = "/JianCe/JianCe_Rpt.aspx?id="+<% = _id %>;
+                //window.location.href = "/JianCe/JianCe_Rpt.aspx?id="+<% = _id %>;
         }
     </script>
 </head>

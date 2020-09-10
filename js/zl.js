@@ -9,8 +9,8 @@ function sm_jc() {
                 var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                 // code 在这里面写上扫描二维码之后需要做的内容 
                 var bj = result.toUpperCase().substring(0, 1).toUpperCase();
-                if (bj != "C" || result.length != 8) {
-                    layer.alert("【检测单号】必须是C开头，长度为8位.请重新扫描.");
+                if (bj != "C" || result.length != 10) {
+                    layer.alert("【检测单号】必须是C开头，长度为10位.请重新扫描.");
                 }
                 else {
                     window.location.href = "/JianCe/JC_Apply.aspx?dh=" + result;

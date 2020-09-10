@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 public partial class ZL : System.Web.UI.Page
 {
     public string _workshop = "";
-
+    public static string connStr_JianCe = System.Configuration.ConfigurationManager.ConnectionStrings["DBJianCe"].ConnectionString;
     protected void Page_Load(object sender, EventArgs e)
     {
         bind_data();
@@ -121,5 +121,25 @@ public partial class ZL : System.Web.UI.Page
         return res;
 
     }
+    //检测监视
+    [WebMethod]
+    public static string JianCe_Data()
+    {
+        //检测监视
+        int iCnt1 = 0, iCnt2 = 0, iCnt3 = 0, iCnt4 = 0; //Cnt1 已申请未完成总数，Cnt2:紧急数 ;  Cnt3  1天完成数 ;Cnt4 
+        // 调整中
+        string sql = string.Format(@"select  id,status,sj_type,priority from [App_JC]  with(nolock)  where status<>9 and status<>-1");//9：完成；-1：取消\删除
+        DataTable dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
+        iCnt1 = iCnt1 + dt_data_go.Rows.Count;
+        iCnt2 = iCnt2 + dt_data_go.Select(" priority='紧急'").Length;
+        //iCnt3 = iCnt3 + dt_data_go.Select("").Count();
+        //24完成
+        sql = string.Format(@"select count(1)cnt from [App_JC]  with(nolock)  where status=9 and complete_date>dateadd(day,-1,getdate())");
+        dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
+      
+        iCnt4 = iCnt4 + Convert.ToInt16(dt_data_go.Rows[0]["cnt"]);
+        string res = "[{\"iCnt1\":\"" + iCnt1.ToString() + "\",\"iCnt2\":\"" + iCnt2.ToString() + "\",\"iCnt3\":\"" + iCnt3.ToString() + "\",\"iCnt4\":\"" + iCnt4.ToString() + "\",\"msg\":\"ok\"}]";
+        return res;
 
+    }
 }
