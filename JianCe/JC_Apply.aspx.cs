@@ -17,7 +17,7 @@ public partial class JC_Apply : System.Web.UI.Page
     public string _id = "";
     public string _dh = "", _priority = "", _jcnr = "", _jcnr_sy = "";
     public string _stepid = "";
-    public string _times_t = ""; public string _times_t_YN = ""; public string _stp_cur = "";
+    public string _times_t = ""; public string _times_t_YN = ""; public string _stp_cur = ""; public string _file_cur = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -81,6 +81,15 @@ public partial class JC_Apply : System.Web.UI.Page
             else
             {
                 _times_t = dt.Rows[0]["times_t"].ToString(); _times_t_YN = dt.Rows[0]["times_t_YN"].ToString();
+            }
+
+            //判断文件夹下是否含有文件
+            string filepath = dt.Rows[0]["filepath"].ToString();
+            if (filepath != "")
+            {
+                string file_db = Server.MapPath(filepath);
+                bool bf_file = judgeExpensionName(filepath);
+                _file_cur = bf_file == true ? "Y" : "N";
             }
 
             listBxInfo.DataSource = dt;
@@ -200,7 +209,7 @@ public partial class JC_Apply : System.Web.UI.Page
 
         if (_option == "apply")//新建文件夹
         {
-            file = file + "p" + _xmh.Substring(2, 3);
+            file = file + "p" + _xmh.Substring(2, 3) + @"\" + _dh;
             if (!Directory.Exists(file))
             {
                 Directory.CreateDirectory(file);
@@ -220,6 +229,7 @@ public partial class JC_Apply : System.Web.UI.Page
         return result;
 
     }
+
     [WebMethod]
     public static string sign(string _emp_code_name, string _id, string _stepid, string _jcnr, string _jcsb, string _comment, string _result, string _type)
     {
@@ -234,5 +244,23 @@ public partial class JC_Apply : System.Web.UI.Page
         string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
         return result;
 
+    }
+
+
+    /// <summary>   
+    /// 判断是否有图片,pdf   
+    /// </summary>   
+    /// <param name="folderPath">指定文件夹路径</param>   
+    /// <returns>bool</returns>   
+    public bool judgeExpensionName(string folderPath)
+    {
+        bool isTp = false;
+
+        if (Directory.Exists(folderPath))
+        {
+            if (Directory.GetFiles(folderPath).Length > 0) { isTp = true; }
+        }
+
+        return isTp;
     }
 }

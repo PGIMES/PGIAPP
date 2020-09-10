@@ -545,6 +545,10 @@
             //卡检测报告？
             return true;
         }
+
+        function show_rtp(){
+            window.location.href = "/JianCe/JianCe_Rpt.aspx?id="+<% = _id %>;
+        }
     </script>
 </head>
 <body>
@@ -723,6 +727,10 @@
                                             <label class="weui-form-preview__label">报告路径</label>
                                             <span class="weui-form-preview__value"><%# Eval("filepath") %></span>
                                         </div>
+                                        <div class="weui-form-preview__item" style="display:<%= _file_cur=="Y"?"":"none"%>; ">
+                                            <label class="weui-form-preview__label"></label>
+                                            <span class="weui-form-preview__value f-blue" onclick="show_rtp()">查看报告</span>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </div>
@@ -814,10 +822,6 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red "><label class="weui-label">检测结论</label></div> 
                     <asp:TextBox ID="txt_result" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结论"></asp:TextBox>  
-                </div>
-                <div class="weui-cell">
-                    <div class="weui-cell__hd f-red "><label class="weui-label">检测报告</label></div> 
-                     
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
