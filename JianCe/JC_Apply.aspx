@@ -697,7 +697,7 @@
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">检测内容</label>
-                                            <span class="weui-form-preview__value"><%# Eval("jcnr") %></span>
+                                            <span class="weui-form-preview__value"><font style="font-weight:800;"><%# Eval("jcnr") %></font></span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">说明</label>

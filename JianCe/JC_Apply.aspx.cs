@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -11,6 +12,7 @@ using System.Web.UI.WebControls;
 public partial class JC_Apply : System.Web.UI.Page
 {
     public static string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DBJianCe"].ConnectionString;
+    public static string file = "";
 
     public string _id = "";
     public string _dh = "", _priority = "", _jcnr = "", _jcnr_sy = "";
@@ -19,6 +21,12 @@ public partial class JC_Apply : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        string year = DateTime.Now.Year.ToString();
+        string month = DateTime.Now.Month.ToString();
+        string day = DateTime.Now.Day.ToString();
+
+        file = Server.MapPath(@"/file/" + year + @"/" + month + @"月/" + month + "-" + day + @"白班/");
+
         if (Request.QueryString["id"] != null) { _id = Request.QueryString["id"].ToString(); }
 
         if (WeiXin.GetCookie("workcode") == null)
@@ -187,12 +195,21 @@ public partial class JC_Apply : System.Web.UI.Page
     {
         string flag = "N", msg = "";
 
+        if (_option == "apply")//新建文件夹
+        {
+            file = file + "p" + _xmh.Substring(2, 3);
+            if (!Directory.Exists(file))
+            {
+                Directory.CreateDirectory(file);
+            }
+        }
+
         if (_id == "") { _id = "0"; }
         string re_sql = @"exec usp_app_JC_Apply '{0}','{1}',{2},'{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}','{14}','{15}'";
         re_sql = string.Format(re_sql, _option, _emp_code_name, Convert.ToInt32(_id), _dh, _source_lot, _xmh, _ljh, _line, _workshop
                 , _sj_type, _op, _prod_machine, _sj_qty, _priority, _jcnr, _remark);
 
-        DataTable re_dt = SQLHelper.Query(re_sql,connString).Tables[0];
+        DataTable re_dt = SQLHelper.Query(re_sql, connString).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
         msg = re_dt.Rows[0][1].ToString();
 
