@@ -49,7 +49,7 @@
         <asp:Repeater runat="server" ID="listBxInfo">
             <ItemTemplate>
                 <div class="weui-cells">
-                  <a class="weui-cell weui-cell_access" href="/pdfview/web/viewer.html?file="+"<%# Eval("filepath") %>"+"#page=1">
+                  <a class="weui-cell weui-cell_access" href="/pdfview/web/viewer.html?file=<%#  HttpUtility.UrlEncode( Eval("filepath").ToString()) %>#page=1">
                     <div class="weui-cell__bd">
                       <p><%# Eval("filename") %></p>
                     </div>
