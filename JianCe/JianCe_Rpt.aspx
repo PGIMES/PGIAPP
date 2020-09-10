@@ -49,15 +49,13 @@
         <asp:Repeater runat="server" ID="listBxInfo">
             <ItemTemplate>
                 <div class="weui-cells">
-                    <a class="weui-cell weui-cell_access" href="javascript:;">
-                      <div class="weui-cell">
-                        <div class="weui-cell__hd"><img src=""></div>
-                        <div class="weui-cell__bd">
-                          <p><%# Eval("filename") %></p>
-                        </div>
-                        <div class="weui-cell__ft">说明文字</div>
-                      </div>
-                    </a>
+                  <a class="weui-cell weui-cell_access" href="/pdfview/web/viewer.html?file="+"<%# Eval("filepath") %>"+"#page=1">
+                    <div class="weui-cell__bd">
+                      <p><%# Eval("filename") %></p>
+                    </div>
+                    <div class="weui-cell__ft">
+                    </div>
+                  </a>
                 </div>
             </ItemTemplate>
         </asp:Repeater>
