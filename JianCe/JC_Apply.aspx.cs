@@ -55,7 +55,7 @@ public partial class JC_Apply : System.Web.UI.Page
             emp_code_name.Text = lu.WorkCode + lu.UserName;
             domain.Text = lu.Domain;
             //emp_code_name.Text = "02432何桂勤";
-            //domain.Text = "200";
+            domain.Text = "200";
 
             txt_dh.Text = _dh;
 
