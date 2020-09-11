@@ -167,16 +167,16 @@
         function showBlockCount() {
             $(".weui-form-preview .weui-cells").each(function (i, item) {
                 var row1 = $(this).find("a:not(.hide)").length;
-                var row2 = $(this).find("a:not(.hide).duoci").length;
-                var row3 = $(this).find("a:not(.hide).chaoshi").length;
+                var row2 = $(this).find("a:not(.hide).ji").length;
+                //var row3 = $(this).find("a:not(.hide)").length;
 
                 var obj1 = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
                 var obj2 = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
-                var obj3 = $(this).closest('li').children(".js-category").find("span").eq(2); //第三个
+                //var obj3 = $(this).closest('li').children(".js-category").find("span").eq(2); //第三个
 
                 $(obj1).text(row1);
-                $(obj2).text(row2);
-                $(obj3).text(row3);
+                $(obj2).text("急"+row2);
+               // $(obj3).text(row3);
 
                 if (row1 == 0) {
                     $(obj1).addClass("bg-gray").removeClass("bg-blue")
@@ -184,20 +184,20 @@
                 else {
                     $(obj1).addClass("bg-blue").removeClass("bg-gray")
                 }
-                //多次
+                //急
                 if (row2 == 0) {
                     $(obj2).addClass("bg-gray").removeClass("bg-orange")
                 }
                 else {
                     $(obj2).addClass("bg-orange").removeClass("bg-gray")
                 }
-                //超时
-                if (row3 == 0) {
-                    $(obj3).addClass("bg-gray").removeClass("bg-orange")
-                }
-                else {
-                    $(obj3).addClass("bg-orange").removeClass("bg-gray")
-                }
+                // 
+                //if (row3 == 0) {
+                //    $(obj3).addClass("bg-gray").removeClass("bg-orange")
+                //}
+                //else {
+                //    $(obj3).addClass("bg-orange").removeClass("bg-gray")
+                //}
             });
 
 
@@ -315,7 +315,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>申 请 中                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -338,7 +338,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -376,7 +376,7 @@
                                                                             <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
                                                                         </span>
                                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
-                                                                        <span class="weui-agree__text">时长:<font class="f-deepfont"> <%=dr["times"] %></font>
+                                                                        <span class="weui-agree__text">时长:<font class="<%=dr["timesColor"] %>"> <%=dr["times"] %></font>
                                                                         </span>
                                                                     </div>
                                                                     <div class="weui-cell__ft">
@@ -411,7 +411,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>待 检 中
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -434,7 +434,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -473,7 +473,7 @@
                                                                             <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
                                                                         </span>
                                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
-                                                                        <span class="weui-agree__text">时长:<span class="f-deepfont"> <%=dr["times"] %></span>
+                                                                        <span class="weui-agree__text">时长:<span class="<%=dr["timesColor"] %>"> <%=dr["times"] %></span>
                                                                         </span>
                                                                     </div>
                                                                     <div class="weui-cell__ft">
@@ -506,7 +506,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>检 测 中                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
 
                                             </div>
@@ -530,7 +530,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -569,7 +569,7 @@
                                                                             <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
                                                                         </span>
                                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
-                                                                        <span class="weui-agree__text">时长:<span class="f-deepfont"> <%=dr["times"] %></span>
+                                                                        <span class="weui-agree__text">时长:<span class="<%=dr["timesColor"] %>"> <%=dr["times"] %></span>
                                                                         </span>
                                                                     </div>
                                                                     <div class="weui-cell__ft">
@@ -601,7 +601,7 @@
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>待 取 回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
 
                                             </div>
@@ -625,7 +625,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -664,7 +664,7 @@
                                                                             <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
                                                                         </span>
                                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
-                                                                        <span class="weui-agree__text">时长:<span class="f-deepfont"> <%=dr["times"] %></span>
+                                                                        <span class="weui-agree__text">时长:<span class="<%=dr["timesColor"] %>"> <%=dr["times"] %></span>
                                                                         </span>
                                                                     </div>
                                                                     <div class="weui-cell__ft">
@@ -696,7 +696,7 @@
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>检测完成（20小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l"><% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -719,7 +719,7 @@
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
-                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  "><% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -758,7 +758,7 @@
                                                                             <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
                                                                         </span>
                                                                         <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
-                                                                        <span class="weui-agree__text">时长:<span class="f-deepfont"> <%=dr["times"] %></span>
+                                                                        <span class="weui-agree__text">时长:<span class="<%=dr["timesColor"] %>"> <%=dr["times"] %></span>
                                                                         </span>
                                                                     </div>
                                                                     <div class="weui-cell__ft">
