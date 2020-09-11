@@ -115,17 +115,17 @@ public partial class JC_Apply : System.Web.UI.Page
         //Repeater_sg.DataSource = dt_sg;
         //Repeater_sg.DataBind();
 
-        DataTable dt_jc = ds.Tables[1]; dt_jc.DefaultView.RowFilter = "type='检测'";
+        DataTable dt_jc = ds.Tables[1];
         Repeater_jc.DataSource = dt_jc;
         Repeater_jc.DataBind();
         ViewState["dt_jc"] = dt_jc.Rows.Count.ToString();
 
-        DataTable dt_jc_rpt = ds.Tables[1]; dt_jc_rpt.DefaultView.RowFilter = "type='检测结论'";
+        DataTable dt_jc_rpt = ds.Tables[2];
         Repeater_jc_rpt.DataSource = dt_jc_rpt;
         Repeater_jc_rpt.DataBind();
         ViewState["dt_jc_rpt"] = dt_jc_rpt.Rows.Count.ToString();
 
-        DataTable dt_qz = ds.Tables[1]; dt_qz.DefaultView.RowFilter = "type='取回'";
+        DataTable dt_qz = ds.Tables[3];
         Repeater_qz.DataSource = dt_qz;
         Repeater_qz.DataBind();
         ViewState["dt_qz"] = dt_qz.Rows.Count.ToString();
