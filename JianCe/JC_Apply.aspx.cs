@@ -25,7 +25,21 @@ public partial class JC_Apply : System.Web.UI.Page
         string month = DateTime.Now.Month.ToString();
         string day = DateTime.Now.Day.ToString();
 
-        file = Server.MapPath(@"/file/" + year + @"/" + month + @"月/" + month + "-" + day + @"白班/");
+        string dn = "白班";
+        DateTime t1 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+        DateTime t2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 07:00:00");
+        DateTime t3 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 19:00:00");
+
+        if (DateTime.Compare(t1, t2) >= 0 && DateTime.Compare(t1, t3) <= 0)
+        {
+            dn = "白班";
+        }
+        else
+        {
+            dn = "夜班";
+        }
+
+        file = Server.MapPath(@"/file/" + year + @"/" + month + @"月/" + month + "-" + day + dn + @"/");
 
         if (Request.QueryString["id"] != null) { _id = Request.QueryString["id"].ToString(); }
         if (Request.QueryString["dh"] != null) { _dh = Request.QueryString["dh"].ToString(); }//扫码进来的
@@ -214,6 +228,10 @@ public partial class JC_Apply : System.Web.UI.Page
             {
                 Directory.CreateDirectory(file);
             }
+        }
+        else
+        {
+            file = "";
         }
 
         if (_id == "") { _id = "0"; }
