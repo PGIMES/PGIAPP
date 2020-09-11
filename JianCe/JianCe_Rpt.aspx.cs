@@ -41,6 +41,11 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
                         continue;
                     }
 
+                    //if (fi.Name.Replace(" ", "") != fi.Name)
+                    //{
+
+                    //}
+
                     DataRow dr = dt_rpt.NewRow();
                     dr["num"] = dt_rpt.Rows.Count + 1;
                     dr["filename"] = fi.Name;

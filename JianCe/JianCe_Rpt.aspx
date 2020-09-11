@@ -59,7 +59,7 @@
             if (Extension == ".pdf" ) {
                 window.location.href = localhostPaht + "/pdfview/web/viewer.html?file=" + encodeURIComponent(filepath) + "#page=1";
             } else {
-                window.location.href = localhostPaht + encodeURIComponent(filepath);
+                window.open(localhostPaht + filepath);
             }
 
 
@@ -76,17 +76,7 @@
                 <div class="weui-cells"><%--href="/pdfview/web/viewer.html?file=<%#  HttpUtility.UrlEncode( Eval("filepath").ToString()) %>#page=1"--%>
                   <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("Extension") %>','<%# Eval("filepath") %>')>
                     <div class="weui-cell__bd">
-                        <p>
-
-                            <%--<%# Eval("num")+","+ Eval("filename") %>--%>
-                            <%--<div class="weui-flex">
-                              <div><%# Eval("num")%></div>
-                              <div class="weui-flex__item padding10-l"><%# Eval("filename")%></div>
-                              <div>weui</div>
-                            </div>--%>
-
-                            <%# Eval("filename") %>
-                        </p>
+                        <p><%# Eval("filename") %></p>
                     </div>
                     <div class="weui-cell__ft">
                         <%# Eval("num") %>
@@ -99,3 +89,12 @@
     </form>
 </body>
 </html>
+
+
+
+                            <%--<%# Eval("num")+","+ Eval("filename") %>--%>
+                            <%--<div class="weui-flex">
+                              <div><%# Eval("num")%></div>
+                              <div class="weui-flex__item padding10-l"><%# Eval("filename")%></div>
+                              <div>weui</div>
+                            </div>--%>
