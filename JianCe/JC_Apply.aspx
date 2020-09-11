@@ -652,7 +652,7 @@
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
-                            <label class="weui-form-preview__label">检测信息</label>
+                            <label class="weui-form-preview__label">申请检测</label>
                         </div>
                         <label class="weui-form-preview__label"><% = _dh %></label>
                         <i class="icon icon-74"></i>
@@ -739,7 +739,7 @@
                 </li>
             </ul>
 
-            <ul class="collapse" style="display:<%= (ViewState["dt_sg"]!=null && ViewState["dt_sg"].ToString()!="0")?"":"none"%>;">
+            <%--<ul class="collapse" style="display:<%= (ViewState["dt_sg"]!=null && ViewState["dt_sg"].ToString()!="0")?"":"none"%>;">
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
@@ -768,6 +768,134 @@
                                         <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()!=""?"":"none"%>; ">
                                             <label class="weui-form-preview__label">检测结论</label>
                                             <span class="weui-form-preview__value"><%# Eval("result") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
+                                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>时间</label>
+                                            <span class="weui-form-preview__value">
+                                                <%# Eval("startdate","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                            </span>
+                                        </div> 
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                            <div class="weui-form-preview__bd" style="padding:0px 15px;">
+                                <div class="weui-form-preview__item" style="display:<%= _stepid=="9"?"":"none"%>;">
+                                    <label class="weui-form-preview__label"></label>
+                                    <span class="weui-form-preview__value">
+                                        总时长: <font class="<%=_times_t_YN=="Y"?"f-red":"f-blue" %>"><%= _times_t %></font> 
+                                    </span>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>--%>
+
+            <ul class="collapse" style="display:<%= (ViewState["dt_jc"]!=null && ViewState["dt_jc"].ToString()!="0")?"":"none"%>;">
+                <li>
+                    <div class="weui-flex js-category">
+                        <div class="weui-flex__item" >
+                            <label class="weui-form-preview__label">检测</label>
+                        </div>
+                        <label class="weui-form-preview__label"></label>
+                        <i class="icon icon-74"></i>
+                    </div>
+                    <div class="page-category js-categoryInner">
+                        <div class="weui-cells page-category-content">
+                            <asp:Repeater runat="server" ID="Repeater_jc">
+                                <ItemTemplate>
+                                    <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>人</label>
+                                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">检测设备</label>
+                                            <span class="weui-form-preview__value"><%# Eval("jcsb") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item" >
+                                            <label class="weui-form-preview__label">检测内容</label>
+                                            <span class="weui-form-preview__value"><%# Eval("jcnr") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
+                                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>时间</label>
+                                            <span class="weui-form-preview__value">
+                                                <%# Eval("startdate","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                            </span>
+                                        </div> 
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="collapse" style="display:<%= (ViewState["dt_jc_rpt"]!=null && ViewState["dt_jc_rpt"].ToString()!="0")?"":"none"%>;">
+                <li>
+                    <div class="weui-flex js-category">
+                        <div class="weui-flex__item" >
+                            <label class="weui-form-preview__label">检测完成</label>
+                        </div>
+                        <label class="weui-form-preview__label"></label>
+                        <i class="icon icon-74"></i>
+                    </div>
+                    <div class="page-category js-categoryInner">
+                        <div class="weui-cells page-category-content">
+                            <asp:Repeater runat="server" ID="Repeater_jc_rpt">
+                                <ItemTemplate>
+                                    <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>人</label>
+                                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label">检测结论</label>
+                                            <span class="weui-form-preview__value"><%# Eval("result") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
+                                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
+                                        </div>
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>时间</label>
+                                            <span class="weui-form-preview__value">
+                                                <%# Eval("startdate","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
+                                            </span>
+                                        </div> 
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="collapse" style="display:<%= (ViewState["dt_qz"]!=null && ViewState["dt_qz"].ToString()!="0")?"":"none"%>;">
+                <li>
+                    <div class="weui-flex js-category">
+                        <div class="weui-flex__item" >
+                            <label class="weui-form-preview__label">取走零件</label>
+                        </div>
+                        <label class="weui-form-preview__label"></label>
+                        <i class="icon icon-74"></i>
+                    </div>
+                    <div class="page-category js-categoryInner">
+                        <div class="weui-cells page-category-content">
+                            <asp:Repeater runat="server" ID="Repeater_qz">
+                                <ItemTemplate>
+                                    <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>人</label>
+                                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
