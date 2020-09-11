@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.VisualBasic.Devices;
 
 public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
 {
@@ -41,17 +42,36 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
                         continue;
                     }
 
-                    //if (fi.Name.Replace(" ", "") != fi.Name)
-                    //{
+                    DataRow dr = dt_rpt.NewRow();
+                    dr["num"] = dt_rpt.Rows.Count + 1;
 
-                    //}
+                    if (fi.Name.Replace(" ", "") != fi.Name)
+                    {
+                        string filename_new = fi.Name.Replace(" ", "");
 
+                        Computer MyComputer = new Computer();
+                        MyComputer.FileSystem.RenameFile(fi.FullName, filename_new);
+
+                        dr["filename"] = filename_new;
+                        dr["filepath"] = @"/file/" + itemFilePath.Replace(path, "").Replace(@"\", @"/").Replace(fi.Name, filename_new);
+                    }
+                    else
+                    {
+                        dr["filename"] = fi.Name;
+                        dr["filepath"] = @"/file/" + itemFilePath.Replace(path, "").Replace(@"\", @"/");
+                    }
+
+
+                    dr["Extension"] = fi.Extension.ToLower();
+                    dt_rpt.Rows.Add(dr);
+
+                    /*
                     DataRow dr = dt_rpt.NewRow();
                     dr["num"] = dt_rpt.Rows.Count + 1;
                     dr["filename"] = fi.Name;
-                    dr["filepath"] = @"/file/"+itemFilePath.Replace(path, "").Replace(@"\",@"/");
+                    dr["filepath"] = @"/file/" + itemFilePath.Replace(path, "").Replace(@"\", @"/");
                     dr["Extension"] = fi.Extension.ToLower();
-                    dt_rpt.Rows.Add(dr);
+                    dt_rpt.Rows.Add(dr);*/
 
                     //创建时间    fi.CreationTime;   
                     //获取上次访问当前目录时间 fi.LastAccessTime   
