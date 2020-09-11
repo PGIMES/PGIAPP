@@ -375,7 +375,7 @@
                                                                         <span class="weui-agree__text span_space">
                                                                             <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
                                                                         </span>
-                                                                        <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
+                                                                        <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["create_date"]) %> </span>
                                                                         <span class="weui-agree__text">时长:<font class="<%=dr["timesColor"] %>"> <%=dr["times"] %></font>
                                                                         </span>
                                                                     </div>
@@ -566,9 +566,9 @@
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
-                                                                            <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
+                                                                            <%=dr["tel"].ToString()+dr["JC_Emp_Name"].ToString() %>
                                                                         </span>
-                                                                        <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
+                                                                        <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["jc_start_date"]) %> </span>
                                                                         <span class="weui-agree__text">时长:<span class="<%=dr["timesColor"] %>"> <%=dr["times"] %></span>
                                                                         </span>
                                                                     </div>
@@ -663,7 +663,7 @@
                                                                         <span class="weui-agree__text span_space">
                                                                             <%=dr["tel"].ToString()+dr["Emp_Name"].ToString() %>
                                                                         </span>
-                                                                        <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["apply_date"]) %> </span>
+                                                                        <span class="weui-agree__text"><%=string.Format("{0:MM-dd HH:mm}", dr["rpt_confirm_date"]) %> </span>
                                                                         <span class="weui-agree__text">时长:<span class="<%=dr["timesColor"] %>"> <%=dr["times"] %></span>
                                                                         </span>
                                                                     </div>
