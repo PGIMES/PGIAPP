@@ -795,7 +795,7 @@
                 </li>
             </ul>--%>
 
-            <ul class="collapse" style="display:<%= (ViewState["dt_jc"]!=null && ViewState["dt_jc"].ToString()!="0")?"":"none"%>;">
+            <ul class="collapse" style="display:<%= (ViewState["dt_jc"]!=null && ViewState["dt_jc"].ToString()!="0")?"":"none"%>;border-top:1px solid #e5e5e5">
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
@@ -839,7 +839,7 @@
                 </li>
             </ul>
 
-            <ul class="collapse" style="display:<%= (ViewState["dt_jc_rpt"]!=null && ViewState["dt_jc_rpt"].ToString()!="0")?"":"none"%>;">
+            <ul class="collapse" style="display:<%= (ViewState["dt_jc_rpt"]!=null && ViewState["dt_jc_rpt"].ToString()!="0")?"":"none"%>;border-top:1px solid #e5e5e5">
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
@@ -879,7 +879,7 @@
                 </li>
             </ul>
 
-            <ul class="collapse" style="display:<%= (ViewState["dt_qz"]!=null && ViewState["dt_qz"].ToString()!="0")?"":"none"%>;">
+            <ul class="collapse" style="display:<%= (ViewState["dt_qz"]!=null && ViewState["dt_qz"].ToString()!="0")?"":"none"%>;border-top:1px solid #e5e5e5">
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
