@@ -285,7 +285,7 @@
                             <div class="weui-form-preview">
                                 <ul class="collapse">
                                     <li class="js-show">
-                                        <a class="weui-flex js-category" href="/jiance/jc_apply.aspx?id=">
+                                        <a class="weui-flex js-category" href="/jiance/jc_apply.aspx?dh=">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-41"></i>检测申请  
                                             </div>
