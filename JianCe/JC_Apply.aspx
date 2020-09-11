@@ -799,7 +799,7 @@
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
-                            <label class="weui-form-preview__label">检测</label>
+                            <label class="weui-form-preview__label">开始检测</label>
                         </div>
                         <label class="weui-form-preview__label"></label>
                         <i class="icon icon-74"></i>
