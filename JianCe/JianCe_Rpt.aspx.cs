@@ -16,6 +16,7 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
         string id = Request.QueryString["id"].ToString();
 
         DataTable dt_rpt = new DataTable();
+        dt_rpt.Columns.Add("num", typeof(string));
         dt_rpt.Columns.Add("filename", typeof(string));
         dt_rpt.Columns.Add("filepath", typeof(string));
         dt_rpt.Columns.Add("Extension", typeof(string));
@@ -36,8 +37,9 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
                     FileInfo fi = new FileInfo(itemFilePath);
 
                     DataRow dr = dt_rpt.NewRow();
+                    dr["num"] = dt_rpt.Rows.Count + 1;
                     dr["filename"] = fi.Name;
-                    dr["filepath"] = @"/file/"+itemFilePath.Replace(path, "");
+                    dr["filepath"] = @"/file/"+itemFilePath.Replace(path, "").Replace(@"\",@"/");
                     dr["Extension"] = fi.Extension.ToLower();
                     dt_rpt.Rows.Add(dr);
 

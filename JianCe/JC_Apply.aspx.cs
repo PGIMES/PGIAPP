@@ -68,15 +68,16 @@ public partial class JC_Apply : System.Web.UI.Page
         }
     }
 
-    void init_data(string id, string dh_para, string connString)
+    void init_data(string id_para, string dh_para, string connString)
     {
         string sql = @"exec [usp_app_JC_Apply_init] {0},'{1}','{2}'";
-        sql = string.Format(sql, Convert.ToInt32(id), dh_para, emp_code_name.Text);
+        sql = string.Format(sql, Convert.ToInt32(id_para), dh_para, emp_code_name.Text);
         DataSet ds = SQLHelper.Query(sql, connString);
 
         DataTable dt = ds.Tables[0];
         if (dt.Rows.Count == 1)
         {
+            _id = dt.Rows[0]["id"].ToString(); id.Text = _id;
             _dh = dt.Rows[0]["dh"].ToString();dh.Text = _dh;
             _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
             _stp_cur = dt.Rows[0]["stp_cur"].ToString();//1:还存在没检测完成的内容；2已全部检测完毕，等待判断结论

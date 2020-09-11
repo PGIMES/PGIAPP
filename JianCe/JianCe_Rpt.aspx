@@ -39,6 +39,17 @@
         $(function () {
 
         });
+        function deal(Extension, filepath) {
+            //alert(Extension);
+
+            if (Extension == "pdf" ) {
+                window.location.href = "/pdfview/web/viewer.html?file=" + encodeURIComponent(filepath) + "#page=1";
+            } else {
+                window.location.href = encodeURIComponent(filepath);
+            }
+
+
+        }
     </script>
 </head>
 <body>
@@ -48,12 +59,23 @@
 
         <asp:Repeater runat="server" ID="listBxInfo">
             <ItemTemplate>
-                <div class="weui-cells">
-                  <a class="weui-cell weui-cell_access" href="/pdfview/web/viewer.html?file=<%#  HttpUtility.UrlEncode( Eval("filepath").ToString()) %>#page=1">
+                <div class="weui-cells"><%--href="/pdfview/web/viewer.html?file=<%#  HttpUtility.UrlEncode( Eval("filepath").ToString()) %>#page=1"--%>
+                  <a class="weui-cell weui-cell_access" onclick=deal('<%# Eval("Extension") %>','<%# Eval("filepath") %>')>
                     <div class="weui-cell__bd">
-                      <p><%# Eval("filename") %></p>
+                        <p>
+
+                            <%--<%# Eval("num")+","+ Eval("filename") %>--%>
+                            <%--<div class="weui-flex">
+                              <div><%# Eval("num")%></div>
+                              <div class="weui-flex__item padding10-l"><%# Eval("filename")%></div>
+                              <div>weui</div>
+                            </div>--%>
+
+                            <%# Eval("filename") %>
+                        </p>
                     </div>
                     <div class="weui-cell__ft">
+                        <%# Eval("num") %>
                     </div>
                   </a>
                 </div>
