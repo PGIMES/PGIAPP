@@ -236,23 +236,32 @@ public partial class JC_Apply : System.Web.UI.Page
     {
         string flag = "N", msg = "";
 
-        if (_option == "apply")//新建文件夹
+        string _file = file;
+        try
         {
-            file = file + "p" + _xmh.Substring(2, 3) + @"\" + _dh;
-            if (!Directory.Exists(file))
+            if (_option == "apply")//新建文件夹
             {
-                Directory.CreateDirectory(file);
+                _file = _file + "p" + _xmh.Substring(2, 3) + @"\" + _dh;
+                if (!Directory.Exists(_file))
+                {
+                    Directory.CreateDirectory(_file);
+                }
+            }
+            else
+            {
+                _file = "";
             }
         }
-        else
+        catch (Exception ex)
         {
-            file = "";
+            //flag = "Y";
+            //msg = "创建目录"+ _file + "失败";
         }
 
         if (_id == "") { _id = "0"; }
         string re_sql = @"exec usp_app_JC_Apply '{0}','{1}',{2},'{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}','{14}','{15}','{16}'";
         re_sql = string.Format(re_sql, _option, _emp_code_name, Convert.ToInt32(_id), _dh, _source_lot, _xmh, _ljh, _line, _workshop
-                , _sj_type, _op, _prod_machine, _sj_qty, _priority, _jcnr, _remark, file);
+                , _sj_type, _op, _prod_machine, _sj_qty, _priority, _jcnr, _remark, _file);
 
         DataTable re_dt = SQLHelper.Query(re_sql, connString).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
