@@ -36,6 +36,11 @@ public partial class JianCe_JianCe_Rpt : System.Web.UI.Page
                 {
                     FileInfo fi = new FileInfo(itemFilePath);
 
+                    if (fi.Extension.ToLower()==".db")
+                    {
+                        continue;
+                    }
+
                     DataRow dr = dt_rpt.NewRow();
                     dr["num"] = dt_rpt.Rows.Count + 1;
                     dr["filename"] = fi.Name;

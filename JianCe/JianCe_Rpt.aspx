@@ -42,7 +42,7 @@
         function deal(Extension, filepath) {
             //alert(Extension);
 
-            if (Extension == "pdf" ) {
+            if (Extension == ".pdf" ) {
                 window.location.href = "/pdfview/web/viewer.html?file=" + encodeURIComponent(filepath) + "#page=1";
             } else {
                 window.location.href = encodeURIComponent(filepath);
