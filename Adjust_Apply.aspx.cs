@@ -104,8 +104,9 @@ public partial class Adjust_Apply : System.Web.UI.Page
             re_sql = string.Format(re_sql, dh, source);
             DataSet ds = SQLHelper.Query(re_sql);
 
-            flag = ds.Tables[0].Rows[0][0].ToString();
-            msg = ds.Tables[0].Rows[0][1].ToString();
+            DataTable dt_r = ds.Tables[0];
+            flag = dt_r.Rows[0][0].ToString();
+            msg = dt_r.Rows[0][1].ToString();
 
             if (flag == "N")
             {
@@ -119,75 +120,97 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
             if (flag == "Y1")
             {
-                //再次判断是否是QAD的参考号
-                DataTable ldt = new DataTable();
-                string sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
+                if (dt_r.Rows[0]["need_no"].ToString() == "")
+                {
+                    flag = "Y"; msg = msg + ",且没有上料记录";
+                }
+                //else if (dt_r.Rows[0]["from_qty"].ToString() == "0")
+                //{
+                //    flag = "Y"; msg = ",在制数量不为0";
+                //}
+                else
+                {
+                    //再次判断是否是QAD的参考号
+                    DataTable ldt = new DataTable();
+                    string sqlStr = @"select ld_part,ld_loc,ld_status,cast(cast(ld_qty_oh as numeric(18,4)) as float) ld_qty_oh 
                                 from pub.ld_det where ld_ref='{0}' and ld_domain='200' with (nolock)";
-                sqlStr = string.Format(sqlStr, dh);
-                ldt = QadOdbcHelper.GetODBCRows(sqlStr);
-                if (ldt == null)
-                {
-                    flag = "Y"; msg = msg + "/QAD";
-                }
-                else if (ldt.Rows.Count <= 0)
-                {
-                    flag = "Y"; msg = msg + "/QAD";
-                }
-                else//QAD存在
-                {
-                    //零件号
-                    string sql_s = @"select pt_desc1,pt_prod_line from [172.16.5.26].qad.dbo.qad_pt_mstr where pt_part='" + ldt.Rows[0]["ld_part"].ToString() + "' and pt_domain='200'";
-                    DataTable dt_s = SQLHelper.Query(sql_s).Tables[0];
-
-                    if (dt_s == null)
+                    sqlStr = string.Format(sqlStr, dh);
+                    ldt = QadOdbcHelper.GetODBCRows(sqlStr);
+                    if (ldt == null)
                     {
-                        flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + ",对应的零件号不存在";
+                        flag = "Y"; msg = msg + "/QAD";
                     }
-                    else if (dt_s.Rows.Count <= 0)
+                    else if (ldt.Rows.Count <= 0)
                     {
-                        flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + "对应的零件号不存在";
+                        flag = "Y"; msg = msg + "/QAD";
                     }
                     else//QAD存在
                     {
-                        pn = dt_s.Rows[0]["pt_desc1"].ToString();
+                        //零件号
+                        string sql_s = @"select pt_desc1,pt_prod_line from [172.16.5.26].qad.dbo.qad_pt_mstr where pt_part='" + ldt.Rows[0]["ld_part"].ToString() + "' and pt_domain='200'";
+                        DataTable dt_s = SQLHelper.Query(sql_s).Tables[0];
 
-                        if (source == "二车间" || source == "四车间")
+                        if (dt_s == null)
                         {
-                            if (ldt.Rows[0]["ld_loc"].ToString() != "9000" && ldt.Rows[0]["ld_status"].ToString().ToUpper() != "WIP")
-                            {
-                                flag = "Y"; msg = "单号" + dh + ",库位不是9000、状态WIP";
-                            }
+                            flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + ",对应的零件号不存在";
                         }
-                        if (source == "三车间")
+                        else if (dt_s.Rows.Count <= 0)
                         {
-                            if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3"))
+                            flag = "Y"; msg = "物料号" + ldt.Rows[0]["ld_part"].ToString() + "对应的零件号不存在";
+                        }
+                        else//QAD存在
+                        {
+                            pn = dt_s.Rows[0]["pt_desc1"].ToString();
+
+                            if (source == "二车间" || source == "四车间")
                             {
-                                if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
+                                if (ldt.Rows[0]["ld_loc"].ToString() != "9000" && ldt.Rows[0]["ld_status"].ToString().ToUpper() != "WIP")
                                 {
-                                    flag = "Y"; msg = "单号" + dh + ",库位不是9000";
+                                    flag = "Y"; msg = "单号" + dh + ",库位不是9000、状态WIP";
                                 }
                             }
-                            if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2"))
+                            if (source == "三车间")
                             {
-                                if (ldt.Rows[0]["ld_loc"].ToString() != "4009")
+                                if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3"))
                                 {
-                                    flag = "Y"; msg = "单号" + dh + ",库位不是4009";
+                                    if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
+                                    {
+                                        flag = "Y"; msg = "单号" + dh + ",库位不是9000";
+                                    }
+                                }
+                                if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2"))
+                                {
+                                    if (ldt.Rows[0]["ld_loc"].ToString() != "4009")
+                                    {
+                                        flag = "Y"; msg = "单号" + dh + ",库位不是4009";
+                                    }
                                 }
                             }
-                        }
 
-                        if (flag == "Y1")
-                        {
-                            flag = "N"; msg = "";
-                            pgino = ldt.Rows[0]["ld_part"].ToString();
-                            from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
-                            flagwhere = "QAD";
-                            need_no = "";
-                            loc = ldt.Rows[0]["ld_loc"].ToString();
+                            if (flag == "Y1")
+                            {
+                                if (ldt.Rows[0]["ld_qty_oh"].ToString() != dt_r.Rows[0]["from_qty"].ToString())
+                                {
+                                    flag = "Y"; msg = "单号" + dh + ",APP在制数量" + dt_r.Rows[0]["from_qty"].ToString() + ",QAD数量" + ldt.Rows[0]["ld_qty_oh"].ToString() + "不一致，不能申请.";
+                                }
+                                else
+                                {
+                                    flag = "N"; msg = "";
+                                    pgino = ldt.Rows[0]["ld_part"].ToString();
+                                    loc = ldt.Rows[0]["ld_loc"].ToString();
+                                    //from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+                                    //flagwhere = "QAD";
+                                    //need_no = "";
+
+                                    //取当前APP里的数据
+                                    from_qty = dt_r.Rows[0]["from_qty"].ToString();
+                                    flagwhere = "QAD_W";
+                                    need_no = dt_r.Rows[0]["need_no"].ToString();
+                                }
+                            }
                         }
                     }
                 }
-
             }
 
         }
