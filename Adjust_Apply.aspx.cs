@@ -300,11 +300,27 @@ public partial class Adjust_Apply : System.Web.UI.Page
         , string _adj_qty, string _comment, string _flagwhere, string _need_no, string _formno, string _stepid, string _loc)
     {
         string flag = "N", msg = "";
-        string re_sql = "";
+        string re_sql = "",flagw = "";
 
         if (_flagwhere != "QAD")
         {
-            re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'";
+            if (_flagwhere == "QAD_W")//QAD里的车间数据，需要补WIP表数据
+            {
+
+                string sql_n = @"exec usp_app_Adjust_Apply_HY '{0}','{1}','{2}','{3}'";
+                sql_n = string.Format(sql_n, _emp_code_name, _dh, _need_no, _source);
+                DataTable dt_n = SQLHelper.Query(sql_n).Tables[0];
+                flag = dt_n.Rows[0][0].ToString();
+                msg = dt_n.Rows[0][1].ToString();
+
+                if (flag == "N")
+                {
+                    flagw = _flagwhere;
+                    _flagwhere = "已生产"; 
+                }
+            }
+
+            re_sql = @"exec usp_app_Adjust_Apply '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}'";
         }
         else
         {
@@ -331,7 +347,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
         if (flag == "N")
         {
             re_sql = string.Format(re_sql, _emp_code_name, _source, _dh, _pgino, _pn, _from_qty, _adj_qty
-           , _comment, _flagwhere, _need_no, _formno, _stepid, _loc);
+           , _comment, _flagwhere, _need_no, _formno, _stepid, _loc, flagw);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             flag = re_dt.Rows[0][0].ToString();
             msg = re_dt.Rows[0][1].ToString();
