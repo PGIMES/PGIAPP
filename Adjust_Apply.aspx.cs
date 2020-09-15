@@ -120,7 +120,7 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
             if (flag == "Y1")
             {
-                if (dt_r.Rows[0]["need_no"].ToString() == "")
+                if (dt_r.Rows[0]["need_no"].ToString() == "" && (source == "二车间" || source == "四车间"))
                 {
                     flag = "Y"; msg = msg + ",且没有上料记录";
                 }
@@ -189,24 +189,36 @@ public partial class Adjust_Apply : System.Web.UI.Page
 
                             if (flag == "Y1")
                             {
-                                if (ldt.Rows[0]["ld_qty_oh"].ToString() != dt_r.Rows[0]["from_qty"].ToString())
+                                if (source == "二车间" || source == "四车间")
                                 {
-                                    flag = "Y"; msg = "单号" + dh + ",APP在制数量" + dt_r.Rows[0]["from_qty"].ToString() + ",QAD数量" + ldt.Rows[0]["ld_qty_oh"].ToString() + "不一致，不能申请.";
+                                    if (ldt.Rows[0]["ld_qty_oh"].ToString() != dt_r.Rows[0]["from_qty"].ToString())
+                                    {
+                                        flag = "Y"; msg = "单号" + dh + ",APP在制数量" + dt_r.Rows[0]["from_qty"].ToString() + ",QAD数量" + ldt.Rows[0]["ld_qty_oh"].ToString() + "不一致，不能申请.";
+                                    }
+                                    else
+                                    {
+                                        flag = "N"; msg = "";
+                                        pgino = ldt.Rows[0]["ld_part"].ToString();
+                                        loc = ldt.Rows[0]["ld_loc"].ToString();
+
+                                        //取当前APP里的数据
+                                        from_qty = dt_r.Rows[0]["from_qty"].ToString();
+                                        flagwhere = "QAD_W";
+                                        need_no = dt_r.Rows[0]["need_no"].ToString();
+                                    }
+
                                 }
-                                else
+                                if (source == "三车间")
                                 {
                                     flag = "N"; msg = "";
                                     pgino = ldt.Rows[0]["ld_part"].ToString();
                                     loc = ldt.Rows[0]["ld_loc"].ToString();
-                                    //from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
-                                    //flagwhere = "QAD";
-                                    //need_no = "";
-
-                                    //取当前APP里的数据
-                                    from_qty = dt_r.Rows[0]["from_qty"].ToString();
-                                    flagwhere = "QAD_W";
-                                    need_no = dt_r.Rows[0]["need_no"].ToString();
+                                    from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+                                    flagwhere = "QAD";
+                                    need_no = "";
                                 }
+
+                                
                             }
                         }
                     }
