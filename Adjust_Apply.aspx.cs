@@ -173,14 +173,14 @@ public partial class Adjust_Apply : System.Web.UI.Page
                             {
                                 if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3"))
                                 {
-                                    if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
+                                    if (ldt.Select("ld_loc='9000'").Length != 1)//if (ldt.Rows[0]["ld_loc"].ToString() != "9000")
                                     {
                                         flag = "Y"; msg = "单号" + dh + ",库位不是9000";
                                     }
                                 }
                                 if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2"))
                                 {
-                                    if (ldt.Rows[0]["ld_loc"].ToString() != "4009")
+                                    if (ldt.Select("ld_loc='4009'").Length != 1)//if (ldt.Rows[0]["ld_loc"].ToString() != "4009")
                                     {
                                         flag = "Y"; msg = "单号" + dh + ",库位不是4009";
                                     }
@@ -211,11 +211,25 @@ public partial class Adjust_Apply : System.Web.UI.Page
                                 if (source == "三车间")
                                 {
                                     flag = "N"; msg = "";
-                                    pgino = ldt.Rows[0]["ld_part"].ToString();
-                                    loc = ldt.Rows[0]["ld_loc"].ToString();
-                                    from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
+                                    //pgino = ldt.Rows[0]["ld_part"].ToString();
+                                    //loc = ldt.Rows[0]["ld_loc"].ToString();
+                                    //from_qty = ldt.Rows[0]["ld_qty_oh"].ToString();
                                     flagwhere = "QAD";
                                     need_no = "";
+
+                                    DataRow[] drs = null;
+                                    if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("3"))
+                                    {
+                                        drs = ldt.Select("ld_loc='9000'");
+                                    }
+                                    if (dt_s.Rows[0]["pt_prod_line"].ToString().StartsWith("2"))
+                                    {
+                                        drs = ldt.Select("ld_loc='4009'");
+                                    }
+
+                                    pgino = drs[0]["ld_part"].ToString();
+                                    loc = drs[0]["ld_loc"].ToString();
+                                    from_qty = drs[0]["ld_qty_oh"].ToString();
                                 }
 
                                 
