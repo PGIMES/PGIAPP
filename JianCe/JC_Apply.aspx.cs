@@ -17,7 +17,7 @@ public partial class JC_Apply : System.Web.UI.Page
     public string _id = "0";
     public string _dh = "", _priority = "", _jcnr = "", _jcnr_sy = "";
     public string _stepid = "";
-    public string _times_t = ""; public string _times_t_YN = ""; public string _stp_cur = ""; public string _file_cur = "";
+    public string _times_t = ""; public string _times_t_YN = ""; public string _file_cur = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -73,7 +73,7 @@ public partial class JC_Apply : System.Web.UI.Page
 
     void init_data(string id_para, string dh_para, string connString)
     {
-        string sql = @"exec [usp_app_JC_Apply_init] {0},'{1}','{2}'";
+        string sql = @"exec [usp_app_JC_Apply_init_V1] {0},'{1}','{2}'";
         sql = string.Format(sql, Convert.ToInt32(id_para), dh_para, emp_code_name.Text);
         DataSet ds = SQLHelper.Query(sql, connString);
 
@@ -83,7 +83,6 @@ public partial class JC_Apply : System.Web.UI.Page
             _id = dt.Rows[0]["id"].ToString(); id.Text = _id;
             _dh = dt.Rows[0]["dh"].ToString();dh.Text = _dh;
             _stepid = dt.Rows[0]["status"].ToString(); stepid.Text = _stepid;
-            _stp_cur = dt.Rows[0]["stp_cur"].ToString();//1:还存在没检测完成的内容；2已全部检测完毕，等待判断结论
             _jcnr_sy = dt.Rows[0]["jcnr_sy"].ToString();
             if (_stepid == "0")
             {
@@ -114,19 +113,15 @@ public partial class JC_Apply : System.Web.UI.Page
             listBxInfo.DataBind();
         }
 
-        //DataTable dt_sg = ds.Tables[1];
-        //Repeater_sg.DataSource = dt_sg;
-        //Repeater_sg.DataBind();
+        DataTable dt_jc_begin = ds.Tables[1];
+        Repeater_jc_begin.DataSource = dt_jc_begin;
+        Repeater_jc_begin.DataBind();
+        ViewState["dt_jc_begin"] = dt_jc_begin.Rows.Count.ToString();
 
-        DataTable dt_jc = ds.Tables[1];
+        DataTable dt_jc = ds.Tables[2];
         Repeater_jc.DataSource = dt_jc;
         Repeater_jc.DataBind();
         ViewState["dt_jc"] = dt_jc.Rows.Count.ToString();
-
-        DataTable dt_jc_rpt = ds.Tables[2];
-        Repeater_jc_rpt.DataSource = dt_jc_rpt;
-        Repeater_jc_rpt.DataBind();
-        ViewState["dt_jc_rpt"] = dt_jc_rpt.Rows.Count.ToString();
 
         DataTable dt_qz = ds.Tables[3];
         Repeater_qz.DataSource = dt_qz;
@@ -326,7 +321,7 @@ public partial class JC_Apply : System.Web.UI.Page
     public static string sign(string _emp_code_name, string _id, string _stepid, string _jcnr, string _jcsb, string _comment, string _result, string _type)
     {
         string flag = "N", msg = "";
-        string re_sql = re_sql = @"exec usp_app_JC_sign '{0}',{1},'{2}','{3}','{4}','{5}','{6}','{7}'";
+        string re_sql = re_sql = @"exec usp_app_JC_sign_V1 '{0}',{1},'{2}','{3}','{4}','{5}','{6}','{7}'";
         re_sql = string.Format(re_sql, _emp_code_name, Convert.ToInt32(_id), _stepid, _jcnr, _jcsb, _comment, _result, _type);
 
         DataTable re_dt = SQLHelper.Query(re_sql,connString).Tables[0];

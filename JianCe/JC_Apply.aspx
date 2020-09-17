@@ -230,7 +230,7 @@
                     url: "JC_Apply.aspx/sign",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
                         + "','_jcnr':'" + selectValue + "','_jcsb':'" + $('#txt_jcsb').val() + "','_comment':'" + $('#comment_0').val()
-                        + "','_result':'','_type':'检测'}",
+                        + "','_result':'" + $('#txt_result').val() + "','_type':'检测'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -250,52 +250,20 @@
                 });
             });
 
-            $("#btn_sign_1").click(function () {
-                $("#btn_sign_1").attr("disabled", "disabled");
-                $("#btn_sign_1").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
-
-                if (!valid_sgin_1()) {
-                    $("#btn_sign_1").removeAttr("disabled");
-                    $("#btn_sign_1").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-
-                    return false;
-                }
-
-                $.ajax({
-                    type: "post",
-                    url: "JC_Apply.aspx/sign",
-                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
-                        + "','_jcnr':'','_jcsb':'','_comment':'" + $('#comment_1').val()
-                        + "','_result':'" + $('#txt_result').val() + "','_type':'检测结论'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-                    success: function (data) {
-                        var obj = eval(data.d);
-                        if (obj[0].flag == "Y") {
-                            layer.alert(obj[0].msg);
-                            $("#btn_sign_1").removeAttr("disabled");
-                            $("#btn_sign_1").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
-
-                            return false;
-                        }
-
-                        window.location.href = "/JianCe/JianCe_Monitor.aspx";
-                    }
-
-                });
-            });
-
             $("#btn_sign_2").click(function () {
                 $("#btn_sign_2").attr("disabled", "disabled");
                 $("#btn_sign_2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
+                var _type="";
+                if ("<%= _stepid %>" == "1") {_type="开始检测";}
+                if ("<%= _stepid %>" == "3") {_type="取回";}
+
                 $.ajax({
                     type: "post",
                     url: "JC_Apply.aspx/sign",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
                         + "','_jcnr':'','_jcsb':'','_comment':'" + $('#comment_1').val()
-                        + "','_result':'','_type':'取回'}",
+                        + "','_result':'','_type':'"+_type+"'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -510,6 +478,11 @@
             if ($("#txt_sj_type").val() == "") {
                 layer.alert("请输入【送检类别】.");
                 return false;
+            }else if ($("#txt_sj_type").val() == "过程") {
+                if ($.trim($('#txt_remark').val())=="") {
+                    layer.alert("送检类别是过程，备注不可为空.");
+                    return false;
+                }
             }
             if ($("#txt_op").val() == "") {
                 layer.alert("请输入【工序】.");
@@ -568,15 +541,12 @@
                 layer.alert("请输入【检测设备】.");
                 return false;
             }
-            return true;
-        }
 
-        function valid_sgin_1() {            
             if ($("#txt_result").val() == "") {
                 layer.alert("请输入【检测结论】.");
                 return false;
             }
-            //卡检测报告？
+
             return true;
         }
 
@@ -773,35 +743,23 @@
                 </li>
             </ul>
 
-            <%--<ul class="collapse" style="display:<%= (ViewState["dt_sg"]!=null && ViewState["dt_sg"].ToString()!="0")?"":"none"%>;">
+            <ul class="collapse" style="display:<%= (ViewState["dt_jc_begin"]!=null && ViewState["dt_jc_begin"].ToString()!="0")?"":"none"%>;border-top:1px solid #e5e5e5">
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
-                            <label class="weui-form-preview__label">操作信息</label>
+                            <label class="weui-form-preview__label">检测开始</label>
                         </div>
                         <label class="weui-form-preview__label"></label>
                         <i class="icon icon-74"></i>
                     </div>
                     <div class="page-category js-categoryInner">
                         <div class="weui-cells page-category-content">
-                            <asp:Repeater runat="server" ID="Repeater_sg">
+                            <asp:Repeater runat="server" ID="Repeater_jc_begin">
                                 <ItemTemplate>
                                     <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label"><%# Eval("type_dd") %>人</label>
                                             <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
-                                        </div>
-                                        <div class="weui-form-preview__item" style="display:<%# Eval("jcsb").ToString()!=""?"":"none"%>; ">
-                                            <label class="weui-form-preview__label">检测设备</label>
-                                            <span class="weui-form-preview__value"><%# Eval("jcsb") %></span>
-                                        </div>
-                                        <div class="weui-form-preview__item" style="display:<%# Eval("jcnr").ToString()!=""?"":"none"%>; ">
-                                            <label class="weui-form-preview__label">检测内容</label>
-                                            <span class="weui-form-preview__value"><%# Eval("jcnr") %></span>
-                                        </div>
-                                        <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()!=""?"":"none"%>; ">
-                                            <label class="weui-form-preview__label">检测结论</label>
-                                            <span class="weui-form-preview__value"><%# Eval("result") %></span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
@@ -816,24 +774,16 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
-                            <div class="weui-form-preview__bd" style="padding:0px 15px;">
-                                <div class="weui-form-preview__item" style="display:<%= _stepid=="9"?"":"none"%>;">
-                                    <label class="weui-form-preview__label"></label>
-                                    <span class="weui-form-preview__value">
-                                        总时长: <font class="<%=_times_t_YN=="Y"?"f-red":"f-blue" %>"><%= _times_t %></font> 
-                                    </span>
-                                </div> 
-                            </div>
                         </div>
                     </div>
                 </li>
-            </ul>--%>
+            </ul>
 
             <ul class="collapse" style="display:<%= (ViewState["dt_jc"]!=null && ViewState["dt_jc"].ToString()!="0")?"":"none"%>;border-top:1px solid #e5e5e5">
                 <li>
                     <div class="weui-flex js-category">
                         <div class="weui-flex__item" >
-                            <label class="weui-form-preview__label">检测开始</label>
+                            <label class="weui-form-preview__label">检测完成</label>
                         </div>
                         <label class="weui-form-preview__label"></label>
                         <i class="icon icon-74"></i>
@@ -854,42 +804,6 @@
                                         <div class="weui-form-preview__item" >
                                             <label class="weui-form-preview__label">检测内容</label>
                                             <span class="weui-form-preview__value"><%# Eval("jcnr") %></span>
-                                        </div>
-                                        <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>说明</label>
-                                            <span class="weui-form-preview__value"><%# Eval("comment") %></span>
-                                        </div>
-                                        <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>时间</label>
-                                            <span class="weui-form-preview__value">
-                                                <%# Eval("startdate","{0:MM-dd HH:mm}") +",时长: <font class='f-blue'>"+Eval("times")+"</font>" %>
-                                            </span>
-                                        </div> 
-                                    </div>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-
-            <ul class="collapse" style="display:<%= (ViewState["dt_jc_rpt"]!=null && ViewState["dt_jc_rpt"].ToString()!="0")?"":"none"%>;border-top:1px solid #e5e5e5">
-                <li>
-                    <div class="weui-flex js-category">
-                        <div class="weui-flex__item" >
-                            <label class="weui-form-preview__label">检测完成</label>
-                        </div>
-                        <label class="weui-form-preview__label"></label>
-                        <i class="icon icon-74"></i>
-                    </div>
-                    <div class="page-category js-categoryInner">
-                        <div class="weui-cells page-category-content">
-                            <asp:Repeater runat="server" ID="Repeater_jc_rpt">
-                                <ItemTemplate>
-                                    <div class="weui-form-preview__bd" style="border-top:1px solid #e5e5e5">
-                                        <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label"><%# Eval("type_dd") %>人</label>
-                                            <span class="weui-form-preview__value"><%# Eval("phone")+""+Eval("emp_name") %></span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">检测结论</label>
@@ -960,7 +874,7 @@
         </div>
         
         <div id="div_op">
-             <div class="weui-cells weui-cells_form" style="display:<%= _stp_cur=="1"?"":"none"%>;">      
+            <div class="weui-cells weui-cells_form" style="display:<%= _stepid=="2"?"":"none"%>;">      
                 <div class="weui-cell weui-flex">
                     <div class="weui-cell__hd f-red"><label class="weui-label">检测内容</label></div> 
                     <div class="weui-flex__item ">
@@ -971,7 +885,11 @@
                     <div class="weui-cell__hd f-red"><label class="weui-label">检测设备</label></div> 
                     <asp:TextBox ID="txt_jcsb" class="weui-input" runat="server" placeholder="检测设备"></asp:TextBox> 
                     <img id="img_sm_jcsb" src="/img/fdj2.png" />                                                     
-                </div> 
+                </div>  
+                <div class="weui-cell">
+                    <div class="weui-cell__hd f-red "><label class="weui-label">检测结论</label></div> 
+                    <asp:TextBox ID="txt_result" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结论"></asp:TextBox>  
+                </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
                     <textarea id="comment_0" class="weui-textarea"  placeholder="请输入说明" rows="2" runat="server" value=''></textarea>
@@ -980,20 +898,7 @@
                     <input id="btn_sign_0" type="button" value="确认" class="weui-btn weui-btn_primary" />
                 </div>
             </div>
-            <div class="weui-cells weui-cells_form" style="display:<%= _stp_cur=="2"?"":"none"%>;">   
-                <div class="weui-cell">
-                    <div class="weui-cell__hd f-red "><label class="weui-label">检测结论</label></div> 
-                    <asp:TextBox ID="txt_result" class="weui-input" style="color:gray;" runat="server" placeholder="请输入检测结论"></asp:TextBox>  
-                </div>
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
-                    <textarea id="comment_1" class="weui-textarea"  placeholder="请输入说明" rows="2" runat="server" value=''></textarea>
-                </div>
-                <div class="weui-cell" >
-                    <input id="btn_sign_1" type="button" value="确认" class="weui-btn weui-btn_primary" />
-                </div>
-            </div>
-            <div class="weui-cells weui-cells_form" style="display:<%= _stepid=="3"?"":"none"%>;"> 
+            <div class="weui-cells weui-cells_form" style="display:<%= (_stepid=="1" || _stepid=="3")?"":"none"%>;"> 
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">说明</label></div>
                     <textarea id="comment_2" class="weui-textarea"  placeholder="请输入说明" rows="2" runat="server" value=''></textarea>
@@ -1118,40 +1023,37 @@
                 }
             }
 
-        } else {
-            if ("<%= _stp_cur %>" == "1") {
+        } else if ("<%= _stepid %>" == "2"){
 
-                var db_jcnr_sy = "<%= _jcnr_sy %>";
-                var db_jcnr_sy_arr = db_jcnr_sy.split(",");
+            var db_jcnr_sy = "<%= _jcnr_sy %>";
+            var db_jcnr_sy_arr = db_jcnr_sy.split(",");
                 
-                if(db_jcnr_sy_arr.length==1){                
-                    $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[0] + "' selected>" + db_jcnr_sy_arr[0] + "</option>");
-                }else {
-                    for (var i in db_jcnr_sy_arr) {
-                        $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[i] + "'>" + db_jcnr_sy_arr[i] + "</option>");
-                    }
+            if(db_jcnr_sy_arr.length==1){                
+                $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[0] + "' selected>" + db_jcnr_sy_arr[0] + "</option>");
+            }else {
+                for (var i in db_jcnr_sy_arr) {
+                    $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[i] + "'>" + db_jcnr_sy_arr[i] + "</option>");
                 }
             }
-
-            if ("<%= _stp_cur %>" == "2") {
-
-                var datalist_sr = [{ title: 'NG', value: 'NG' }, { title: '合格', value: '合格' }];
-                $("#txt_result").select({
-                    title: "结果",
-                    items: datalist_sr,
-                    onChange: function (d) {
-                        //    console.log(this, d);
-                    },
-                    onClose: function (d) {
-                        var obj = eval(d.data);
-                        //alert(obj.values);
-                    },
-                    onOpen: function () {
-                        //  console.log("open");
-                    },
-
-                });
-            }
+            var datalist_sr = [{ title: 'NG', value: 'NG' }, { title: '合格', value: '合格' }];
+            $("#txt_result").select({
+                title: "结果",
+                items: datalist_sr,
+                onChange: function (d) {
+                    //    console.log(this, d);
+                },
+                onClose: function (d) {
+                    var obj = eval(d.data);
+                    //alert(obj.values);
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                }
+            });
+        }else if ("<%= _stepid %>" == "1"){
+            $("#btn_sign_2").val("开始检测");
+        }else if ("<%= _stepid %>" == "3"){
+            $("#btn_sign_2").val("确认取回");
         }
     </script>
 </body>
