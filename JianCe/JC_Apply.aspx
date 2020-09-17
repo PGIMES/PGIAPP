@@ -78,6 +78,14 @@
             sm_prod_machine();
             sm_jcsb();
 
+            
+
+            $("#txt_prod_machine").keyup(function (e) {
+                if (($("#txt_prod_machine").val()).length >= 5) {
+                    prod_machine_change();
+                }
+            });
+
             $('.collapse .js-category').click(function () {
                 $parent = $(this).parent('li');
                 if ($parent.hasClass('js-show')) {
@@ -119,7 +127,7 @@
                     data: "{'_option':'zancun','_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
                         + "','_dh':'" + $('#txt_dh').val() + "','_source_lot':'" + $('#txt_source_lot').val() + "','_xmh':'" + $('#txt_xmh').val()
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
-                        + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $('#txt_prod_machine').val()
+                        + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $.trim($('#txt_prod_machine').val())
                         + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
                         + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
                         + "'}",
@@ -173,7 +181,7 @@
                     data: "{'_option':'apply','_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val()
                         + "','_dh':'" + $('#txt_dh').val() + "','_source_lot':'" + $('#txt_source_lot').val() + "','_xmh':'" + $('#txt_xmh').val()
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
-                        + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $('#txt_prod_machine').val()
+                        + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $.trim($('#txt_prod_machine').val())
                         + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
                         + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
                         + "'}",
@@ -445,9 +453,32 @@
                             var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                             // code 在这里面写上扫描二维码之后需要做的内容
                             $('#txt_prod_machine').val(result);
+                            prod_machine_change();
                         }
                     });
                 });
+            });
+        }
+
+        function prod_machine_change(){
+            if ($("#txt_prod_machine").val() == "") {
+                layer.alert('【生产设备】不可为空');
+                return;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "JC_Apply.aspx/prod_machine_change",
+                data: "{ 'prod_machine':'" + $('#txt_prod_machine').val()+ "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    $("#txt_prod_machine").val(obj[0].prod_machine_rs);
+                    if (obj[0].flag=="Y") {layer.alert(obj[0].msg);}
+                }
+
             });
         }
 
@@ -484,8 +515,11 @@
                 layer.alert("请输入【工序】.");
                 return false;
             }
-            if ($("#txt_prod_machine").val() == "") {
+            if ($.trim($("#txt_prod_machine").val()) == "") {
                 layer.alert("请输入【生产设备】.");
+                return false;
+            }else if (($.trim($("#txt_prod_machine").val())).length < 5) {
+                layer.alert("【生产设备】长度必须大于等于5位.");
                 return false;
             }
             if ($.trim($("#txt_sj_qty").val()) == "" || $.trim($("#txt_sj_qty").val()) == "0") {
@@ -596,7 +630,7 @@
             </div>  
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red"><label class="weui-label">生产设备</label></div> 
-                <asp:TextBox ID="txt_prod_machine" class="weui-input" runat="server" placeholder="生产设备"></asp:TextBox> 
+                <asp:TextBox ID="txt_prod_machine" class="weui-input" runat="server" placeholder="生产设备" onkeyup="this.value=this.value.toUpperCase()" ></asp:TextBox> 
                 <img id="img_sm_prod_machine" src="/img/fdj2.png" />                                                     
             </div> 
             <div class="weui-cell">

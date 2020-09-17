@@ -233,6 +233,27 @@ public partial class JC_Apply : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string prod_machine_change(string prod_machine)
+    {
+        string flag = "N", msg = "", prod_machine_rs="";
+
+        if (prod_machine.Length >= 5) { prod_machine = prod_machine.Substring(prod_machine.Length - 5); }
+        string sql = @"select distinct top 1 location,workshop,line from [Mes_App_Base_Location] with(nolock) WHERE e_code = '{0}' ";
+        sql = string.Format(sql, prod_machine);
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        if (re_dt.Rows.Count <= 0)
+        {
+            flag = "Y"; msg = "【设备" + prod_machine + "】不存在.";
+        }
+
+        if (flag == "N") { prod_machine_rs = prod_machine; }
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\",\"prod_machine_rs\":\"" + prod_machine_rs + "\"}]";
+        return result;
+
+    }
+
+    [WebMethod]
     public static string save(string _option, string _emp_code_name, string _id, string _dh, string _source_lot, string _xmh
         , string _ljh, string _line, string _workshop, string _sj_type, string _op, string _prod_machine, string _sj_qty
         , string _priority, string _jcnr, string _remark)
