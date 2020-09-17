@@ -1082,6 +1082,25 @@
 
             //赋初始值
             if ("<%= _stepid %>" == "0") {
+
+                //暂存打开，初始化，绑定工序
+                if ( $("#txt_xmh").val()!=""&& $("#txt_sj_type").val()!="") {
+                    $.ajax({
+                        type: "post",
+                        url: "JC_Apply.aspx/pgino_change",
+                        data: "{'pgino':'" + $("#txt_xmh").val() + "','sj_type':'" + $("#txt_sj_type").val() + "','domain': '" + $("#domain").val() + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                        success: function (data) {
+                            var obj = eval(data.d);
+
+                            var json_op = obj[0].json_op;
+                            $("#txt_op").select("update", { items: json_op });
+                        }
+                    });
+                }
+
                 
                 if ("<%= _priority %>" != "") {
                     $("input[name='priority'][value='<%= _priority %>']").attr("checked", true);
