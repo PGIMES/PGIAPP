@@ -167,16 +167,19 @@
         function showBlockCount() {
             $(".weui-form-preview .weui-cells").each(function (i, item) {
                 var row1 = $(this).find("a:not(.hide)").length;
-                var row2 = $(this).find("a:not(.hide).ji").length;
+                var row2 = $(this).find("a:not(.hide) :contains('紧急')").length;
                 var row3 = $(this).find("a:not(.hide) :contains('部分')").length;//部分
+                var row4 = $(this).find("a:not(.hide) :contains('Ng')").length;//NG
 
                 var obj1 = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
                 var obj2 = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
                 var obj3 = $(this).closest('li').children(".js-category").find("span").eq(2); //第三个 
+                var obj4 = $(this).closest('li').children(".js-category").find("span.Ng"); //NG 
 
                 $(obj1).text(row1);
                 $(obj2).text("急"+row2);
                 $(obj3).text("部"+row3);
+                $(obj4).text("Ng" + row4);
 
                 if (row1 == 0) {
                     $(obj1).addClass("bg-gray").removeClass("bg-blue")
@@ -197,6 +200,13 @@
                 }
                 else {
                     $(obj3).addClass("bg-orange").removeClass("bg-gray")
+                }
+                // NG
+                if (row4 == 0) {
+                    $(obj4).addClass("bg-gray").removeClass("bg-red")
+                }
+                else {
+                    $(obj4).addClass("bg-red").removeClass("bg-gray")
                 }
             });
 
@@ -445,7 +455,7 @@
 
                                                                     foreach (System.Data.DataRow dr in dt_line.Select("sj_type='" + sj_type + "'"))
                                                                     {%>
-                                                                <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
+                                                                <a class="weui-cell  weui-cell_access " href="<%=dr["href"] %>">
                                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-orange"></span></div>
                                                                     <div class="weui-cell__hd">
                                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
@@ -600,7 +610,7 @@
                                     rowsCnt1 = dt_line.Rows.Count;
                                     rowsCnt2 = dt_line.Select("priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)","").ToString();
-
+                                    var rowsNg = dt_line.Select("jcResult='NG'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -609,6 +619,7 @@
                                                 <i class="icon nav-icon icon-49"></i>待 取 回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l Ng ">Ng<% =rowsNg %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>h</div>
 
                                             </div>
@@ -625,6 +636,7 @@
                                                         var apl_qty = drLine["apl_qty"].ToString();
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
+                                                        var rowsNgLine = dt_line.Select("jcResult='NG' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -633,6 +645,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l ">Ng<% =rowsNgLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -644,7 +657,7 @@
                                                                     foreach (System.Data.DataRow dr in dt_line.Select("sj_type='" + sj_type + "'"))
                                                                     {%>
                                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"></span></div>
+                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-green"><%=dr["jcResult"].ToString() %></span></div>
                                                                     <div class="weui-cell__hd">
                                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                     </div>
@@ -699,11 +712,13 @@
                                                 rowsCnt1 = dt_line.Rows.Count;
                                                 rowsCnt2 = dt_line.Select("priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)","").ToString();
+                                                rowsNg = dt_line.Select("jcResult='Ng'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>检测完成（24小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l Ng">Ng<% =rowsNg.ToString() %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -719,6 +734,7 @@
                                                         var apl_qty = drLine["apl_qty"].ToString();
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
+                                                        var rowsNgLine = dt_line.Select("jcResult='NG' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -727,6 +743,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l  ">Ng<% =rowsNgLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -738,7 +755,7 @@
                                                                     foreach (System.Data.DataRow dr in dt_line.Select("sj_type='" + sj_type + "'"))
                                                                     {%>
                                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
-                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"></span></div>
+                                                                    <div class="weui-mark-vip"><span class="weui-mark-lt bg-gray"><%=dr["jcResult"].ToString()%></span></div>
                                                                     <div class="weui-cell__hd">
                                                                         <i class="fa fa-thermometer-full" aria-hidden="true"></i>
                                                                     </div>
@@ -759,6 +776,10 @@
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red  margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <%} %>
+                                                                        <% if (dr["jcResult"].ToString().ToUpper() == "NG")
+                                                                            { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red  margin10-l" style="font-size: x-small;">Ng</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
