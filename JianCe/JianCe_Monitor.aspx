@@ -168,15 +168,15 @@
             $(".weui-form-preview .weui-cells").each(function (i, item) {
                 var row1 = $(this).find("a:not(.hide)").length;
                 var row2 = $(this).find("a:not(.hide).ji").length;
-                //var row3 = $(this).find("a:not(.hide)").length;
+                var row3 = $(this).find("a:not(.hide) :contains('部分')").length;//部分
 
                 var obj1 = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
                 var obj2 = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
-                //var obj3 = $(this).closest('li').children(".js-category").find("span").eq(2); //第三个
+                var obj3 = $(this).closest('li').children(".js-category").find("span").eq(2); //第三个 
 
                 $(obj1).text(row1);
                 $(obj2).text("急"+row2);
-               // $(obj3).text(row3);
+                $(obj3).text("部"+row3);
 
                 if (row1 == 0) {
                     $(obj1).addClass("bg-gray").removeClass("bg-blue")
@@ -191,13 +191,13 @@
                 else {
                     $(obj2).addClass("bg-orange").removeClass("bg-gray")
                 }
-                // 
-                //if (row3 == 0) {
-                //    $(obj3).addClass("bg-gray").removeClass("bg-orange")
-                //}
-                //else {
-                //    $(obj3).addClass("bg-orange").removeClass("bg-gray")
-                //}
+                // 部分
+                if (row3 == 0) {
+                    $(obj3).addClass("bg-gray").removeClass("bg-orange")
+                }
+                else {
+                    $(obj3).addClass("bg-orange").removeClass("bg-gray")
+                }
             });
 
 
@@ -314,9 +314,9 @@
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>申 请 中                                                
-                                                <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
+                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>h</div>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -412,7 +412,7 @@
                                                 <i class="icon nav-icon icon-49"></i>待 检 中
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
+                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>h</div>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -498,17 +498,17 @@
                                     rowsCnt1 = dt_line.Rows.Count;
                                     rowsCnt2 = dt_line.Select("priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)","").ToString();
-
+                                    var rowspart = dt_line.Select("ispart='部分'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
                                         <div class="weui-flex js-category">
                                             <div class="weui-cells__title weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>检 测 中                                                
-                                                <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
+                                                <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
-
+                                                <span class="weui-badge bg-<% =(rowspart==0?"gray":"orange") %> margin15-l " >部<% =rowspart %></span>
+                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" ><% =rowsCnt3 %>h</div>
                                             </div>
                                             <i class="icon icon-35"></i>
                                         </div>
@@ -523,14 +523,16 @@
                                                         var apl_qty = drLine["apl_qty"].ToString();
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
+                                                        var rowspartLine = dt_line.Select("ispart='部分' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
                                                         <div class="weui-flex js-category2" onclick="showorhide(this);">
                                                             <div class="weui-cells__title LH weui-flex__item">
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
-                                                                <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
+                                                                <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>                                                                
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
+                                                                <span class="weui-badge bg-<% =(rowspartLine==0?"gray":"orange") %> margin15-l maxHour" >部<% =rowspartLine %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -560,10 +562,15 @@
                                                                         <span class=""><%=dr["xmh"] %></span>
                                                                         <span><%=dr["ljh"] %></span>
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString() %></span>件
+                                                                        <% if (dr["ispart"].ToString() == "部分")
+                                                                            { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  " style="font-size: x-small;">部分</span>
+                                                                        <%}; %>
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
-                                                                        <%} %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red " style="font-size: x-small;">紧急</span>
+                                                                        <%}; %>
+                                                                        
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
                                                                             <%=dr["tel"].ToString()+dr["JC_Emp_Name"].ToString() %>
@@ -602,7 +609,7 @@
                                                 <i class="icon nav-icon icon-49"></i>待 取 回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>
+                                                <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>h</div>
 
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -682,7 +689,7 @@
                                 </ul>
                             </div>
 
-                            <%----检测完成（20H内）-----%>
+                            <%----检测完成（24H内）-----%>
                             <div class="weui-form-preview">
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -694,7 +701,7 @@
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)","").ToString();
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
-                                                <i class="icon nav-icon icon-49"></i>检测完成（20小时内）                                                 
+                                                <i class="icon nav-icon icon-49"></i>检测完成（24小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
