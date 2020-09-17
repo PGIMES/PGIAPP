@@ -244,14 +244,16 @@ public partial class JC_Apply : System.Web.UI.Page
         {
             if (_option == "apply")//新建文件夹
             {
-                string year = DateTime.Now.Year.ToString();
-                string month = DateTime.Now.Month.ToString();
-                string day = DateTime.Now.Day.ToString();
+                DateTime now = DateTime.Now;
+                string year = now.Year.ToString();
+                string month = now.Month.ToString();
+                string day = now.Day.ToString();
+                string today = now.ToString("yyyy/MM/dd");
 
                 string dn = "白班";
-                DateTime t1 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                DateTime t2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 07:00:00");
-                DateTime t3 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 19:00:00");
+                DateTime t1 = Convert.ToDateTime(now.ToString("yyyy/MM/dd HH:mm:ss"));
+                DateTime t2 = Convert.ToDateTime(today + " 07:00:00");
+                DateTime t3 = Convert.ToDateTime(today + " 19:00:00");
 
                 if (DateTime.Compare(t1, t2) >= 0 && DateTime.Compare(t1, t3) <= 0)
                 {
@@ -262,10 +264,10 @@ public partial class JC_Apply : System.Web.UI.Page
                     dn = "夜班";
 
                     //凌晨至7点时，夜班归属日期是昨天
-                    DateTime t4 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 00:00:00");
+                    DateTime t4 = Convert.ToDateTime(today + " 00:00:00");
                     if (DateTime.Compare(t1, t4) >= 0 && DateTime.Compare(t1, t3) <= 0)
                     {
-                        day = DateTime.Now.AddDays(-1).Day.ToString();
+                        day = now.AddDays(-1).Day.ToString();
                     }
                 }
 
