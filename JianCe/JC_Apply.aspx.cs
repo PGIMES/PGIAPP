@@ -21,6 +21,7 @@ public partial class JC_Apply : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        /*
         string year = DateTime.Now.Year.ToString();
         string month = DateTime.Now.Month.ToString();
         string day = DateTime.Now.Day.ToString();
@@ -40,6 +41,8 @@ public partial class JC_Apply : System.Web.UI.Page
         }
 
         file = Server.MapPath(@"/file/" + year + @"/" + month + @"月/" + month + "-" + day + dn + @"/");
+        */
+        file = Server.MapPath(@"/file/");
 
         if (Request.QueryString["id"] != null) { _id = Request.QueryString["id"].ToString(); }
         if (Request.QueryString["dh"] != null) { _dh = Request.QueryString["dh"].ToString(); }//扫码进来的
@@ -236,20 +239,44 @@ public partial class JC_Apply : System.Web.UI.Page
     {
         string flag = "N", msg = "";
 
-        string _file = file;
+        string _file = "";
         try
         {
             if (_option == "apply")//新建文件夹
             {
+                string year = DateTime.Now.Year.ToString();
+                string month = DateTime.Now.Month.ToString();
+                string day = DateTime.Now.Day.ToString();
+
+                string dn = "白班";
+                DateTime t1 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                DateTime t2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 07:00:00");
+                DateTime t3 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 19:00:00");
+
+                if (DateTime.Compare(t1, t2) >= 0 && DateTime.Compare(t1, t3) <= 0)
+                {
+                    dn = "白班";
+                }
+                else
+                {
+                    dn = "夜班";
+
+                    //凌晨至7点时，夜班归属日期是昨天
+                    DateTime t4 = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd") + " 00:00:00");
+                    if (DateTime.Compare(t1, t4) >= 0 && DateTime.Compare(t1, t3) <= 0)
+                    {
+                        day = DateTime.Now.AddDays(-1).Day.ToString();
+                    }
+                }
+
+                _file = file + year + @"\" + month + @"月\" + month + "-" + day + dn + @"\";
+
+                //项目号
                 _file = _file + "p" + _xmh.Substring(2, 3) + @"\" + _dh;
                 if (!Directory.Exists(_file))
                 {
                     Directory.CreateDirectory(_file);
                 }
-            }
-            else
-            {
-                _file = "";
             }
         }
         catch (Exception ex)
