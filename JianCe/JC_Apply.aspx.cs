@@ -318,11 +318,11 @@ public partial class JC_Apply : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string sign(string _emp_code_name, string _id, string _stepid, string _jcnr, string _jcsb, string _comment, string _result, string _type)
+    public static string sign(string _emp_code_name, string _id, string _stepid, string _jcnr, string _jcsb, string _comment, string _result, string _type, string _islast)
     {
         string flag = "N", msg = "";
-        string re_sql = re_sql = @"exec usp_app_JC_sign_V1 '{0}',{1},'{2}','{3}','{4}','{5}','{6}','{7}'";
-        re_sql = string.Format(re_sql, _emp_code_name, Convert.ToInt32(_id), _stepid, _jcnr, _jcsb, _comment, _result, _type);
+        string re_sql = re_sql = @"exec usp_app_JC_sign_V1 '{0}',{1},'{2}','{3}','{4}','{5}','{6}','{7}','{8}'";
+        re_sql = string.Format(re_sql, _emp_code_name, Convert.ToInt32(_id), _stepid, _jcnr, _jcsb, _comment, _result, _type, _islast);
 
         DataTable re_dt = SQLHelper.Query(re_sql,connString).Tables[0];
         flag = re_dt.Rows[0][0].ToString();

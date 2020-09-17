@@ -218,19 +218,28 @@
                     return false;
                 }
 
-
                 var selectValue = "";
                 $("#checkedLevel_sg").find("option:selected").each(function () {
                     selectValue += $(this).text() + ","
                 });
                 if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
 
+                //是否是最后一项检测内容
+                var db_jcnr_sy = "<%= _jcnr_sy %>";
+                var db_jcnr_sy_arr = db_jcnr_sy.split(",");
+                
+                var islast="N";
+                if(db_jcnr_sy_arr.length==1){  
+                    islast="Y";
+                }
+                //alert(islast);
+
                 $.ajax({
                     type: "post",
                     url: "JC_Apply.aspx/sign",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
                         + "','_jcnr':'" + selectValue + "','_jcsb':'" + $('#txt_jcsb').val() + "','_comment':'" + $('#comment_0').val()
-                        + "','_result':'" + $('#txt_result').val() + "','_type':'检测'}",
+                        + "','_result':'" + $('#txt_result').val() + "','_type':'检测','_islast':'"+islast+"'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -262,8 +271,8 @@
                     type: "post",
                     url: "JC_Apply.aspx/sign",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','_id':'" + $('#id').val() + "','_stepid':'" + $('#stepid').val()
-                        + "','_jcnr':'','_jcsb':'','_comment':'" + $('#comment_1').val()
-                        + "','_result':'','_type':'"+_type+"'}",
+                        + "','_jcnr':'','_jcsb':'','_comment':'" + $('#comment_2').val()
+                        + "','_result':'','_type':'"+_type+"','_islast':''}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
