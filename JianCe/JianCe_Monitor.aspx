@@ -169,17 +169,17 @@
                 var row1 = $(this).find("a:not(.hide)").length;
                 var row2 = $(this).find("a:not(.hide) :contains('紧急')").length;
                 var row3 = $(this).find("a:not(.hide) :contains('部分')").length;//部分
-                var row4 = $(this).find("a:not(.hide) :contains('Ng')").length;//NG
+                var row4 = $(this).find("a:not(.hide) :contains('NG')").length;//NG
 
                 var obj1 = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
                 var obj2 = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
-                var obj3 = $(this).closest('li').children(".js-category").find("span").eq(2); //第三个 
-                var obj4 = $(this).closest('li').children(".js-category").find("span.Ng"); //NG 
+                var obj3 = $(this).closest('li').children(".js-category").find("span.Part").eq(2); //第三个 
+                var obj4 = $(this).closest('li').children(".js-category").find("span.NG"); //NG 
 
                 $(obj1).text(row1);
                 $(obj2).text("急"+row2);
                 $(obj3).text("部"+row3);
-                $(obj4).text("Ng" + row4);
+                $(obj4).text("NG" + row4);
 
                 if (row1 == 0) {
                     $(obj1).addClass("bg-gray").removeClass("bg-blue")
@@ -517,7 +517,7 @@
                                                 <i class="icon nav-icon icon-49"></i>检 测 中                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge bg-<% =(rowspart==0?"gray":"orange") %> margin15-l " >部<% =rowspart %></span>
+                                                <span class="weui-badge bg-<% =(rowspart==0?"gray":"orange") %> margin15-l Part" >部<% =rowspart %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" ><% =rowsCnt3 %>h</div>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -619,7 +619,7 @@
                                                 <i class="icon nav-icon icon-49"></i>待 取 回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l Ng ">Ng<% =rowsNg %></span>
+                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l NG ">NG<% =rowsNg %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>h</div>
 
                                             </div>
@@ -645,7 +645,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l ">Ng<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l ">NG<% =rowsNgLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -712,13 +712,13 @@
                                                 rowsCnt1 = dt_line.Rows.Count;
                                                 rowsCnt2 = dt_line.Select("priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)","").ToString();
-                                                rowsNg = dt_line.Select("jcResult='Ng'").Length;
+                                                rowsNg = dt_line.Select("jcResult='NG'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>检测完成（24小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l Ng">Ng<% =rowsNg.ToString() %></span>
+                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l NG">NG<% =rowsNg.ToString() %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -743,7 +743,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l  ">Ng<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l  ">NG<% =rowsNgLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -779,7 +779,7 @@
                                                                         <%} %>
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red  margin10-l" style="font-size: x-small;">Ng</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red  margin10-l" style="font-size: x-small;">NG</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
