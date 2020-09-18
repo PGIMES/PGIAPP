@@ -232,7 +232,7 @@
                         <div class="weui-cells__title fl  weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
-                            <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>H</div>
+                            <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>h</div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -259,7 +259,7 @@
                                             <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
                                                 <% =(ViewState["dt_data_2"] as System.Data.DataTable).Select("line='" + line + "'").Count() %>
                                             </span>
-                                            <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>H</div>
+                                            <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>h</div>
                                         </div>
                                         <i class="icon icon-74 right"></i>
                                     </div>
@@ -345,7 +345,7 @@
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
-                            <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>H</div>
+                            <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>h</div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -372,7 +372,7 @@
                                             <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
                                                 <% =(ViewState["dt_data_3"] as System.Data.DataTable).Select("line='" + line + "'").Count() %>
                                             </span>
-                                            <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>H</div>
+                                            <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>h</div>
                                         </div>
                                         <i class="icon icon-74 right"></i>
                                     </div>
@@ -453,7 +453,7 @@
                         <div class="weui-cells__title fl  weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 待入库                                                 
                             <span class="weui-badge  bg-<% =(rowscount==0?"gray":"blue") %> margin20-l " style="margin-right: 15px;"><% =rowscount %></span>
-                            <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>H</div>
+                            <div class="weui-badge  <% = bgcolor %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour %>h</div>
                         </div>
                         <i class="icon icon-35"></i>
                     </div>
@@ -480,7 +480,7 @@
                                             <span class="weui-badge bg-blue margin20-l " style="margin-right: 15px;">
                                                 <% =(ViewState["dt_data_4"] as System.Data.DataTable).Select("line='" + line + "'").Count() %>
                                             </span>
-                                            <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>H</div>
+                                            <div class="weui-badge <%=bgcolor_line %> margin20-l maxHour" style="margin-right: 15px;"><% =drLine["timesHours"] %>h</div>
                                         </div>
                                         <i class="icon icon-74 right"></i>
                                     </div>
@@ -557,7 +557,7 @@
                             <span class="weui-badge  bg-<% =(count_98_2==0?"gray":"orange") %> margin20-l" style="margin-right: 15px;"><% =count_98_2 %></span>
                             <%--<div class="weui-badge  bg-<% =(maxHour_98_2<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_2 %>H</div>--%>
                             <div class="weui-badge  bg-<% =(maxHour_98_2==0?"gray":"orange") %> margin20-l maxHour" style="margin-right: 15px;">
-                                <% =maxHour_98_2 %>H
+                                <% =maxHour_98_2 %>h
                             </div>
                         </div>
                         <i class="icon icon-35"></i>
@@ -650,7 +650,7 @@
                             <span class="weui-badge  bg-<% =(count_98_3==0?"gray":"orange") %> margin20-l" style="margin-right: 15px;"><% =count_98_3 %></span>
                             <%--<div class="weui-badge  bg-<% =(maxHour_98_3<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_3 %>H</div>--%>                            
                             <div class="weui-badge  bg-<% =(maxHour_98_3==0?"gray":"orange") %> margin20-l maxHour" style="margin-right: 15px;">
-                                <% =maxHour_98_3 %>H
+                                <% =maxHour_98_3 %>h
                             </div>
                         </div>
                         <i class="icon icon-35"></i>
@@ -743,7 +743,7 @@
                             <span class="weui-badge  bg-<% =(count_98_4==0?"gray":"orange") %> margin20-l" style="margin-right: 15px;"><% =count_98_4 %></span>
                             <%--<div class="weui-badge  bg-<% =(maxHour_98_4<4?"orange":"red") %> margin20-l maxHour" style="margin-right: 15px;"><% =maxHour_98_4 %>H</div>--%>                            
                             <div class="weui-badge  bg-<% =(maxHour_98_4==0?"gray":"orange") %> margin20-l maxHour" style="margin-right: 15px;">
-                                <% =maxHour_98_4 %>H
+                                <% =maxHour_98_4 %>h
                             </div>
                         </div>
                         <i class="icon icon-35"></i>

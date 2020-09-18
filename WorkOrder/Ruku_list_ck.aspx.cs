@@ -176,7 +176,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             {
                 Label2.CssClass = "weui-badge  bg-orange margin20-l maxHour";
             }
-            Label2.Text = Label2.Text + "H";
+            Label2.Text = Label2.Text + "h";
         }
     }
 
@@ -224,7 +224,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             {
                 Label2.CssClass = "weui-badge  bg-orange margin20-l maxHour";
             }
-            Label2.Text = Label2.Text + "H";
+            Label2.Text = Label2.Text + "h";
         }
     }
 
@@ -272,7 +272,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             {
                 Label2.CssClass = "weui-badge  bg-orange margin20-l maxHour";
             }
-            Label2.Text = Label2.Text + "H";
+            Label2.Text = Label2.Text + "h";
         }
     }
 
