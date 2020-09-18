@@ -268,8 +268,8 @@ public partial class JC_Apply : System.Web.UI.Page
 
                 string dn = "白班";
                 DateTime t1 = Convert.ToDateTime(now.ToString("yyyy/MM/dd HH:mm:ss"));
-                DateTime t2 = Convert.ToDateTime(today + " 07:00:00");
-                DateTime t3 = Convert.ToDateTime(today + " 19:00:00");
+                DateTime t2 = Convert.ToDateTime(today + " 07:30:00");
+                DateTime t3 = Convert.ToDateTime(today + " 19:30:00");
 
                 if (DateTime.Compare(t1, t2) >= 0 && DateTime.Compare(t1, t3) <= 0)
                 {
