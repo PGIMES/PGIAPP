@@ -1131,7 +1131,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>二车间 不合格 已入库(24h内)
-                            <span class="weui-badge  bg-<% =(count_99_2==0?"gray":"orange") %>"><% =count_99_2 %></span>
+                            <span class="weui-badge  bg-<% =(count_99_2==0?"gray":"orange") %> margin20-l"><% =count_99_2 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -1220,7 +1220,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>三车间 不合格 已入库(24h内)
-                            <span class="weui-badge  bg-<% =(count_99_3==0?"gray":"orange") %>"><% =count_99_3 %></span>
+                            <span class="weui-badge  bg-<% =(count_99_3==0?"gray":"orange") %> margin20-l"><% =count_99_3 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>
@@ -1309,7 +1309,7 @@
                     <div class="weui-flex js-category">
                         <div class="weui-cells__title fl weui-flex__item">
                             <i class="icon nav-icon icon-49"></i>四车间 不合格 已入库(24h内)
-                            <span class="weui-badge  bg-<% =(count_99_4==0?"gray":"orange") %>"><% =count_99_4 %></span>
+                            <span class="weui-badge  bg-<% =(count_99_4==0?"gray":"orange") %> margin20-l"><% =count_99_4 %></span>
                         </div>
                         <i class="icon icon-74"></i>
                     </div>

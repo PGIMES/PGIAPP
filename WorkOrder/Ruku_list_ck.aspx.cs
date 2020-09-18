@@ -294,11 +294,11 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             Label1.Text = detail.Items.Count.ToString();
             if (Label1.Text == "0")
             {
-                Label1.CssClass = "weui-badge  bg-gray";
+                Label1.CssClass = "weui-badge  bg-gray margin20-l";
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-orange";
+                Label1.CssClass = "weui-badge  bg-orange margin20-l";
             }
         }
     }
@@ -320,11 +320,11 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             Label1.Text = detail.Items.Count.ToString();
             if (Label1.Text == "0")
             {
-                Label1.CssClass = "weui-badge  bg-gray";
+                Label1.CssClass = "weui-badge  bg-gray margin20-l";
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-orange";
+                Label1.CssClass = "weui-badge  bg-orange margin20-l";
             }
         }
     }
@@ -346,11 +346,11 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
             Label1.Text = detail.Items.Count.ToString();
             if (Label1.Text == "0")
             {
-                Label1.CssClass = "weui-badge  bg-gray";
+                Label1.CssClass = "weui-badge  bg-gray margin20-l";
             }
             else
             {
-                Label1.CssClass = "weui-badge  bg-orange";
+                Label1.CssClass = "weui-badge  bg-orange margin20-l";
             }
         }
     }
