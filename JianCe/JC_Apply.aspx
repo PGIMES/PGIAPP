@@ -1037,7 +1037,7 @@
                     $.ajax({
                         type: "post",
                         url: "JC_Apply.aspx/pgino_change",
-                        data: "{'pgino':'" + $("#txt_xmh").val() + "','sj_type':'" + $("#txt_sj_type").val() + "','domain': '" + $("#domain").val() + "'}",
+                        data: "{'pgino':'" + $("#txt_xmh").val() + "','sj_type':'" + $("#txt_sj_type").val() + "','domain': '" + $("#domain").val() + "','prod_machine':'" + $('#txt_prod_machine').val()+ "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -1046,6 +1046,9 @@
 
                             var json_op = obj[0].json_op;
                             $("#txt_op").select("update", { items: json_op });
+
+                            var json_gl_dh = obj[0].json_gl_dh;
+                            $("#txt_gl_dh").select("update", { items: json_gl_dh });
                         }
                     });
                 }
