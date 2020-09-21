@@ -44,7 +44,7 @@ public partial class prod_wip_detail_V1 : System.Web.UI.Page
         string sql_re = @"select count(1) from [dbo].[Mes_App_EmployeeLogin] a  with(nolock) 
                         inner join [Mes_App_EmployeeLogin_Location] b  with(nolock) on a.id=b.login_id 
 	                    inner join [172.16.5.26].[Production].[dbo].[Hrm_Emp] c  with(nolock) on a.emp_code=c.EMPLOYEEID
-                    where emp_code='" + emp_code + "' and off_date is null and (b.e_code like 'G%' or c.dept_name='IT部')";
+                    where emp_code='" + emp_code + "' and off_date is null and (b.e_code like 'G%' or b.e_code='X4000' or c.dept_name='IT部')";
         DataTable re_dt = SQLHelper.Query(sql_re).Tables[0];
         if (Convert.ToInt32(re_dt.Rows[0][0].ToString()) > 0)
         {
