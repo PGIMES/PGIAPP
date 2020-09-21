@@ -189,10 +189,10 @@
                 }
                 //急
                 if (row2 == 0) {
-                    $(obj2).addClass("bg-gray").removeClass("bg-orange")
+                    $(obj2).addClass("bg-gray").removeClass("bg-red")
                 }
                 else {
-                    $(obj2).addClass("bg-orange").removeClass("bg-gray")
+                    $(obj2).addClass("bg-red").removeClass("bg-gray")
                 }
                 // 部分
                 if (row3 == 0) {
@@ -377,6 +377,7 @@
                                                                         <span><%=dr["xmh"] %></span>
                                                                         <span><%=dr["ljh"] %></span>
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString()%></span>件
+                                                                        <span ><%=dr["location"].ToString()%></span>
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
@@ -474,6 +475,7 @@
                                                                         <span class=""><%=dr["xmh"] %></span>
                                                                         <span><%=dr["ljh"] %></span>
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString()+"" %></span>件
+                                                                        <span ><%=dr["location"].ToString()%></span>
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
@@ -572,6 +574,7 @@
                                                                         <span class=""><%=dr["xmh"] %></span>
                                                                         <span><%=dr["ljh"] %></span>
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString() %></span>件
+                                                                        <span ><%=dr["location"].ToString()%></span>
                                                                         <% if (dr["ispart"].ToString() == "部分")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  " style="font-size: x-small;">部分</span>
@@ -675,9 +678,13 @@
                                                                         <span><%=dr["xmh"] %></span>
                                                                         <span><%=dr["ljh"] %></span>
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString() %></span>件
+                                                                        <span ><%=dr["location"].ToString()%></span>
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red   margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">紧急</span>
+                                                                        <%} %>
+                                                                         <% if (dr["jcResult"].ToString() == "NG")  { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">NG</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -773,13 +780,14 @@
                                                                         <span><%=dr["xmh"] %></span>
                                                                         <span><%=dr["ljh"] %></span>
                                                                         <span class="f-blue"><%=dr["sj_qty"].ToString()%></span>件
+                                                                        <span ><%=dr["location"].ToString()%></span>
                                                                         <% if (dr["priority"].ToString() == "紧急")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red  margin10-l" style="font-size: x-small;">紧急</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">紧急</span>
                                                                         <%} %>
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
-                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red  margin10-l" style="font-size: x-small;">NG</span>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">NG</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
