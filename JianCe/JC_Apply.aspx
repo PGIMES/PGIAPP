@@ -808,7 +808,7 @@
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">检测设备</label>
-                                            <span class="weui-form-preview__value"><%# Eval("jcsb") %></span>
+                                            <span class="weui-form-preview__value"><%# Eval("jcsb") %> <%# Eval("location").ToString()==""?"":"("+Eval("location")+")" %> </span>
                                         </div>
                                         <div class="weui-form-preview__item" >
                                             <label class="weui-form-preview__label">检测内容</label>
