@@ -46,7 +46,7 @@
     <script>
         $(document).ready(function () {
             $("#txt_ljh").attr("readonly", "readonly"); $("#txt_line").attr("readonly", "readonly"); $("#txt_workshop").attr("readonly", "readonly");
-
+            $("#txt_gl_dh").attr("readonly", "readonly"); 
         });
 
         $(function () {
@@ -120,7 +120,7 @@
                 });
                 if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
 
-
+                //$('#txt_gl_dh')
                 $.ajax({
                     type: "post",
                     url: "JC_Apply.aspx/save",
@@ -129,8 +129,7 @@
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
                         + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $.trim($('#txt_prod_machine').val())
                         + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
-                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
-                        + "'}",
+                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()+ "','_gl_dh':'" + $('#txt_gl_dh').val() + "'}",
                         //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -183,8 +182,7 @@
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
                         + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $.trim($('#txt_prod_machine').val())
                         + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
-                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()
-                        + "'}",
+                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()+ "','_gl_dh':'" + $('#txt_gl_dh').val() + "'}",
                         //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -366,7 +364,7 @@
             $.ajax({
                 type: "post",
                 url: "JC_Apply.aspx/pgino_change",
-                data: "{'pgino':'" + $("#txt_xmh").val() + "','sj_type':'" + $("#txt_sj_type").val() + "','domain': '" + $("#domain").val() + "'}",
+                data: "{'pgino':'" + $("#txt_xmh").val() + "','sj_type':'" + $("#txt_sj_type").val() + "','domain': '" + $("#domain").val() + "','prod_machine':'" + $('#txt_prod_machine').val()+ "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -387,7 +385,11 @@
                         op_change();
                     }
 
+                    var json_gl_dh = obj[0].json_gl_dh;
+                    $("#txt_gl_dh").select("update", { items: json_gl_dh });
+                    $('#txt_gl_dh').val('');
 
+                    if (json_gl_dh.length == 1) {$('#txt_gl_dh').val(json_gl_dh[0].title);}
                 }
 
             });
@@ -452,7 +454,7 @@
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                 success: function (data) {
                     var obj = eval(data.d);
-                    $("#txt_prod_machine").val(obj[0].prod_machine_rs);
+                    $("#txt_prod_machine").val(obj[0].prod_machine_rs);pgino_change();
                     if (obj[0].flag=="Y") {layer.alert(obj[0].msg);}
                 }
 
@@ -609,9 +611,13 @@
             </div>  
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red"><label class="weui-label">生产设备</label></div> 
-                <asp:TextBox ID="txt_prod_machine" class="weui-input" runat="server" placeholder="生产设备" onkeyup="this.value=this.value.toUpperCase()" ></asp:TextBox> 
+                <asp:TextBox ID="txt_prod_machine" class="weui-input" runat="server" placeholder="生产设备" onkeyup="this.value=this.value.toUpperCase()"></asp:TextBox> 
                 <img id="img_sm_prod_machine" src="/img/fdj2.png" />                                                     
             </div> 
+            <div class="weui-cell" id="div_gl_dh">
+                <div class="weui-cell__hd f-red"><label class="weui-label">关联单号</label></div>
+                <asp:TextBox ID="txt_gl_dh" class="weui-input" style="color:gray;" runat="server" placeholder="关联单号" ></asp:TextBox>  
+            </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red"><label class="weui-label">送检数量</label></div> 
                 <asp:TextBox ID="txt_sj_qty" class="weui-input" runat="server" placeholder="送检数量"></asp:TextBox>      
@@ -704,6 +710,10 @@
                                             <label class="weui-form-preview__label">设备</label>
                                             <span class="weui-form-preview__value"><%# Eval("prod_machine") %></span>
                                         </div>
+                                        <div class="weui-form-preview__item" style="display:<%# Eval("gl_dh").ToString()!=""?"block":"none"%>; ">
+                                            <label class="weui-form-preview__label">关联单号</label>
+                                            <span class="weui-form-preview__value"><%# Eval("gl_dh") %></span>
+                                        </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">送检数量</label>
                                             <span class="weui-form-preview__value"><%# Eval("sj_qty") %></span>
@@ -743,6 +753,10 @@
                                         <div class="weui-form-preview__item" style="display:<%= _file_cur=="Y"?"":"none"%>; ">
                                             <label class="weui-form-preview__label"></label>
                                             <span class="weui-form-preview__value f-blue" onclick="show_rtp()">查看报告</span>
+                                        </div>
+                                        <div class="weui-form-preview__item" style="display:<%# Eval("result").ToString()!=""?"block":"none"%>; ">
+                                            <label class="weui-form-preview__label">检测结果</label>
+                                            <span class="weui-form-preview__value"><%# Eval("result") %></span>
                                         </div>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -965,7 +979,11 @@
                 items: datalist_sj_type,
                 onChange: function (d) {
                     //alert(d.values);
-                    $("#txt_ljh").val(d.values);
+                    if(d.values=="生产调试"){
+                        $("#div_gl_dh").css("display","");
+                    }else {
+                        $("#div_gl_dh").css("display","none");
+                    }
                     pgino_change();
                 },
                 onClose: function (d) {
@@ -983,6 +1001,23 @@
                 onChange: function (d) {
                     //alert(d.values);
                     op_change();
+                },
+                onClose: function (d) {
+                    //var obj = eval(d.data);
+                    //alert(obj.values);
+
+                },
+                onOpen: function () {
+                    //  console.log("open");
+                }
+            });
+
+            $("#txt_gl_dh").select({
+                title: "关联单号",
+                items: [{ title: '', value: '' }],
+                onChange: function (d) {
+                    //alert(d.values);
+                    pgino_change();
                 },
                 onClose: function (d) {
                     //var obj = eval(d.data);
