@@ -93,6 +93,7 @@ public partial class JC_Apply : System.Web.UI.Page
                 txt_prod_machine.Text = dt.Rows[0]["prod_machine"].ToString(); txt_sj_qty.Text = dt.Rows[0]["sj_qty"].ToString();
                 txt_remark.Value = dt.Rows[0]["remark"].ToString();
                 txt_dh.Text = _dh; txt_source_lot.Text = dt.Rows[0]["source_lot"].ToString();
+                txt_gl_dh.Text = dt.Rows[0]["gl_dh"].ToString();
                 _priority = dt.Rows[0]["priority"].ToString(); _jcnr = dt.Rows[0]["jcnr"].ToString();
             }
             else
