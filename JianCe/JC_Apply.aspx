@@ -478,7 +478,7 @@
             $.ajax({
                 type: "post",
                 url: "JC_Apply.aspx/prod_machine_change",
-                data: "{ 'prod_machine':'" + $('#txt_prod_machine').val()+ "'}",
+                data: "{ 'prod_machine':'" + $('#txt_prod_machine').val()+ "','type':'sc'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -518,7 +518,7 @@
             $.ajax({
                 type: "post",
                 url: "JC_Apply.aspx/prod_machine_change",
-                data: "{ 'prod_machine':'" + $('#txt_jcsb').val()+ "'}",
+                data: "{ 'prod_machine':'" + $('#txt_jcsb').val()+ "','type':'jc'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码

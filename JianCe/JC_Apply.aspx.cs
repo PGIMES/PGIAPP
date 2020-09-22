@@ -257,12 +257,13 @@ public partial class JC_Apply : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string prod_machine_change(string prod_machine)
+    public static string prod_machine_change(string prod_machine, string type)
     {
         string flag = "N", msg = "", prod_machine_rs="";
 
         if (prod_machine.Length >= 5) { prod_machine = prod_machine.Substring(prod_machine.Length - 5); }
         string sql = @"select distinct top 1 location,workshop,line from [Mes_App_Base_Location] with(nolock) WHERE e_code = '{0}' ";
+        if (type == "jc") { sql = sql + " and workshop='实验室'"; }
         sql = string.Format(sql, prod_machine);
         DataTable re_dt = SQLHelper.Query(sql).Tables[0];
         if (re_dt.Rows.Count <= 0)
