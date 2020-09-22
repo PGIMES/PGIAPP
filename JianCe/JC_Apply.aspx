@@ -85,6 +85,11 @@
                     prod_machine_change();
                 }
             });
+            $("#txt_jcsb").keyup(function (e) {
+                if (($("#txt_jcsb").val()).length >= 5) {
+                    jcsb_change();
+                }
+            });
 
             $('.collapse .js-category').click(function () {
                 $parent = $(this).parent('li');
@@ -422,6 +427,30 @@
 
             });
         }
+        
+        function checkedLevel_change(){
+            var selectValue = "";
+            $("#checkedLevel").find("option:selected").each(function () {
+                selectValue += $(this).text() + ","
+            });
+            if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
+            //layer.alert(selectValue);
+
+            $.ajax({
+                type: "post",
+                url: "JC_Apply.aspx/checkedLevel_change",
+                data: "{'jcnr':'" + selectValue + "','domain': '" + $("#domain").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    $("#txt_sys").val(obj[0].sys);
+                }
+
+            });
+
+        }
 
         function sm_prod_machine() {
             $('#img_sm_prod_machine').click(function () {
@@ -455,7 +484,8 @@
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                 success: function (data) {
                     var obj = eval(data.d);
-                    $("#txt_prod_machine").val(obj[0].prod_machine_rs);pgino_change();
+                    $("#txt_prod_machine").val(obj[0].prod_machine_rs);
+                    pgino_change();
                     if (obj[0].flag=="Y") {layer.alert(obj[0].msg);}
                 }
 
@@ -472,34 +502,33 @@
                             var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                             // code 在这里面写上扫描二维码之后需要做的内容
                             $('#txt_jcsb').val(result);
+                            jcsb_change();
                         }
                     });
                 });
             });
         }
 
-        function checkedLevel_change(){
-            var selectValue = "";
-            $("#checkedLevel").find("option:selected").each(function () {
-                selectValue += $(this).text() + ","
-            });
-            if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
-            //layer.alert(selectValue);
+        function jcsb_change(){
+            if ($("#txt_jcsb").val() == "") {
+                layer.alert('【检测设备】不可为空');
+                return;
+            }
 
             $.ajax({
                 type: "post",
-                url: "JC_Apply.aspx/checkedLevel_change",
-                data: "{'jcnr':'" + selectValue + "','domain': '" + $("#domain").val() + "'}",
+                url: "JC_Apply.aspx/prod_machine_change",
+                data: "{ 'prod_machine':'" + $('#txt_jcsb').val()+ "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                 success: function (data) {
                     var obj = eval(data.d);
-                    $("#txt_sys").val(obj[0].sys);
+                    $("#txt_jcsb").val(obj[0].prod_machine_rs);
+                    if (obj[0].flag=="Y") {layer.alert(obj[0].msg);}
                 }
 
             });
-
         }
 
         function valid(para) {
@@ -577,8 +606,11 @@
                 return false;
             }
 
-            if ($("#txt_jcsb").val() == "") {
+            if ($.trim($("#txt_jcsb").val()) == "") {
                 layer.alert("请输入【检测设备】.");
+                return false;
+            }else if (($.trim($("#txt_jcsb").val())).length < 5) {
+                layer.alert("【生产设备】长度必须大于等于5位.");
                 return false;
             }
 
@@ -939,7 +971,7 @@
                 </div> 
                 <div class="weui-cell">
                     <div class="weui-cell__hd f-red"><label class="weui-label">检测设备</label></div> 
-                    <asp:TextBox ID="txt_jcsb" class="weui-input" runat="server" placeholder="检测设备"></asp:TextBox> 
+                    <asp:TextBox ID="txt_jcsb" class="weui-input" runat="server" placeholder="检测设备" onkeyup="this.value=this.value.toUpperCase()"></asp:TextBox> 
                     <img id="img_sm_jcsb" src="/img/fdj2.png" />                                                     
                 </div>  
                 <div class="weui-cell">
