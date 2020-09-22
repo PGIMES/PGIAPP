@@ -93,7 +93,7 @@ public partial class JC_Apply : System.Web.UI.Page
                 txt_prod_machine.Text = dt.Rows[0]["prod_machine"].ToString(); txt_sj_qty.Text = dt.Rows[0]["sj_qty"].ToString();
                 txt_remark.Value = dt.Rows[0]["remark"].ToString();
                 txt_dh.Text = _dh; txt_source_lot.Text = dt.Rows[0]["source_lot"].ToString();
-                txt_gl_dh.Text = dt.Rows[0]["gl_dh"].ToString();
+                txt_gl_dh.Text = dt.Rows[0]["gl_dh"].ToString(); txt_sys.Text = dt.Rows[0]["sys"].ToString();
                 _priority = dt.Rows[0]["priority"].ToString(); _jcnr = dt.Rows[0]["jcnr"].ToString();
             }
             else
@@ -226,7 +226,32 @@ public partial class JC_Apply : System.Web.UI.Page
         DataTable dt_jcnr = ds.Tables[0];
         string json_jcnr = JsonConvert.SerializeObject(dt_jcnr);
 
-        result = "[{\"json_jcnr\":" + json_jcnr + "}]";
+        string sys = "";
+        DataTable dt = ds.Tables[1];
+        if (dt.Rows.Count > 0)
+        {
+            sys = dt.Rows[0]["sys"].ToString();
+        }
+
+        result = "[{\"json_jcnr\":" + json_jcnr + ",\"sys\":\"" + sys + "\"}]";
+        return result;
+
+    }
+    [WebMethod]
+    public static string checkedLevel_change(string jcnr, string domain)
+    {
+        string result = "";
+        string sql = @" exec [usp_app_JC_Apply_jcnr_change] '" + domain + "','" + jcnr + "'";
+        DataSet ds = SQLHelper.Query(sql, connString);
+
+        string sys = "";
+        DataTable dt = ds.Tables[0];
+        if (dt.Rows.Count > 0)
+        {
+            sys = dt.Rows[0]["sys"].ToString();
+        }
+
+        result = "[{\"sys\":\"" + sys + "\"}]";
         return result;
 
     }

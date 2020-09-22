@@ -46,7 +46,7 @@
     <script>
         $(document).ready(function () {
             $("#txt_ljh").attr("readonly", "readonly"); $("#txt_line").attr("readonly", "readonly"); $("#txt_workshop").attr("readonly", "readonly");
-            $("#txt_gl_dh").attr("readonly", "readonly"); 
+            $("#txt_gl_dh").attr("readonly", "readonly"); $("#txt_sys").attr("readonly", "readonly");
         });
 
         $(function () {
@@ -407,7 +407,6 @@
                     var obj = eval(data.d);
 
                     var json_op = obj[0].json_jcnr;
-                    //$('#txt_jcnr').val('');
                     $("select[id='checkedLevel']").multipleSelect('setSelects', []);
 
                     // 设置默认选中
@@ -417,6 +416,8 @@
                     });
                    
                     $("select[id='checkedLevel']").multipleSelect('setSelects', arrayObj);
+
+                    $("#txt_sys").val(obj[0].sys);
                 }
 
             });
@@ -477,6 +478,30 @@
             });
         }
 
+        function checkedLevel_change(){
+            var selectValue = "";
+            $("#checkedLevel").find("option:selected").each(function () {
+                selectValue += $(this).text() + ","
+            });
+            if (selectValue != "") { selectValue = selectValue.substr(0, selectValue.length - 1); }
+            //layer.alert(selectValue);
+
+            $.ajax({
+                type: "post",
+                url: "JC_Apply.aspx/checkedLevel_change",
+                data: "{'jcnr':'" + selectValue + "','domain': '" + $("#domain").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
+                    $("#txt_sys").val(obj[0].sys);
+                }
+
+            });
+
+        }
+
         function valid(para) {
             if ($("#txt_xmh").val() == "") {
                 layer.alert("请输入【项目号】.");
@@ -513,7 +538,11 @@
                 layer.alert("【送检数量】不可小于等于0.");
                 return false;
             }
-
+            
+            if ($("#txt_sys").val() == "") {
+                layer.alert("请输入【实验室】.");
+                return false;
+            }
             var selectValue = "";
             $("#checkedLevel").find("option:selected").each(function () {
                 selectValue += $(this).text() + ","
@@ -564,6 +593,7 @@
         function show_rtp(){
                 window.location.href = "/JianCe/JianCe_Rpt.aspx?id="+<% = _id %>;
         }
+
     </script>
 </head>
 <body>
@@ -645,13 +675,16 @@
                     </div>
                     </label>
                 </div> 
-            </div>    
+            </div>  
+            <div class="weui-cell">
+                <div class="weui-cell__hd f-red"><label class="weui-label">实验室</label></div>
+                <asp:TextBox ID="txt_sys" class="weui-input" style="color:gray;" runat="server" placeholder="实验室" ></asp:TextBox>  
+            </div>  
             <div class="weui-cell weui-flex">
                 <div class="weui-cell__hd f-red"><label class="weui-label">检测内容</label></div> 
                 <div class="weui-flex__item ">
-                    <select id='checkedLevel' multiple="multiple"></select>
+                    <select id='checkedLevel' multiple="multiple" onchange="checkedLevel_change()"></select>
                 </div>
-                 
             </div>
 
             <div class="weui-cell">
