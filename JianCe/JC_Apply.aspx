@@ -134,7 +134,8 @@
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
                         + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $.trim($('#txt_prod_machine').val())
                         + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
-                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()+ "','_gl_dh':'" + $('#txt_gl_dh').val() + "'}",
+                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()+ "','_gl_dh':'" + $('#txt_gl_dh').val() 
+                        + "','_sys':'" + $('#txt_sys').val() + "'}",
                         //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -187,7 +188,8 @@
                         + "','_ljh':'" + $('#txt_ljh').val() + "','_line':'" + $('#txt_line').val() + "','_workshop':'" + $('#txt_workshop').val()
                         + "','_sj_type':'" + $('#txt_sj_type').val() + "','_op':'" + $('#txt_op').val() + "','_prod_machine':'" + $.trim($('#txt_prod_machine').val())
                         + "','_sj_qty':'" + $('#txt_sj_qty').val() + "','_priority':'" + $("input[name='priority']:checked").val()
-                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()+ "','_gl_dh':'" + $('#txt_gl_dh').val() + "'}",
+                        + "','_jcnr':'" + selectValue + "','_remark':'" + $('#txt_remark').val()+ "','_gl_dh':'" + $('#txt_gl_dh').val() 
+                        + "','_sys':'" + $('#txt_sys').val() + "'}",
                         //+ "','_dh':'" + $('#dh').val() + "','_stepid':'" + $('#stepid').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

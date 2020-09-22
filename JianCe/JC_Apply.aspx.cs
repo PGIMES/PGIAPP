@@ -281,7 +281,7 @@ public partial class JC_Apply : System.Web.UI.Page
     [WebMethod]
     public static string save(string _option, string _emp_code_name, string _id, string _dh, string _source_lot, string _xmh
         , string _ljh, string _line, string _workshop, string _sj_type, string _op, string _prod_machine, string _sj_qty
-        , string _priority, string _jcnr, string _remark, string _gl_dh)
+        , string _priority, string _jcnr, string _remark, string _gl_dh, string _sys)
     {
         string flag = "N", msg = "";
 
@@ -334,9 +334,9 @@ public partial class JC_Apply : System.Web.UI.Page
         }
 
         if (_id == "") { _id = "0"; }
-        string re_sql = @"exec usp_app_JC_Apply '{0}','{1}',{2},'{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}','{14}','{15}','{16}','{17}'";
+        string re_sql = @"exec usp_app_JC_Apply '{0}','{1}',{2},'{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}','{14}','{15}','{16}','{17}','{18}'";
         re_sql = string.Format(re_sql, _option, _emp_code_name, Convert.ToInt32(_id), _dh, _source_lot, _xmh, _ljh, _line, _workshop
-                , _sj_type, _op, _prod_machine, _sj_qty, _priority, _jcnr, _remark, _file, _gl_dh);
+                , _sj_type, _op, _prod_machine, _sj_qty, _priority, _jcnr, _remark, _file, _gl_dh, _sys);
 
         DataTable re_dt = SQLHelper.Query(re_sql, connString).Tables[0];
         flag = re_dt.Rows[0][0].ToString();
