@@ -19,7 +19,7 @@
     <script src="/js/multiple-select.js"></script>
     <style>
         .weui-cell{
-            padding:4px 15px; 
+            padding:4px 8px; 
         }
         .f_gray{
             color:gray;
@@ -42,6 +42,9 @@
         .ms-choice{
             border:0px;
         }
+        .weui-label{
+            width:85px;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -50,6 +53,11 @@
         });
 
         $(function () {
+             $("#txt_xmh_rs").change(function () {
+                 $("#txt_xmh").val($("#txt_xmh_rs").val());
+                 pgino_change();
+            });       
+
             $('#checkedLevel').multipleSelect({
                 height: "100px", //宽度
                 addTitle: true, //鼠标点悬停在下拉框时是否显示被选中的值
@@ -378,6 +386,10 @@
                 success: function (data) {
                     var obj = eval(data.d);
 
+                    if (obj[0].msg!="") {layer.alert(obj[0].msg);}
+                    
+                    if($("#txt_xmh_rs").val()!=""){$("#txt_xmh_rs").val(obj[0].xmh);}
+                    $("#txt_xmh").val(obj[0].xmh);
                     $("#txt_ljh").val(obj[0].ljh);
                     $("#txt_line").val(obj[0].line);
                     $("#txt_workshop").val(obj[0].workshop);
@@ -654,7 +666,8 @@
             </div>    
             <div class="weui-cell">
                 <div class="weui-cell__hd f-red"><label class="weui-label">项目号</label></div>
-                <asp:TextBox ID="txt_xmh" class="weui-input" style="color:gray;width:55%; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="项目号" ></asp:TextBox>    
+                <asp:TextBox ID="txt_xmh_rs" class="weui-input" style="color:gray;width:50%;font-size:13px; border-bottom:1px solid #e5e5e5;" runat="server" placeholder="项目号" ></asp:TextBox> 
+                <asp:TextBox ID="txt_xmh" class="weui-input" style="color:gray;width:50%;font-size:13px;" runat="server"></asp:TextBox>    
                 <asp:TextBox ID="txt_ljh" class="weui-input" style="color:gray;font-size:13px;" runat="server"></asp:TextBox> 
             </div>
             <div class="weui-cell">

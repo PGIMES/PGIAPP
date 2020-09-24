@@ -192,17 +192,22 @@ public partial class JC_Apply : System.Web.UI.Page
     [WebMethod]
     public static string pgino_change(string pgino, string sj_type, string domain, string prod_machine)
     {
-        string result = "";
+        string result = "";string msg = "";
         string sql = @" exec [usp_app_JC_Apply_pgino_change] '" + domain + "','" + pgino + "','" + sj_type + "','" + prod_machine + "'";
         DataSet ds = SQLHelper.Query(sql, connString);
 
-        string ljh = "", line = "", workshop = "";
+        string xmh = "", ljh = "", line = "", workshop = "";
         DataTable dt = ds.Tables[0];
         if (dt.Rows.Count > 0)
         {
+            xmh = dt.Rows[0]["pt_part"].ToString();
             ljh = dt.Rows[0]["pt_desc1"].ToString();
             line = dt.Rows[0]["scx"].ToString();
             workshop = dt.Rows[0]["scx_workshop"].ToString();
+        }
+        else
+        {
+            msg = "物料号"+ pgino + "不存在";
         }
 
         DataTable dt_op = ds.Tables[1];
@@ -211,7 +216,8 @@ public partial class JC_Apply : System.Web.UI.Page
         DataTable dt_gl_dh = ds.Tables[2];
         string json_gl_dh = JsonConvert.SerializeObject(dt_gl_dh);
 
-        result = "[{\"ljh\":\"" + ljh + "\",\"line\":\"" + line + "\",\"workshop\":\"" + workshop + "\",\"json_op\":" + json_op + ",\"json_gl_dh\":" + json_gl_dh + "}]";
+        result = "[{\"msg\":\"" + msg + "\",\"xmh\":\"" + xmh + "\",\"ljh\":\"" + ljh + "\",\"line\":\"" + line + "\",\"workshop\":\"" + workshop 
+            + "\",\"json_op\":" + json_op + ",\"json_gl_dh\":" + json_gl_dh + "}]";
         return result;
 
     }
