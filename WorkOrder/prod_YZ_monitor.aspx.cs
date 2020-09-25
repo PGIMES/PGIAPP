@@ -38,7 +38,7 @@ public partial class prod_YZ_monitor : System.Web.UI.Page
     //生产中
     private void BindData1()
     {
-        string sql = string.Format(@"exec [usp_app_YZ_monitor_] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 1 );
+        string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}",  Request["workshop"], WeiXin.GetCookie("workcode"), 1 );
         DataSet ds= SQLHelper.Query(sql);        
         DataTable dt_data = ds.Tables[0];
         ViewState["dt_data_1"] = dt_data;
