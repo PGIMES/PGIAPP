@@ -41,34 +41,41 @@
             $("#txt_loc").change(function () {
                 pgino_change();
             });
+            $("#txt_loc_to").change(function () {
+                loc_to_change();
+            });
 
-            //$("#btn_sign_2").click(function () {
-            //    $("#btn_sign_2").attr("disabled", "disabled");
-            //    $("#btn_sign_2").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
+            $("#btnsave").click(function () {
+                $("#btnsave").attr("disabled", "disabled");
+                $("#btnsave").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
+                if (!valid()) {
+                    $("#btnsave").removeAttr("disabled");
+                    $("#btnsave").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
 
-            //    $.ajax({
-            //        type: "post",
-            //        url: "Loc_Transfer.aspx/save",
-            //        data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "'}",
-            //        contentType: "application/json; charset=utf-8",
-            //        dataType: "json",
-            //        async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
-            //        success: function (data) {
-            //            var obj = eval(data.d);
-            //            if (obj[0].flag == "Y") {
-            //                layer.alert(obj[0].msg);
-            //                $("#btn_sign_2").removeAttr("disabled");
-            //                $("#btn_sign_2").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
+                    return false;
+                }
 
-            //                return false;
-            //            }
+                $.ajax({
+                    type: "post",
+                    url: "Loc_Transfer.aspx/save",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    success: function (data) {
+                        var obj = eval(data.d);
+                        if (obj[0].flag == "Y") {
+                            layer.alert(obj[0].msg);
+                            $("#btnsave").removeAttr("disabled");
+                            $("#btnsave").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
 
-            //            window.location.href = "/JianCe/JianCe_Monitor.aspx";
-            //        }
-
-            //    });
-            //});
+                            return false;
+                        }
+                        window.location.href = "/ck.aspx";
+                    }
+                });
+            });
         });
 
         function pgino_change() {
@@ -89,12 +96,54 @@
                     $("#txt_ref").val(obj[0].ref_value);
                     $("#txt_loc").val(obj[0].loc_value);
                     $("#txt_qty").val(obj[0].qty_value);
-
                 }
+            });
+        }
+        function loc_to_change() {
+            $.ajax({
+                type: "post",
+                url: "Loc_Transfer.aspx/loc_to_change",
+                data: "{'domain': '" + $("#domain").val() + "','loc':'" + $("#txt_loc_to").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                success: function (data) {
+                    var obj = eval(data.d);
 
+                    if (obj[0].flag == "Y") {
+                        $.toptip(obj[0].msg, 3000, 'error');//layer.alert(obj[0].msg);
+                        $("#txt_loc_to").val('');
+                    }
+                }
             });
         }
 
+        function valid() {
+            if ($.trim($("#txt_xmh").val()) == "") {
+                layer.alert("请输入【项目号】.");
+                return false;
+            }
+            if ($.trim($("#txt_loc").val()) == "") {
+                layer.alert("请输入【当前库位】.");
+                return false;
+            }
+            if ($.trim($("#txt_qty").val()) == "" || $.trim($("#txt_qty").val()) == "0") {
+                layer.alert("请输入【数量】.");
+                return false;
+            } else if (parseFloat($("#txt_qty").val()) <= 0) {
+                layer.alert("【数量】不可小于等于0.");
+                return false;
+            }
+            if ($.trim($("#txt_ref_to").val()) == "") {
+                layer.alert("请输入【移至参考号】.");
+                return false;
+            }
+            if ($.trim($("#txt_loc_to").val()) == "") {
+                layer.alert("请输入【移至库位】.");
+                return false;
+            }
+            return true;
+        }
     </script>
 </head>
 <body>
@@ -179,9 +228,6 @@
     </script>
 </body>
     <script>
-        //Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-        //    sm_loc_hg();
-        //});
         var datad = [];
         $.ajax({
             url: "/getwxconfig.aspx/GetScanQRCode",

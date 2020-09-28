@@ -97,6 +97,7 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         ViewState["dt_data_end_2"] = ds_hg.Tables[3];
         ViewState["dt_data_end_3"] = ds_hg.Tables[4];
         ViewState["dt_data_end_4"] = ds_hg.Tables[5];
+        {
     }
 
     //待入库

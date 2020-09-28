@@ -134,6 +134,20 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string loc_to_change(string domain, string loc)
+    {
+        string flag = "N", msg = "";
+        string sql = @" exec [usp_app_Loc_Transfer_loc_to_change] '" + domain + "','" + loc + "'";
+        DataTable re_dt = SQLHelper.Query(sql).Tables[0];
+        flag = re_dt.Rows[0][0].ToString();
+        msg = re_dt.Rows[0][1].ToString();
+
+        string result = "[{\"flag\":\"" + flag + "\",\"msg\":\"" + msg + "\"}]";
+        return result;
+
+    }
+
 
     [WebMethod]
     public static string sign(string _emp_code_name)
