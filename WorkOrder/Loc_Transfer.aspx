@@ -26,8 +26,7 @@
 
     <script>
         $(document).ready(function () {
-            //$("#txt_ljh").attr("readonly", "readonly"); $("#txt_line").attr("readonly", "readonly"); $("#txt_workshop").attr("readonly", "readonly");
-            //$("#txt_gl_dh").attr("readonly", "readonly"); $("#txt_sys").attr("readonly", "readonly");
+            //$("#txt_ljh").attr("readonly", "readonly"); 
         });
 
         $(function () {
@@ -44,6 +43,8 @@
             $("#txt_loc_to").change(function () {
                 loc_to_change();
             });
+            sm_ref(); sm_loc();
+            sm_ref_to(); sm_loc_to();
 
             $("#btnsave").click(function () {
                 $("#btnsave").attr("disabled", "disabled");
@@ -59,7 +60,9 @@
                 $.ajax({
                     type: "post",
                     url: "Loc_Transfer.aspx/save",
-                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "'}",
+                    data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','domain': '" + $("#domain").val()
+                        + "','pgino':'" + $("#txt_xmh").val() + "','_ref':'" + $("#txt_ref").val() + "','loc':'" + $('#txt_loc').val() + "','qty':'" + $('#txt_qty').val()
+                        + "','ref_to':'" + $('#txt_ref_to').val() + "','loc_to':'" + $('#txt_loc_to').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
@@ -77,6 +80,71 @@
                 });
             });
         });
+
+        function sm_ref() {
+            $('#img_sm_ref').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容
+                            $('#txt_ref').val(result);
+                            pgino_change();
+                        }
+                    });
+                });
+            });
+        }
+        function sm_loc() {
+            $('#img_sm_loc').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容
+                            $('#txt_loc').val(result);
+                            pgino_change();
+                        }
+                    });
+                });
+            });
+        }
+
+        function sm_ref_to() {
+            $('#img_sm_ref_to').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容
+                            $('#txt_ref_to').val(result);
+                        }
+                    });
+                });
+            });
+        }
+        function sm_loc_to() {
+            $('#img_sm_loc_to').click(function () {
+                wx.ready(function () {
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            // code 在这里面写上扫描二维码之后需要做的内容
+                            $('#txt_loc_to').val(result);
+                            loc_to_change();
+                        }
+                    });
+                });
+            });
+        }
 
         function pgino_change() {
             $.ajax({
@@ -99,6 +167,7 @@
                 }
             });
         }
+
         function loc_to_change() {
             $.ajax({
                 type: "post",
@@ -136,6 +205,9 @@
             }
             if ($.trim($("#txt_ref_to").val()) == "") {
                 layer.alert("请输入【移至参考号】.");
+                return false;
+            } else if (($.trim($("#txt_ref_to").val())).length != 8) {
+                layer.alert("【移至参考号】长度必须8位.");
                 return false;
             }
             if ($.trim($("#txt_loc_to").val()) == "") {

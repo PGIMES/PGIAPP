@@ -150,7 +150,8 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
 
 
     [WebMethod]
-    public static string sign(string _emp_code_name)
+    public static string sign(string _emp_code_name, string domain, string pgino, string _ref, string loc, string qty
+            , string ref_to, string loc_to)
     {
         string flag = "N", msg = "";
         //string re_sql = re_sql = @"exec usp_app_JC_sign_V1 '{0}'";
