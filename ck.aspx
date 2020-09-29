@@ -75,6 +75,9 @@
                     if (obj[0].flag == "Y") {
                         $("#div_rk_print_aga").show();
                     }
+                    if (obj[0].flag_loc_zy == "Y") {
+                        $("#div_loc_transfer").show();
+                    }
                 }
             });
         }
@@ -250,6 +253,15 @@
                     </div>
                     <div class="weui-cell__bd">
                         <p>入库标签补打</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/workorder/Loc_Transfer.aspx" id="div_loc_transfer" style="display:none;">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-print margin10-r"></i>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>库位转移<span class="f12">（测试中）</span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>

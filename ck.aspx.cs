@@ -68,7 +68,8 @@ public partial class ck : System.Web.UI.Page
         DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
 
         string flag = re_dt.Rows[0][0].ToString();
-        string res = "[{\"flag\":\"" + flag + "\"}]";
+        string flag_loc_zy = re_dt.Rows[0][0].ToString();
+        string res = "[{\"flag\":\"" + flag + "\",\"flag_loc_zy\":\"" + flag_loc_zy + "\"}]";
         return res;
 
     }
