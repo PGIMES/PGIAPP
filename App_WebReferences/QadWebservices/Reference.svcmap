@@ -18,11 +18,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://172.16.5.56/QADIFPGITEST/default.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://172.16.5.56/QADIFPGIPROD/default.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="default.disco" MetadataType="Disco" ID="854c73ed-99c2-49ff-a05c-ae862cec27a2" SourceId="1" SourceUrl="http://172.16.5.56/QADIFPGITEST/default.asmx?disco" />
-    <MetadataFile FileName="default.wsdl" MetadataType="Wsdl" ID="bed1be54-4126-4c7e-b1c8-f5e2aac9dfa1" SourceId="1" SourceUrl="http://172.16.5.56/QADIFPGITEST/default.asmx?wsdl" />
+    <MetadataFile FileName="default1.wsdl" MetadataType="Wsdl" ID="fc55d1b2-390b-4fff-80de-cb7533c8196d" SourceId="1" SourceUrl="http://172.16.5.56/QADIFPGIPROD/default.asmx?wsdl" />
+    <MetadataFile FileName="default1.disco" MetadataType="Disco" ID="78595954-51a4-4f05-b2af-68217708fb3e" SourceId="1" SourceUrl="http://172.16.5.56/QADIFPGIPROD/default.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -159,16 +159,16 @@ Invoke 方法返回值：&lt;br&gt;
   </wsdl:binding>
   <wsdl:service name="QADInterface">
     <wsdl:port name="QADInterfaceSoap" binding="tns:QADInterfaceSoap">
-      <soap:address location="http://172.16.5.56/QADIFPGITEST/default.asmx" />
+      <soap:address location="http://172.16.5.56/QADIFPGIPROD/default.asmx" />
     </wsdl:port>
     <wsdl:port name="QADInterfaceSoap12" binding="tns:QADInterfaceSoap12">
-      <soap12:address location="http://172.16.5.56/QADIFPGITEST/default.asmx" />
+      <soap12:address location="http://172.16.5.56/QADIFPGIPROD/default.asmx" />
     </wsdl:port>
     <wsdl:port name="QADInterfaceHttpGet" binding="tns:QADInterfaceHttpGet">
-      <http:address location="http://172.16.5.56/QADIFPGITEST/default.asmx" />
+      <http:address location="http://172.16.5.56/QADIFPGIPROD/default.asmx" />
     </wsdl:port>
     <wsdl:port name="QADInterfaceHttpPost" binding="tns:QADInterfaceHttpPost">
-      <http:address location="http://172.16.5.56/QADIFPGITEST/default.asmx" />
+      <http:address location="http://172.16.5.56/QADIFPGIPROD/default.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
