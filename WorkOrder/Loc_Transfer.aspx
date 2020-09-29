@@ -9,7 +9,6 @@
     <title>库位转移</title>
     <script src="/Scripts/jquery-1.10.2.min.js"></script> 
     <script src="/Content/layer/layer.js"></script>
-
     <link href="/css/weui.css" rel="stylesheet" />
     <link href="/css/weuix.css" rel="stylesheet" />
     <script src="/js/zepto.min.js"></script>
@@ -46,7 +45,7 @@
             sm_ref(); sm_loc();
             sm_ref_to(); sm_loc_to();
 
-            $("#btnsave").click(function () {
+            $("#btnsave").click(function () {              
                 $("#btnsave").attr("disabled", "disabled");
                 $("#btnsave").removeClass('weui-btn_primary').addClass('weui_btn_disabled weui_btn_default');
 
@@ -65,7 +64,7 @@
                         + "','ref_to':'" + $('#txt_ref_to').val() + "','loc_to':'" + $('#txt_loc_to').val() + "','comment':'" + $('#comment').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
+                    async: true,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                     success: function (data) {
                         var obj = eval(data.d);
                         if (obj[0].msg != "") {
