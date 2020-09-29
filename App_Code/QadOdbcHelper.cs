@@ -20,6 +20,7 @@ using System.Text;
 
         public static string SQLErrorString;
         public static string ODBCCSRead = "Dsn=mfgprod_read;uid=sysprogress;pwd=sysprogress";
+        //public static string ODBCCSRead = "Dsn=mfgdemo_read;uid=sysprogress;pwd=sysprogress";
         public static string ODBCCS = "Dsn=mfgtrain_write;uid=sysprogress;pwd=sysprogress";
 
         /// <summary>

@@ -258,7 +258,7 @@
                 </a>
                 <a class="weui-cell weui-cell_access" href="/workorder/Loc_Transfer.aspx" id="div_loc_transfer" style="display:none;">
                     <div class="weui-cell__hd">
-                        <i class="fa fa-print margin10-r"></i>
+                        <i class="fa fa-exchange margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
                         <p>库位转移<span class="f12">（测试中）</span></p>
