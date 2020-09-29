@@ -68,7 +68,7 @@
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
                     success: function (data) {
                         var obj = eval(data.d);
-                        if (obj[0].flag == "Y") {
+                        if (obj[0].msg != "") {
                             layer.alert(obj[0].msg);
                             $("#btnsave").removeAttr("disabled");
                             $("#btnsave").removeClass('weui_btn_disabled weui_btn_default').addClass('weui-btn_primary');
