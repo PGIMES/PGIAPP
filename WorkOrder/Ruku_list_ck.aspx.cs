@@ -73,20 +73,22 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         list_99_4_line.DataBind();
         count_99_4 = dt_99_4.Rows.Count;
 
-        ////待入库
-        //BindData4();
-        ////入库完成24小时
-        //BindData5();
+        /*
+        //待入库
+        BindData4();
+        //入库完成24小时
+        BindData5();
+        */
 
+        /*
+        string workcode = WeiXin.GetCookie("workcode");
+        string sql_a = @"exec [usp_app_wip_list_Qcc] '二车间','" + workcode + "',4;";
+        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workcode + "',4;";
+        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workcode + "',4;";
 
-        string workorder = WeiXin.GetCookie("workcode");
-        string sql_a = @"exec [usp_app_wip_list_Qcc] '二车间','" + workorder + "',4;";
-        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',4;";
-        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workorder + "',4;";
-
-        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '二车间','" + workorder + "',5;";
-        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workorder + "',5;";
-        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workorder + "',5;";
+        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '二车间','" + workcode + "',5;";
+        sql_a = sql_a + @"exec [usp_app_YZ_monitor] '三车间','" + workcode + "',5;";
+        sql_a = sql_a + @"exec [usp_app_wip_list_Qcc] '四车间','" + workcode + "',5;";
         DataSet ds_hg = SQLHelper.Query(sql_a);
 
 
@@ -97,7 +99,44 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         ViewState["dt_data_end_2"] = ds_hg.Tables[3];
         ViewState["dt_data_end_3"] = ds_hg.Tables[4];
         ViewState["dt_data_end_4"] = ds_hg.Tables[5];
+        */
+
+        string workcode = WeiXin.GetCookie("workcode");
+        //1.new方式实例化一个Task，需要通过Start方法启动
+        Task<DataTable> task_2 = new Task<DataTable>(() =>
         {
+            return GetdtData_2(workcode);
+        });
+        task_2.Start();
+
+        ////2.Task.Factory.StartNew(Func func)创建和启动一个Task
+        Task<DataTable> task_3 = Task.Factory.StartNew<DataTable>(() =>
+        {
+            return GetdtData_3(workcode);
+        });
+        Task<DataTable> task_4 = Task.Factory.StartNew<DataTable>(() =>
+        {
+            return GetdtData_4(workcode);
+        });
+        Task<DataTable> task_end_2 = Task.Factory.StartNew<DataTable>(() =>
+        {
+            return GetdtData_end_2(workcode);
+        });
+        Task<DataTable> task_end_3 = Task.Factory.StartNew<DataTable>(() =>
+        {
+            return GetdtData_end_3(workcode);
+        });
+        Task<DataTable> task_end_4 = Task.Factory.StartNew<DataTable>(() =>
+        {
+            return GetdtData_end_4(workcode);
+        });
+
+        ViewState["dt_data_2"] = task_2.Result;
+        ViewState["dt_data_3"] = task_3.Result;
+        ViewState["dt_data_4"] = task_4.Result;
+        ViewState["dt_data_end_2"] = task_end_2.Result;
+        ViewState["dt_data_end_3"] = task_end_3.Result;
+        ViewState["dt_data_end_4"] = task_end_4.Result;
     }
 
     //待入库
@@ -132,6 +171,44 @@ public partial class WorkOrder_Ruku_list_ck : System.Web.UI.Page
         ViewState["dt_data_end_4"] = dt_data_end_4;
     }
 
+
+    //=============task 使用=============================================  
+    private DataTable GetdtData_2(string workcode)
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", workcode, 4);
+        DataTable dt_data = SQLHelper.Query(sql).Tables[0];
+        return dt_data;
+    }
+    private DataTable GetdtData_3(string workcode)
+    {
+        string sql = string.Format(@"exec [usp_app_YZ_monitor] '{0}','{1}',{2}", "三车间", workcode, 4);
+        DataTable dt_data = SQLHelper.Query(sql).Tables[0];
+        return dt_data;
+    }
+    private DataTable GetdtData_4(string workcode)
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", workcode, 4);
+        DataTable dt_data = SQLHelper.Query(sql).Tables[0];
+        return dt_data;
+    }
+    private DataTable GetdtData_end_2(string workcode)
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "二车间", workcode, 5);
+        DataTable dt_data = SQLHelper.Query(sql).Tables[0];
+        return dt_data;
+    }
+    private DataTable GetdtData_end_3(string workcode)
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "三车间", workcode, 5);
+        DataTable dt_data = SQLHelper.Query(sql).Tables[0];
+        return dt_data;
+    }
+    private DataTable GetdtData_end_4(string workcode)
+    {
+        string sql = string.Format(@"exec [usp_app_wip_list_Qcc] '{0}','{1}',{2}", "四车间", workcode, 5);
+        DataTable dt_data = SQLHelper.Query(sql).Tables[0];
+        return dt_data;
+    }
 
     protected void list_98_2_line_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
