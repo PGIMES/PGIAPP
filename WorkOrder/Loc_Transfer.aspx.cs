@@ -121,11 +121,14 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
                         }
                     }
 
-                    if (msg == "" && drs.Length == 1)//多笔的 不自动带出
+                    if (msg == "" && drs != null)
                     {
-                        ref_value = drs[0]["ld_ref"].ToString();
-                        qty_value = drs[0]["ld_qty_oh"].ToString();
-                        loc_value = drs[0]["ld_loc"].ToString();
+                        if (drs.Length == 1)//多笔的 不自动带出
+                        {
+                            ref_value = drs[0]["ld_ref"].ToString();
+                            qty_value = drs[0]["ld_qty_oh"].ToString();
+                            loc_value = drs[0]["ld_loc"].ToString();
+                        }
                     }
                 }
             }
@@ -152,8 +155,8 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
 
 
     [WebMethod]
-    public static string sign(string _emp_code_name, string domain, string pgino, string _ref, string loc, string qty
-            , string ref_to, string loc_to)
+    public static string save(string _emp_code_name, string domain, string pgino, string _ref, string loc, string qty
+            , string ref_to, string loc_to,string comment)
     {
         string msg = "";
 
@@ -164,7 +167,7 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
             en.sourceid = 0;
             en.historyid = 0;
             en.guid = Guid.NewGuid().ToString();
-            en.companycode = qty;
+            en.companycode = domain;
             en.part = pgino;
             en.lotserial_qty = Convert.ToDecimal(qty);
             en.nbr = "";
@@ -188,8 +191,8 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
 
 
             //-----------------------插入数据库，做log记录
-            string re_sql = re_sql = @"exec [usp_app_Loc_Transfer_Log] '{0}','{1}','{2}','{3}','{4}',{5},'{6}','{7}','{8}'";
-            re_sql = string.Format(re_sql, _emp_code_name, domain, pgino, _ref, loc, Convert.ToSingle(qty), ref_to, loc_to, en.guid);
+            string re_sql = re_sql = @"exec [usp_app_Loc_Transfer_Log] '{0}','{1}','{2}','{3}','{4}',{5},'{6}','{7}','{8}','{9}'";
+            re_sql = string.Format(re_sql, _emp_code_name, domain, pgino, _ref, loc, Convert.ToSingle(qty), ref_to, loc_to, en.guid, comment);
             DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
             msg = re_dt.Rows[0][0].ToString();
 
@@ -205,7 +208,7 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
                 qad_result = ParseResultMessage(rec_msg, out qad_msg);
                 if (qad_result != "200") { msg = qad_msg; } //200正确，其他错误
 
-                string sqlStr = "update App_Loc_Transfer set ERR_CODE='" + qad_result + "',ERR_MSG='" + qad_msg + "',qad_updatetime=getdate() where guid='" + en.guid + "'";
+                string sqlStr = "update App_Loc_Transfer set ERR_CODE='" + qad_result + "',ERR_MSG='" + qad_msg + "',qad_updatetime=getdate() where guid_id='" + en.guid + "'";
                 SQLHelper.ExSql(sqlStr);
             }
         }

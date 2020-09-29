@@ -62,7 +62,7 @@
                     url: "Loc_Transfer.aspx/save",
                     data: "{'_emp_code_name':'" + $('#emp_code_name').val() + "','domain': '" + $("#domain").val()
                         + "','pgino':'" + $("#txt_xmh").val() + "','_ref':'" + $("#txt_ref").val() + "','loc':'" + $('#txt_loc').val() + "','qty':'" + $('#txt_qty').val()
-                        + "','ref_to':'" + $('#txt_ref_to').val() + "','loc_to':'" + $('#txt_loc_to').val() + "'}",
+                        + "','ref_to':'" + $('#txt_ref_to').val() + "','loc_to':'" + $('#txt_loc_to').val() + "','comment':'" + $('#comment').val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,//默认是true，异步；false为同步，此方法执行完在执行下面代码
