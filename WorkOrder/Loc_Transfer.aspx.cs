@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
 using System.Xml.Linq;
 
 public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
@@ -156,44 +157,62 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
     {
         string msg = "";
 
-        //-------------------------调用webservice
-        Model_SCM_TR en = new Model_SCM_TR();
-        en.need_no = "";
-        en.sourceid = 0;
-        en.historyid = 0;
-        en.guid = Guid.NewGuid().ToString();
-        en.companycode = qty;
-        en.part = pgino;
-        en.lotserial_qty = Convert.ToDecimal(qty);
-        en.nbr = "";
-        en.so_job = "";
-        en.rmks = "";
-        en.site_from = domain;
-        en.loc_from = loc;
-        en.lotser_from = "";
-        en.lotref_from = _ref;
-        en.site_to = domain;
-        en.loc_to = loc_to;
-        en.lotser_to = "";
-        en.lotref_to = ref_to;
-        en.ex1 = "";
-        en.ex2 = "";
-        en.ex3 = "";
-        en.ex4 = "";
-        en.ex5 = "";
-        en.ex6 = "";
-        en.cmdtype = "库位转移";
+        try
+        {
+            Model_SCM_TR en = new Model_SCM_TR();
+            en.need_no = "";
+            en.sourceid = 0;
+            en.historyid = 0;
+            en.guid = Guid.NewGuid().ToString();
+            en.companycode = qty;
+            en.part = pgino;
+            en.lotserial_qty = Convert.ToDecimal(qty);
+            en.nbr = "";
+            en.so_job = "";
+            en.rmks = "";
+            en.site_from = domain;
+            en.loc_from = loc;
+            en.lotser_from = "";
+            en.lotref_from = _ref;
+            en.site_to = domain;
+            en.loc_to = loc_to;
+            en.lotser_to = "";
+            en.lotref_to = ref_to;
+            en.ex1 = "";
+            en.ex2 = "";
+            en.ex3 = "";
+            en.ex4 = "";
+            en.ex5 = "";
+            en.ex6 = "";
+            en.cmdtype = "库位转移";
 
-        string content = GetXmlForTR(en);
 
-        QadWebservices.QADInterfaceSoapClient ser = new QadWebservices.QADInterfaceSoapClient("QADInterfaceSoap");
-        msg = ser.Invoke("SCM", "QAD", en.guid, "TR", content);
+            //-----------------------插入数据库，做log记录
+            string re_sql = re_sql = @"exec [usp_app_Loc_Transfer_Log] '{0}','{1}','{2}','{3}','{4}',{5},'{6}','{7}','{8}'";
+            re_sql = string.Format(re_sql, _emp_code_name, domain, pgino, _ref, loc, Convert.ToSingle(qty), ref_to, loc_to, en.guid);
+            DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+            msg = re_dt.Rows[0][0].ToString();
 
-        //-----------------------插入数据库，做log记录
 
-        string re_sql = re_sql = @"exec [usp_app_Loc_Transfer_Log] '{0}'";
-        re_sql = string.Format(re_sql, _emp_code_name, domain, pgino, _ref, loc, qty, ref_to, loc_to, msg, en.guid);
-        DataTable re_dt = SQLHelper.Query(re_sql).Tables[0];
+            //-------------------------调用webservice
+            if (msg == "")
+            {
+                string content = GetXmlForTR(en);
+                QadWebservices.QADInterfaceSoapClient ser = new QadWebservices.QADInterfaceSoapClient("QADInterfaceSoap");
+                string rec_msg = ser.Invoke("SCM", "QAD", en.guid, "TR", content);
+
+                string qad_result = "", qad_msg = "";
+                qad_result = ParseResultMessage(rec_msg, out qad_msg);
+                if (qad_result != "200") { msg = qad_msg; } //200正确，其他错误
+
+                string sqlStr = "update App_Loc_Transfer set ERR_CODE='" + qad_result + "',ERR_MSG='" + qad_msg + "',qad_updatetime=getdate() where guid='" + en.guid + "'";
+                SQLHelper.ExSql(sqlStr);
+            }
+        }
+        catch (Exception ex)
+        {
+            msg = "error:" + ex.Message;
+        }
 
         string result = "[{\"msg\":\"" + msg + "\"}]";
         return result;
@@ -330,5 +349,35 @@ public partial class WorkOrder_Loc_Transfer : System.Web.UI.Page
         tr.Add(ex6);
         return xDoc;
     }
+
+    public static string ParseResultMessage(string rec_msg,out string err_msgs)
+    {
+        string result = "";
+        err_msgs = "";
+        try
+        {
+            XmlDocument xdoc = new XmlDocument();
+            xdoc.LoadXml(rec_msg);
+            XmlNode CorpTaskId = xdoc.SelectSingleNode("root/RequestHead/RequestID");
+            string guid = CorpTaskId.InnerText;
+
+            XmlNodeList EportLocationInformations = xdoc.SelectNodes("root/RequestBody/List/QAD");
+            foreach (XmlNode item in EportLocationInformations)
+            {
+                //XmlNode BKF_DOC = item.SelectSingleNode("BKF_DOC");
+                XmlNode ERR_CODE = item.SelectSingleNode("ERR_CODE"); //200正确，其他错误
+                XmlNode ERR_MSG = item.SelectSingleNode("ERR_MSG");
+                result = ERR_CODE.InnerText;
+                err_msgs = ERR_MSG.InnerText;
+            }
+        }
+        catch (Exception ex)//解析返回结果出错
+        {
+            result = "000";
+            err_msgs = ex.Message;
+        }
+        return result;
+    }
+
 
 }
