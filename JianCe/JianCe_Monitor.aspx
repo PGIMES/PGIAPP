@@ -618,6 +618,7 @@
                                     rowsCnt2 = dt_line.Select(exp+"and priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                     var rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
+                                    var rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -626,7 +627,7 @@
                                                 <i class="icon nav-icon icon-49"></i><% =sys %> 待取回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l NG ">NG<% =rowsNg %></span>
+                                                <span class="weui-badge  bg-<% =((rowsNg+rowsNK)==0?"gray":"red") %> margin15-l NG ">NG<% =rowsNg %>+<% =rowsNK %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour"  ><% =rowsCnt3 %>h</div>
 
                                             </div>
@@ -645,6 +646,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -653,7 +655,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l ">NG<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =((rowsNgLine+rowsNKLine)==0?"gray":"red") %>  margin10-l ">NG<% =rowsNgLine.ToString() %>+<% =rowsNKLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -690,6 +692,8 @@
                                                                         <%} %>
                                                                          <% if (dr["jcResult"].ToString() == "NG")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">NG</span>
+                                                                        <%}  else if (dr["jcResult"].ToString() == "内控")  { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -925,6 +929,7 @@
                                     rowsCnt2 = dt_line.Select(exp+"and priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                     rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
+                                    rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -933,7 +938,7 @@
                                                 <i class="icon nav-icon icon-49"></i><% =sys %> 待取回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l NG ">NG<% =rowsNg %></span>
+                                                <span class="weui-badge  bg-<% =((rowsNg+rowsNK)==0?"gray":"red") %> margin15-l NG ">NG<% =rowsNg %>+<% =rowsNK %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour"  ><% =rowsCnt3 %>h</div>
 
                                             </div>
@@ -952,6 +957,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -960,7 +966,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l ">NG<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =((rowsNgLine+rowsNKLine)==0?"gray":"red") %>  margin10-l ">NG<% =rowsNgLine.ToString() %>+<% =rowsNKLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -997,6 +1003,8 @@
                                                                         <%} %>
                                                                          <% if (dr["jcResult"].ToString() == "NG")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">NG</span>
+                                                                        <%} else if (dr["jcResult"].ToString() == "内控")  { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -1232,6 +1240,7 @@
                                     rowsCnt2 = dt_line.Select(exp+"and priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                     rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
+                                    rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -1240,7 +1249,7 @@
                                                 <i class="icon nav-icon icon-49"></i><% =sys %> 待取回                                                
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin15-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin15-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin15-l NG ">NG<% =rowsNg %></span>
+                                                <span class="weui-badge  bg-<% =((rowsNg+rowsNK)==0?"gray":"red") %> margin15-l NG ">NG<% =rowsNg %>+<% =rowsNK %></span>
                                                 <div class="weui-badge bg-<% =(rowsCnt3==""?"gray":"orange") %> margin15-l maxHour"  ><% =rowsCnt3 %>h</div>
 
                                             </div>
@@ -1259,6 +1268,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1267,7 +1277,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l ">NG<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =((rowsNgLine+rowsNKLine)==0?"gray":"red") %>  margin10-l ">NG<% =rowsNgLine.ToString() %>+<% =rowsNKLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -1304,6 +1314,8 @@
                                                                         <%} %>
                                                                          <% if (dr["jcResult"].ToString() == "NG")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">NG</span>
+                                                                        <%} else if (dr["jcResult"].ToString() == "内控")  { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -1340,12 +1352,13 @@
                                                 rowsCnt2 = dt_line.Select(exp+" and priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                                 rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
+                                                rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>机加 检测完成（24小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin5-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin5-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin5-l NG">NG<% =rowsNg.ToString() %></span>
+                                                <span class="weui-badge  bg-<% =((rowsNg+rowsNK)==0?"gray":"red") %> margin5-l NG">NG<% =rowsNg.ToString() %>+<% =rowsNK.ToString() %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -1363,6 +1376,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1371,7 +1385,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l  ">NG<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =((rowsNgLine+rowsNKLine)==0?"gray":"red") %>  margin10-l  ">NG<% =rowsNgLine.ToString() %>+<% =rowsNKLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -1409,6 +1423,9 @@
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">NG</span>
+                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "内控")
+                                                                            { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -1444,12 +1461,13 @@
                                                 rowsCnt2 = dt_line.Select(exp+" and priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                                 rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
+                                                rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>Equator 检测完成（24小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin5-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin5-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin5-l NG">NG<% =rowsNg.ToString() %></span>
+                                                <span class="weui-badge  bg-<% =((rowsNg+rowsNK)==0?"gray":"red") %> margin5-l NG">NG<% =rowsNg.ToString() %>+<% =rowsNK.ToString() %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -1467,6 +1485,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1475,7 +1494,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l  ">NG<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =((rowsNgLine+rowsNKLine)==0?"gray":"red") %>  margin10-l  ">NG<% =rowsNgLine.ToString() %>+<% =rowsNKLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -1513,6 +1532,9 @@
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">NG</span>
+                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "内控")
+                                                                            { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
@@ -1548,12 +1570,13 @@
                                                 rowsCnt2 = dt_line.Select(exp+" and priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                                 rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
+                                                rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>压铸 检测完成（24小时内）                                                 
                                                 <span class="weui-badge  bg-<% =(rowsCnt1==0?"gray":"blue") %> margin5-l"><% =rowsCnt1 %></span>
                                                 <span class="weui-badge  bg-<% =(rowsCnt2==0?"gray":"red") %> margin5-l">急<% =rowsCnt2 %></span>
-                                                <span class="weui-badge  bg-<% =(rowsNg==0?"gray":"red") %> margin5-l NG">NG<% =rowsNg.ToString() %></span>
+                                                <span class="weui-badge  bg-<% =((rowsNg+rowsNK)==0?"gray":"red") %> margin5-l NG">NG<% =rowsNg.ToString() %>+<% =rowsNK.ToString() %></span>
                                                 <%--<div class="weui-badge bg-orange margin15-l maxHour" style="margin-right: 15px;"><% =rowsCnt3 %>H</div>--%>
                                             </div>
                                             <i class="icon icon-35"></i>
@@ -1571,6 +1594,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1579,7 +1603,7 @@
                                                                 <i class="icon nav-icon icon-22 color-success"></i><%= sj_type %>
                                                                 <span class="weui-badge bg-<% =(apl_qty=="0"?"gray":"blue") %>  margin10-l  "><% =apl_qty %></span>
                                                                 <span class="weui-badge bg-<% =(pri_qty=="0"?"gray":"red") %>  margin10-l  ">急<% =pri_qty %></span>
-                                                                <span class="weui-badge bg-<% =(rowsNgLine==0?"gray":"red") %>  margin10-l  ">NG<% =rowsNgLine.ToString() %></span>
+                                                                <span class="weui-badge bg-<% =((rowsNgLine+rowsNKLine)==0?"gray":"red") %>  margin10-l  ">NG<% =rowsNgLine.ToString() %>+<% =rowsNKLine.ToString() %></span>
                                                                 <span class="weui-badge bg-orange  margin20-l  "><% =timesHours %></span>
                                                             </div>
                                                             <i class="icon icon-74"></i>
@@ -1617,6 +1641,9 @@
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">NG</span>
+                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "内控")
+                                                                            { %>
+                                                                        <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
                                                                         <span class="weui-agree__text span_space">
