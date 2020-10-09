@@ -136,13 +136,13 @@ public partial class ZL : System.Web.UI.Page
         sql = string.Format(@"[usp_app_JC_Monitor] '','3'");
         dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
         iCnt3 = iCnt3 + dt_data_go.Select("result='NG'").Count();
-        iCnt5 = iCnt5 + dt_data_go.Select("result='内控'").Count();
+        iCnt5 = iCnt5 + dt_data_go.Select("result='超内控'").Count();
         //24完成
         sql = string.Format(@"select dh,result from [App_JC]  with(nolock)  where status=9 and complete_date>dateadd(day,-1,getdate())");
         dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
         iCnt3 = iCnt3 + dt_data_go.Select("result='NG'").Length;
         iCnt4 = iCnt4 + Convert.ToInt16(dt_data_go.Rows.Count);
-        iCnt5 = iCnt5 + dt_data_go.Select("result='内控'").Length;
+        iCnt5 = iCnt5 + dt_data_go.Select("result='超内控'").Length;
         string res = "[{\"iCnt1\":\"" + iCnt1.ToString() + "\",\"iCnt2\":\"" + iCnt2.ToString() + "\",\"iCnt3\":\"" + iCnt3.ToString() 
             + "\",\"iCnt4\":\"" + iCnt4.ToString() + "\",\"iCnt5\":\"" + iCnt5.ToString() + "\",\"msg\":\"ok\"}]";
         return res;
