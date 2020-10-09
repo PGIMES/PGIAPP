@@ -1162,7 +1162,7 @@
                     $("#checkedLevel_sg").append("<option value='" + db_jcnr_sy_arr[i] + "'>" + db_jcnr_sy_arr[i] + "</option>");
                 }
             }
-            var datalist_sr = [{ title: 'NG', value: 'NG' }, { title: '合格', value: '合格' }];
+            var datalist_sr = [{ title: 'NG', value: 'NG' }, { title: '合格', value: '合格' }, { title: '超内控', value: '超内控' }];
             $("#txt_result").select({
                 title: "结果",
                 items: datalist_sr,
