@@ -173,7 +173,7 @@
 
                 var obj1 = $(this).closest('li').children(".js-category").find("span").first(); //蓝标题span
                 var obj2 = $(this).closest('li').children(".js-category").find("span").eq(1); //黄标题span
-                var obj3 = $(this).closest('li').children(".js-category").find("span.Part").eq(2); //第三个 
+                var obj3 = $(this).closest('li').children(".js-category").find("span.Part"); //第三个 
                 var obj4 = $(this).closest('li').children(".js-category").find("span.NG"); //NG 
 
                 $(obj1).text(row1);
@@ -335,10 +335,10 @@
                                             <div class="weui-cells">
                                                 <%
                                                     System.Data.DataView dataView = dt_line.DefaultView;
-                                                    System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "sj_type", "apl_qty", "pri_qty", "timesHours");
+                                                    System.Data.DataTable dtLineDistinct = dataView.ToTable(true, "workshop", "apl_qty", "pri_qty", "timesHours");
                                                     foreach (System.Data.DataRow drLine in dtLineDistinct.Rows)
                                                     {
-                                                        sj_type = drLine["sj_type"].ToString();
+                                                        sj_type = drLine["workshop"].ToString();//申请以workshop来分组
                                                         var apl_qty = drLine["apl_qty"].ToString();
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
@@ -357,7 +357,7 @@
                                                         <div class="page-category js-categoryInner a_body" style="display:none">
                                                             <div>
                                                                 <%  
-                                                                    foreach (System.Data.DataRow dr in dt_line.Select("sj_type='" + sj_type + "'"))
+                                                                    foreach (System.Data.DataRow dr in dt_line.Select("workshop='" + sj_type + "'"))
                                                                     {%>
                                                                 <a class="weui-cell  weui-cell_access" href="<%=dr["href"] %>">
                                                                     <div class="weui-mark-vip"><span class="weui-mark-lt bg-blue"></span></div>
@@ -369,7 +369,7 @@
                                                                             <%=dr["dh"].ToString() %>
                                                                         </span>
                                                                         <span>
-                                                                            <%=dr["workshop"].ToString() %>
+                                                                            <%=dr["sj_type"].ToString() %>
                                                                         </span>
                                                                         <span>
                                                                             <%=dr["line"].ToString() %> <%="op"+dr["op"].ToString() %>
