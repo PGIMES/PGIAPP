@@ -126,7 +126,7 @@ public partial class ZL : System.Web.UI.Page
     public static string JianCe_Data()
     {
         //检测监视
-        int iCnt1 = 0, iCnt2 = 0, iCnt3 = 0, iCnt4 = 0; //Cnt1 已申请未完成总数，Cnt2:紧急数 ;  Cnt3  1天完成数 ;Cnt4 
+        int iCnt1 = 0, iCnt2 = 0, iCnt3 = 0, iCnt4 = 0, iCnt5 = 0;//Cnt1 已申请未完成总数，Cnt2:紧急数 ;  Cnt3  1天完成数 ;Cnt4 
         // 调整中
         string sql = string.Format(@"select  id,status,sj_type,priority from [App_JC]  with(nolock)  where status<>9 and status<>-1");//9：完成；-1：取消\删除
         DataTable dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
@@ -136,12 +136,15 @@ public partial class ZL : System.Web.UI.Page
         sql = string.Format(@"[usp_app_JC_Monitor] '','3'");
         dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
         iCnt3 = iCnt3 + dt_data_go.Select("result='NG'").Count();
+        iCnt5 = iCnt5 + dt_data_go.Select("result='内控'").Count();
         //24完成
         sql = string.Format(@"select dh,result from [App_JC]  with(nolock)  where status=9 and complete_date>dateadd(day,-1,getdate())");
         dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
         iCnt3 = iCnt3 + dt_data_go.Select("result='NG'").Length;
         iCnt4 = iCnt4 + Convert.ToInt16(dt_data_go.Rows.Count);
-        string res = "[{\"iCnt1\":\"" + iCnt1.ToString() + "\",\"iCnt2\":\"" + iCnt2.ToString() + "\",\"iCnt3\":\"" + iCnt3.ToString() + "\",\"iCnt4\":\"" + iCnt4.ToString() + "\",\"msg\":\"ok\"}]";
+        iCnt5 = iCnt5 + dt_data_go.Select("result='内控'").Length;
+        string res = "[{\"iCnt1\":\"" + iCnt1.ToString() + "\",\"iCnt2\":\"" + iCnt2.ToString() + "\",\"iCnt3\":\"" + iCnt3.ToString() 
+            + "\",\"iCnt4\":\"" + iCnt4.ToString() + "\",\"iCnt5\":\"" + iCnt5.ToString() + "\",\"msg\":\"ok\"}]";
         return res;
 
     }

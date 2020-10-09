@@ -248,13 +248,13 @@
                     datad = JSON.parse(data.d); //转为Json字符串
                     if (datad.length > 0) {
                         $("#Cnt1").text(datad[0].iCnt1);
-                        $("#Cnt3").text("NG" + datad[0].iCnt3);
-                        $("#Cnt2").text("急"+datad[0].iCnt2);
+                        $("#Cnt3").text("NG" + datad[0].iCnt3 + "+" + datad[0].iCnt5);
+                        $("#Cnt2").text("急" + datad[0].iCnt2);
                         $("#Cnt4").text(datad[0].iCnt4);
                         if (datad[0].iCnt1 == 0) { $("#Cnt1").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].iCnt2 == 0) { $("#Cnt2").removeClass("bg-orange").addClass("bg-gray"); }
                         if (datad[0].iCnt4 == 0) { $("#Cnt4").removeClass("bg-blue").addClass("bg-gray"); }
-                        if (datad[0].iCnt3 == 0) { $("#Cnt3").removeClass("bg-red").addClass("bg-gray"); }
+                        if ((parseInt(datad[0].iCnt3) + parseInt(datad[0].iCnt5)) == 0) { $("#Cnt3").removeClass("bg-red").addClass("bg-gray"); }
                     }
 
                 }//,
