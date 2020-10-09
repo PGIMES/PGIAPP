@@ -132,12 +132,15 @@ public partial class ZL : System.Web.UI.Page
         DataTable dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
         iCnt1 = iCnt1 + dt_data_go.Rows.Count;
         iCnt2 = iCnt2 + dt_data_go.Select(" priority='紧急'").Length;
-        //iCnt3 = iCnt3 + dt_data_go.Select("").Count();
-        //24完成
-        sql = string.Format(@"select count(1)cnt from [App_JC]  with(nolock)  where status=9 and complete_date>dateadd(day,-1,getdate())");
+        //NG
+        sql = string.Format(@"[usp_app_JC_Monitor] '','3'");
         dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
-      
-        iCnt4 = iCnt4 + Convert.ToInt16(dt_data_go.Rows[0]["cnt"]);
+        iCnt3 = iCnt3 + dt_data_go.Select("result='NG'").Count();
+        //24完成
+        sql = string.Format(@"select dh,result from [App_JC]  with(nolock)  where status=9 and complete_date>dateadd(day,-1,getdate())");
+        dt_data_go = SQLHelper.Query(sql, connStr_JianCe).Tables[0];
+        iCnt3 = iCnt3 + dt_data_go.Select("result='NG'").Length;
+        iCnt4 = iCnt4 + Convert.ToInt16(dt_data_go.Rows.Count);
         string res = "[{\"iCnt1\":\"" + iCnt1.ToString() + "\",\"iCnt2\":\"" + iCnt2.ToString() + "\",\"iCnt3\":\"" + iCnt3.ToString() + "\",\"iCnt4\":\"" + iCnt4.ToString() + "\",\"msg\":\"ok\"}]";
         return res;
 

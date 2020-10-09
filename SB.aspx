@@ -61,7 +61,7 @@
                         <i class="fa fa-user-circle-o margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>上岗<span style="font-size:smaller">(调整中)</span></p>
+                        <p>上岗<span style="font-size:smaller"></span></p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>                
@@ -79,7 +79,7 @@
                         <i class="fa fa-group margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>上岗监视<span style="font-size:smaller">(调整中)</span></p>
+                        <p>上岗监视</p>
                     </div>
                     <div class="weui-cell__ft">
                         <asp:Label ID="Label1" runat="server" Text="" style="display:none;"></asp:Label>
@@ -95,6 +95,21 @@
 
                     <div class="weui-cell__bd">
                         <p>故障监视</p>
+                    </div>
+                    <div class="weui-cell__ft">                                                
+                       <%-- <span class="weui-badge bg-blue" id="wip" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-blue" id="sh" style='margin-right: 15px;'>..</span>
+                        <span class="weui-badge bg-orange" id="part"  style='margin-right: 15px;'>部..</span>
+                        <span class="weui-badge bg-red" id="ng" style='margin-right: 15px;'>返..</span>   --%>                  
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="/SB/API_Monitor.aspx">
+                    <div class="weui-cell__hd">
+                        <i class="fa fa-gears margin10-r"></i>
+                    </div>
+
+                    <div class="weui-cell__bd">
+                        <p>故障监视<span style="font-size:smaller">(改版测试)</span></p>
                     </div>
                     <div class="weui-cell__ft">                                                
                        <%-- <span class="weui-badge bg-blue" id="wip" style='margin-right: 15px;'>..</span>

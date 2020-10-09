@@ -80,7 +80,7 @@
                         <i class="fa fa-filter margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>检测申请<font style="font-size:smaller">(开发中)</font></p>
+                        <p>检测申请</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a> 
@@ -129,13 +129,14 @@
                         <i class="fa fa-gears margin10-r"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>检测监视<font style="font-size:smaller">(开发中)</font></p>
+                        <p>检测监视</p>
                     </div>
                     <div class="weui-cell__ft">                                                
                         <span class="weui-badge bg-blue" id="Cnt1" style='margin-right: 15px;'>..</span>
                         <span class="weui-badge bg-blue" id="Cnt4"  style='margin-right: 15px;'>..</span> 
+                        <span class="weui-badge bg-red" id="Cnt3" style='margin-right: 15px;'>NG..</span> 
                         <span class="weui-badge bg-red" id="Cnt2" style='margin-right: 15px;'>急..</span>
-                                                                   
+                                                                  
                     </div>
                 </a>
             </div>
@@ -247,11 +248,13 @@
                     datad = JSON.parse(data.d); //转为Json字符串
                     if (datad.length > 0) {
                         $("#Cnt1").text(datad[0].iCnt1);
+                        $("#Cnt3").text("NG" + datad[0].iCnt3);
                         $("#Cnt2").text("急"+datad[0].iCnt2);
                         $("#Cnt4").text(datad[0].iCnt4);
                         if (datad[0].iCnt1 == 0) { $("#Cnt1").removeClass("bg-blue").addClass("bg-gray"); }
                         if (datad[0].iCnt2 == 0) { $("#Cnt2").removeClass("bg-orange").addClass("bg-gray"); }
                         if (datad[0].iCnt4 == 0) { $("#Cnt4").removeClass("bg-blue").addClass("bg-gray"); }
+                        if (datad[0].iCnt3 == 0) { $("#Cnt3").removeClass("bg-red").addClass("bg-gray"); }
                     }
 
                 }//,
