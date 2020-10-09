@@ -618,7 +618,7 @@
                                     rowsCnt2 = dt_line.Select(exp+"and priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                     var rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
-                                    var rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
+                                    var rowsNK = dt_line.Select(exp+" and jcResult='超内控'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -646,7 +646,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
-                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='超内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -692,7 +692,7 @@
                                                                         <%} %>
                                                                          <% if (dr["jcResult"].ToString() == "NG")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">NG</span>
-                                                                        <%}  else if (dr["jcResult"].ToString() == "内控")  { %>
+                                                                        <%}  else if (dr["jcResult"].ToString() == "超内控")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
@@ -929,7 +929,7 @@
                                     rowsCnt2 = dt_line.Select(exp+"and priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                     rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
-                                    rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
+                                    rowsNK = dt_line.Select(exp+" and jcResult='超内控'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -957,7 +957,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
-                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='超内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1003,7 +1003,7 @@
                                                                         <%} %>
                                                                          <% if (dr["jcResult"].ToString() == "NG")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">NG</span>
-                                                                        <%} else if (dr["jcResult"].ToString() == "内控")  { %>
+                                                                        <%} else if (dr["jcResult"].ToString() == "超内控")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
@@ -1240,7 +1240,7 @@
                                     rowsCnt2 = dt_line.Select(exp+"and priority='紧急'").Length;
                                     rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                     rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
-                                    rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
+                                    rowsNK = dt_line.Select(exp+" and jcResult='超内控'").Length;
                                 %>
                                 <ul class="collapse">
                                     <li class="js-show">
@@ -1268,7 +1268,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
-                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='超内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1314,7 +1314,7 @@
                                                                         <%} %>
                                                                          <% if (dr["jcResult"].ToString() == "NG")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">NG</span>
-                                                                        <%} else if (dr["jcResult"].ToString() == "内控")  { %>
+                                                                        <%} else if (dr["jcResult"].ToString() == "超内控")  { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr  b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
                                                                         <br />
@@ -1352,7 +1352,7 @@
                                                 rowsCnt2 = dt_line.Select(exp+" and priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                                 rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
-                                                rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
+                                                rowsNK = dt_line.Select(exp+" and jcResult='超内控'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>机加 检测完成（24小时内）                                                 
@@ -1376,7 +1376,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
-                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='超内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1423,7 +1423,7 @@
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">NG</span>
-                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "内控")
+                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "超内控")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
@@ -1461,7 +1461,7 @@
                                                 rowsCnt2 = dt_line.Select(exp+" and priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                                 rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
-                                                rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
+                                                rowsNK = dt_line.Select(exp+" and jcResult='超内控'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>Equator 检测完成（24小时内）                                                 
@@ -1485,7 +1485,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
-                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='超内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1532,7 +1532,7 @@
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">NG</span>
-                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "内控")
+                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "超内控")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
@@ -1570,7 +1570,7 @@
                                                 rowsCnt2 = dt_line.Select(exp+" and priority='紧急'").Length;
                                                 rowsCnt3 = dt_line.Compute("max(timesHours)",exp).ToString();
                                                 rowsNg = dt_line.Select(exp+" and jcResult='NG'").Length;
-                                                rowsNK = dt_line.Select(exp+" and jcResult='内控'").Length;
+                                                rowsNK = dt_line.Select(exp+" and jcResult='超内控'").Length;
                                             %>
                                             <div class="weui-cells__title  weui-flex__item">
                                                 <i class="icon nav-icon icon-49"></i>压铸 检测完成（24小时内）                                                 
@@ -1594,7 +1594,7 @@
                                                         var pri_qty = drLine["pri_qty"].ToString();
                                                         var timesHours = drLine["timesHours"].ToString() + "h";
                                                         var rowsNgLine = dt_line.Select(exp+" and jcResult='NG' and sj_type='"+sj_type+"'").Length;
-                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='内控' and sj_type='"+sj_type+"'").Length;
+                                                        var rowsNKLine = dt_line.Select(exp+" and jcResult='超内控' and sj_type='"+sj_type+"'").Length;
                                                 %>
                                                 <ul class="collapse2  ">
                                                     <li style="margin-top: 0px; margin-bottom: 0px">
@@ -1641,7 +1641,7 @@
                                                                         <% if (dr["jcResult"].ToString().ToUpper() == "NG")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">NG</span>
-                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "内控")
+                                                                        <%} else if (dr["jcResult"].ToString().ToUpper() == "超内控")
                                                                             { %>
                                                                         <span class="weui-mark-rt- weui-badge  weui-badge-tr b-red f-red" style="font-size: x-small;">内控</span>
                                                                         <%} %>
